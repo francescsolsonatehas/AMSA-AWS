@@ -15,6 +15,9 @@ website:
     logo-alt: "AMSA Logo"
     pinned: true
     tools:
+    - icon: house
+      href: "index.html"
+      text: "Home"
     - icon: github
       href: "https://github.com/amsa-gei-udl-2526-105013/course/"
       text: "GitHub organization"
@@ -26,8 +29,11 @@ website:
     search: false
     collapse-level: 1
     contents:
-      - section: Course Information
-      - section: Slides
+      - section: Informació del curs
+        contents:
+          - href: ./course-information/schedule.html
+            text: Planificació
+      - section: Diapositives
         contents:
           - href: ./slides/01-foundations-of-systems-administration.qmd
             text: Unitat 01 · Fonaments de l'Administració de Sistemes

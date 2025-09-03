@@ -1,32 +1,20 @@
 ---
-title: "AMSA 105013: System Administration"
-tbl-colwidths: [5,5,5,30,5,5,5,5,5,30]
+title: "AMSA 105013: Administració de Sistemes"
 format:
     html:
         toc: false
 ---
 
+![](figs/humor/system_admin_crisis.png){width="600px"}
 
-
-
-|    |                 |
-|--|-----------------|
-| **Course Title**        | Systems and Applications Administration and Management
-| **Semester**  | 1st Semester of the Bachelor's Degree in Computer Engineering
-| **Course Year** | Third Year |
-| **Professor**   | [Jordi Mateo](mailto:jordi.mateo@udl.cat) |
-| **Department** | [Computer Engineering and Digital Design]([https://dd](https://deidd.udl.cat/ca/))  |
-| **University** | [University of Lleida](https://www.udl.cat) |
-| **Course Guide** | [105013](https://guiadocent.udl.cat/en/html/2025-26_105013) |
-| **School**      | [![](figs/institute.png){width="200px"} ](https://www.eps.udl.cat) |
-
-
-
-## Schedule & Materials & Assignments
-
-Below is a complete schedule of the topics, course content, and assignments for the semester. Please note that this schedule is a living document and may be updated. All changes will be posted here to ensure you have the most current information.
-
-::: column-screen-inset-right
-| Week | Type               | Date       | Topic                                                    | Slides  | Notes  | Lab  | Others  | HW | Deliveries                                                                                                                                       |
-|:----:|:------------------:|:----------:|:---------------------------------------------------------|:--:|:--:|:--:|:--:|:--:|:----------------------------------------------------------------------------------------------------------------------------------------:|
-| 1    | Theory             |10/09/25    | **Unitat 01**: Fonaments de l’Administració de Sistemes  | [📖](slides/slides/01-foundations-of-systems-administration.html){aria-label="Fonaments de l’Administració de Sistemes "}  |    |  |  |        |                                                                                                                                          |
+|                         |                                                                                                  |
+|-------------------------|--------------------------------------------------------------------------------------------------|
+| **Course Title**        | Systems and Applications Administration and Management                                           |
+| **Semester**            | 1st Semester of the Bachelor's Degree in Computer Engineering                                    |
+| **Course Year**         | Third Year                                                                                       |
+| **Professor**           | [Jordi Mateo](mailto:jordi.mateo@udl.cat)                                                        |
+| **Schedule**            | [📅 ](course-information/schedule.html)                                                           |
+| **Course Guide**        | [📚](https://guiadocent.udl.cat/en/html/2025-26_105013)                                          |
+| **School**              | [![](figs/corporative/institute.png){width="200px"} ](https://www.eps.udl.cat)                   |
+| **University**          | [![](figs/corporative/university.png){width="200px"} ](https://www.udl.cat)                   | 
+| **Department**          | [![](figs/corporative/department.png){width="200px"} ](https://deidd.udl.cat/)              |

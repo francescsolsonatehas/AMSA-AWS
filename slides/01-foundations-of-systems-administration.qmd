@@ -2,7 +2,7 @@
 title: "Fonaments de l'Administració de Sistemes"
 subtitle: "Unitat 1 · Administració i Manteniment de Sistemes i Aplicacions (AMSA)"
 author: "Jordi Mateo Fornés"
-logo: "/figs/institute.png"
+logo: "/figs/corporative/institute.png"
 format: 
   revealjs:
     transition: fade
