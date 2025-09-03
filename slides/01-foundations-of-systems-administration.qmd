@@ -19,39 +19,43 @@ execute:
 
 # Introducció al curs
 
-## Benvinguda {.smaller}
+## Benvinguda
+
+:::::: columns
+::: {.column width="20%"}
+![](../figs/logo.png)
+:::
+
+:::: {.column width="80%"}
+::: {.callout-warning title="Administració i Manteniment de Sistemes i Aplicacions (AMSA)"}
+**1r Semestre, 3r Curs del Grau en Enginyeria Informàtica**. Impartida per [Jordi Mateo](mailto:jordi.mateo@udl.cat), professor del [Departament d'Enginyeria Informàtica i Disseny Digital (DEIDD)](https://deidd.udl.cat/ca/).
+:::
+::::
+::::::
 
 ::: center
-![(Font: Extret de [Neowin](https://www.neowin.net/news/to-our-readers-happy-sysadmin-day/))](https://cdn.neow.in/news/images/uploaded/1_devotion_to_duty.jpg){width="90%"}
+![(Font: Extret de [Neowin](https://www.neowin.net/news/to-our-readers-happy-sysadmin-day/))](https://cdn.neow.in/news/images/uploaded/1_devotion_to_duty.jpg){style="text-align: center;"}
 :::
 
 ::: notes
-Benvinguts al curs 24/25 de **Administració i Manteniment de Sistemes i Aplicacions**. Aquesta assignatura pretén introduir-vos en el món de l'administració de sistemes i aplicacions, així com en la seva gestió i manteniment. Aquesta assignatura és la continuació de les assignatures de **Sistemes Operatius**, **Xarxes**, **Bases de Dades** i **Seguretat**.
+Benvinguts al curs 25/26 de **Administració i Manteniment de Sistemes i Aplicacions**. Aquesta assignatura pretén introduir-vos en el món de l'administració de sistemes i aplicacions, així com en la seva gestió i manteniment.
 
-En la vinyeta de la diapositiva, es representa la dedicació d'un administrador de sistemes tradicional. Malgrat el caos i les situacions perilloses, el seu principal rol és assegurar que els sistemes estan funcionant en tot moment de forma correcta. Això reflecteix el paper real d'un administrador de sistemes, que és responsable de mantenir i gestionar la infraestructura i garantir la seva disponibilitat; evitant i resolent problemes que podrien interrompre els serveis.
+Aquesta vinyeta, amb un toc d'humor, il·lustra la dedicació d'un administrador de sistemes. Malgrat el caos i els reptes, la seva prioritat és assegurar que els sistemes funcionin correctament i estiguin sempre disponibles. Independentment del que passi fora de la sala de servidors. La seva feina consisteix a mantenir la infraestructura, prevenir problemes i resoldre'ls ràpidament per garantir la continuïtat dels serveis.
 :::
 
-## Què és l'Administració de Sistemes? *Preconcepcions* {.smaller}
+## Què és l'Administració de Sistemes?
 
-::::: columns
-::: {.column width="65%"}
-![](./figs/01-introduction/enquesta_inicial.png)
+![](./figs/01-introduction/enquesta_inicial.png){style="display: block;margin-left: auto; margin-right: auto;"}
+
+::: {.callout-tip title="Instruccions"}
+Escaneja el codi QR amb el teu dispositiu mòbil o accedeix a l'enllaç per respondre a l'enquesta inicial. Respon amb una paraula o frase curta a la pregunta: **Què és l'Administració de Sistemes?**
 :::
-
-::: {.column width="35%"}
-### Instruccions
-
-Escaneja el codi QR amb el teu dispositiu mòbil o accedeix a l'enllaç per respondre a l'enquesta inicial.
-
-Respon amb una paraula o frase curta a la pregunta: **Què és l'Administració de Sistemes?**
-:::
-:::::
 
 ::: notes
 Per començar, m'agradaria conèixer la vostra opinió sobre què és l'Administració de Sistemes. Per fer-ho, crearem un núvol de paraules amb les vostres respostes, al final de curs analitzarem les respostes i veurem si la vostra opinió ha canviat. [Enllaç al wordcloud](https://www.polleverywhere.com/free_text_polls/K1fn37S8SkKIh5MqVBa9G)
 :::
 
-## Què és l'Administració de Sistemes? *Definició segons ChatGPT* {.smaller}
+## Què és l'Administració de Sistemes?
 
 ::::: columns
 ::: {.column width="20%"}
@@ -73,7 +77,7 @@ L'administració de sistemes és la disciplina tècnica que implica la [**config
 
 ### Administrador (RAE)
 
-un **administrador** és una persona que té cura, gestiona o dirigeix els béns o els interessos d'una altra persona o entitat. En aquest cas, configurar, gestionar, supervisar i mantenir sistemes informatics.
+Un **administrador** és una persona que té cura, gestiona o dirigeix els béns o els interessos d'una altra persona o entitat. En aquest cas, configurar, gestionar, supervisar i mantenir sistemes informatics.
 
 ::: notes
 Fixeu-vos en els elements clau de la definició:
