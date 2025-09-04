@@ -1022,29 +1022,6 @@ La virtualització és una tecnologia clau que permet aprofitar millor els recur
 -   Virtualització Assistida per Hardware: Aquest model aprofita les capacitats del processador per accelerar el procés de virtualització. Processadors moderns com els d'Intel (VT-x) o AMD (AMD-V) ofereixen suport per a aquest tipus de virtualització, que és utilitzat per tecnologies com VMware o Hyper-V.
 :::
 
-## Virtualització (Contenidors) {.smaller}
-
-::: {.center-container}
-![Esquema de tipus de virtualització de contenidors (Docker)](../figs/slides/01-foundations-of-systems-administration/containers.png)
-:::
-
-::: notes
-La virtualització de contenidors és una tecnologia que permet als desenvolupadors empaquetar aplicacions i les seves dependències en un contenidor lleuger i portàtil que pot ser executat en qualsevol sistema que tingui un motor de contenidors. Aquest enfocament permet als desenvolupadors crear, distribuir i executar aplicacions de manera eficient i fiable, ja que els contenidors són autosuficients i aïllats de l'entorn d'execució. A més, els contenidors són lleugers i portàtils, el que facilita la seva distribució i execució en entorns diversos.
-
-Per exemple, Docker o containerd són motors de contenidors que permeten als desenvolupadors crear i executar contenidors lleugers i portàtils. Aquests contenidors poden contenir aplicacions, serveis o microserveis, i es poden executar en qualsevol sistema que tingui un motor de contenidors instal·lat. Això permet als desenvolupadors crear, distribuir i executar aplicacions de manera eficient i fiable, ja que els contenidors són autosuficients i aïllats de l'entorn d'execució.
-
-La principal diferència entre la virtualització de màquines virtuals i la virtualització de contenidors és el nivell d'abstracció. Mentre que les màquines virtuals virtualitzen tota una màquina física, incloent el sistema operatiu, els contenidors virtualitzen només l'aplicació i les seves dependències, compartint el mateix nucli del sistema operatiu hoste. Això fa que els contenidors siguin més lleugers i portàtils que les màquines virtuals, i permet als desenvolupadors crear i executar aplicacions de manera més eficient i fiable.
-:::
-
-## Kubernetes {.smaller}
-
-::: {.center-container}
-![Kubernetes](../figs/slides/01-foundations-of-systems-administration/kubernetes.png){width="80%"}
-:::
-::: notes
-Kubernetes és una plataforma de codi obert per a la gestió d'aplicacions en contenidors. Permet als desenvolupadors automatitzar el desplegament, l'escalat i la gestió d'aplicacions en contenidors, oferint una plataforma flexible i escalable per a la implementació d'aplicacions en entorns de producció. Es basa en una arquitectura de màster i nodes, on el màster és responsable de la gestió i control del clúster, mentre que els nodes són els servidors on s'executen les aplicacions en contenidors. Requereix de diferents xarxes (com xarxa de control, xarxa de pod, xarxa de servei) per a la comunicació entre els components del clúster, a més necessita serveis de descobriment de serveis (com etcd) per a la gestió de la configuració i l'estat del clúster, controladors de xarxa (com Flannel) per a la comunicació entre els nodes, i controladors de volums (com Rook) per a la gestió de l'emmagatzematge persistent, un planificador (com kube-scheduler) per a la programació de les tasques, i un controlador de replicació (com kube-controller-manager) per a la gestió de la replicació de les aplicacions i sobretot el kubelet, que és l'agent que s'executa en cada node i és responsable de la gestió dels contenidors en el node. Com veieu, Kubernetes és una plataforma complexa que requereix una configuració i gestió adequades per a garantir el seu funcionament correcte.
-:::
-
 ## Ansible
 
 Ansible és una eina d'automatització de la configuració i gestió de sistemes. Utilitza un llenguatge senzill basat en `YAML` per definir les tasques i la configuració dels sistemes, i utilitza SSH per connectar-se als servidors i executar les tasques.
@@ -1079,6 +1056,7 @@ hosts:
 ::: notes
 Ansible és una eina d'automatització que ens permet gestionar la configuració dels servidors de manera eficient i fiable. Per exemple, si necessitem instal·lar un servidor web a 10.000 servidors, en lloc de fer-ho manualment en cada servidor, podem utilitzar Ansible per automatitzar aquesta tasca. Amb aquest script indiquem les tasques ha realitzar instal·lar apache i aixecar el servei. I en el fitxer de hosts indiquem els servidors on volem realitzar aquestes tasques.
 :::
+
 
 ## Què és el Cloud Computing?
 
@@ -1163,6 +1141,29 @@ Resources:
 
 ::: notes
 AWS CloudFormation és un servei que permet als desenvolupadors definir i desplegar la infraestructura de manera programàtica mitjançant codi. Aquest codi es defineix en plantilles de CloudFormation, que descriuen els recursos necessaris per a la infraestructura, com ara instàncies EC2, grups de seguretat, taules de rutes, ..., En aquest exemple, es defineix una instància EC2 amb una imatge AMI, un tipus d'instància, una clau SSH, i un grup de seguretat. Un cop es defineix la plantilla, es pot desplegar la infraestructura amb un sol clic o una sola comanda, automatitzant així el procés de desplegament i garantint la consistència de la infraestructura.
+:::
+
+## Virtualització (Contenidors) {.smaller}
+
+::: {.center-container}
+![Esquema de tipus de virtualització de contenidors (Docker)](../figs/slides/01-foundations-of-systems-administration/containers.png)
+:::
+
+::: notes
+La virtualització de contenidors és una tecnologia que permet als desenvolupadors empaquetar aplicacions i les seves dependències en un contenidor lleuger i portàtil que pot ser executat en qualsevol sistema que tingui un motor de contenidors. Aquest enfocament permet als desenvolupadors crear, distribuir i executar aplicacions de manera eficient i fiable, ja que els contenidors són autosuficients i aïllats de l'entorn d'execució. A més, els contenidors són lleugers i portàtils, el que facilita la seva distribució i execució en entorns diversos.
+
+Per exemple, Docker o containerd són motors de contenidors que permeten als desenvolupadors crear i executar contenidors lleugers i portàtils. Aquests contenidors poden contenir aplicacions, serveis o microserveis, i es poden executar en qualsevol sistema que tingui un motor de contenidors instal·lat. Això permet als desenvolupadors crear, distribuir i executar aplicacions de manera eficient i fiable, ja que els contenidors són autosuficients i aïllats de l'entorn d'execució.
+
+La principal diferència entre la virtualització de màquines virtuals i la virtualització de contenidors és el nivell d'abstracció. Mentre que les màquines virtuals virtualitzen tota una màquina física, incloent el sistema operatiu, els contenidors virtualitzen només l'aplicació i les seves dependències, compartint el mateix nucli del sistema operatiu hoste. Això fa que els contenidors siguin més lleugers i portàtils que les màquines virtuals, i permet als desenvolupadors crear i executar aplicacions de manera més eficient i fiable.
+:::
+
+## Kubernetes {.smaller}
+
+::: {.center-container}
+![Kubernetes](../figs/slides/01-foundations-of-systems-administration/kubernetes.png){width="80%"}
+:::
+::: notes
+Kubernetes és una plataforma de codi obert per a la gestió d'aplicacions en contenidors. Permet als desenvolupadors automatitzar el desplegament, l'escalat i la gestió d'aplicacions en contenidors, oferint una plataforma flexible i escalable per a la implementació d'aplicacions en entorns de producció. Es basa en una arquitectura de màster i nodes, on el màster és responsable de la gestió i control del clúster, mentre que els nodes són els servidors on s'executen les aplicacions en contenidors. Requereix de diferents xarxes (com xarxa de control, xarxa de pod, xarxa de servei) per a la comunicació entre els components del clúster, a més necessita serveis de descobriment de serveis (com etcd) per a la gestió de la configuració i l'estat del clúster, controladors de xarxa (com Flannel) per a la comunicació entre els nodes, i controladors de volums (com Rook) per a la gestió de l'emmagatzematge persistent, un planificador (com kube-scheduler) per a la programació de les tasques, i un controlador de replicació (com kube-controller-manager) per a la gestió de la replicació de les aplicacions i sobretot el kubelet, que és l'agent que s'executa en cada node i és responsable de la gestió dels contenidors en el node. Com veieu, Kubernetes és una plataforma complexa que requereix una configuració i gestió adequades per a garantir el seu funcionament correcte.
 :::
 
 ## That's all
