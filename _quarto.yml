@@ -39,6 +39,9 @@ website:
             text: Unitat 01 · Fonaments de l'Administració de Sistemes
       - section: Lecture materials
       - section: Laboratories
+        contents:
+          - href: ./laboratories/01-intro-lab.qmd
+            text: Laboratori 01 · Introducció a AWS
       - section: Projects
       - section: Activities
   
