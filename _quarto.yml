@@ -38,7 +38,14 @@ website:
           - href: ./slides/01-foundations-of-systems-administration.qmd
             text: Unitat 01 · Fonaments de l'Administració de Sistemes
       - section: Activitats
-  
+        contents:
+          - section: Unitat 01 · Fonaments de l'Administració de Sistemes
+            contents:
+              - href: ./exercises/01-foundations-of-systems-administration/01-ex-week1.qmd
+                text: Activitat 1 · Configuració d'entorn de virtualització
+              - href: ./exercises/01-foundations-of-systems-administration/02-ex-week1.qmd
+                text: Activitat 2 · Emulació en mode d'usuari amb QEMU
+
 format:
   html:
     toc: true

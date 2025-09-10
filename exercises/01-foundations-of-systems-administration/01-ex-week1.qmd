@@ -1,0 +1,67 @@
+---
+title: Configuració d'entorn de virtualització
+lang: ca
+---
+
+Aquest exercici té com a objectiu recordar i consolidar les habilitats en la configuració d'entorns de virtualització utilitzant màquines virtuals (MV). Durant el curs, la creació i destrucció de MV serà una tasca recurrent, per la qual cosa és fonamental tenir una base sòlida. Preparant una plantilla preinstal·lada, podreu estalviar temps significatiu evitant la reinstal·lació completa del sistema operatiu cada cop que necessiteu un nou entorn de treball.
+
+## Requeriments previs
+
+- Disposar d'un hipervisor de virtualització instal·lat a la vostra màquina hoste. Es recomana utilitzar [VMware Workstation Pro](https://www.vmware.com/products/workstation-pro.html) o [VMware Fusion](https://www.vmware.com/products/fusion.html). Podeu reutilitzar la instal·lació que ja vau fer a l'assignatura de Sistemes Operatius.
+
+
+## Objectius
+
+- Crear i configurar màquines virtuals amb distribucions Linux.
+- Utilitzar snapshots per gestionar l'estat de les MV.
+- Configurar i establir una connexió remota segura a les MV utilitzant SSH.
+
+## Tasques
+
+### Creació de màquines virtuals
+
+Creareu dues màquines virtuals amb les distribucions Linux que farem servir durant el curs. Assegureu-vos de descarregar les imatges ISO correctament:
+
+1. **AlmaLinux**: Una distribució de GNU/Linux basada en Red Hat Enterprise Linux (RHEL).Descarregueu la [versió 9.6](https://mirrors.almalinux.org/isos.html).
+
+2. **Debian**: Una distribució popular coneguda per la seva estabilitat. Descarregueu la [versió 12.5.0](https://debian.uvigo.es/debian-cd/12.5.0/). 
+
+En la configuració no necessitareu finestres gràfiques, i de moment podeu utilitzar una configuració de disc i particions estàndard. Més endavant, durant el curs, anirem ajustant la configuració segons les necessitats específiques de cada pràctica.
+
+### Creació de snapshots
+
+Un cop instal·lades les dues màquines virtuals, creeu una snapshot de cadascuna. Una snapshot és una **instantània** de l'estat actual de la màquina virtual, incloent-hi la seva memòria, configuració i l'estat dels seus discos virtuals. Aquesta eina us permetrà tornar ràpidament a un estat inicial net en qualsevol moment, evitant haver de reinstal·lar el sistema si alguna configuració falla.
+
+### Configuració d'accés remot amb SSH
+
+Per facilitar la connexió i gestió de les màquines virtuals, configurarem l'accés remot mitjançant SSH (Secure Shell). Això us permetrà connectar-vos a les MV des de la vostra màquina hoste utilitzant una terminal o PowerShell amb suport SSH (Linux o MacOS).
+
+```bash
+ssh user@vm_ip_address
+```
+
+### Ús de la snapshot
+
+Un cop hàgiu completat la configuració inicial i les proves amb les màquines virtuals, practiqueu l'ús de les snapshots:
+
+1. Instal·leu algun programari a la MV amb debian com les eines de desenvolupament (gcc, make, etc).
+
+```bash
+# Recordeu instal·lar com a root
+apt install build-essential
+```
+
+2. Comproveu que el programari està instal·lat correctament.
+
+```bash
+gcc --version
+```
+
+3. Després, torneu a la snapshot creada anteriorment per veure que el programari ja no està instal·lat.
+
+## Activitat proposada
+
+- Escriu un script senzill que et permeti obrir la MV i connectar-te via SSH amb un sol comandament. Aquest script hauria de:
+  - Iniciar la màquina virtual si no està en funcionament.
+  - Esperar fins que la MV estigui completament engegada.
+  - Connectar-se a la MV mitjançant SSH.

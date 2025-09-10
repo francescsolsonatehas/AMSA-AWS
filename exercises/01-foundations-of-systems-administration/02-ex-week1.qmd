@@ -1,0 +1,108 @@
+---
+title: Emulació en mode d'usuari amb QEMU
+lang: ca
+---
+
+Aquest exercici t'introduirà a l'emulació en mode d'usuari de QEMU, una eina que et permet executar un programa compilat per a una arquitectura de CPU diferent de la teva màquina. Concretament, executaràs un programa de 32 bits compilat per a ARM en un sistema x86 (processadors Intel o AMD) o ARM de 64 bits (processadors Apple M). Per simplificar l'exercici, utiltizarem un *Hello, World!* com a programa d'exemple.
+
+## Requeriments previs
+
+- Disposar d'una màquina virtual amb **Debian** configurada segons les instruccions de l'exercici de configuració d'entorn de virtualització.
+- Disposar de les eines bàsiques de desenvolupament instal·lades a la màquina virtual (compilador `gcc`, `make`, etc.). Pots instal·lar-les com a *root* amb la comanda següent: ```apt install build-essential```.
+
+## Objectius
+
+1. Introduir-se en l'ús de QEMU en mode d'usuari per a l'emulació d'aplicacions.
+2. Comprendre la diferència entre compilació nativa i compilació creuada.
+3. Compilar i executar un programa senzill per a una arquitectura diferent de la teva màquina.
+
+## Tasques
+
+### Escriure i compilar un programa Hello World per a ARM
+
+1. Crea un fitxer anomenat `hello.c` amb el següent contingut:
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
+
+Per compilar-lo per a l'arquitectura ARM, necessites un compilador creuat. En aquest laboratori, utilitzarem el GNU ARM toolchain per a Linux. Instal·la'l amb la següent comanda:
+
+```bash
+# Com a root
+apt install gcc-arm-linux-gnueabi
+```
+
+Ara, compila el programa per a ARM amb aquesta comanda:
+
+```bash
+# Com a usuari normal
+arm-linux-gnueabi-gcc -o helloarm -static hello.c
+```
+
+Això generarà un executable anomenat **helloarm**. La bandera -static crea un binari estàticament enllaçat, la qual cosa significa que totes les biblioteques necessàries s'inclouen dins del propi fitxer. 
+
+Si intentes executar helloarm directament, rebràs un error:
+
+```bash
+./helloarm
+-bash: ./helloarm: no es pot executar el fitxer binari: Error de format d'execució
+```
+Aquest error es produeix perquè el teu sistema operatiu no reconeix l'arquitectura del fitxer. Pots verificar-ho amb la comanda ```file```:
+
+```bash
+file helloarm
+helloarm: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, not stripped
+```
+
+### Compilació per a l'arquitectura de la teva MV
+
+Per entendre la diferència, ara compila el mateix codi per a l'arquitectura de la teva màquina amb gcc:
+
+```bash
+gcc -o hellohost hello.c
+```
+
+Si l'executes, funcionarà sense problemes:
+
+```bash
+./hellohost
+Hello, World!
+```
+
+Per comprovar-ne l'arquitectura, utilitza de nou la comanda `file`:
+
+```bash
+file hellohost
+# Exemple per a x86
+hellohost: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked...
+# Exemple per a Apple M Series (ARM 64-bit)
+hellohost: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked...
+```
+
+### Execució del programa amb QEMU
+
+Finalment, per executar el binari ARM a la teva màquina, necessites el component de QEMU per a emulació en mode d'usuari. Instal·la'l amb aquesta comanda:
+
+```bash
+# Com a root
+apt install qemu-user
+```
+
+Un cop instal·lat, pots executar el programa helloarm amb l'emulador qemu-arm:
+
+```bash
+qemu-arm helloarm
+Hello, World!
+```
+
+### Preguntes finals
+
+- Investiga quines altres arquitectures són compatibles amb QEMU en mode d'usuari. Prova de compilar i executar un programa per a una d'aquestes arquitectures.
+- Per què la compilació estàtica és important en aquest context? Per què no cal incloure la bandera `-static` en la compilació normal? Quines avantatges i inconvenients té cada enfocament?
+
