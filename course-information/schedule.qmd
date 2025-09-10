@@ -14,6 +14,6 @@ A continuació es presenta un calendari complet dels temes, el contingut del cur
 | Setmana | Tipus              | Data       | Tema                                                     | Diapositives | Apunts | Laboratori | Altres | Tasques | Lliuraments  |                                                                                                                                       |
 |:----:|:------------------:|:----------:|:---------------------------------------------------------|:--:|:--:|:--:|:--:|:--:|:----------------------------------------------------------------------------------------------------------------------------------------:|
 | 1    | Teoria             |10/09/25    | **Unitat 01**: Fonaments de l’Administració de Sistemes  | [📖](https://amsa-gei-udl-2526-105013.github.io/course/slides/01-foundations-of-systems-administration.html#/title-slide){aria-label="Fonaments de l’Administració de Sistemes "}  |    |  |  |        |    
-| 2    | Laboratori         |15/09/25    | **Laboratori 01**: Iniciació a AWS i a l'administració    |    |    | [🔬]()   |    |    |                                                                                                                                        |
+| 2    | Laboratori         |15/09/25    | Iniciació a AWS i a l'administració    |    |    | [🔬]()   |    |    |                                                                                                                                        |
 
 

@@ -3,7 +3,6 @@ title: Unitat 1 · Laboratori de preparació i comandes bàsiques d'administraci
 subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
 ---
 
-
 ##  Preparant l'entorn de treball  remot {#preparant-lentorn-de-treball-remot}
 
 Per preparar l'entorn de treball a AWS, seguirem els següents passos:
