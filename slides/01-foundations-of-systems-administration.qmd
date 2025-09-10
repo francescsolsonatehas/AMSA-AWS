@@ -47,11 +47,7 @@ Aquesta vinyeta, amb un toc d'humor, il·lustra la dedicació d'un administrador
 ## Què és l'Administració de Sistemes?
 
 ::: {.center-container}
-![](../figs/slides/01-foundations-of-systems-administration/enquesta_inicial.png){width="600px"}
-:::
-
-::: {.callout-tip title="Instruccions"}
-Escaneja el codi QR amb el teu dispositiu mòbil o accedeix a l'enllaç per respondre a l'enquesta inicial. Respon amb una paraula o frase curta a la pregunta: **Què és l'Administració de Sistemes?**
+![](../figs/slides/01-foundations-of-systems-administration/enquesta_inicial.png){width="500px"}
 :::
 
 ::: notes
@@ -157,7 +153,7 @@ La definició de ChatGPT no és incorrecta, però és una mica limitada. Un sist
 Quants de vosaltres heu vist la pel·lícula **Matrix**? Què té a veure amb l'Administració de Sistemes?
 :::
 
-::: {.fragment}
+::: {.fragment .center-container}
 [![Introducció a System Administration - CBT Nuggets (0:32 fins a 2:16)](https://img.youtube.com/vi/H7_1L5eoytA/0.jpg)](https://www.youtube.com/watch?v=H7_1L5eoytA)
 :::
 
@@ -272,41 +268,45 @@ Aquesta assignatura té com a objectiu introduir-vos al món de l'administració
 |   18a    |                            |                            |
 |   19a    |       RECUPERACIONS        |                            |
 
-## Avaluació · *Criteris* {.smaller}
+# Avaluació
 
-| **Bloc** | **Activitat** | **Pes** | **Recuperable?** | **Nota Mínima?** | **Grup?** |
-|:--:|:---|:---|:---|:---|:---|
-| Exàmens | Examen 1 | 35% | Sí | No | No |
-| Exàmens | Examen 2 | 35% | Sí | No | No |
-| Pràctiques | Laboratori | 20% | No | Sí | Sí |
-| Activitats | Activitats Async | 5% | No | No | No |
-| Participació | Seguiment i participació | 5% | No | No | No |
-| Extra | Notes setmanals | 5% | No | No | No |
-| Extra | Millora materials | 5% | No | No | No |
+## Criteris d'Avaluació
 
-## Avaluació · *Exàmens* {.smaller}
+| **Activitat** | **Pes** | **Recuperable?** | **Nota Mínima?** | **Grup?** |
+|:---|:---|:---|:---|:---|
+| Examen 1 | 35% | Sí | No | No |
+| Examen 2 | 35% | Sí | No | No |
+| Laboratori | 20% | No | Sí | Sí |
+| Activitats Async | 5% | No | No | No |
+| Seguiment i participació | 5% | No | No | No |
 
-- Els exàmens parcials (**E1 i E2**) són proves escrites que avaluen els coneixements teòrics i pràctics adquirits durant el curs. Cadascun té un pes del 35% de la nota final. Són proves individuals i presencials, i es realitzaran en les dates establertes al calendari acadèmic.
+## Exàmens
 
-- Durant aquestes proves, no es permet l'ús de cap dispositiu electrònic (telèfons mòbils, ordinadors portàtils o tauletes). Tanmateix, es permet l'ús d'un resum de continguts, que ha de ser un document escrit a mà i no pot excedir una fulla DIN A4 (per davant i per darrere).
+Els exàmens parcials (**E1 i E2**) són *proves escrites que avaluen els coneixements **teòrics** i **pràctics*** adquirits durant el curs.
 
-## Avaluació · *Recuperació* {.smaller}
+-   Són proves individuals i presencials.
+-   Es realitzaran en les dates establertes al calendari acadèmic.
+-   No es permet l'ús de cap dispositiu electrònic (telèfons mòbils, ordinadors portàtils o tauletes).
+-   Si es permet l'ús d'un resum de continguts, que ha de ser un document escrit a mà i no pot excedir una fulla DIN A4 (per davant i per darrere).
 
-- Els parcials són recuperables mitjançant proves escrites addicionals que es realitzaran durant la setmana de recuperació.
--   Si un estudiant necessita recuperar un únic parcial (E1 o E2), podrà fer una prova específica per a aquest parcial. La qualificació obtinguda en aquesta recuperació substituirà la nota del parcial corresponent.
--   Si un estudiant necessita recuperar ambdós parcials, haurà de realitzar dues proves separades, una per a cada parcial (E1 i E2). Les qualificacions obtingudes en cadascuna d'aquestes proves de recuperació substituiran les notes originals dels parcials respectius.
-- És important notar que no hi haurà un model d'examen unificat per a la recuperació; cada prova de recuperació se centrarà exclusivament en els continguts del parcial al qual correspon.
+## Recuperació {.smaller}
 
-## Avaluació · *Pràctiques* {.smaller}
+-   Els parcials són recuperables mitjançant proves escrites addicionals que es realitzaran durant la setmana de recuperació.
+-   Si un estudiant necessita recuperar un únic parcial (**E1** o **E2**), podrà fer una prova específica per a aquest parcial. *La qualificació obtinguda en aquesta recuperació substituirà la nota del parcial corresponent*.
+-   Si un estudiant necessita recuperar ambdós parcials, haurà de realitzar dues proves separades, una per a cada parcial (**E1** i **E2**). Les qualificacions obtingudes en cadascuna d'aquestes proves de recuperació substituiran les notes originals dels parcials respectius.
+-   És important notar que **no hi haurà un model d'examen unificat per a la recuperació**; *cada prova de recuperació se centrarà exclusivament en els continguts del parcial al qual correspon*.
 
-- Les pràctiques de l'assignatura impliquen treball fora de l'aula i s'han de lliurar de forma estricta en les dates establertes. La seva avaluació es farà mitjançant rúbriques de correcció, que estaran disponibles per als estudiants amb antelació.
--   El professorat pot entrevistar els estudiants per verificar l'autoria i la comprensió. Si es detecta que una activitat no ha estat realitzada per l'estudiant, podrà ser suspesa.
--   Qualsevol entrega fora del termini establert es considerarà no vàlida i es qualificarà amb un 0.
--   La nota final de les pràctiques s'obtindrà calculant la mitjana ponderada de les qualificacions de cada pràctica, tenint en compte que cadascuna pot tenir una ponderació específica
--   Aquestes pràctiques no són recuperables.
--   Tot i ser activitats en grup, cada estudiant pot obtenir una nota diferent en funció de la seva participació i aportacions individuals al grup.
+## Pràctiques {.smaller}
 
-## Avaluació · *Activitats Asíncrones a AWS* {.smaller}
+-   Les pràctiques de l'assignatura impliquen treball fora de l'aula i s'han de lliurar de forma estricta en les dates establertes.
+-   La seva avaluació es farà mitjançant rúbriques de correcció, que estaran disponibles per als estudiants amb antelació.
+-   El professorat pot entrevistar els estudiants per verificar l'autoria. Si es detecta que una activitat *no ha estat realitzada per l'estudiant* la seva qualificació **serà 0**.
+-   Qualsevol entrega *fora del termini establert* es considerarà no vàlida i es **qualificarà amb un 0**.
+-   Cadascuna pot tenir una **ponderació específica** indicada a la descripció de l'activitat.
+-   Aquestes pràctiques **no són recuperables**.
+-   Tot i ser activitats en grup, *cada estudiant pot obtenir una nota diferent* en funció de la seva participació i **aportacions individuals al grup**.
+
+## Activitats Asíncrones a AWS {.smaller}
 
 Aquestes activitats asíncrones es realitzaran a la plataforma AWS al llarg del curs. La seva finalitat és que completis totes les activitats i laboratoris proposats, ja que la qualificació es basarà íntegrament en la finalització d'aquests. Completar totes les tasques et donarà el 5% de la nota final. Si en fas només una part, la puntuació serà proporcional a les activitats que hagis realitzat.
 
@@ -314,11 +314,11 @@ Aquestes activitats asíncrones es realitzaran a la plataforma AWS al llarg del 
 -   **Data límit**: La data màxima per a la presentació i finalització és el dia de l'E2.
 -   **Valor afegit**: Obtenció d'un certificat oficial AWS.
 
-## Avaluació *Seguiment i Participació* {.smaller}
+## Seguiment i Participació {.smaller}
 
 ::: {.callout-warning title="Rúbrica d'Avaluació "}
 | Punts | Participació Presencial | Participació en Fòrums | Activitats Sessió |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | **10** | Contribucions excepcionals,enriqueix la discussió. | Líder en discussions, promou debat. | Qualitat excepcional, supera expectatives. |
 | **9** | Comentaris rellevants, mostra comprensió, escolta activament. | Respostes significatives. | Alta qualitat, treball precís. |
 | **8** | Contribucions regulars, interactua amb companys. | Publicacions rellevants, contribueix constructivament. | Compleix tots requisits amb precisió. |
@@ -328,17 +328,28 @@ Aquestes activitats asíncrones es realitzaran a la plataforma AWS al llarg del 
 | **0** | Evita participar, distret. | Publicacions fora de tema. | No lliura activitats. |
 :::
 
-## Avaluació · *Bonus 1* {.smaller}
+::: {style="text-align: center;"}
+L'assistència passiva no es puntua.
+:::
 
-:::::: columns
+::: notes
+Aquest component d'avaluació està dissenyat per fomentar la participació activa i el compromís amb l'assignatura. La participació no es limita només a l'assistència a classe, sinó que també inclou la contribució en discussions, fòrums en línia i activitats relacionades amb les sessions. Tota participació ha de ser rellevant i constructiva per ser valorada positivament. En aquesta rúbrica, es detallen els criteris específics que s'utilitzaran per avaluar la participació dels estudiants en diferents àmbits.
+:::
+
+## Bonus 1 {.smaller}
+
+::::::: columns
 ::: {.column width="55%"}
 -   **Objectiu**: Fomentar la reflexió i l'autoavaluació dels continguts treballats a classe.
 -   **Metodologia**: Cada setmana, els estudiants han de fer un commit al seu repositori d'apunts amb les notes de les sessions de teoria i pràctiques.
 -   **Avaluació**: Es valorarà la qualitat de les notes, la seva coherència i la seva relació amb els continguts treballats, així com les reflexions i opinions personals incloses.
+-   Per participar cal crear un repositori a Github (públic) i fer-me arribar l'enllaç.
 :::
-::: {.column .fragment width="5%"}
+
+::: {.column width="5%"}
 :::
-::: {.column .fragment width="40%"}
+
+:::: {.column width="40%"}
 ### Exemple de Notes
 
 ``` markdown
@@ -353,77 +364,64 @@ Aquestes activitats asíncrones es realitzaran a la plataforma AWS al llarg del 
 # Reflexions personals
 ```
 
-::: {.callout-warning .fragment title="No es permet cap altre forma "}
+::: {.callout-warning title="No es permet cap altre forma "}
 Les notes han de ser escrites en format Markdown i mantingudes en un repositori Git i Github.
 :::
+::::
+:::::::
+
+::: notes
+Aquest bonus està dissenyat per incentivar els estudiants a mantenir un registre organitzat i reflexiu dels continguts treballats a classe. En fer un commit setmanal amb les seves notes, els estudiants no només reforcen el seu aprenentatge, sinó que també desenvolupen habilitats de documentació i autoavaluació. La qualitat de les notes serà clau en l'avaluació, ja que es valorarà no només la precisió dels continguts, sinó també la capacitat de reflexionar sobre el que s'ha après i com s'ha aplicat aquest coneixement. Es tracta d'una oportinitat per als estudiants per crear el seu diari d'aprenentatge al llarg del curs. Per participar, els estudiants han de crear un repositori públic a Github i compartir l'enllaç amb el professorat.
 :::
 
+## Bonus 2
 
-::::::
-
-## Avaluació · *Bonus 2* {.smaller}
-
-
-::: columns
-::: {.column width="50%"}
-- Els materials de l'assignatura segueixen la metodologia de *Open Source*. 
-- Això vol dir que qualsevol estudiant pot detectar errors, millorar els materials o afegir continguts nous. 
-- Per tant, cada estudiant pot fer *fork* del repositori de l'assignatura i fer *pull request* amb les seves correccions i millores.
-- S'avaluarà la quantitat i qualitat de les correccions, deteccions i millores realitzades en els materials de l'assignatura.
-
-:::
-::: {.column width="10%"}
-
-:::
+::::: columns
 ::: {.column width="40%"}
-```{mermaid}
-graph TD
-        A(↓ Pull · git pull)
-        B(Crea una branca · git branch)
-        C(Fes canvis)
-        D(↑ Push · git push)
-        E(Obre una Pull Request)
-
-    A -- "Actualitzar" --> B
-    B -- "Treballar aïlladament" --> C
-    C -- "Guarda els teus canvis" --> D
-    D -- "Proposa els canvis" --> E
-
-    style A fill:#e6f3ff,stroke:#007bff,stroke-width:2px;
-    style B fill:#fff0e6,stroke:#ff8c00,stroke-width:2px;
-    style C fill:#f0fff0,stroke:#28a745,stroke-width:2px;
-    style D fill:#e6f9ff,stroke:#17a2b8,stroke-width:2px;
-    style E fill:#e6e6ff,stroke:#6610f2,stroke-width:2px;
-
-    linkStyle 0 stroke:#007bff,stroke-width:2px;
-    linkStyle 1 stroke:#ff8c00,stroke-width:2px;
-    linkStyle 2 stroke:#28a745,stroke-width:2px;
-    linkStyle 3 stroke:#17a2b8,stroke-width:2px;
-```
-:::
+-   Els materials són *Open Source*.
+-   Qualsevol estudiant pot detectar errors, millorar els materials o afegir continguts nous.
+-   S'avaluarà la quantitat i qualitat.
 :::
 
-## Normativa del curs (I) - *Gestió del curs* {.smaller}
+::: {.column width="60%"}
+![](../figs/slides/01-foundations-of-systems-administration/bonus2.png)
+:::
+:::::
 
--   Es demana que els estudiants arribin puntuals a les sessions. L'entrada tardana pot interrompre la dinàmica de la classe i el treball dels companys.
--   Les sessions de tutoria es realitzaran de manera *presencial o virtual*, segons les necessitats dels estudiants. És important que els estudiants sol·licitin cita prèvia per a les tutories utilitzant el correu electrònic [jordi.mateo\@udl.cat](mailto:jordi.mateo@udl.cat){.email} indicant el motiu de la consulta i la disponibilitat horària i afegint l'assumpte **\[AMSA\]: Sol·licitud de Tutoria**.
+::: notes
+Un altre bonus que oferim és la possibilitat de contribuir als materials de l'assignatura seguint la metodologia de *Open Source*. Això significa que qualsevol estudiant pot detectar errors, suggerir millores o afegir continguts nous als materials proporcionats. Per participar, els estudiants poden fer un *fork* del repositori de l'assignatura, treballar en una branca separada i després obrir una *pull request* amb les seves propostes de canvi. La quantitat i qualitat de les contribucions seran avaluades, oferint així una oportunitat per als estudiants de participar activament en la millora dels recursos educatius.
+:::
+
+# Normativa del curs
+
+## Gestió del curs
+
+-   Es demana que els estudiants **arribin puntuals** a les sessions. L'entrada tardana pot interrompre la dinàmica de la classe i el treball dels companys.
 -   Es demana que els estudiants respectin les normes de convivència i respecte mutu durant les sessions de classe. Això inclou evitar interrupcions innecessàries, escoltar activament als companys i al professor, i mantenir un ambient de treball positiu i constructiu.
 
-## Normativa del curs (II) - *Grups* {.smaller}
+## Comunicació amb el professorat
 
--   Cada estudiant és responsable de la seva pròpia feina i de com gestiona el seu temps. L'assistència a classe no és obligatòria, però és altament recomanable per garantir el seguiment adequat de l'assignatura.
--   Durant les sessions de laboratori, es fomenta el treball en grup, sempre de manera ordenada i respectuosa envers els companys.
+-   Intenteu comunicar-vos a través del correu electrònic i no per l'eina del campus virtual per assegurar una resposta més ràpida.
+-   Les sessions de tutoria es realitzaran de manera *presencial o virtual*, segons les necessitats dels estudiants. És important que els estudiants sol·licitin cita prèvia per a les tutories utilitzant el correu electrònic [jordi.mateo\@udl.cat](mailto:jordi.mateo@udl.cat){.email} indicant el motiu de la consulta i la disponibilitat horària i afegint l'assumpte **\[AMSA\]: Sol·licitud de Tutoria**.
+
+## Treball individual
+
+-   Cada estudiant és responsable de la seva pròpia feina i de com gestiona el seu temps.
+-   L'assistència a classe no és obligatòria.
 -   Cada alumne ha de presentar evidències pròpies del treball realitzat, encara que es col·labori en grup.
 
-## Normativa del curs (III) - *Ús de la Intel·ligència Artificial Generativa* {.smaller}
+## Ús de la IAG {.smaller}
 
--   Pots utilitzar eines d'IAG per generar idees, entendre conceptes complexos o esbossar l'estructura inicial del teu codi o projecte. No obstant això, la implementació i la versió final han de ser sempre de la teva autoria.
--   Està estrictament prohibit presentar codi o solucions generades directament per una IAG com a treball propi (és a dir, mitjançant un simple copiar i enganxar).
--   Si incorpores material assistit per una IAG, has de declarar-ho explícitament. Això implica identificar clarament les seccions generades per IAG i proporcionar el prompt exacte utilitzat per crear-les.
+-   **Pots utilitzar eines d'IAG** per *generar idees, entendre conceptes complexos o esbossar l'estructura inicial del teu codi o projecte*. No obstant això, **la implementació i la versió final han de ser sempre de la teva autoria**.
+-   Està estrictament **prohibit** *presentar codi o solucions generades directament per una IAG com a treball propi (és a dir, mitjançant un simple copiar i enganxar)*.
+-   Si incorpores material assistit per una IAG, **has de declarar-ho explícitament**. Això implica identificar clarament les seccions generades per IAG i proporcionar el prompt exacte utilitzat per crear-les.
 
-::: {.callout-warning .fragment title="Normativa de Convivència de la UdL"}
-L'incompliment d'aquestes directrius es considerarà una violació de la integritat acadèmica i pot comportar una qualificació de zero en la tasca, a més de les conseqüències disciplinàries que estableix la Normativa de Convivència de la UdL per frau acadèmic.
+::: {.fragment style="text-align: center;"}
+L'incompliment d'aquestes directrius es considerarà una violació de la integritat acadèmica.
 :::
+
+-   Qualificació de zero en la tasca.
+-   Conseqüències disciplinàries que estableix la Normativa de Convivència de la UdL per frau acadèmic.
 
 ## Eines {.smaller}
 
@@ -434,16 +432,17 @@ L'incompliment d'aquestes directrius es considerarà una violació de la integri
     -   És obligatori utilitzar les distribucions indicades als laboratoris. Altres distribucions no rebran suport.
 -   Software de virtualització (VMWare i QEMU)
     -   Es recomana utilitzar VMWare i QEMU, però podeu optar per altres opcions de virtualització. Heu de ser capaços d’adaptar el material al vostre programari de virtualització.
+-   Compte a AWS 
+    
 
-## Materials i Recursos {.smaller}
+## Materials i Recursos
 
-1.  Apunts de l'assignatura i materials complementaris proporcionats pel professor al espai de l'assignatura.
-2.  Laboratoris i activitats pràctiques disponibles al repositori de l'assignatura.
-3.  Documentació oficial de les eines i tecnologies utilitzades.
-4.  Fòrums tècnics a la xarxa com Stack Overflow, Reddit, etc.
-5.  Llibres de referència en administració de sistemes:
-    -   **"UNIX and Linux System Administration Handbook"** de Evi Nemeth, Garth Snyder, Trent R. Hein, Ben Whaley.
-    -   **"The Practice of System and Network Administration"** de Thomas A. Limoncelli, Christina J. Hogan, Strata R. Chalup.
+- Apunts de l'assignatura i materials proporcionats pel professor.
+- Documentació oficial de les eines i tecnologies utilitzades.
+- Fòrums tècnics a la xarxa com *Stack Overflow, Reddit*, etc
+- Llibres de referència en administració de sistemes:
+  - **"UNIX and Linux System Administration Handbook"** de Evi Nemeth, Garth Snyder, Trent R. Hein, Ben Whaley.
+  - **"The Practice of System and Network Administration"** de Thomas A. Limoncelli, Christina J. Hogan, Strata R. Chalup.
 
 # La feina de l'administrador de sistemes {.smaller}
 
@@ -639,24 +638,25 @@ Un dels conceptes més importants en l'administració de sistemes és l'arquitec
 Per exemple, quan un usuari accedeix a una pàgina web, el seu navegador actua com a client i sol·licita la pàgina al servidor web. El servidor de DNS consulta la URL i retorna l'adreça IP del servidor web. El navegador envia una petició HTTP o HTTPS al servidor web, que respon amb els fitxers necessaris per mostrar la pàgina al navegador. Aquest procés implica la comunicació entre el client i el servidor per proporcionar la informació sol·licitada a l'usuari.
 :::
 
-## Característiques *Client-Servidor* {.smaller}
+## Característiques *Client-Servidor* 
 
 ::::: columns
 ::: {.column width="45%"}
 ### Avantatges
 
-> -   Sistema centralitzat \blueArrow Totes les dades en un lloc.
-> -   Polítiques de recuperació de dades.
-> -   Separació de la lògica.
+-   Sistema centralitzat \blueArrow Totes les dades en un lloc.
+-   Polítiques de recuperació de dades.
+-   Separació de la lògica.
 :::
-
+::: {.column width="10%"}
+:::
 ::: {.column width="45%"}
 ### Inconvenients
 
-> -   Atacs de denegació de serveis.
-> -   Man-in-the-middle.
-> -   Phishing.
-> -   Spoofing.
+-   Atacs de denegació de serveis.
+-   Man-in-the-middle.
+-   Phishing.
+-   Spoofing.
 :::
 :::::
 
@@ -668,7 +668,7 @@ Els principals inconvenients d'aquesta arquitectura són els possibles atacs de 
 A la figura s'observa com múltiples clients es comuniquen amb un servidor central per obtenir informació o serveis. I com multiples servidors poden comunicar-se amb altres servidors per obtenir informació o serveis. També 1 client pot comunicar-se amb múltiples servidors. Per exemple, un client pot accedir a un servidor web per obtenir informació i a un servidor de correu per enviar correus electrònics. El servidor web pot comunicar-se amb el servidor de correu per enviar notificacions als usuaris.
 :::
 
-## Servidors més comuns {.smaller}
+## Servidors més comuns 
 
 ::::: columns
 ::: {.column width="45%"}
@@ -1063,48 +1063,9 @@ Ansible és una eina d'automatització que ens permet gestionar la configuració
 
 Lliurament de **recursos** sota demanda, incloent servidors, emmagatzematge, bases de dades, programari, analítica, i més, a través d'internet amb un model de *pagament per ús*.
 
-```{mermaid}
-classDiagram
-    direction LR
-    class OnPremise {
-        On-Premise (Cuinar a Casa)
-        Gestió total
-        ✅ Forn, Gas/Electricitat
-        ✅ Taula, Plats, Begudes
-        ✅ Massa, Salsa, Ingredients
-    }
-    class IaaS {
-        IaaS(Compra-la i Enforna-la)
-        El proveïdor et dona la infraestructura
-
-        ❌ Forn, Gas/Electricitat
-        ✅ Taula, Plats, Begudes
-        ✅ Massa, Salsa, Ingredients
-    }
-    class PaaS {
-        PaaS(Pizza a Domicili)
-        Et porten la plataforma llesta per usar
-        ❌ Forn, Gas/Electricitat
-        ✅ Taula, Plats, Begudes
-        ❌ Massa, Salsa, Ingredients
-    }
-    class SaaS {
-        SaaS(Menjar en un Restaurant)
-        Un servei complet, tu només consumeixes
-        ❌ Forn, Gas/Electricitat
-        ❌ Taula, Plats, Begudes
-        ❌ Massa, Salsa, Ingredients
-    }
-
-    OnPremise --|> IaaS: 
-    IaaS --|> PaaS: 
-    PaaS --|> SaaS: 
-    
-    style OnPremise fill:#d4edda,stroke:#28a745,stroke-width:2px;
-    style IaaS fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
-    style PaaS fill:#cfe2ff,stroke:#0d6efd,stroke-width:2px;
-    style SaaS fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
-```
+::: {.center-container}
+![Pizza as a service](../figs/slides/01-foundations-of-systems-administration/pizza_as_service.png)
+:::
 
 ::: notes
 El cloud computing es refereix al lliurament sota demanda de serveis informàtics, incloent servidors, emmagatzematge, bases de dades, programari, analítica, i molt més, a través d'internet amb un model de pagament per ús.

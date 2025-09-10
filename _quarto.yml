@@ -37,10 +37,7 @@ website:
         contents:
           - href: ./slides/01-foundations-of-systems-administration.qmd
             text: Unitat 01 · Fonaments de l'Administració de Sistemes
-      - section: Lecture materials
-      - section: Laboratories
-      - section: Projects
-      - section: Activities
+      - section: Activitats
   
 format:
   html:
