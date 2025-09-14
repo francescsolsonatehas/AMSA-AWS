@@ -46,6 +46,15 @@ website:
               - href: ./exercises/01-foundations-of-systems-administration/02-ex-week1.qmd
                 text: Activitat 2 · Emulació en mode d'usuari amb QEMU
 
+      - section: Lecture materials
+      - section: Laboratoris
+        contents:
+          - href: ./laboratories/01-aws-introduction.qmd
+            text: Laboratori 01 · Introducció a AWS
+          - href: ./laboratories/02-aws-wordpress.qmd
+            text: Laboratori 02 · Desplegament d'una aplicació web amb AWS
+
+  
 format:
   html:
     toc: true
