@@ -1,6 +1,7 @@
 ---
 title: Unitat 1 · Laboratori de preparació i comandes bàsiques d'administració
 subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
+lang: ca
 ---
 
 ##  Preparant l'entorn de treball  remot {#preparant-lentorn-de-treball-remot}
@@ -17,11 +18,11 @@ Per preparar l'entorn de treball a AWS, seguirem els següents passos:
 
 Reviseu el vostre correu electrònic per veure si heu rebut un correu electrònic d'AWS Academy amb l'assumpte *Invitació al curs*. Si no l'heu rebut, feu-m'ho saber. El correu electrònic contindrà un botó amb el text **Get Started**. Feu clic en aquest botó per iniciar el procés de registre.
 
-![AWS Academy email](../figs/laboratories/01-intro/login0.png)
+![](../figs/laboratories/01-intro/login0.png)
 
 Després de fer clic al botó **Get Started**, sereu redirigits a la pàgina d'inici de sessió d'AWS Academy. Ara heu de fer clic al botó **Create my account** per iniciar el procés de registre, com es mostra a continuació:
 
-![AWS Academy login](../figs/laboratories/01-intro/login1.png)
+![](../figs/laboratories/01-intro/login1.png)
 
 Seleccioneu una contrasenya i completeu el procés de registre. Un cop hàgiu completat el procés de registre, sereu redirigits al tauler d'AWS Academy. Enhorabona! Heu creat amb èxit el vostre compte d'AWS Academy.
 
@@ -29,7 +30,7 @@ Seleccioneu una contrasenya i completeu el procés de registre. Un cop hàgiu co
 
 Ara que heu creat el vostre compte d'AWS Academy, podeu accedir al tauler d'AWS. El primer que heu de fer és fer clic a la pestanya **Courses** (1) a la part esquerra de la pantalla. Veureu una llista de cursos disponibles per a vosaltres. Feu clic al curs **AWS Academy Learner Lab** (2), com es mostra a la captura de pantalla següent:
 
-![AWS Academy Learner Lab](../figs/laboratories/01-intro/login2.png)
+![](../figs/laboratories/01-intro/login2.png)
 
 ::: {.callout-note}
 El curs **AWS Academy Learner Lab** és el curs que utilitzareu per completar els laboratoris pràctics, si recordeu a la primera sessió vam parlar del curs **AWS Academy Cloud Foundations**, que no és obligatori però és altament recomanat per a aquells que vulguin tenir una base més sòlida i obtenir el 5% de l'apartat (*Async Activities		AWS*). 
@@ -41,27 +42,23 @@ Tingueu en compte que només hi ha un curs a la captura de pantalla següent, no
 
 Ara hem de buscar la pestanya **Modules** (1) a la part esquerra de la pantalla. Feu clic en ella i veureu una llista de mòduls disponibles per a vosaltres. Feu clic en el mòdul **AWS Academy Learner Lab** (2), com es mostra a continuació:
 
-![AWS Academy Learner Lab](../figs/laboratories/01-intro/login3.png)
+![](../figs/laboratories/01-intro/login3.png)
 
 Ara se us demanarà que accepteu els termes i condicions del curs. Feu-ho desplaçant-vos fins al final de la pàgina i fent clic al botó **I Agree**.
 
-![AWS Academy terms and conditions](../figs/laboratories/01-intro/login4.png)
+![](../figs/laboratories/01-intro/login4.png)
 
 Després d'acceptar els termes i condicions, ara només heu de fer clic al botó **Start Lab**.
 
-![AWS Academy terms and conditions](../figs/laboratories/01-intro/login5.png)
-
-::: {.callout-warning}
-He provat amb Firefox i Google Chrome només. **Firefox no carrega el laboratori**. Si el vostre navegador no carrega el laboratori, us recomano provar amb un altre.
-:::
+![](../figs/laboratories/01-intro/login5.png)
 
 Ara doneu-li uns minuts per carregar. Veureu aquesta animació mentre el laboratori s'està preparant per a vosaltres:
 
-![AWS Academy terms and conditions](../figs/laboratories/01-intro/login6.png)
+![](../figs/laboratories/01-intro/login6.png)
 
 Finalment, quan el laboratori estigui llest, veureu que el punt al costat de **AWS** és verd. També veureu un temporitzador que compta enrere des de 4 hores. Aquest és el temps que teniu per treballar al laboratori. A l'esquerra del temporitzador veureu com va el vostre pressupost. Teniu un pressupost de 50 dòlars per gastar en serveis d'AWS. Feu clic a **AWS** per accedir al tauler d'AWS, com es mostra a continuació:
 
-![AWS Academy terms and conditions](../figs/laboratories/01-intro/login7.png)
+![](../figs/laboratories/01-intro/login7.png)
 
 
 ::: {.callout-important title="Consideracions sobre els laboratoris"}
@@ -74,13 +71,19 @@ Per tant, si comences un laboratori i el deixes a mig fer, podràs reprendre'l e
 
 Genial! Ara heu accedit al tauler d'AWS. Veureu una pantalla similar a la següent:
 
-![AWS Dashboard](../figs/laboratories/01-intro/login8.png)
+![](../figs/laboratories/01-intro/login8.png)
 
 ### Pas 3: Creació d'un parell de claus SSH {#pas-3-importació-de-la-clau-pública-a-aws}
 
-Més endavant en aquest laboratori crearem una instància EC2, per treballar amb aquest ordinador remot necessitarem connectar-nos-hi mitjançant SSH. Per fer-ho, necessitarem un parell de claus SSH.
+La clau SSH és un mecanisme de seguretat que permet l'autenticació segura entre dos sistemes. El servidor d'Amazon EC2 té la clau pública i el client (el vostre ordinador local) té la clau privada. Quan el client es connecta al servidor, el servidor comprova si la clau pública del client coincideix amb la clau privada del servidor. Si les claus coincideixen, el client es connecta al servidor. Per tant, la clau privada no s'ha de compartir amb ningú. Mentre que la clau pública es pot compartir amb qualsevol i la podeu fer servir en múltiples servidors. A dia d'avui, no hi ha cap mecanisme per obtenir la clau privada a partir de la clau pública.
 
-Anem a fer-ho utilitzant un terminal al nostre ordinador local. Recordeu que un terminal és un programa que us permet interactuar amb el vostre ordinador mitjançant ordres de text. Si això us sona confús, us recomano llegir [aquest post](https://medium.com/rewrite-tech/getting-friendly-with-the-terminal-a-super-friendly-beginners-guide-7ff0cd6425cd). Per als usuaris de Windows, també podeu llegir [aquest post](https://learn.microsoft.com/en-us/windows/terminal/) específic per al Windows Terminal. Els usuaris de MacOS ja haurien de tenir un terminal instal·lat al seu ordinador. I també hi ha [aquest vídeo genial](https://www.youtube.com/watch?v=rIp4n3V0_NU) que està orientat a una comprensió general del terminal adaptada per a científics de dades.
+Per crear un parell de claus SSH, utilitzarem la comanda `ssh-keygen`. Aquesta comanda està disponible a la majoria dels sistemes operatius, inclosos Linux, MacOS i Windows (a través de PowerShell o Windows Subsystem for Linux - WSL). Si utilitzeu Windows i no teniu accés a `ssh-keygen`, podeu utilitzar eines com PuTTYgen per generar les claus SSH.
+
+Aquesta comanda té diversos paràmetres que permeten personalitzar la clau SSH. Els paràmetres més comuns són:
+
+* `-t`: Especifica el tipus de xifratge de la clau. Els tipus més comuns són rsa, dsa, ecdsa i ed25519.
+* `-f`: Especifica el nom del fitxer on es guardarà la clau.
+* `-b`: Especifica la longitud de la clau en bits.
 
 ::: {.callout-note}
 És molt important entendre quan estem treballant al nostre ordinador local i quan estem treballant a la màquina remota. El primer pas sempre serà obrir un terminal al nostre propi ordinador, però un cop ens connectem a la màquina remota mitjançant l'ordre SSH, encara que sembli que res no ha canviat, el terminal ara està **connectat a la màquina remota**. Això vol dir que a partir d'ara les ordres que escrivim s'executaran a la màquina remota, no al nostre ordinador local. Si no esteu segurs si esteu treballant al vostre ordinador local o a la màquina remota, només heu d'escriure `pwd` i veure quin és el resultat. Si és el vostre ordinador local, veureu la ruta al directori en què esteu al vostre ordinador local, si és la màquina remota, veureu la ruta al directori en què esteu a la màquina remota. `pwd` significa `print working directory`.
@@ -92,12 +95,9 @@ El primer pas per crear el parell de claus SSH serà assegurar-nos que el direct
 mkdir .ssh
 ```
 
-L'ordre pot generar un error si el directori ja existeix, això és normal, només vol dir que el directori ja estava allà. Per acostumar-nos al terminal, utilitzarem l'ordre `ls` per llistar els continguts del directori. Escriviu la següent ordre:
-```bash
-ls .ssh
-```
-
-No hauríeu de veure cap sortida de l'ordre, això és perquè el directori està buit. Pot ser que ja tingueu claus SSH creades, així que en aquest cas l'ordre `ls .ssh` mostrarà algunes línies llistant els fitxers a la carpeta `.ssh`.
+::: {.callout-warning}
+Si el directori `.ssh` ja existeix, obtindreu un error indicant que el directori ja existeix. Això és normal, només vol dir que el directori ja estava allà.
+:::
 
 Ara crearem el parell de claus SSH. Escriviu la següent ordre:
 
@@ -132,7 +132,7 @@ Aquí, `ssh-keygen` és l'ordre per generar el parell de claus, `-t rsa` especif
 
 
 :::{.callout-tip title="Entendre les claus SSH - Veure video"}
-Es clau entendre com funcionen les claus públiques i privades i com s'utilitzen per establir una connexió SSH, **heu de veure [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**. Tingueu en compte que suggereixen utilitzar `putty` per connectar-vos a la màquina remota quan esteu en un ordinador Windows, mentre que jo suggereixo utilitzar el terminal, com vaig dir a classe, això és una elecció personal però faré els laboratoris utilitzant el terminal així que si voleu seguir-me us recomano que feu el mateix.
+Es clau entendre com funcionen les claus públiques i privades i com s'utilitzen per establir una connexió SSH, **heu de veure [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
 :::
 
 Una altra vegada, podem comprovar el contingut del directori `.ssh` escrivint la següent ordre:
@@ -184,7 +184,7 @@ Recordeu que com s'ha explicat a la nota anterior, potser no veureu la carpeta `
 
 Ara hauríeu de veure el parell de claus que acabeu d'importar a la llista de parells de claus. Probablement hi haurà un altre parell de claus allà, això està bé, podeu ignorar-lo. Perfecte! Ara heu importat la clau pública a AWS. A continuació, crearem una instància EC2 i la configurarem per utilitzar el parell de claus que acabem d'importar.
 
-## Pas 5: Creació d'una instància EC2 {#pas-5-creacio-duna-instancia-ec2}
+### Pas 5: Creació d'una instància EC2 {#pas-5-creacio-duna-instancia-ec2}
 
 El primer pas serà anar al tauler d'EC2. Podeu fer-ho escrivint `EC2` a la barra de cerca i fent clic al servei `EC2`, com vam fer al principi del [Pas 3](#pas-3-importació-de-la-clau-pública-a-aws):
 
@@ -200,7 +200,7 @@ Deixeu-ho tot com està excepte l'opció `Key pair (login)` (Parell de claus (in
 
 Ara tenim una instància EC2 en execució amb la nostra clau pública importada. Això significa que tenim una màquina remota a AWS a la qual podem connectar-nos des del nostre ordinador local mitjançant SSH. Vegem com fer-ho.
 
-## Pas 6: Connexió a la instància EC2 {#pas-6-connexio-a-la-instancia-ec2}
+### Pas 6: Connexió a la instància EC2 {#pas-6-connexio-a-la-instancia-ec2}
 
 Abans de connectar-nos a la màquina remota, vull que proveu alguns ordres al vostre ordinador local que després repetirem un cop estiguem connectats a la màquina remota. Una de les ordres és `pwd`, que significa `print working directory`, com ja s'ha comentat anteriorment. Aquesta ordre us mostrarà la ruta al directori en què esteu actualment. L'altra ordre és `whoami`, que us mostrarà el nom d'usuari amb el qual heu iniciat sessió. Proveu aquestes ordres al vostre ordinador local i recordeu-ne la sortida. Les repetirem un cop estiguem connectats a la màquina remota.
 
@@ -258,7 +258,7 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 [ec2-user@ip-172-31-86-82 ~]$
 ```
 
-::: {.callout-tip title="Exercici"}
+::: {.callout-important title="Exercici"}
 Investiga quin és el significat i la importànica del missatge que acceptes quan et connectes per primera vegada a la màquina remota. Per què és important acceptar aquest missatge? Què significa? Quines implicacions té?
 :::
 
@@ -277,7 +277,7 @@ Aquesta vegada la sortida hauria de ser la mateixa que la meva. Observeu que el 
 :::
 
 
-::: {.callout-tip title="Exercici"}
+::: {.callout-important title="Exercici"}
 
 Utilitza la comanada `lastlog` i investiga com administrador com podem trueure partit d'aquesta informació.
 
@@ -302,14 +302,7 @@ ssh -i .ssh/aws-keypair ec2-user@<public-ip>
   sudo yum update -y
   ```
 
-2. Comprova si tens instal·lat Git i, si no, instal·la'l:
-
-  ```bash
-  git --version # Comprova si Git està instal·lat
-  sudo yum install git -y # Instal·la Git si no està instal·lat
-  ```
-
-3. Comprova si tens instal·lat Python i, si no, instal·la'l:
+2. Comprova si tens instal·lat Python i, si no, instal·la'l:
 
   ```bash
   python3 --version # Comprova si Python està instal·lat
@@ -329,7 +322,7 @@ ssh -i .ssh/aws-keypair ec2-user@<public-ip>
 python3 -c "print('Hello World from the virtual environment!')"
   ```
 
-::: {.callout-tip title="Exercici"}
+::: {.callout-important title="Exercici"}
 Ara utiltiza la comanda `exit` per sortir de la màquina remota. Un cop al teu ordinador local, torna a connectar-te a la màquina remota amb SSH i torna a executar la comanda `python3 -c "print('Hello World from the virtual environment!')"`. Quin és el resultat? Per què és diferent del que has obtingut abans? Com ho podem solucionar?
 :::
 
@@ -339,101 +332,147 @@ Ara utiltiza la comanda `exit` per sortir de la màquina remota. Un cop al teu o
   pip install pandas matplotlib psutil
   ```
 
-7. Descarrega el següent repositori de Git que conté un programa amb python per simular una càrrega de treball i generar un gràfic:
+7. Crea un directori per al projecte i entra-hi:
 
   ```bash
-  git clone xxxxx
-  ```
-
-8. Entra al directori del projecte:
-
-  ```bash
+  mkdir lab01-workload-simulation
   cd lab01-workload-simulation
   ```
 
-9. Comprova que el fitxer `simulate_workload.py` està al directori:
+8. Crea el fitxer del script de Python, utilitzant `vi` o `vim`:
 
   ```bash
-  ls -l simulate_workload.py
+  vi simulate_workload.py
+  ```
+  
+  ---
+  
+  ```python
+  #!/usr/bin/env python3
+  import sys
+  import time
+  import pandas as pd
+  import matplotlib.pyplot as plt
+
+  def main():
+      if len(sys.argv) != 2:
+          print("Ús: python3 simulate.py workload.csv")
+          sys.exit(1)
+
+      csv_file = sys.argv[1]
+      df = pd.read_csv(csv_file)
+
+      print("Simulació d'ús de CPU i memòria (amb gràfic)\n")
+
+      plt.ion()
+      fig, ax = plt.subplots()
+      cpu_vals, mem_vals, ts_vals = [], [], []
+
+      for i, row in df.iterrows():
+          ts = row['timestamp']
+          cpu = row['cpu_usage']
+          mem = row['memory_usage']
+
+          print(f"[{ts}] CPU: {cpu:.2f}%  |  MEM: {mem:.2f}%")
+
+          ts_vals.append(ts)
+          cpu_vals.append(cpu)
+          mem_vals.append(mem)
+
+          ax.clear()
+          ax.plot(ts_vals, cpu_vals, label="CPU (%)", color="tab:red", marker="o")
+          ax.plot(ts_vals, mem_vals, label="Memòria (%)", color="tab:blue", marker="x")
+          ax.set_ylim(0, 100)
+          ax.set_xlabel("Temps")
+          ax.set_ylabel("Ús (%)")
+          ax.set_title("Simulació de càrrega del sistema")
+          ax.legend()
+          plt.xticks(rotation=45)
+
+
+      print("\n--- Fi de la simulació ---")
+      plt.savefig("workload_analysis.png")
+
+  if __name__ == "__main__":
+      main()
   ```
 
-10. Si el fitxer existeix, pots executar-lo amb la següent ordre:
+9.  Si el fitxer existeix, pots executar-lo amb la següent ordre:
 
   ```bash
   python3 simulate_workload.py workload.csv
   ```
 
-Ens falta un fitxer de dades per executar el script. Aquest fitxer de dades hauria de contenir informació sobre l'ús de la CPU i la memòria en format CSV. Crearem aquest fitxer a la nostra màquina local i el pujarem a la instància EC2:
+En aquest punt, hauríeu de veure un error indicant que el fitxer `workload.csv` no existeix. Això és normal perquè encara no hem pujat el fitxer de dades a la instància EC2.
 
-Descarrega't aquest fitxer de dades [workload.csv](https://raw.githubusercontent.com/el-teu-nom-d-usuari/lab-workload-simulation/main/workload.csv) i desa'l a la carpeta on tens el teu repoitori de treball remot. Per fer-ho podem utilitzar la comanda `sftp` per transferir fitxers entre la màquina local i la màquina remota.
+### Pas 2: Transferència del fitxer de dades a la instància EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
 
-El primer serà obrir una terminal local a la carpeta descarregues o a la carpeta on hagi guardat el fitxer `workload.csv`, si feu `ls` haureu de veure el fitxer `workload.csv` a la llista de fitxers. Ara, per pujar el fitxer a la màquina remota, utilitzarem SFTP (SSH File Transfer Protocol). Això ens permetrà transferir fitxers de manera segura entre la nostra màquina local i la instància EC2.
+Per transferir el fitxer de dades `workload.csv` a la instància EC2, utilitzarem SFTP (SSH File Transfer Protocol). SFTP és un protocol segur per transferir fitxers entre un ordinador local i una màquina remota. Utilitzarem el mateix parell de claus SSH que vam crear anteriorment per autenticar-nos a la instància EC2.
 
-```bash
-# Connecta't a la instància EC2 amb SFTP
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:ruta/al/teu/repo
-```
-
-Un cop connectats, a la màquina remota al directori on vulguis pujar el fitxer, utilitza l'ordre `put` per pujar el fitxer `workload.csv`:
+- Descarrega't el fitxer de dades [`workload.csv`](lab01/workload.csv) al teu ordinador local.
+- Utilitza SFTP per pujar el fitxer de dades a la instància EC2:
 
 ```bash
+# Substitueix <public-ip> per la IP pública de la teva instància EC2
+sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
+# Baixa el fitxer workload.csv del directori remot a la màquina local
 put workload.csv
+# Tanca la sessió SFTP
+exit
 ```
 
-Després de pujar el fitxer, podeu sortir de la sessió SFTP amb l'ordre `exit`.
-
-## Pas 2: Execució del script i generació de la imatge {#pas-2-execucio-del-script-i-generacio-de-la-imatge}
-
-Ara que tenim el fitxer de dades a la instància EC2, podem executar el script de Python per simular la càrrega de treball i generar un gràfic. Tornarem a connectar-nos a la instància EC2 mitjançant SSH i executarem el script:
+- Torna a connectar-te a la instància EC2 mitjançant SSH, i executa el programa de Python de nou:
 
 ```bash
-# Ens situem al directori del projecte
-cd lab-workload-simulation
-# Assegura't que el fitxer de dades és allà
-ls -La
-# Executa l'script de Python
 python3 simulate_workload.py workload.csv
 ```
 
-Un cop executat, el script hauria de generar un fitxer d'imatge (per exemple, `workload_analysis.png`) al mateix directori. Aquest fitxer contindrà un gràfic que mostra l'ús de la CPU i la memòria al llarg del temps. Podem comprovar que el fitxer d'imatge s'ha creat correctament amb l'ordre `ls`:
+Ara hauria de funcionar correctament i generar un fitxer d'imatge amb el gràfic de la càrrega de treball. Pots comprovar que el fitxer d'imatge s'ha creat correctament amb l'ordre `ls -l`. Un cop la imatge s'ha generat, pots utilitzar SFTP per baixar-la a la teva màquina local:
 
 ```bash
-ls -l workload_analysis.png
-workload_analysis.png
-```
-
-## Pas 3: Transferència de la imatge a la màquina local {#pas-3-transferencia-de-la-imatge-a-la-maquina-local}
-
-Ara que tenim el gràfic generat a la instància EC2, volem transferir-lo a la nostra màquina local per poder-lo visualitzar. Tornarem a utilitzar SFTP per baixar el fitxer d'imatge.
-
-```bash
-# Connecta't a la instància EC2 amb SFTP
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:ruta/al/teu/repo
-
-# Utilitza l'ordre `get` per baixar el fitxer d'imatge
+# Substitueix <public-ip> per la IP pública de la teva instància EC2
+sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
+# Baixa el fitxer workload_analysis.png del directori remot a la màquina local
 get workload_analysis.png
+# Tanca la sessió SFTP
+exit
 ```
 
-Un cop baixat, podeu sortir de la sessió SFTP amb l'ordre `exit`.
-
-::: {.callout-tip title="Exercici"}
-Investiga com podem baixar de cop tots els fitxers d'un directori remot a la màquina local utilitzant SFTP. Com ho faries si vols baixar tots els fitxers del directori `lab-workload-simulation` a la teva màquina local?
+::: {.callout-important title="Exercicis"}
+1. Com podem descarregar tots els fitxers d'un directori remot a la nostra màquina local utilitzant el protocol SFTP? Per exemple, imagina que necessites descarregar tot el contingut del directori remot anomenat lab-workload-simulation. Explica els passos o la comanda que utilitzaries per dur a terme aquesta tasca de manera eficient.
+2. Com podem descarregar un fitxer específic des d'una URL directament a un servidor remot? Per a fer-ho més pràctic, prepara un script que, donada una URL, descarregui un fitxer directament al servidor remot sense passar-lo per la màquina local. Fes el test amb el fitxer `workload.csv` que hem utilitzat en aquest laboratori.
 :::
 
 
-## Tasques bàsqiques d'administració {#tasques-basiques-dadministracio}
+## Eines bàsqiques d'administració {#tasques-basiques-dadministracio}
 
-En aquest apartat, explorarem alguns problemes simples d'administració que podem trobar en un servidor i veure'm el seu impacte. 
+En aquest apartat, explorarem algunes tasques bàsiques d'administració que podem realitzar en un servidor Linux. Aquestes tasques inclouen la gestió de l'espai en disc.
+
+### Gestió de l'espai en disc {#gestio-de-lespai-en-disc}
 
 Amb la comanda `df -h` podem veure l'espai en disc disponible i utilitzat a les particions del sistema. Aquesta comanda ens mostrarà informació sobre l'espai en disc de cada partició, incloent-hi la mida total, l'espai utilitzat, l'espai disponible i el punt de muntatge. En aquest curs estudiarem el sistema de fitxers en profunditat, però ara només introduirem la comanda i veurem el seu resultat.
+
+```bash
+[ec2-user@ip-172-31-30-17 ~]$ df -h
+Filesystem        Size  Used Avail Use% Mounted on
+devtmpfs          4.0M     0  4.0M   0% /dev
+tmpfs             453M     0  453M   0% /dev/shm
+tmpfs             181M  424K  181M   1% /run
+/dev/nvme0n1p1    8.0G  2.0G  6.1G  25% /
+tmpfs             453M     0  453M   0% /tmp
+/dev/nvme0n1p128   10M  1.3M  8.7M  13% /boot/efi
+tmpfs              91M     0   91M   0% /run/user/1000
+```
+
+En aquest cas, podem veure que la partició `/dev/nvme0n1p1` té una mida total de 8.0 GB, amb 2.0 GB utilitzats i 6.1 GB disponibles. Això significa que el 25% de l'espai en disc està utilitzat. El seu punt de muntatge és `/`, que és el directori arrel del sistema de fitxers. La resta de particions les podem ignorar per ara i les veurem en detall més endavant.
 
 A més, també podem utilitzar la comanda `du` per veure l'espai en disc utilitzat per un directori específic. Per exemple, si volem veure l'espai en disc utilitzat pel directori `/home/ec2-user`, podem utilitzar la comanda següent:
 
 ```bash
-du -sh /home/ec2-user
+[ec2-user@ip-172-31-30-17 ~]$ du -sh /home/ec2-user
+301M    /home/ec2-user
 ```
-
-Aquesta comanda ens mostrarà l'espai en disc utilitzat pel directori `/home/ec2-user` i tots els seus subdirectoris. L'opció `-s` indica que volem un resum de l'espai utilitzat, i l'opció `-h` mostra la sortida en un format llegible per humans (per exemple, en KB, MB, GB).
+Aquesta comanda ens mostrarà l'espai en disc utilitzat pel directori `/home/ec2-user` i tots els seus subdirectoris. L'opció `-s` indica que volem un resum de l'espai utilitzat, i l'opció `-h` mostra la sortida en un format llegible per humans (per exemple, en KB, MB, GB). En aquest cas, podem veure que el directori `/home/ec2-user` utilitza 301 MB d'espai en disc.
 
 Podem crear un fitxer de prova per veure com afecta l'espai en disc. Per exemple, podem crear un fitxer de text gran amb la comanda `dd`:
 
@@ -441,7 +480,12 @@ Podem crear un fitxer de prova per veure com afecta l'espai en disc. Per exemple
 dd if=/dev/zero of=largefile.txt bs=1M count=100
 ```
 
-Aquesta comanda crearà un fitxer anomenat `largefile.txt` de 100 MB ple de zeros. Ara podem tornar a executar la comanda `df -h` per veure com ha canviat l'espai en disc disponible.
+Aquesta comanda crearà un fitxer anomenat `largefile.txt` de 100 MB ple de zeros. Ara podem tornar a executar la comanda `du -sh /home/ec2-user` per veure com ha canviat l'espai en disc utilitzat pel directori `/home/ec2-user`:
+
+```bash
+[ec2-user@ip-172-31-30-17 ~]$ du -sh /home/ec2-user
+401M    /home/ec2-user
+```
 
 Per eliminar el fitxer que hem creat, podem utilitzar la comanda `rm`:
 
@@ -449,15 +493,23 @@ Per eliminar el fitxer que hem creat, podem utilitzar la comanda `rm`:
 rm largefile.txt
 ```
 
-Crea un fitxer el suficientment gran per omplir l'espai disponible al teu directori d'usuari. [@TODO: Explicar com fer-ho amb `fallocate` o `truncate` i revisar la mida de la màquina virtual]
+:::{.callout-important title="Exercici"}
+1. Completa aquest script perque ens permeti llegir un fitxer de text línia a línia, cada linia conté el nom i la mida en MB d'un fitxer que volem crear. El script ha de crear els fitxers amb la mida especificada al directori on s'executa el script. 
 
-@IDEA Fer un test per veure com no et deixa connectar-te a la màquina remota quan no hi ha prou espai disponible. Podem fer-ho a tmp i aixi amb el reboot podem veure com es buida el directori `/tmp` i podem tornar a connectar-nos.
+  ```bash
+  while read -r nom_fitxer mida_mb; do
+    
+  done < "$1"
+  ```
+2. Utiltiza la comanda `du`, `sort`, `head`, `tail` per obtenir el fitxer més gran i el més petit del directori on s'executa el script.
+3. Utilitza la comanda `find` per trobar tots els fitxers més grans de 10 MB al directori on s'executa el script.
+:::
 
+## Neteja final {#neteja-final}
 
-Després el hi farem executar sense explicar `for i in $(seq 1 1000000); do touch fitxer_$i; done` i fer que intentin despres crear un directori, investiga que passa i per què no es pot crear un directori nou.
-
+Un cop hàgiu acabat el laboratori, és important que tanqueu la instància EC2 per evitar costos innecessaris. Per fer-ho, torneu al tauler d'EC2 i seleccioneu la instància que heu creat. A la part superior de la pantalla, feu clic a `Instance state` i després a `Terminate instance`.
 
 ## Entrega del laboratori {#entrega-del-laboratori}
 
-
+Per entregar el laboratori, heu de pujar un pdf amb les respostes als exercicis proposats al campus virtual a la secció corresponent al laboratori 1. 
 

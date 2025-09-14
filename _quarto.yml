@@ -38,10 +38,12 @@ website:
           - href: ./slides/01-foundations-of-systems-administration.qmd
             text: Unitat 01 · Fonaments de l'Administració de Sistemes
       - section: Lecture materials
-      - section: Laboratories
+      - section: Laboratoris
         contents:
-          - href: ./laboratories/01-intro-lab.qmd
+          - href: ./laboratories/01-aws-introduction.qmd
             text: Laboratori 01 · Introducció a AWS
+          - href: ./laboratories/02-aws-wordpress.qmd
+            text: Laboratori 02 · Desplegament d'una aplicació web amb AWS
       - section: Projects
       - section: Activities
   
