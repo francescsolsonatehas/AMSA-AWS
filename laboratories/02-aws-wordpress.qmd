@@ -291,13 +291,16 @@ Un cop finalitzat, podeu accedir a l'adreça IP pública de la instància EC2 de
 
 ## Entrega del laboratori
 
-Heu de pujar al campus virtual un document amb les següents captures de pantalla:
+Heu de pujar al [Campus Virtual](https://cv.udl.cat/), un document amb les següents captures de pantalla:
   
 - Pantalla de la consola d'Amazon RDS amb la base de dades creada.
 - Pantalla de la consola d'EC2 amb la instància EC2 creada.
 - Pantalla del navegador web amb la pàgina d'inici de sessió de WordPress.
 - Pantalla del tauler d'administració de WordPress.
 - Pantalla del playbook d'Ansible executat correctament.
+
+A més, heu d'incloure el contingut dels següents fitxers:
+
 - Script d'Ansible modificat amb variables (si heu fet l'exercici).
 - Script en bash per instal·lar WordPress (si heu fet l'exercici).
 

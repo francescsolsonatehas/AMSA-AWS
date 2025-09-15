@@ -511,5 +511,5 @@ Un cop hàgiu acabat el laboratori, és important que tanqueu la instància EC2 
 
 ## Entrega del laboratori {#entrega-del-laboratori}
 
-Per entregar el laboratori, heu de pujar un pdf amb les respostes als exercicis proposats al campus virtual a la secció corresponent al laboratori 1. 
+Per a l'entrega d'aquest laboratori, heu de preparar un document PDF amb les respostes completes a tots els exercicis. Un cop finalitzat, cal que el pengeu al [Campus Virtual](https://cv.udl.cat/), a l'apartat designat per al Laboratori 1.
 

@@ -45,8 +45,6 @@ website:
                 text: Activitat 1 · Configuració d'entorn de virtualització
               - href: ./exercises/01-foundations-of-systems-administration/02-ex-week1.qmd
                 text: Activitat 2 · Emulació en mode d'usuari amb QEMU
-
-      - section: Lecture materials
       - section: Laboratoris
         contents:
           - href: ./laboratories/01-aws-introduction.qmd
