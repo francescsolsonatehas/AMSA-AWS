@@ -1,0 +1,49 @@
+---
+title: "Laboratori: Fonaments de l'Administració de Sistemes amb AWS"
+subtitle: "Unitat 1 · Administració i Manteniment de Sistemes i Aplicacions (AMSA)"
+author: "Jordi Mateo Fornés"
+logo: "/figs/corporative/institute.png"
+format: 
+  revealjs:
+    transition: fade
+    slide-number: true
+    incremental: true 
+    chalkboard: false
+    footer: "Unitat 1 · Administració i Manteniment de Sistemes i Aplicacions (AMSA) [🏠](/index.html)</a>"
+editor: visual
+
+execute:
+  freeze: auto
+  echo: false
+---
+
+## Laboratori 1: Fonaments de l'Administració de Sistemes amb AWS
+
+## Objectius del laboratori
+
+-   Accedir a la plataforma de computació en núvol AWS a travvés AWS Educate.
+-   Entendre els conceptes bàsic d'aministració remota a través de SSH.
+-   Ús d'autenticació amb claus SSH.
+-   Crear i gestionar màquines virtuals a AWS EC2.
+
+::: {.fragment style="text-align: center;"}
+[🧪 Laboratori 01: Laboratori de preparació i comandes bàsiques d'administració](/laboratories/01-aws-introduction.html#prepare)
+:::
+
+## Laboratori 2: Desplegament d'una aplicació web amb WordPress a AWS
+
+## Esquema de l'arquitectura
+
+![](/figs/laboratories/02-aws-wp/architecture.png)
+
+## Objectius del laboratori
+
+-   Conèixer els serveis bàsics d'AWS per desplegar aplicacions web.
+-   Desplegar una base de dades gestionada amb Amazon RDS.
+-   Desplegar una màquina virtual amb Amazon EC2.
+-   Desplegar una aplicació web amb WordPress.
+-   Ús d'Ansible per automatitzar el desplegament de l'aplicació
+
+::: {.fragment style="text-align: center;"}
+[🧪 Laboratori 02: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/02-aws-wordpress.html#prepare)
+:::

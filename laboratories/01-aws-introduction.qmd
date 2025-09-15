@@ -409,7 +409,7 @@ En aquest punt, hauríeu de veure un error indicant que el fitxer `workload.csv`
 
 Per transferir el fitxer de dades `workload.csv` a la instància EC2, utilitzarem SFTP (SSH File Transfer Protocol). SFTP és un protocol segur per transferir fitxers entre un ordinador local i una màquina remota. Utilitzarem el mateix parell de claus SSH que vam crear anteriorment per autenticar-nos a la instància EC2.
 
-- Descarrega't el fitxer de dades [`workload.csv`](lab01/workload.csv) al teu ordinador local.
+- Descarrega't el fitxer de dades [`workload.csv`](01-foundations/sources/workload.csv) al teu ordinador local.
 - Utilitza SFTP per pujar el fitxer de dades a la instància EC2:
 
 ```bash

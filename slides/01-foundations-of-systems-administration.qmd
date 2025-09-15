@@ -46,7 +46,7 @@ Aquesta vinyeta, amb un toc d'humor, il·lustra la dedicació d'un administrador
 
 ## Què és l'Administració de Sistemes?
 
-::: {.center-container}
+::: center-container
 ![](../figs/slides/01-foundations-of-systems-administration/enquesta_inicial.png){width="500px"}
 :::
 
@@ -239,7 +239,7 @@ Aquesta assignatura té com a objectiu introduir-vos al món de l'administració
 ## Planificació *Part I* {.smaller}
 
 | **Set.** | **Dilluns** | **Dimecres** |
-|:---:|:--------------------------:|:--------------------------:|
+|:--:|:--:|:--:|
 | 1a | \- | U1: Fonaments de l'Administració |
 | 2a | U2: Procés d'Arrencada i Inicialització del Sistema | U2: Procés d'Arrencada i Inicialització |
 | 3a | U2: Procés d'Arrencada i Inicialització del Sistema | U2: Procés d'Arrencada i Inicialització |
@@ -269,13 +269,13 @@ Aquesta assignatura té com a objectiu introduir-vos al món de l'administració
 
 ## Criteris d'Avaluació
 
-| **Activitat** | **Pes** | **Recuperable?** | **Nota Mínima?** | **Grup?** |
-|:---|:---|:---|:---|:---|
-| Examen 1 | 35% | Sí | No | No |
-| Examen 2 | 35% | Sí | No | No |
-| Laboratori | 20% | No | Sí | Sí |
-| Activitats Async | 5% | No | No | No |
-| Seguiment i participació | 5% | No | No | No |
+| **Activitat**            | **Pes** | **Recuperable?** | **Nota Mínima?** | **Grup?** |
+|:-------------|:-------------|:-------------|:-------------|:-------------|
+| Examen 1                 | 35%     | Sí               | No               | No        |
+| Examen 2                 | 35%     | Sí               | No               | No        |
+| Laboratori               | 20%     | No               | Sí               | Sí        |
+| Activitats Async         | 5%      | No               | No               | No        |
+| Seguiment i participació | 5%      | No               | No               | No        |
 
 ## Exàmens
 
@@ -315,7 +315,7 @@ Aquestes activitats asíncrones es realitzaran a la plataforma AWS al llarg del 
 
 ::: {.callout-warning title="Rúbrica d'Avaluació "}
 | Punts | Participació Presencial | Participació en Fòrums | Activitats Sessió |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **10** | Contribucions excepcionals,enriqueix la discussió. | Líder en discussions, promou debat. | Qualitat excepcional, supera expectatives. |
 | **9** | Comentaris rellevants, mostra comprensió, escolta activament. | Respostes significatives. | Alta qualitat, treball precís. |
 | **8** | Contribucions regulars, interactua amb companys. | Publicacions rellevants, contribueix constructivament. | Compleix tots requisits amb precisió. |
@@ -429,17 +429,16 @@ L'incompliment d'aquestes directrius es considerarà una violació de la integri
     -   És obligatori utilitzar les distribucions indicades als laboratoris. Altres distribucions no rebran suport.
 -   Software de virtualització (VMWare i QEMU)
     -   Es recomana utilitzar VMWare i QEMU, però podeu optar per altres opcions de virtualització. Heu de ser capaços d’adaptar el material al vostre programari de virtualització.
--   Compte a AWS 
-    
+-   Compte a AWS
 
 ## Materials i Recursos
 
-- Apunts de l'assignatura i materials proporcionats pel professor.
-- Documentació oficial de les eines i tecnologies utilitzades.
-- Fòrums tècnics a la xarxa com *Stack Overflow, Reddit*, etc
-- Llibres de referència en administració de sistemes:
-  - **"UNIX and Linux System Administration Handbook"** de Evi Nemeth, Garth Snyder, Trent R. Hein, Ben Whaley.
-  - **"The Practice of System and Network Administration"** de Thomas A. Limoncelli, Christina J. Hogan, Strata R. Chalup.
+-   Apunts de l'assignatura i materials proporcionats pel professor.
+-   Documentació oficial de les eines i tecnologies utilitzades.
+-   Fòrums tècnics a la xarxa com *Stack Overflow, Reddit*, etc
+-   Llibres de referència en administració de sistemes:
+    -   **"UNIX and Linux System Administration Handbook"** de Evi Nemeth, Garth Snyder, Trent R. Hein, Ben Whaley.
+    -   **"The Practice of System and Network Administration"** de Thomas A. Limoncelli, Christina J. Hogan, Strata R. Chalup.
 
 # La feina de l'administrador de sistemes {.smaller}
 
@@ -635,7 +634,7 @@ Un dels conceptes més importants en l'administració de sistemes és l'arquitec
 Per exemple, quan un usuari accedeix a una pàgina web, el seu navegador actua com a client i sol·licita la pàgina al servidor web. El servidor de DNS consulta la URL i retorna l'adreça IP del servidor web. El navegador envia una petició HTTP o HTTPS al servidor web, que respon amb els fitxers necessaris per mostrar la pàgina al navegador. Aquest procés implica la comunicació entre el client i el servidor per proporcionar la informació sol·licitada a l'usuari.
 :::
 
-## Característiques *Client-Servidor* 
+## Característiques *Client-Servidor*
 
 :::::: columns
 ::: {.column width="45%"}
@@ -645,8 +644,10 @@ Per exemple, quan un usuari accedeix a una pàgina web, el seu navegador actua c
 -   Polítiques de recuperació de dades.
 -   Separació de la lògica.
 :::
+
 ::: {.column width="10%"}
 :::
+
 ::: {.column width="45%"}
 ### Inconvenients
 
@@ -665,7 +666,7 @@ Els principals inconvenients d'aquesta arquitectura són els possibles atacs de 
 A la figura s'observa com múltiples clients es comuniquen amb un servidor central per obtenir informació o serveis. I com multiples servidors poden comunicar-se amb altres servidors per obtenir informació o serveis. També 1 client pot comunicar-se amb múltiples servidors. Per exemple, un client pot accedir a un servidor web per obtenir informació i a un servidor de correu per enviar correus electrònics. El servidor web pot comunicar-se amb el servidor de correu per enviar notificacions als usuaris.
 :::
 
-## Servidors més comuns 
+## Servidors més comuns
 
 ::::: columns
 ::: {.column width="45%"}
@@ -1059,7 +1060,7 @@ Ansible és una eina d'automatització que ens permet gestionar la configuració
 
 Lliurament de **recursos** sota demanda, incloent servidors, emmagatzematge, bases de dades, programari, analítica, i més, a través d'internet amb un model de *pagament per ús*.
 
-::: {.center-container}
+::: center-container
 ![Pizza as a service](../figs/slides/01-foundations-of-systems-administration/pizza_as_service.png)
 :::
 
