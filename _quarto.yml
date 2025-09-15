@@ -49,7 +49,7 @@ website:
         contents:
           - section: Unitat 01 · Fonaments de l'Administració de Sistemes
             contents:
-              - href: ./laboratories/01-foundations/01-aws-introduction.qmd
+              - href: ./laboratories/01-introduction.qmd
                 text: Laboratori ·Fonaments de l'Administració de Sistemes amb AWS
               - href: ./laboratories/01-foundations/01-aws-introduction.qmd
                 text: Laboratori 01 · Introducció a AWS
