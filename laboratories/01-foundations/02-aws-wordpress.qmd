@@ -26,9 +26,9 @@ El servei de bases de dades relacional d'Amazon Web Services (RDS) és una opci�
 
     La resta de paràmetres els deixarem per defecte. Una vegada acabat, fem clic a **Create database**.
 
-    ::: {.callout-important title="Contrassenya"}
-    Feu clic a **View Connection Details** per veure la password generada. Si no ho feu, haureu d'anar a modificar, regenerar la password i aplicar els canvis.
-    :::
+::: {.callout-important title="Contrassenya"}
+Feu clic a **View Connection Details** per veure la password generada. Si no ho feu, haureu d'anar a modificar, regenerar la password i aplicar els canvis.
+:::
 
 3. Espereu uns minuts fins que la columna **Status** estigui en verd i posi **Available**. 
 4. Un cop la base de dades estigui disponible, fem clic a la base de dades i anem a la pestanya **Connectivity & security** per veure els detalls de connexió.
@@ -208,10 +208,13 @@ Un cop tingueu accés SSH a la màquina `webserver` des de la màquina `ansible`
   <IP_INSTANCIA_EC2> ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/my-key-pair
   ```
 
-A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la màquina `webserver`. Un playbook és un fitxer YAML que defineix les tasques que Ansible ha d’executar a les màquines remotes.
+  On <IP_INSTANCIA_EC2> és l'adreça IP pública de la vostra instància EC2 on voleu instal·lar WordPress i la ruta `~/.ssh/my-key-pair` és la ruta a la vostra clau privada SSH que us permet accedir a la instància EC2.
+
+A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la màquina `webserver`. Un playbook és un fitxer YAML que defineix les tasques que Ansible ha d’executar a les màquines remotes. Podeu descargar el fitxer [`wordpress.yml`](./sources/wordpress.yml) o bé crear-lo amb el contingut següent (substituïu `<RDS_ENDPOINT>` per l’endpoint de la vostra base de dades RDS):
+
 
 ```yaml
-    ---
+  ---
 - hosts: webserver
   become: yes
   tasks:
@@ -294,7 +297,7 @@ Un cop finalitzat, podeu accedir a l'adreça IP pública de la instància EC2 de
 Heu de pujar al [Campus Virtual](https://cv.udl.cat/), un document amb les següents captures de pantalla:
   
 - Pantalla de la consola d'Amazon RDS amb la base de dades creada.
-- Pantalla de la consola d'EC2 amb la instància EC2 creada.
+- Pantalla de la consola d'EC2 amb la instància EC2 creada (eg. podeu fer servir `history` per veure les ordres que heu executat).
 - Pantalla del navegador web amb la pàgina d'inici de sessió de WordPress.
 - Pantalla del tauler d'administració de WordPress.
 - Pantalla del playbook d'Ansible executat correctament.
@@ -303,6 +306,10 @@ A més, heu d'incloure el contingut dels següents fitxers:
 
 - Script d'Ansible modificat amb variables (si heu fet l'exercici).
 - Script en bash per instal·lar WordPress (si heu fet l'exercici).
+
+## Neteja els recursos creats
+
+Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
 
 
 

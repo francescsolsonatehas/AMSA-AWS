@@ -27,7 +27,7 @@ execute:
 -   Crear i gestionar màquines virtuals a AWS EC2.
 
 ::: {.fragment style="text-align: center;"}
-[🧪 Laboratori 01: Laboratori de preparació i comandes bàsiques d'administració](/laboratories/01-aws-introduction.html#prepare)
+[🧪 Laboratori 01: Laboratori de preparació i comandes bàsiques d'administració](/laboratories/01-foundations/01-aws-introduction.qmd)
 :::
 
 ## Laboratori 2: Desplegament d'una aplicació web amb WordPress a AWS
@@ -45,5 +45,5 @@ execute:
 -   Ús d'Ansible per automatitzar el desplegament de l'aplicació
 
 ::: {.fragment style="text-align: center;"}
-[🧪 Laboratori 02: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/02-aws-wordpress.html#prepare)
+[🧪 Laboratori 02: Desplegament d'una aplicació web amb WordPress a AWS](../laboratories/01-foundations/02-aws-wordpress.qmd)
 :::
