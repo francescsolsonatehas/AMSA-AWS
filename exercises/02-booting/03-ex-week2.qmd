@@ -1,0 +1,66 @@
+---
+title: Arrancada UEFI
+lang: ca
+---
+
+## Objectiu
+
+- Entendre com funciona la UEFI i la partició ESP.
+- Configurar una màquina virtual amb dual boot.
+- Practicar la gestió de l’ordre d’arrencada i la creació d’entrades UEFI.
+
+Al final, hauries de poder seleccionar entre AlmaLinux i Debian a l’inici de la màquina virtual.
+
+## Preparació de les Màquines Virtuals
+
+En primer lloc, heu de crear dues màquines virtuals amb UEFI com a firmware.
+
+| Nom           | OS            | Disc  | Firmware |
+|---------------|---------------|-------|----------|
+| VM1-AlmaLinux | AlmaLinux 9   | 20 GB | UEFI     |
+| VM2-Debian    | Debian 12     | 20 GB | UEFI     |
+
+::::{.callout-note title="Nota"}
+Assegureu-vos que ambdues màquines virtuals tinguin UEFI com a firmware. En el moment de fer les particions, heu de veure que es crea una partició ESP (EFI System Partition) automàticament. Si no és així, pot ser que la màquina virtual no estigui configurada correctament per utilitzar UEFI. No continuïs fins que no tinguis aquesta partició.
+:::
+
+## Migrar el disc de Debian a la màquina virtual d'AlmaLinux
+
+1. Apaga la màquina virtual de Debian si està en funcionament.
+2. Localitza el fitxer de disc virtual de la màquina virtual de Debian. Aquest fitxer al programa VMware sol tenir l'extensió `.vmdk`.
+3. A la configuració de la màquina virtual d'AlmaLinux, aneu a l'opció de disc dur i afegiu un nou disc dur, seleccionant el disc dur de la màquina virtual de Debian que heu localitzat en el pas anterior.
+4. Confirmar els parametres i aplica els canvis.
+
+### Test 
+
+Assegureu-vos que la màquina virtual ara té dos discs durs: un amb AlmaLinux i un altre amb Debian utilitzant la comanda `lsblk`, hauria de mostrar-vos alguna cosa com això:
+
+```bash
+[root@localhost ~]# lsblk
+NAME               MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sr0                 11:0    1  1.7G  0 rom
+nvme0n1            259:0    0   20G  0 disk
+├─nvme0n1p1        259:1    0  600M  0 part /boot/efi
+├─nvme0n1p2        259:2    0    1G  0 part /boot
+└─nvme0n1p3        259:3    0 18.4G  0 part
+├─almalinux-root 253:0    0 16.4G  0 lvm  /
+└─almalinux-swap 253:1    0    2G  0 lvm  [SWAP]
+nvme0n2            259:4    0   20G  0 disk
+├─nvme0n2p1        259:5    0  512M  0 part
+├─nvme0n2p2        259:6    0 18.5G  0 part
+└─nvme0n2p3        259:7    0  976M  0 part
+```
+
+On `nvme0n1` és el disc d'AlmaLinux i `nvme0n2` és el disc de Debian. Es posible que el nom del disc no sigui `nvme`, pot ser `sda`, `vda`, etc. Depèn del tipus de disc que tinguis.
+
+## Tasca
+
+Reinicia la màquina virtual d'AlmaLinux i entra a la UEFI (normalment prement `F2` o `Esc` durant l'arrencada). La teva tasca es configurar la UEFI per afegir una entrada d'arrencada per a Debian. Has de poder arrancar tant AlmaLinux com Debian des del menú d'arrencada de la UEFI.
+
+## Entrega
+
+Has de presentar un document amb els següents punts:
+
+- Els passos que has seguit per configurar la UEFI i afegir l'entrada d'arrencada per a Debian. 
+- Fes una captura de pantalla del menú d'arrencada de la UEFI mostrant les dues entrades (AlmaLinux i Debian) i puja-la a l'aula virtual juntament amb una breu descripció dels passos que has seguit per aconseguir-ho.
+

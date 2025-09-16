@@ -1,0 +1,265 @@
+---
+title: Booting amb MBR i BIOS
+lang: ca
+---
+
+## Objectiu
+- Entendre com funciona el procés d'arrencada amb BIOS i MBR.
+- Crear un bootloader senzill de primera i segona etapa.
+- Practicar l'ús de QEMU per emular una màquina amb BIOS.
+
+## Requisits previs
+
+- Una màquina virtual amb Debian i accés a la terminal.
+
+### Part 1: El Bootloader de Primera Etapa (MBR)
+
+L'objectiu d'aquesta part és crear un disc virtual amb un MBR que la BIOS pugui reconèixer i executar, mostrant un missatge de benvinguda.
+
+#### Creació de la imatge del disc
+
+Crearem un fitxer de *10 MiB* que servirà com a disc dur virtual. Utilitzarem la comanda `dd`:
+
+```bash
+dd if=/dev/zero of=disk.img bs=512 count=20480
+```
+
+Observeu que `bs=512` estableix la mida del bloc a 512 bytes, i `count=20480` indica que volem 20480 blocs, resultant en un fitxer de 10 MiB (512 bytes * 20480 blocs = 10 MiB). A més, aquest fitxer estarà inicialitzat amb zeros (`if=/dev/zero`) i es crearà amb el nom `disk.img`.
+
+:::{.callout-note title="Recordatori"}
+MBR significa *Master Boot Record* i ocupa els primers 512 bytes del disc.
+:::
+
+#### Bootloader de primera etapa
+
+El bootloader de primera etapa és un petit programa que s'executa quan la BIOS carrega el MBR. Aquest programa ha de ser molt petit, ja que només té 512 bytes per treballar. En aquest exercici, escriurem un bootloader senzill en llenguatge d'assemblador que mostrarà un missatge de benvinguda.
+
+Crea un fitxer anomenat `boot.asm` amb el següent contingut:
+
+```asm
+[org 0x7c00]      ; L'adreça on la BIOS carrega el nostre codi
+
+jmp short start   ; Salt a la rutina principal per evitar que la BIOS executi la taula de particions
+nop               ; 
+
+start:
+    ; Configurem els registres del segment
+    xor ax, ax      ; Posa AX a 0
+    mov ds, ax      ; Configurem DS (segment de dades) a 0
+    mov es, ax      ; Configurem ES (segment extra) a 0
+    mov ss, ax      ; Configurem SS (segment de pila) a 0
+    mov sp, 0x7c00  ; Configurem el punter de pila
+
+    ; Imprimir el missatge de benvinguda
+    mov si, msg     ; Carreguem l'adreça del missatge a SI
+.print_loop:
+    lodsb           ; Carreguem un byte des de [DS:SI] a AL, i incrementem SI
+    cmp al, 0       ; Comparem AL amb zero
+    je .done_print  ; Si AL és zero, hem arribat al final del missatge
+    mov ah, 0x0e    ; Funció BIOS per a l'escriptura en mode teletip
+    int 0x10        ; Crida a la interrupció de vídeo
+    jmp .print_loop
+.done_print:
+
+    ; Bucle infinit per aturar l'execució
+    cli             ; Deshabilitem les interrupcions
+.halt:
+    hlt             ; Aturem la CPU
+    jmp .halt       ; Saltem a nosaltres mateixos en cas de despertar-nos d'un HLT
+
+msg db "Hola, soc l'MBR. La primera etapa d'arrencada ha funcionat!", 0
+
+; Omplim la resta del sector amb zeros
+times 510 - ($-$$) db 0
+
+; La signatura MBR
+dw 0xaa55
+```
+
+La primera línia `[org 0x7c00]` indica a l’assemblador que el codi s’ha de considerar com si s’executés a l’adreça `0x7C00`, que és on la BIOS carrega el sector MBR a la memòria.
+
+Abans de l’execució del nostre codi, els registres de segment de la **CPU (DS, ES, SS)** poden contenir valors aleatoris. Per garantir que les adreces de memòria siguin interpretades correctament en mode real, els inicialitzem a zero amb les instruccions `mov ds, ax`, `mov es, ax` i `mov ss, ax`.
+
+La instrucció `mov sp, 0x7c00` estableix el punter de pila (SP) a la mateixa adreça on s’ha carregat el MBR, evitant que la pila sobrescrigui el codi. En bootloaders més complexos, això permetria utilitzar instruccions com `CALL`, `PUSH` i `POP` sense problemes.
+
+La rutina de bucle llegeix cada caràcter de la cadena de text i el mostra a la pantalla mitjançant la interrupció BIOS `0x10`, *funció teletip (AH=0x0E)*. Un cop s’ha imprès tot el missatge, s’utilitza la instrucció `HLT` dins d’un bucle infinit per aturar la CPU. Això evita que la CPU continuï executant dades no definides més enllà del sector MBR, cosa que podria provocar comportaments inesperats.
+
+#### Ensamblar i escriure el bootloader al disc
+
+Utilitzarem `nasm` per ensamblar el nostre codi i `dd` per escriure'l al disc virtual:
+
+```bash
+# Instal·lar nasm si no el tens
+su -c "apt install nasm -y"
+# Ensamblar el codi
+nasm -f bin -o boot.bin boot.asm
+````
+
+On `-f bin` indica que volem un fitxer binari pla, i `-o boot.bin` especifica el nom del fitxer de sortida.
+
+Ara, escrivim el bootloader al disc virtual:
+
+```bash
+dd if=boot.bin of=disk.img bs=512 count=1 conv=notrunc
+```
+
+On `conv=notrunc` assegura que no truncarem el fitxer de sortida, mantenint la resta del disc intacta.
+
+Per comprovar que el bootloader s'ha escrit correctament, podem utilitzar `hexdump`:
+
+```bash
+hexdump -C -n 512 disk.img | sed -n '1,16p'
+```
+
+on `-n 512` limita la sortida als primers 512 bytes (el sector MBR) i `sed -n '1,16p'` mostra només les primeres 16 línies de la sortida.
+
+També podem comprovar la signatura MBR (els últims dos bytes del sector) amb:
+
+```bash
+hexdump -C -s 510 -n 2 disk.img
+```
+
+Haurias de veure `55 aa`, el `00000200` indica l'offset.
+
+#### Executar la imatge del disc amb QEMU
+
+Finalment, podem executar la nostra imatge de disc amb QEMU per veure el nostre missatge de benvinguda:
+
+```bash
+# Instal·lar QEMU si no el tens
+su -c "apt install qemu-system-x86 -y"
+# Executar la imatge del disc
+qemu-system-x86_64 -drive file=disk.img,format=raw -nographic
+```
+
+:::{.callout-note title="Nota"}
+La nostra màquina virtual és mode text (`-nographic`), així que hauries de veure el missatge de benvinguda a la terminal. Si teniu una interfície gràfica, podeu ometre `-nographic` per veure la sortida en una finestra de QEMU.
+:::
+
+Enhorabona! Acabes de crear i executar un bootloader de primera etapa senzill que mostra un missatge de benvinguda. Aquest és el primer pas per entendre com funciona el procés d'arrencada d'un sistema operatiu.
+
+:::{.callout-tip title="Sortir de QEMU"}
+Per sortir de QEMU, utilitza la combinació de tecles `Ctrl + A`, seguida de `X`.
+:::
+
+### Part 2: El Bootloader de Segona
+
+En aquest punt, ja tenim el nostre bootloader de primera etapa, però la seva funció principal és passar el control a un programa més gran. Aquest serà el nostre bootloader de segona etapa. Per fer-ho, el MBR ha de llegir un sector del disc i carregar-lo a la memòria. Normalment, el MBR analitzaria la taula de particions per trobar on comença el següent bootloader. No obstant això, per a aquest exercici, simplificarem aquest procés i codificarem directament l'adreça del nostre bootloader de segona etapa al codi.
+
+La interrupció `int 0x13h` de la BIOS és la responsable de les operacions d'entrada/sortida de disc i requereix un paquet d'adreces de disc (**DAP**) per funcionar. Aquest **DAP** és una estructura de dades de 16 bytes que li diu a la BIOS on llegir i on escriure les dades. La proposta és configurar el nostre **DAP**  per llegir el sector 2048 del disc (`dword [si+8], 2048`) i carregar-lo a la memòria a l'adreça 0x8000 `(word [si+4], 0x8000)`.
+
+Escriu un fitxer anomenat `second_boot.asm` amb el següent contingut:
+
+```asm
+[org 0x8000]     ; Stage2 carregat pel MBR a 0x8000
+
+mov si, msg
+.print_loop:
+    lodsb
+    or al, al
+    jz .done
+    mov ah, 0x0e
+    int 0x10
+    jmp .print_loop
+
+.done:
+    jmp $           ; aturar-se aquí
+
+msg db "Hola des del bootloader de segona etapa!", 0
+```
+
+Ara ensamblarem aquest codi i el prepararem per ser carregat pel nostre bootloader de primera etapa.
+
+```bash
+nasm -f bin -o second_boot.bin second_boot.asm
+```
+
+Ara, escriurem aquest bootloader de segona etapa al disc virtual, però no al principi. El MBR està dissenyat per carregar el bootloader de segona etapa des d'una ubicació específica del disc. En aquest cas, utilitzarem el sector 2048 (1 MiB) per a això. Representaria la primera partició d'un disc amb una taula de particions estàndard.
+
+```bash
+dd if=second_boot.bin of=disk.img bs=512 count=1 seek=2048 conv=notrunc
+```
+
+Modifiqueu el vostre `boot.asm` per carregar aquest bootloader de segona etapa des del sector 2048:
+
+```asm
+[org 0x7c00]
+
+jmp short start
+nop
+
+start:
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
+
+    ; Missatge Stage1
+    mov si, msg_mbr
+.print_loop_mbr:
+    lodsb
+    or al, al
+    jz .load_next_stage
+    mov ah, 0x0e
+    int 0x10
+    jmp .print_loop_mbr
+
+.load_next_stage:
+    ; Configura DAP a 0x0600
+    mov si, 0x0600
+    mov byte [si], 0x10         ; mida del DAP
+    mov byte [si+1], 0x00
+    mov word [si+2], 1          ; sectors a llegir
+    mov word [si+4], 0x8000     ; offset destí
+    mov word [si+6], 0x0000     ; segment destí
+    mov dword [si+8], 2048      ; LBA
+    mov dword [si+12], 0        ; high LBA
+
+    ; BIOS extended read
+    mov ah, 0x42
+    mov dl, 0x80
+    int 0x13
+    jc .boot_failed
+
+    jmp 0:0x8000
+
+.boot_failed:
+    mov si, msg_fail
+.print_loop_fail:
+    lodsb
+    or al, al
+    jz .halt
+    mov ah, 0x0e
+    int 0x10
+    jmp .print_loop_fail
+.halt:
+    cli
+    hlt
+    jmp .halt
+
+msg_mbr db "Hola, soc l'MBR. Carregant Stage2...",0
+msg_fail db "Error carregant Stage2!",0
+
+times 510-($-$$) db 0
+dw 0xAA55
+```
+
+Ara ensamblarem el nou MBR:
+
+```bash
+nasm -f bin -o boot.bin boot.asm
+```
+
+I escriurem el nou MBR al disc virtual:
+```bash
+dd if=boot.bin of=disk.img bs=512 count=1 conv=notrunc
+```
+
+Finalment, executem la imatge del disc amb QEMU per veure el nostre missatge de benvinguda i la càrrega del bootloader de segona etapa:
+
+```bash
+qemu-system-x86_64 -drive file=disk.img,format=raw -nographic
+```
+
+Enhorabona! Acabes de crear i executar un bootloader de primera etapa que carrega un bootloader de segona etapa des d'una ubicació específica del disc.
