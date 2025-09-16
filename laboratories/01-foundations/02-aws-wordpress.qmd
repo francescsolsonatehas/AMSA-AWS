@@ -214,7 +214,7 @@ A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la mà
 
 
 ```yaml
-  ---
+---
 - hosts: webserver
   become: yes
   tasks:
