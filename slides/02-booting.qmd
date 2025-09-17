@@ -125,7 +125,7 @@ El firmware està emmagatzemat en un xip de memòria flash a la placa base. L’
 
 ::::
 ::: {.column width="50%"}
-![](../figs/slides/02-booting/mbr.png)
+![](../figs/slides/02-booting/MBR.png)
 :::
 ::::::
 
