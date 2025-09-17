@@ -168,7 +168,7 @@ mov si, msg
     jmp .print_loop
 
 .done:
-    jmp $           ; aturar-se aquí
+    jmp $       
 
 msg db "Hola des del bootloader de segona etapa!", 0
 ```
