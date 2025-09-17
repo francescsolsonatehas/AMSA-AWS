@@ -97,6 +97,10 @@ nasm -f bin -o boot.bin boot.asm
 
 On `-f bin` indica que volem un fitxer binari pla, i `-o boot.bin` especifica el nom del fitxer de sortida.
 
+:::{.callout-important title="Problemes"}
+Si la comanda d'instalació de `qemu` no acaba correctament, heu de fer un `su -c "apt update"` i problablement també un `su -c "apt upgrade -y"` abans de tornar a intentar instal·lar `qemu`.
+:::
+
 Ara, escrivim el bootloader al disc virtual:
 
 ```bash
@@ -139,7 +143,8 @@ La nostra màquina virtual és mode text (`-nographic`), així que hauries de ve
 Enhorabona! Acabes de crear i executar un bootloader de primera etapa senzill que mostra un missatge de benvinguda. Aquest és el primer pas per entendre com funciona el procés d'arrencada d'un sistema operatiu.
 
 :::{.callout-tip title="Sortir de QEMU"}
-Per sortir de QEMU, utilitza la combinació de tecles `Ctrl + A`, seguida de `X`.
+1. Per sortir de QEMU, utilitza la combinació de tecles `Ctrl + A`, seguida de `X`.
+2. Alternativament, pots `Ctrl + C` a la terminal per anar a la línia de comandes de QEMU i després escriure `quit` per sortir.
 :::
 
 ### Part 2: El Bootloader de Segona
