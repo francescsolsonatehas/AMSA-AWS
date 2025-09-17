@@ -20,11 +20,17 @@ Si no teniu una interfície gràfica, podeu instal·lar-la amb la següent coman
 su -c "apt install task-gnome-desktop -y"
 ```
 
+:::{.callout-note title="Nota"}
+Un cop instal·lada la interfície gràfica, reinicieu la màquina virtual i inicieu sessió a l'entorn d'escriptori.
+:::
+
 A més, necessitem instal·lar les eines necessàries per compilar i executar el nostre codi UEFI.
 
 ```bash
 su -c "apt install qemu-system-x86 gcc-x86-64-linux-gnu nasm make gnu-efi gdisk mtools -y"
 ```
+
+su -c "apt install qemu-system-x86 make gdisk mtools -y"
 
 Finalment, clonem el repositori amb el codi font del joc de Tetris per UEFI:
 
@@ -68,7 +74,9 @@ La comanda `fs0:` ens canvia a la partició FAT que correspon al nostre director
 2. Si `fs0:` no funciona, podeu llistar les particions disponibles amb la comanda `map` i provar amb les altres.
 :::
 
-Ara, podem veure els fitxers disponibles amb la comanda `ls` i veurem que el fitxer `tetris.efi` està present.
+:::{.callout-note title="Nota"}
+Utilitzeu les comandes `ls` i `cd` per navegar pel sistema de fitxers fins que trobeu la carpeta `uefi-tetris` i dins d'ella el fitxer `tetris.efi`.
+:::
 
 Finalment, executem el bootloader UEFI:
 
@@ -109,7 +117,7 @@ A la consola de `gdisk`, utilitzarem les següents comandes:
 - Prèmer `w` per escriure els canvis i sortir.
 
 :::{.callout-note title="Nota"}
-Confirmeu tots els canvis escrivint `Y` quan se us demani. Un cop acabat, sortiu de `gdisk` amb `q`. Per assegurar-vos que la partició s'ha creat correctament, podeu utilitzar `gdisk -l tetris.img` per llistar les particions del fitxer d'imatge. Observeu que la partició té el tipus `EF00`, indicant que és una partició ESP.
+Confirmeu tots els canvis escrivint `Y` quan se us demani. Per assegurar-vos que la partició s'ha creat correctament, podeu utilitzar `gdisk -l tetris.img` per llistar les particions del fitxer d'imatge. Observeu que la partició té el tipus `EF00`, indicant que és una partició ESP.
 :::
 
 #### Formatejar la partició com a FAT32
@@ -122,13 +130,13 @@ Ara que tenim la partició, l'hem de formatar, és a dir, donar-li un sistema de
 # Com a root
 losetup --partscan --find --show tetris.img
 ```
-Aquesta comanda mostrarà el nom del dispositiu de bucle creat (p. ex., `/dev/loop0`) i la seva partició (`/dev/loop0p1`). Anoteu-ho.
+Aquesta comanda mostrarà el nom del dispositiu de bucle creat (p. ex., `/dev/loop1`) i la seva partició (`/dev/loop1p1`). Anoteu-ho.
 
 - Formatejar la partició:
 
 ```bash
 # Com a root
-mkfs.fat -F 32 /dev/loop0p1
+mkfs.fat -F 32 /dev/loop1p1
 ```
 
 #### Copiar el fitxer UEFI a la partició ESP
@@ -137,11 +145,11 @@ Ara, muntem la partició i copiem el fitxer `tetris.efi` a la ubicació correcta
 
 ```bash
 # Com a root
-mount /dev/loop0p1 /mnt
+mount /dev/loop1p1 /mnt
 mkdir -p /mnt/EFI/BOOT
 cp tetris.efi /mnt/EFI/BOOT/BOOTX64.EFI
 umount /mnt
-losetup -d /dev/loop0
+losetup -d /dev/loop1
 ```
 
 :::{.callout-note title="Observació"}
