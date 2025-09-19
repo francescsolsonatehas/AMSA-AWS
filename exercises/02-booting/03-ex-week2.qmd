@@ -24,6 +24,17 @@ En primer lloc, heu de crear dues màquines virtuals amb UEFI com a firmware.
 Assegureu-vos que ambdues màquines virtuals tinguin UEFI com a firmware. En el moment de fer les particions, heu de veure que es crea una partició ESP (EFI System Partition) automàticament. Si no és així, pot ser que la màquina virtual no estigui configurada correctament per utilitzar UEFI. No continuïs fins que no tinguis aquesta partició.
 :::
 
+::::{.callout-warning title="Advertència"}
+Si **VMWare** no us deixa seleccionar **UEFI** com a firmware, un cop creada la màquina virtual amb **BIOS**, heu de modificar el fitxer `.vmx` de la màquina virtual i afegir al final les línies següents:
+
+```
+firmware = "efi"
+efi.secureBoot.enabled = "FALSE"
+```
+
+Guarda els canvis i inicia la màquina virtual de nou, i instal·la el sistema operatiu.
+:::
+
 ## Migrar el disc de Debian a la màquina virtual d'AlmaLinux
 
 1. Apaga la màquina virtual de Debian si està en funcionament.
