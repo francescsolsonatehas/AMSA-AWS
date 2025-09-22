@@ -65,6 +65,10 @@ website:
                 text: Laboratori 01 · Introducció a AWS
               - href: ./laboratories/01-foundations/02-aws-wordpress.qmd
                 text: Laboratori 02 · Desplegament d'una aplicació web amb AWS
+      - section: Projectes
+        contents:
+          - href: ./projects/01-project/01-project.qmd
+            text: Projecte 1 · Snapshots i Backups amb systemd i initramfs
 
   
 format:
