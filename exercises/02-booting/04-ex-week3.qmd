@@ -1,0 +1,136 @@
+---
+title: Modificant la contrasenya de l'usuari root a través del GRUB
+lang: ca
+---
+
+## Objectiu
+
+- Entendre com funciona la edició temporal del GRUB.
+- Entendre com protegir el GRUB amb una contrasenya.
+- Entendre com GRUB pot ser un vector d’accés físic al sistema.
+
+## Escenari
+Un atacant amb **accés físic** al servidor podria modificar la contrasenya de l’usuari root iniciant el sistema des del GRUB. En aquesta pràctica assumirem aquest escenari de manera controlada.
+
+## Requeriments previs
+
+- Una màquina virtual amb Debian 12 amb GRUB com a gestor d’arrencada.
+
+## Procediment
+
+1. **Accés al GRUB**
+   - Reinicia el sistema i accedeix al menú del **bootloader GRUB**.
+   - Selecciona la entrada del sistema operatiu i prem `e` per editar-la.
+
+2. **Modificació de la línia del kernel**
+   - Localitza la línia que comença amb `linux` i acaba amb `ro`.
+   - Afageix `init=/bin/bash` al final.
+   - Aquesta opció indica al kernel iniciar directament un **shell** sense passar pel procés d’inicialització normal.
+
+:::{.callout-note title="`init=/bin/bash`"}
+Aquesta opció fa que el sistema arranqui directament en un shell de bash com a root, evitant els processos d'inicialització habituals. Tots els serveis *systemd* i altres processos no s'inicien, i el sistema es troba en un estat mínim, amb només el shell disponible.
+:::
+
+3. **Inici amb les opcions modificades**
+   - Prem `Ctrl + X` per iniciar el sistema amb aquesta configuració.
+   - Accediràs a un **prompt de bash** amb permisos de root.
+
+4. **Muntar el sistema de fitxers en mode escriptura**
+   ```bash
+   mount -o remount,rw /
+    ```
+
+:::{.callout-note title="`mount -o remount,rw /`"}
+Com alternativa, es pot editar la línia del kernel per canviar `ro` (read-only) a `rw` (read-write). Això permetrà que el sistema de fitxers es monti en mode escriptura des del principi, evitant la necessitat de remuntar-lo més tard.
+:::
+
+5. **Accedir a l'arrel amb chroot**
+
+   ```bash
+   chroot /
+   ```
+
+:::{.callout-note title="`chroot`"}
+Una chroot (change root) és una operació que canvia el directori arrel aparent d'un procés i els seus fills a un directori especificat. Això crea un entorn aïllat on el procés veu el directori especificat com la seva arrel (`/`), permetent executar processos en un sistema de fitxers diferent sense afectar el sistema principal.
+:::
+
+6. **Canviar la contrasenya de root**
+
+    ```bash
+    passwd
+    ```
+    
+    - Introdueix la nova contrasenya quan se't demani.
+
+7. **Sincronitzar els canvis i reiniciar**
+
+    ```bash
+    exit 
+    reboot
+    ```
+
+:::{.callout-note title="Solcució si `reboot` no funciona"}
+Si el sistema no respon a la comanda `reboot`, pots forçar un reinici físic de la màquina virtual.
+:::
+
+1. **Iniciar sessió amb l'usuari normal**.
+2. **Canviar a l'usuari root** amb la nova contrasenya. `su -`
+
+## Protecció del GRUB
+
+Per protegir el GRUB i evitar que un atacant amb accés físic pugui modificar les opcions d'arrencada, es pot configurar una contrasenya per al GRUB.
+
+1. **Generar una contrasenya xifrada**
+   - Utilitza la comanda següent per generar una contrasenya xifrada:
+     ```bash
+     grub-mkpasswd-pbkdf2
+     ```
+   - Introdueix la contrasenya desitjada i copia la sortida que comença amb `pbkdf2`.
+
+2. **Editar la configuració del GRUB**
+   - Obre el fitxer de configuració del GRUB:
+
+        ```bash
+        # Com a root
+        vi /etc/grub.d/40_custom
+        ```
+
+    - Afegeix les línies següents al fitxer, substituint `your_encrypted_password` per la contrasenya xifrada que has generat:
+
+        ```bash
+        set superusers="root"
+        password_pbkdf2 root your_encrypted_password
+        ```
+
+3. **Actualitzar la configuració del GRUB**
+    - Després d'haver editat el fitxer, actualitza la configuració del GRUB:
+
+        ```bash
+        update-grub    # Debian/Ubuntu
+        grub2-mkconfig -o /boot/grub2/grub.cfg  # Alma/Rocky (BIOS)
+        grub2-mkconfig -o /boot/efi/EFI/almalinux/grub.cfg  # Alma/Rocky (UEFI)
+        ```
+4. **Reiniciar el sistema**
+
+        ```bash
+        reboot
+        ```
+
+5. **Verificar la protecció del GRUB**
+   - Durant l'arrencada, intenta editar una entrada del GRUB. Hauries de ser sol·licitat per una contrasenya.
+
+:::{.callout-important title="👁️ Observació"}
+Malgrat l'ús d'una contrasenya per a protegir el GRUB, aquesta tècnica no és infal·lible. Un atacant amb accés físic pot montar un usb bootable i iniciar el sistema amb aquest dispositiu. Un cop iniciat el sistema, l'atacant podria montar el sistema de fitxers i modificar la contrasenya de l'usuari root. Ara bé, es podria configurar el BIOS o UEFI per a desactivar l'arrencada des de dispositius externs com els USBs. Això dificultaria l'accés no autoritzat al sistema a través d'aquesta tècnica.
+:::
+
+## Reflexions
+
+- Control físic del servidor: Limitar l’accés físic és essencial.
+- Desactivar arrencada des de dispositius externs: Configurar BIOS/UEFI per bloquejar USB/CD.
+- Amb `LUKS/dm-crypt`, encara que l’atacant accedeixi físicament al GRUB, no podrà llegir ni modificar les dades sense la clau.
+- UEFI Secure Boot: Si està activat i el GRUB està signat, no es podrà iniciar amb `init=/bin/bash` sense desactivar temporalment Secure Boot.
+
+
+
+
+
