@@ -1,0 +1,185 @@
+---
+title: Desxifrat automàtic mitjançant clau en disc secundari (USB emulat)
+lang: ca
+---
+
+## Objectius
+
+- Aprendre a personalitzar la **initramfs** per buscar una clau en un disc secundari (emulant un USB).
+- Desxifrar automàticament una partició LUKS durant l'arrencada amb una **keyfile**.
+- Entendre els hooks i scripts d'`initramfs-tools` i com incloure binaris (`cryptsetup`) a la imatge.
+
+
+## Requeriments Previs
+
+- Tenir una màquina virtual (MV) amb Debian instal·lat, aquesta màquina virtual s'ha d'haver creat seleccionat l'opció de LVM xifrat durant la instal·lació.
+- Afegeix un disc secundari a la màquina virtual que simularà un USB de 4GB i de tipus SATA.
+- Totes les comandes s'han d'executar amb permisos de superusuari (`root`). Per tant, `su -`.
+- Realitzar un `apt update -y && apt upgrade -y` per assegurar-se que el sistema està actualitzat.
+- Instal·lar el paquet `apt install parted vim -y` per gestionar particions.
+
+
+## Passos
+
+### Creació del disc secundari amb la clau
+
+Primer, cal crear un disc secundari que simuli un USB. Això es pot fer afegint un nou disc a la màquina virtual. En aquest exemple, suposarem que el nou disc és `/dev/sda`. Si el teu disc és diferent, substitueix `/dev/sda` pel nom correcte. Per obtenir el nom del nou disc, pots utilitzar la comanda `lsblk` o `df -h`.
+
+```bash
+parted --script /dev/sda mklabel msdos
+parted --script /dev/sda mkpart primary ext4 1MiB 100%
+mkfs.ext4 -L KEYDISK /dev/sda1
+```
+
+Aquestes comandes creen una taula de particions MBR i una partició primària que ocupa tot l'espai del disc, formatada amb el sistema de fitxers ext4 i amb l'etiqueta `KEYDISK`.
+
+### Muntar el disc i crear la clau
+
+Primer crearem un punt de muntatge i muntarem la partició del disc secundari. Després, generarem un fitxer de clau amb dades aleatòries i li assignarem permisos restrictius per garantir la seva seguretat.
+
+```bash
+mkdir -p /tmp/keydisk
+mount /dev/sda1 /tmp/keydisk
+dd if=/dev/urandom of=/tmp/keydisk/keyfile.bin bs=4096 count=1
+chmod 0400 /tmp/keydisk/keyfile.bin
+```
+
+### Afegir la clau a la partició LUKS
+
+Afegirem el fitxer de clau a la partició LUKS que conté la partició arrel. En aquest exemple, suposarem que la partició LUKS és `/dev/nvme0n1p3`. Si el teu dispositiu és diferent, substitueix `/dev/nvme0n1p3` pel nom correcte.
+
+```bash
+cryptsetup luksDump /dev/nvme0n1p3
+cryptsetup luksAddKey /dev/nvme0n1p3 /tmp/keydisk/keyfile.bin
+```
+
+En aquest punt, se't demanarà introduïr una passphrase existent per autoritzar l'afegiment de la nova clau, entra la passphrase i comprova que la clau s'ha afegit correctament amb: 
+
+```bash
+cryptsetup luksDump /dev/nvme0n1p3
+```
+
+Ara veuras una línia addicional a **Key Slot**. Indicant que la clau s'ha afegit correctament.
+
+## Edita el fitxer `/etc/crypttab`
+
+Aquest fitxer s'utilitza per definir les particions xifrades que s'han de desxifrar durant l'arrencada. Edita el fitxer `/etc/crypttab` i afegeix la a entre el **UUID** de la partició LUKS i les opcions, la ruta al fitxer de clau que hem creat anteriorment. Per fer-ho, elimineu `none` i afegiu la ruta al fitxer de clau.
+
+```bash
+# /etc/crypttab
+nvme0n1p3_crypt UUID=XXXXXXXXX /tmp/keydisk/keyfile.bin  luks,discard
+```
+
+Indicarem que la keyfile es troba a `/tmp/keydisk/keyfile.bin`, ja que en la initramfs muntarem el disc secundari a `/tmp/keydisk` i llegirem la clau des d'allà.
+
+### Crear l'script per muntar el disc i llegir la clau
+
+Crearem un script que s'executarà durant l'arrencada per muntar el disc secundari, llegir la clau i desxifrar la partició LUKS. Aquest script es col·locarà a `/etc/initramfs-tools/scripts/local-top/` i s'anomenarà `mount_disk`.
+
+```bash
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          mount_disk
+# Required-Start:    $local_fs
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Unlock LUKS root using a keyfile on a secondary disk
+# Description:       Finds and mounts a secondary disk
+### END INIT INFO
+
+log_msg() {
+    echo "mount_disk: $1" > /dev/kmsg
+}
+
+KEYDISK_UUID="XXXXXX" # <-- Substitueix amb el teu UUID corresponent al disc secundari
+KEYFILE_PATH="/keyfile.bin"
+
+log_msg "Iniciant desxifrat automàtic amb keyfile."
+
+MNT_POINT="/tmp/keydisk"
+mkdir -p "$MNT_POINT"
+
+DEV=$(blkid -U "$KEYDISK_UUID")
+if [ -n "$DEV" ]; then
+    log_msg "Dispositiu trobat a $DEV. Muntant..."
+    mount -t ext4 "$DEV" "$MNT_POINT"
+    if [ $? -ne 0 ]; then
+        log_msg "ERROR: No s'ha pogut muntar $DEV."
+        exit 0
+    fi
+else
+    log_msg "ERROR: No s'ha trobat cap dispositiu amb l'UUID especificat."
+    exit 0
+fi
+
+# Comprovar si el keyfile existeix
+if [ -f "$MNT_POINT/$KEYFILE_PATH" ]; then
+    log_msg "Keyfile trobat. Desxifrant LUKS..."
+else
+    log_msg "ERROR: No s'ha trobat el keyfile."
+fi
+
+exit 0
+```
+
+Guarda aquest script com a `/etc/initramfs-tools/scripts/local-top/mount_disk` i fes-lo executable:
+
+```bash
+chmod +x /etc/initramfs-tools/scripts/local-top/mount_disk
+```
+
+### Confiigurar `cryptsetup` per a la initramfs
+
+`cryptsetup` ja esta inclòs en la initramfs per defecte, però cal assegurar-se que està configurat per utilitzar el fitxer de clau des del disc secundari. Edita el fitxer `/etc/cryptsetup-initramfs/conf-hook` i afegeix la següent línia que permet que no es demani la contrasenya si es troba el fitxer de clau:
+
+```bash
+#  /etc/cryptsetup-initramfs/conf-hook
+ASKPASS=n
+```
+
+### Incloure el fitxer `/etc/crypttab` a la initramfs
+
+Per assegurar que el fitxer `/etc/crypttab` es troba disponible durant l'arrencada, cal crear un script que el copiï a la initramfs. Crearem un script anomenat `copy-crypttab` a `/etc/initramfs-tools/hooks/`.
+
+```bash
+#!/bin/sh
+cp /etc/crypttab "${DESTDIR}/cryptroot/crypttab"
+exit
+```
+
+Guarda aquest script com a `/etc/initramfs-tools/hooks/copy-crypttab` i fes-lo executable:
+
+```bash
+chmod +x /etc/initramfs-tools/hooks/copy-crypttab
+```
+
+
+### Actualitzar la initramfs
+Perquè els canvis tinguin efecte, cal actualitzar la initramfs. Això es fa amb la comanda següent:
+```bash
+update-initramfs -u -k $(uname -r)
+```
+
+### Comprovar la inclusió de l'script i `cryptsetup` a la initramfs
+Per assegurar-te que l'script s'ha inclòs correctament a la initramfs i que `cryptsetup` també hi és, pots utilitzar les següents comandes:
+```bash
+lsinitramfs /boot/initrd.img-$(uname -r) | grep mount_disk
+lsinitramfs /boot/initrd.img-$(uname -r) | grep cryptsetup
+```
+
+### Prova l'arrencada
+Reinicia la màquina virtual per provar l'arrencada. Si tot està configurat correctament, la partició LUKS s'hauria de desxifrar automàticament utilitzant la clau emmagatzemada al disc secundari. Sense demanar la contrasenya manualment.
+
+```bash
+reboot
+```
+
+### Consultar el log d'arrencada
+
+Durant l'arrencada, el sistema registrarà missatges al kernel log. Pots consultar aquests missatges per verificar que l'script s'ha executat correctament i que la partició LUKS s'ha desxifrat. Utilitza la comanda següent per veure els missatges rellevants:
+
+```bash
+dmesg | grep mount_disk
+```
+
