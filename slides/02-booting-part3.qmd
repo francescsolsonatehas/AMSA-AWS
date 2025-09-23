@@ -1,0 +1,330 @@
+---
+title: "Arrencada del sistema (Part 2)"
+subtitle: "Unitat 2 · Administració i Manteniment de Sistemes i Aplicacions (AMSA)"
+author: "Jordi Mateo Fornés"
+logo: "/figs/corporative/institute.png"
+format: 
+  revealjs:
+    transition: fade
+    slide-number: true
+    incremental: true 
+    chalkboard: false
+    css: styles.css
+    footer: "Unitat 2 · Administració i Manteniment de Sistemes i Aplicacions (AMSA) [🏠](/index.html)</a>"
+editor: visual
+
+execute:
+  freeze: auto
+  echo: false
+---
+
+## Etapes de l'arrancada
+
+![](../figs/slides/02-booting/linux-unix-booting-process.png)
+
+
+## PID 1: init/systemd {.smaller}
+
+Quan s'acaba el procés d'inicialització del sistema en l'espai del kernel i es descomprimeix i executa l'initramfs, es produeix una transició important cap a l'espai d'usuari.
+
+``` bash
+exec switch_root /mnt /sbin/init
+```
+
+-   El comandament `switch_root` substitueix l'arrel del sistema de fitxers actual (l'initramfs) per la partició arrel real del sistema operatiu.
+-   El kernel deixa de gestionar directament els processos i passa el control a un procés en l'espai d'usuari.
+-   El procés **PID 1** és el primer procés que s'inicia en l'espai d'usuari i és responsable de la gestió dels processos del sistema operatiu.
+-   Tradicionalment, aquest procés era el programa **init**, però en els sistemes moderns, *systemd* ha substituït *init* com a responsable principal de la gestió de processos.
+
+## Funcions de PID 1 {.smaller}
+
+1.  **Gestió de la inicialització del sistema**. Carrega els serveis i dimonis necessaris per al bon funcionament del sistema.
+2.  **Gestió dels processos del sistema**. Controla la creació, execució i finalització dels processos. Si un procés orfe (un procés que perd el seu procés pare) continua en execució, el PID 1 assumeix la seva gestió i, eventualment, la seva terminació.
+3.  **Arrel de l'arbre de processos**: Tots els altres processos del sistema pengen d'ell, directament o indirectament. Això fa que sigui fonamental per a l'estabilitat i la continuïtat del sistema.
+4.  **Apagat i reinici del sistema**: El PID 1 també és responsable de controlar l'apagat i reinici del sistema, garantint que els processos es tanquin adequadament i que el sistema es desconnecti de manera segura
+
+## Systemd vs SysVinit {.smaller}
+
+El canvi de **SysVinit** a [**Systemd**](https://systemd.io/) en moltes distribucions de Linux va ser motivat per la necessitat de millorar l'eficiència i la gestió dels serveis del sistema.
+
+::::: columns
+::: {.column width="45%"}
+### SysVinit
+
+-   **Seqüencial**: Basat en scripts. *Cada servei depèn de l'execució completa del servei anterior, la qual cosa pot ser lenta*.
+-   **Simple**: Cada servei s'inicia amb un script directament llegible i modificable per l'administrador del sistema.
+-   **Inflexible**: Dificultat engestionar dependències. *No permet arrencar serveis en paral·lel ni controlar els processos un cop arrencats*.
+:::
+
+::: {.column width="55%"}
+### Systemd
+
+-   **Rendiment**: Capacitat de carregar serveis en paral·lel. Reducció temps d'inici del sistema.
+-   **Modularitat**: Els serveis es gestionen a través d'unitats (*unit files*) que poden especificar dependències, condicions de reinici automàtic,etc.
+-   **Cgroups**: Limitar/gestionar els recursos assignats a cada servei.
+-   **Monitoratge**: Control i seguiment granular dels serveis amb *journalctl*.
+:::
+:::::
+
+## Crítiques a Systemd {.smaller}
+
+-   **Complexitat**
+    -   Integra múltiples funcionalitats (gestió de serveis, journal, timers, logind, networkd, etc.) en un sol procés. Això pot augmentar la superfície de fallada i dificultar la depuració.
+-   **Trenca amb la filosofia Unix tradicional**
+    -   Unix promou eines petites, especialitzades i composables.\
+    -   Systemd concentra moltes tasques en un únic sistema de gestió.
+-   **Dependència del sistema**
+    -   Molts scripts, paquets i eines modernes depenen de systemd, dificultant la compatibilitat amb sistemes alternatius (SysVinit, OpenRC).
+
+::: fragment
+#### Debat en la comunitat
+
+-   Els defensors de **systemd** argumenten que simplifica l’administració de sistemes moderns i ofereix funcions que abans requerien múltiples eines externes.\
+-   Els crítics insisteixen en que és massa intrusiu i redueix la flexibilitat per a administradors avançats i entorns mínims.\
+:::
+
+## Backdoor en XZ Utils (I) {.smaller}
+
+Recents vulnerabilitats en paquets com **xz-utils** han posat en evidència la complexitat de *Systemd* i com una backdoor ocult pot comprometre gran part de la infraestructura moderna de Linux.
+
+-   El backdoor va ser introduït de manera gradual, començant amb contribucions sospitoses al projecte **libarchive el 2021**.
+-   Durant el 2022, un desenvolupador desconegut, *JiaT75*, va guanyar influència dins del projecte **xz-utils**, substituint el contacte del mantenidor original i introduint canvis que van ocultar les vulnerabilitats.
+-   El 2023, *JiaT75* va introduir modificacions malicioses a **xz-utils**, aprofitant-les per comprometre sistemes a través de dependències amb Systemd.
+
+[**CVE-2024-3094**](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-3094): Vulnerabilitat que permet l'execució de codi maliciós en el sistema mitjançant un defecte en la descompressió de fitxers **.xz**.
+
+## Backdoor en XZ Utils (II) {.smaller}
+
+Aquesta vulnerabilitat va afectar molts servidors Linux, que van actualitzar **xz-utils** amb la versió compromesa.
+
+-   **liblzma** és una llibreria de compressió que es pot enllaçar amb altres programes. Per exemple, **OpenSSH** es pot vincular a **liblzma** per gestionar la descompressió de fitxers de configuració.
+-   En sistemes amb **systemd**, **OpenSSH** enllaça amb **systemd**, que a la vegada enllaça amb **liblzma**. Això permet a **XZ Utils** controlar indirectament serveis essencials com **sshd**.
+-   Mitjançant una backdoor oculta en versions modificades de **xz-utils**, un atacant amb una clau de xifrat prèviament establerta podria carregar codi maliciós en certificats SSH i executar-lo en dispositius compromesos.
+
+::: center-container
+Aquests esdeveniments posen de manifest les contrapartides de la complexitat de **Systemd** i com una vulnerabilitat en un paquet aparentment inofensiu com **xz-utils** pot tenir un impacte significatiu en la seguretat del sistema i serveis crítics com **sshd**.
+:::
+
+## Executar els Targets o Runlevels {.smaller}
+
+El **PID 1** executa els *targets* de systemd. En sistemes més antics, s'utilitzaven els *runlevels* d'init. Els targets representen un conjunt de serveis i mòduls que s'executen per a cada estat del sistema. La seva funció és definir l'estat del sistema i els serveis que s'han de carregar en aquest estat. La transició entre els *targets* es pot fer manualment amb la comanda `systemctl isolate` o automàticament amb la comanda `systemctl set-default`.
+
+::: fragment
+-   **default.target**: Apunta a *graphical.target* o *multi-user.target*-
+-   **graphical.target**: Defineix un entorn gràfic.
+-   **multi-user.target**: Proporciona un entorn no gràfic, permetent múltiples usuaris al sistema, habitual per a servidors.
+-   **rescue.target**: Proporciona un entorn de rescat amb una consola de línia de comandes.
+-   **emergency.target**: Ofereix un entorn d'emergència que inicialitza el mínim de serveis necessaris per a la solució de problemes.
+-   **shutdown.target**: Gestiona l'apagat del sistema.
+-   **reboot.target**: Gestiona el reinici del sistema.
+:::
+
+## Units de systemd {.smaller}
+
+Els **units** són els fitxers de configuració de **systemd** que defineixen els serveis, ens permeten gestionar-los i controlar-los.
+
+-   `/etc/systemd/system/` – Fitxers d'unitat personalitzats per l'administrador.
+-   `/run/systemd/system/` – Configuració en temps d'execució, és a dir, afecta només un arrencada única.
+-   `/usr/lib/systemd/system/` – Configuració proporcionada per la distribució. A Debian és `/lib/systemd/system/`.
+
+Quan hi ha dos fitxers de configuració amb el mateix nom, **systemd** carregarà només un des del directori que estigui més alt en la jerarquia. Per exemple, la configuració a `/etc` sempre sobreescriu la configuració a `/usr`.
+
+Després de canviar la configuració, és necessari recarregar **systemd** amb: `systemctl daemon-reload`.
+
+## Tipus d'unitats {.smaller}
+
+-   **Serveis**: Fitxers que defineixen com s'inicien, s'aturen i es gestionen els serveis. Ex: `/etc/systemd/system/sshd.service` (servei SSH).
+-   **Sockets**: Units que gestionen els *sockets* de comunicació per als serveis.
+-   **Devices**: Units que representen dispositius de maquinari.
+-   **Mounts**: Units que gestionen els punts de muntatge del sistema de fitxers.
+-   **Paths**: Units que monitoren els canvis en fitxers o directoris específics.
+-   **Timers**: Units que planifiquen tasques per a la seva execució en moments específics.
+-   **Targets**: Units que agrupen altres units per a l'arrencada d'estats del sistema.
+
+## Targets i Systemd {.smaller}
+
+![](../figs/slides/02-booting/systemd.png)
+
+## Exemple de fitxer d'unitat {.smaller}
+
+``` bash
+[Unit]
+Description=CUPS Scheduler
+Documentation=man:cupsd(8)
+After=network.target
+[Service]
+ExecStart=/usr/sbin/cupsd -l
+Type=notify
+[Install]
+Also=cups.socket cups.path
+WantedBy=printer.target
+```
+
+::: notes
+Aquest fitxer defineix el servei **CUPS** (Common Unix Printing System) és un sistema que té una depenència amb la xarxa (`After=network.target`), s'inicia amb el comandament `/usr/sbin/cupsd -l` i es configura per iniciar-se automàticament quan s'arrenca el sistema (`WantedBy=printer.target`). Printer.target és un *target* que agrupa serveis relacionats amb la impressió. Cups.socket i cups.path són altres unitats que també s'inicien quan s'inicia el servei CUPS ja que estan lligades a aquest servei. El tipus de servei és `notify`, el qual indica que el servei enviarà una notificació a systemd quan estigui llest.
+:::
+
+## Dependències entre unitats {.smaller}
+
+Les unitats són objectes gestionats per **systemd**. Les dependències són associacions entre elles. Cada tipus d'unitat té algunes dependències per defecte (a menys que s'especifiqui el contrari).
+
+::::: columns
+::: {.column width="65%"}
+#### Relacionals
+
+-   **Requires**: Indica que una unitat depèn d'una altra unitat per a la seva activació. Si la unitat requerida no està activa, la unitat que la requereix no s'activarà.
+-   **Wants**: Similar a **Requires**, però no és tan estricte. Si la unitat requerida no està activa, la unitat que la vol no es bloquejarà.
+-   **BindsTo**: Similar a **Requires**, però si la unitat requerida es deté, la unitat que la vincula també es detindrà.
+-   **PartOf**: Indica que una unitat és part d'una altra unitat. Si la unitat pare es deté, la unitat fill també es detindrà.
+-   **Conflicts**: Indica que dues unitats no poden estar actives al mateix temps. Si una unitat s'activa, l'altra es detindrà automàticament.
+:::
+
+::: {.column width="35%"}
+#### Ordenació
+
+-   **After**: Indica que una unitat s'ha d'iniciar després d'una altra unitat. No crea una dependència estricta, només defineix l'ordre d'inici.
+-   **Before**: Indica que una unitat s'ha d'iniciar abans d'una altra unitat. No crea una dependència estricta, només defineix l'ordre d'inici.
+:::
+:::::
+
+## Transaccions a systemd (I) {.smaller}
+
+Cada vegada que l’usuari o un servei sol·licita una acció (per exemple, iniciar o aturar un servei), es crea una **transacció** que gestiona l’execució ordenada de les unitats afectades.
+
+1.  **Creació de feines (jobs)**
+    -   Es crea una feina per a la unitat sol·licitada.\
+    -   S’afegeixen recursivament les feines corresponents a totes les **dependències** de la unitat.
+2.  **Minimització de la transacció**
+    -   Eliminar feines duplicades o redundants.\
+    -   Eliminar feines que no estiguin referenciades per cap altre job (ancoratge).
+3.  **Resolució de cicles de dependències**
+    -   Detectar **loops** en el gràfic de dependències.\
+    -   Trencar-los eliminant feines problemàtiques per evitar deadlocks.
+
+## Transaccions a systemd (I) {.smaller}
+
+4.  **Fusió i optimització de feines**
+    -   Fusionar feines similars per reduir el nombre d’operacions.\
+    -   Prioritzar feines ja existents a la cua.
+5.  **Enviament i execució**
+    -   Afegir les feines a la **cua de jobs** de systemd.\
+    -   Executar les feines segons la dependència i l’ordre optimitzat.
+
+::: fragment
+Garanteix que les unitats es gestionin de manera atòmica i ordenada, permetent a systemd paral·lelitzar serveis mentre respecta les dependències.
+:::
+
+::: notes
+-   Les **transaccions** garanteixen que les unitats es gestionin de manera atòmica i ordenada.\
+-   Això permet a systemd **paral·lelitzar serveis** mentre respecta les dependències.\
+-   Cadascuna de les feines conté informació sobre la unitat, la seva acció (`start`, `stop`, `reload`) i les condicions d’execució.
+:::
+
+## `systemctl` (I) {.smaller}
+
+La comanda `systemctl` és l'eina principal per interactuar amb **systemd** i gestionar els serveis i unitats del sistema. Algunes de les operacions més comunes inclouen:
+
+| Comanda | Descripció |
+|-----------------------------|-------------------------------------------|
+| `systemctl start <unit>` | Inicia una unitat (servei, socket, etc.). |
+| `systemctl stop <unit>` | Atura una unitat. |
+| `systemctl restart <unit>` | Reinicia una unitat. |
+| `systemctl status <unit>` | Mostra l'estat actual d'una unitat. |
+| `systemctl enable <unit>` | Habilita una unitat perquè s'iniciï automàticament en arrencar el sistema. |
+| `systemctl disable <unit>` | Deshabilita una unitat perquè no s'iniciï automàticament. |
+| `systemctl is-active <unit>` | Comprova si una unitat està activa. |
+| `systemctl is-enabled <unit>` | Comprova si una unitat està habilitada per arrencar automàticament. |
+
+## `systemctl` (II) {.smaller}
+
+| Comanda | Descripció |
+|-----------------------------|-------------------------------------------|
+| `systemctl list-units` | Llista totes les unitats carregades actualment. |
+| `systemctl list-unit-files` | Llista tots els fitxers d'unitats disponibles. |
+| `systemctl list-dependencies <SERVICE>` | Mostra les dependències d'una unitat. |
+| `systemctl list-jobs` | Mostra les feines pendents i en execució. |
+
+## Unitat \[`INSTALL`\] {.smaller}
+
+``` bash
+[Install]
+WantedBy=multi-user.target
+Also=sysstat-collect.timer
+Also=sysstat-summary.timer
+Alias=monitoring.service
+```
+
+-   La secció `[Install]` defineix com s'instal·la i s'inicia una unitat.
+-   `WantedBy=multi-user.target` indica que aquesta unitat s'ha d'iniciar quan s'arrenca el sistema en mode multiusuari (runlevel 3).
+-   `Also=` permet associar altres unitats que s'han d'iniciar juntament amb aquesta.
+-   `Alias=` crea un nom alternatiu per a la unitat, facilitant la seva referència.
+
+::: notes
+En aquest cas, la unitat s'iniciarà automàticament en arrencar el sistema en mode multiusuari, i també s'iniciaran els temporitzadors `sysstat-collect.timer` i `sysstat-summary.timer`. A més, es pot referenciar aquesta unitat amb el nom alternatiu `monitoring.service`.
+:::
+
+## Opcions \[`Service`\] (I) {.smaller}
+
+| Opció | Descripció |
+|-------------------------|----------------------------------------------|
+| `Type=` | Defineix el tipus de servei (simple, forking, oneshot, notify, idle). |
+| `ExecStart=` | Comanda que s'executa per iniciar el servei. |
+| `ExecStop=` | Comanda que s'executa per aturar el servei. |
+| `ExecReload=` | Comanda que s'executa per recarregar la configuració del servei. |
+| `RemainAfterExit=` | Indica si el servei es manté actiu després de finalitzar. |
+| `Restart=` | Defineix si el servei s'ha de reiniciar en cas de fallada. |
+| `User=` | Defineix l'usuari amb el qual s'executa el servei. |
+| `Group=` | Defineix el grup amb el qual s'executa el servei. |
+
+## Opcions \[`Service`\] (II) {.smaller}
+
+| Opció               | Descripció                                           |
+|----------------------|--------------------------------------------------|
+| `Environment=`      | Defineix variables d'entorn per al servei.           |
+| `WorkingDirectory=` | Defineix el directori de treball del servei.         |
+| `PIDFile=`          | Especifica el fitxer que conté el PID del servei.    |
+| `TimeoutStartSec=`  | Temps d'espera per a l'inici del servei.             |
+| `TimeoutStopSec=`   | Temps d'espera per a l'aturada del servei.           |
+| `StandardOutput=`   | Defineix on s'envia la sortida estàndard del servei. |
+| `StandardError=`    | Defineix on s'envia l'error                          |
+
+## Tipus de serveis (I) {.smaller}
+
+-   **Simple**: Per defecte, aquest servei s'inicia immediatament després del `fork()`. No espera cap senyal de que el servei estigui llest.
+-   **Forking**: Aquest tipus de servei és per a processos que es bifurquen (fork) i es converteixen en dimonis. El servei es considera actiu després que el procés pare finalitzi.
+-   **Oneshot**: Aquest tipus és per a serveis que realitzen una tasca única i després finalitzen. Systemd espera que el procés acabi abans de considerar el servei com a actiu.
+-   **Notify**: Aquest tipus de servei utilitza el mecanisme de notificació de systemd per informar quan està llest. El servei ha d'enviar una notificació explícita a systemd.
+-   **DBus**: Aquest tipus de servei s'utilitza per a serveis que es comuniquen a través de DBus. El servei es considera actiu quan el nom del bus apareix al bus de sistema.
+-   **Idle**: Aquest tipus de servei s'inicia només quan el sistema està inactiu, és a dir, quan no hi ha altres feines pendents.
+
+## Efecte del tipus de servei al runtime {.smaller}
+
+![](../figs/slides/02-booting/service-types.png)
+
+## Script de l'usuari {.smaller}
+
+Un cop s'han carregat tots els serveis i el sistema està en marxa, els usuaris poden iniciar sessió al sistema. Els scripts de l'usuari es troben a la carpeta `/etc/profile.d/` i s'executen quan l'usuari inicia sessió.
+
+-   **/etc/profile**: Conté la configuració global per a tots els usuaris. S'executa en iniciar sessió en un entorn de shell.
+-   **/etc/bashrc**: Proporciona configuració per a shells interactius. S'executa cada vegada que s'inicia una nova sessió de shell.
+-   **\~/.bashrc**: Fitxer de configuració específic per a l'usuari, que s'executa en iniciar una sessió de shell interactiu.
+-   **\~/.bash_profile**: S'executa quan l'usuari inicia sessió a la terminal. Normalment, s'utilitza per configurar l'entorn de l'usuari, incloent la configuració de l'PATH.
+-   **\~/.bash_logout**: S'executa quan l'usuari tanca la sessió de shell. Aquí es poden incloure comandes de neteja o tancament.
+-   **\~/.bash_history**: Fitxer que emmagatzema l'històric de les comandes executades per l'usuari en la sessió de shell.
+
+## That's all
+
+::::::: columns
+:::: {.column width="45%"}
+::: {.callout-note title="Take Home Message"}
+El procés d'arrencada és un procés complex. Els administradors de sistemes han de conèixer aquest procés per poder gestionar i solucionar problemes durant l'arrencada del sistema i garantir un sistema segur, estable i eficient.
+:::
+::::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="50%"}
+![](https://static.posters.cz/image/750/posters/looney-tunes-thats-all-folks-i295.jpg){width="70%"}
+:::
+:::::::
