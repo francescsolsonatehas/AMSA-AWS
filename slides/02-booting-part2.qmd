@@ -349,6 +349,13 @@ exec switch_root /mnt /sbin/init
 :::
 :::
 
+## Exercicis Propostas
+
+-   [Modificant la contrasenya de l'usuari root a través del GRUB](../exercises/02-booting/04-ex-week3.qmd)
+-   [Desxifrat automàtic mitjançant clau en disc secundari (USB emulat)](../exercises/02-booting/05-ex-week3.qmd)
+-   Discussió: [**Secure Boot és realment segur?**](https://github.com/amsa-gei-udl-2526-105013/course/issues/3): Cerca notícies recents sobre Secure Boot i comparteix-les al fòrum del curs. Debatiu sobre avantatges, desavantatges, vulnerabilitats conegudes i experiències personals.
+
+
 ## That's all
 
 ::::::: columns
