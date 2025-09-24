@@ -43,7 +43,6 @@ execute:
 -   **Stage 2**:
     -   Conté el GRUB complet amb el menú d'arrencada.
     -   Pot carregar mòduls addicionals (drivers de FS, vídeo, xarxa, criptografia...).
-    -   Llegeix el fitxer de configuració (grub.cfg) i carrega el kernel i l'initramfs a la memòria.
     -   Transfereix el control al kernel per iniciar el sistema operatiu.
 
 ## Diagrama d'arrencada del GRUB {.smaller}
@@ -104,7 +103,6 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 |---------------------|---------------------------------------------------|
 | `quiet` | Suprimeix els missatges del nucli durant l'arrencada. |
 | `single` | Inicia el sistema en mode d'usuari únic (single-user mode) per a tasques de manteniment. |
-| `splash` | Mostra una imatge de fons durant l'arrencada en lloc de missatges de text. |
 | `nomodeset` | Desactiva la detecció de modes de vídeo, útil per a solucions de problemes amb gràfics. |
 | `root=` | Especifica la partició arrel del sistema de fitxers. |
 | `init=` | Especifica un fitxer d'init alternatiu. |
@@ -124,17 +122,14 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 **Secure Boot** és una característica de seguretat del firmware UEFI que assegura que només es carregui i s'executi programari de confiança durant el procés d'arrencada del sistema.
 
-1.  Quan s’encén el sistema
-    -   UEFI comprova la signatura digital del bootloader EFI (per exemple, grubx64.efi) abans de carregar-lo.
-    -   La signatura és comparada amb les claus de confiança emmagatzemades en la DB (Database of allowed signatures) del firmware.
-    -   Si la signatura és vàlida, UEFI carrega i executa el bootloader. Sinó, impedeix l’execució del bootloader i mostra un missatge d’error.
-2.  Bootloader signat (GRUB EFI)
-    -   Pot carregar mòduls addicionals signats, que també poden ser verificats pel mateix GRUB (*opcional*).
-3.  Kernel i initramfs
-    -   El kernel Linux també pot estar signat (*opcional*, si s’utilitza Linux Kernel Signing).
-    -   Si s’utilitza [Shim](http://github.com/rhboot/shim), aquest actua com a intermediari: el firmware UEFI confia en Shim, i Shim verifica després GRUB i el kernel.
+-   UEFI comprova la signatura digital del bootloader EFI (per exemple, grubx64.efi) abans de carregar-lo.
+-   La signatura és comparada amb les claus de confiança emmagatzemades en la DB (Database of allowed signatures) del firmware.
+-   Si la signatura és vàlida, UEFI carrega i executa el bootloader. Sinó, impedeix l’execució del bootloader i mostra un missatge d’error.
+-   Pot carregar mòduls addicionals signats, que també poden ser verificats pel mateix GRUB (*opcional*).
+-   El kernel Linux també pot estar signat (*opcional*, si s’utilitza Linux Kernel Signing).
+-   Si s’utilitza [Shim](http://github.com/rhboot/shim), aquest actua com a intermediari: el firmware UEFI confia en Shim, i Shim verifica després GRUB i el kernel.
 
-## Problemes de Secure Boot
+## Problemes de Secure Boot {.smaller}
 
 -   **Compatibilitat**: No tots els sistemes operatius o distribucions Linux suporten Secure Boot de manera nativa.
 -   **Claus de confiança**: La gestió de claus pot ser complexa, especialment en entorns corporatius.
@@ -209,19 +204,23 @@ L’**Initramfs** (*Initial RAM Filesystem*) és un petit sistema de fitxers int
     -   Executa la seqüència d’inicialització: muntatge de sistemes virtuals, càrrega de mòduls i preparació de l’entorn.\
 3.  **Creació del sistema de fitxers temporal**
     -   Muntatge de `/proc`, `/sys` i `/dev`.\
-    -   Creació de directoris temporals (`/tmp`, `/run`) per permetre que els scripts i utilitats funcionin.\
-4.  **Carregar mòduls del kernel**
-    -   Carrega controladors necessaris per accedir a maquinari (discos, controladors de xarxa, LVM, RAID, xifrat).\
-    -   Si els mòduls estan integrats al kernel, aquesta etapa pot ser mínima o nul·la.
+    -   Creació de directoris temporals (`/tmp`, `/run`) per permetre que els scripts i utilitats funcionin.
+
 
 ## Etapes de l'Initramfs (II) {.smaller}
 
+4.  **Carregar mòduls del kernel**
+    -   Carrega controladors necessaris per accedir a maquinari (discos, controladors de xarxa, LVM, RAID, xifrat).\
+    -   Si els mòduls estan integrats al kernel, aquesta etapa pot ser mínima o nul·la.
 5.  **Muntatge de la partició arrel real**
     -   Localitza la partició arrel (per exemple `/dev/sda1` o `UUID=...`).\
     -   Muntatge en un punt temporal (`/mnt/root` o similar).\
 6.  **Transició al sistema complet (`switch_root`)**
     -   Substitueix l’entorn temporal de l’initramfs pel sistema de fitxers real.\
     -   Executa el binari `init` del sistema complet (normalment `/sbin/init` o systemd).\
+
+## Etapes de l'Initramfs (III) {.smaller}
+
 7.  **Alliberament de l’initramfs**
     -   Destruir l’entorn temporal a RAM.\
     -   Alliberar la memòria utilitzada pel sistema de fitxers temporal, deixant el control complet al sistema operatiu.
@@ -295,9 +294,12 @@ dracut -f /boot/initramfs-<versió>.img <versió>
     -   **`init-bottom/`** → scripts executats **just abans de fer `switch_root`** al sistema complet. Útil per passos finals com muntar la partició arrel, desbloquejar LUKS o activar LVM.\
     -   **`local-bottom/`** → scripts addicionals definits per l’administrador.
     -   **`local-top/`** → scripts addicionals definits per l’administrador.
-    -   **`premount/`** → scripts executats **abans de muntar la partició arrel**. Ideal per preparar dispositius o sistemes de fitxers especials.
-    -   **`mount/`** → scripts executats **durant el muntatge de la partició arrel**. Útil per passos específics relacionats amb el muntatge.
-    -   **`cleanup/`** → scripts executats **després de fer `switch_root`** al sistema complet. Ideal per netejar recursos temporals o realitzar tasques posteriors a l’arrencada.
+
+## `initramfs-tools` (Debian) (II) {.smaller}
+
+-   **`premount/`** → scripts executats **abans de muntar la partició arrel**. Ideal per preparar dispositius o sistemes de fitxers especials.
+-   **`mount/`** → scripts executats **durant el muntatge de la partició arrel**. Útil per passos específics relacionats amb el muntatge.
+-   **`cleanup/`** → scripts executats **després de fer `switch_root`** al sistema complet. Ideal per netejar recursos temporals o realitzar tasques posteriors a l’arrencada.
 
 ## `dracut` (Fedora/Red Hat) {.smaller}
 
