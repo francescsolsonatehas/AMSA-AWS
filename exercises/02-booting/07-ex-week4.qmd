@@ -1,0 +1,159 @@
+---
+title: "Servei de Còpia de Seguretat Automàtica amb systemd"
+lang: ca
+---
+
+## Objectius
+
+- Aprendre a crear un servei bàsic amb `systemd`.
+- Configurar un servei que s'executi a l'inici del sistema.
+- Entendre els fitxers d'unitat de `systemd` i com gestionar-los.
+- Crear un script senzill per realitzar una còpia de seguretat de la carpeta `/home` i desar-lo a `/backup`.
+
+## Requeriments Previs
+
+- Tenir una màquina virtual (MV) amb Debian instal·lat.
+- Totes les comandes s'han d'executar amb permisos de superusuari (`root`). Per tant, `su -`.
+- Realitzar un `apt update -y && apt upgrade -y` per assegurar-se que el sistema està actualitzat.
+- Instal·lar el paquet `vim` per editar fitxers: `apt install vim -y`.
+- Crear la carpeta `/backup` on es desaran les còpies de seguretat: `mkdir -p /backup`.
+
+
+
+## Servei bàsic amb systemd
+
+1. Crearem un script que farà la còpia de seguretat de la carpeta `/home`, per fer-ho simplement crearem un arxiu `.tar.gz` amb la data i hora actual al nom de l'arxiu. Aquest arxiu es desarà a la carpeta `/backup` que hem creat anteriorment. El script es col·locarà a `/usr/local/bin/backup.sh`.
+
+    ```bash
+    #!/bin/bash
+    tar -czf /backup/system_backup_$(date +%Y%m%d_%H%M%S).tar.gz /home
+    ```
+
+2. Configurarem un servei que faci una còpia de seguretat cada cop que s'iniciï el sistema. Crearem un fitxer de servei a `/etc/systemd/system/backup.service`.
+
+    ```ini
+    [Unit]
+    Description=Backup Service
+    After=network.target
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/local/bin/backup.sh
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+::: {.callout-note}
+El target `multi-user.target` s'utilitza perquè el servei s'executi quan el sistema està en mode multiusuari, és a dir, quan la majoria dels serveis del sistema ja estan en funcionament.
+:::
+
+3. Activarem el servei perquè s'executi a l'inici del sistema amb la comanda:
+
+    ```bash
+    systemctl start backup.service
+    ```
+
+4. Comprova l'estat del servei amb:
+
+    ```bash
+    systemctl status backup.service
+    ```
+
+::: {.callout-important}
+El servei no s'ha arrancat degut a errors en l'script. Revisa el fitxer de registre amb `journalctl -xeu backup.service` per veure els errors i corregir-los. On `xeu` indica que volem veure els missatges d'error i advertència filtrant per unitat. El error que observareu és que el script no té permisos d'execució. Per solucionar-ho, simplement afegiu permisos d'execució a l'script amb `chmod +x /usr/local/bin/backup.sh` i torneu a iniciar el servei amb `systemctl restart backup.service`.
+:::
+
+
+5. Comprovarem el contigut de la carpeta `/backup`. Un cop el servei s'hagi executat correctament, hauríeu de veure un fitxer de còpia de seguretat amb la data actual al nom del fitxer.
+
+    ```bash
+    ls -lh /backup
+    ```
+
+6. Activarem el servei perquè s'executi a l'inici del sistema amb la comanda:
+
+    ```bash
+    systemctl enable backup.service
+    ```
+
+7. Finalment, reiniciarem el sistema per assegurar-nos que el servei s'executa correctament a l'inici:
+
+    ```bash
+    reboot
+    ```
+
+8. Després de reiniciar, comprova que el fitxer de còpia de seguretat s'ha creat correctament a la carpeta `/backup`:
+
+    ```bash
+    ls -lh /backup
+    ```
+
+## Servei amb Timer amb systemd
+
+El servei que hem creat anteriorment s'executa només una vegada a l'inici del sistema. Ara crearem un servei que s'executi diàriament a una hora específica utilitzant un timer de `systemd`. El primer pas és crear el servei que volem executar periòdicament, en aquest cas, el mateix script de còpia de seguretat que hem creat abans. El segon pas és crear un fitxer de timer que programi l'execució del servei.
+
+1. Crearem un fitxer de timer a `/etc/systemd/system/backup-daily.timer` per programar l'execució del servei diàriament a les 2:00 AM.
+
+    ```ini
+    [Unit]
+    Description=Runs backup-daily.service daily at 2:00 AM
+    Requires=backup-daily.service
+
+    [Timer]
+    OnCalendar=*-*-* 02:00:00
+    Persistent=true
+
+    [Install]
+    WantedBy=timers.target
+    ```
+
+    on el camp `OnCalendar`, `*-*-* 02:00:00` indica que el servei s'executarà diàriament a les 2:00 AM. La línia `Persistent=true` assegura que si el sistema està apagat a l'hora programada, el servei s'executarà tan aviat com el sistema s'iniciï. El `*-*-*` és un comodí que representa qualsevol any, mes i dia.
+
+2. Crearem el fitxer de servei a `/etc/systemd/system/backup-daily.service` que serà el que s'executarà diàriament.
+
+    ```ini
+    [Unit]
+    Description=Daily Backup Service
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/local/bin/backup.sh
+    ```
+
+3. Activarem el timer perquè s'executi diàriament amb la comanda:
+
+    ```bash
+    systemctl enable --now backup-daily.timer
+    ```
+
+::: {.callout-important}
+L'argument `--now` activa el timer immediatament després d'habilitar-lo, de manera que no cal reiniciar el sistema per començar a utilitzar-lo.
+:::
+
+4. Comprova l'estat del timer amb:
+
+    ```bash
+    systemctl status backup-daily.timer
+    ```
+
+5. Per veure quan s'executarà el proper cop el servei, utilitza la comanda:
+
+    ```bash
+    systemctl list-timers --all
+    ```
+
+6. Per provar que el servei funciona correctament, pots forçar l'execució del servei amb la comanda:
+
+    ```bash
+    systemctl start backup-daily.service
+    ```
+
+
+## Exercicis Proposats
+
+- Modifica el servei perquè faci una còpia de seguretat de la carpeta `/var` i `/etc` en lloc de `/home`. Un cop fet això, utilitza `systemd-analyze` i `systemd-analyze blame` per analitzar el servei abans i després d'activar-lo. Comenta i justifica els resultats obtinguts.
+
+- Crea un servei que permeti actualitzar el sistema automàticament cada diumenge a les 3:00 AM. Aquest servei hauria d'executar `apt update && apt upgrade -y`.
+
+

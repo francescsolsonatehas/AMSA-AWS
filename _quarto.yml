@@ -61,6 +61,11 @@ website:
                 text: Activitat 4 · Modificant la contrasenya de l'usuari root a través del GRUB
               - href: ./exercises/02-booting/05-ex-week3.qmd
                 text: Activitat 5 · Arrencada automàtica d'una partició LUKS amb clau en un disc secundari
+              - href: ./exercises/02-booting/06-ex-week4.qmd
+                text: Activitat 6 · Anàlisi del procés d'arrencada amb systemd
+              - href: ./exercises/02-booting/07-ex-week4.qmd
+                text: Activitat 7 · Servei de Còpia de Seguretat Automàtica amb systemd
+
       - section: Laboratoris
         contents:
           - section: Unitat 01 · Fonaments de l'Administració de Sistemes

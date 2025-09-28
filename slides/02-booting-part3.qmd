@@ -1,5 +1,5 @@
 ---
-title: "Arrencada del sistema (Part 2)"
+title: "Arrencada del sistema (Part 3)"
 subtitle: "Unitat 2 · Administració i Manteniment de Sistemes i Aplicacions (AMSA)"
 author: "Jordi Mateo Fornés"
 logo: "/figs/corporative/institute.png"
@@ -21,7 +21,6 @@ execute:
 ## Etapes de l'arrancada
 
 ![](../figs/slides/02-booting/linux-unix-booting-process.png)
-
 
 ## PID 1: init/systemd {.smaller}
 
@@ -266,7 +265,7 @@ En aquest cas, la unitat s'iniciarà automàticament en arrencar el sistema en m
 ## Opcions \[`Service`\] (I) {.smaller}
 
 | Opció | Descripció |
-|-------------------------|----------------------------------------------|
+|--------------------------|----------------------------------------------|
 | `Type=` | Defineix el tipus de servei (simple, forking, oneshot, notify, idle). |
 | `ExecStart=` | Comanda que s'executa per iniciar el servei. |
 | `ExecStop=` | Comanda que s'executa per aturar el servei. |
@@ -279,7 +278,7 @@ En aquest cas, la unitat s'iniciarà automàticament en arrencar el sistema en m
 ## Opcions \[`Service`\] (II) {.smaller}
 
 | Opció               | Descripció                                           |
-|----------------------|--------------------------------------------------|
+|-----------------------|-------------------------------------------------|
 | `Environment=`      | Defineix variables d'entorn per al servei.           |
 | `WorkingDirectory=` | Defineix el directori de treball del servei.         |
 | `PIDFile=`          | Especifica el fitxer que conté el PID del servei.    |
