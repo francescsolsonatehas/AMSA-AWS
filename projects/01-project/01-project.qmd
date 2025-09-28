@@ -58,61 +58,58 @@ En cas de problemes amb el `update`, igual necessitareu fer un `apt upgrade` aba
 
 ## Tasques
 
-1. **Crear snapshots amb `rsync` (bàsic)** 📝
-   - Escriure un script que creï snapshots del directori `/home` i  a `/mnt/snapshots` utilitzant `rsync`.
-   - Crea un primer snapshot manualment per tenir una base de dades inicial i anomeneu-lo `snapshot_00000000_000000`, feu servir script com a `root` o amb `sudo`.
+1. **Crear snapshots amb `rsync` (2 punts)** 📝
+   - Escriure un script que creï snapshots dels directoris `/home, /opt, /bin, /usr`  a `/mnt/snapshots` utilitzant `rsync`.
+   - Crea un primer snapshot manualment per tenir una base de dades inicial i anomeneu-lo `snapshot_00000000_000000`, feu servir script com a `root`.
    - Provar l’script manualment i assegurar-se que es poden crear diversos snapshots.
    - Utilitzar un format de nom com `snapshot_YYYYMMDD_HHMMSS` per al directori. 
    - Els snapshots han de ser còpies completes del sistema, excepte el directori de snapshots.
    - Implementar una política per mantenir el snapshot inicial i els 3 snapshots més recents, eliminant els més antics.
   
-2. **Automatitzar la creació de snapshots amb `systemd` (nivell mitjà)** ⚙️
+2. **Automatitzar la creació de snapshots amb `systemd` (3 punts)** ⚙️
    - Crear un servei `systemd` que executi l’script de creació de snapshots a cada apagada de la màquina.
    - Validar que cada vegada que s’aturi la màquina es crea un nou snapshot.
 
-3. **Restaurar snapshots en arrencada amb `systemd` (nivell mitjà)** 🔄
+3. **Restaurar snapshots en arrencada amb `systemd` (3 punts)** 🔄
     - Escriure un script que mostri un llistat de snapshots disponibles i permeti seleccionar-ne un per restaurar.
     - Crear un servei `systemd` que s’executi abans de `multi-user.target` i cridi aquest script.
     - Comprovar que en arrencar la màquina es mostra el menú de snapshots.
+    - Validar que es pot restaurar un snapshot seleccionat.
 
-4. **Restaurar snapshots des d’`initramfs` (nivell avançat)** 🚀
+4. **Restaurar snapshots des d’`initramfs` (1/2 punts)** 🚀
     - Afegir un parametre al kernel per indicar el fitxer de snapshot a restaurar. Aquest paràmetres'anomenarà `snapshot=` i rebrrà el nom de la snapshot a restaurar, per exemple `snapshot=snapshot_20240101_120000`. En cas de no rebre cap paràmetre, no es restaurarà cap snapshot.
     - Afegir un script a `initramfs` que carregui el disc secundari, llegeixi el paràmetre i restauri el snapshot abans de muntar `/`.
-      - **Simple**: Utilitzant comandes integrades a `initramfs`.
-      - **Avançat**: Afegint programari compilat estaticament a `initramfs`.
+      - **Simple**: Utilitzant comandes integrades a `initramfs`. (**1 punt**)
+      - **Avançat**: Afegint programari compilat estaticament a `initramfs`. (**2 punts**)
     - Reconstruir l’`initramfs` i validar que s'ha restaurat el snapshot correcte. 
 
   
-## Criteris d’avaluació
-
-| Criteri                                | Puntuació |
-|----------------------------------------|-----------|
-| Bàsic (script manual)                  | 5 punts   |
-| Intermedi (systemd)                    | 7 punts   |
-| Avançat (initramfs - simple)           | 9 punts   |
-| Extra (initramfs - avançat)            | 10 punts  |
-
-
-
 ## Organització i lliurament
 
-Creeu un directori anomenat `practica01` amb l’estructura següent i pengeu-lo al vostre repositori de GitHub:
+Accediu a l'activitat a través de l'enllaç al [Github Classroom](https://classroom.github.com/a/MT3q9LBg). Un cop acceptada l'activitat, clonareu el repositori a la vostra màquina local i començareu a treballar. Podeu treballar amb grups de fins a 3 persones.
 
 ```text
 📂 practica01/
-├── SOLUCIÓ.md                # Solució i explicació de cada part amb captures 
+├── SOLUCIÓ.md               
 ├── scripts/
-│   ├── create_snapshot.sh    # Esquelet d'script per crear snapshots
-│   ├── restore_snapshot.sh   # Esquelet d'script per restaurar snapshots
-│   └── helpers.sh            # Funcions auxiliars (ordenar, netejar snapshots, etc.)
+│   ├── create_snapshot.sh    
+│   ├── restore_snapshot.sh   
+│   └── helpers.sh            
 ├── systemd/
-│   ├── snapshot.service      # Unit file per crear snapshot al shutdown
-│   └── restore.service       # Unit file per restaurar snapshot a l'arrencada
+│   ├── snapshot.service      
+│   └── restore.service       
 ├── initramfs/
-│   └── snapshot_menu         # Hook d’exemple per initramfs 
+│   └── snapshot_menu        
 └── grub/
-    └── 40_custom_snapshot    # Exemple d’entrada extra per GRUB 
+    └── 40_custom_snapshot    
 ```
 
-Es permet també documentar la pràctica en un document `.pdf` enlloc de `.md` amb les explicacions i captures de pantalla. Assegureu-vos d’incloure totes les parts desenvolupades i les respostes a les preguntes de reflexió.
+El document `SOLUCIÓ.md` ha d’incloure:
+
+- Explicació de cada part de la pràctica i comandes utilitzades.
+- Diferències entre les comandes `cp`, `rsync` i `tar` per fer còpies de seguretat.
+- Conjunt de proves realitzades per validar cada part.
+- Captures de pantalla que mostrin el funcionament correcte.
+- Documentació o prompts consultats.
+
 
