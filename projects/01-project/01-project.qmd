@@ -76,27 +76,22 @@ En cas de problemes amb el `update`, igual necessitareu fer un `apt upgrade` aba
     - Comprovar que en arrencar la màquina es mostra el menú de snapshots.
 
 4. **Restaurar snapshots des d’`initramfs` (nivell avançat)** 🚀
-    - Afegir un parametre al kernel per indicar el fitxer de snapshot a restaurar.
+    - Afegir un parametre al kernel per indicar el fitxer de snapshot a restaurar. Aquest paràmetres'anomenarà `snapshot=` i rebrrà el nom de la snapshot a restaurar, per exemple `snapshot=snapshot_20240101_120000`. En cas de no rebre cap paràmetre, no es restaurarà cap snapshot.
     - Afegir un script a `initramfs` que carregui el disc secundari, llegeixi el paràmetre i restauri el snapshot abans de muntar `/`.
-    - Reconstruir l’`initramfs` i validar que s'ha restaurat el snapshot correcte.
+      - **Simple**: Utilitzant comandes integrades a `initramfs`.
+      - **Avançat**: Afegint programari compilat estaticament a `initramfs`.
+    - Reconstruir l’`initramfs` i validar que s'ha restaurat el snapshot correcte. 
 
   
-## Preguntes de reflexió
-
-- Quins riscos implica restaurar snapshots a nivell de fitxers?  (**bàsic**)
-- Com es pot assegurar la integritat dels snapshots creats?  (**intermedi**)
-- Quina diferència hi ha entre executar el menú de restauració a initramfs i fer-ho amb systemd després d’arrencar? (**avançat**)
-
-
-
 ## Criteris d’avaluació
 
-| Criteri                        | Puntuació |
-|-------------------------------|-----------|
-| Bàsic (script manual)         | 5 punts   |
-| Intermedi (systemd)            | 7 punts   |
-| Avançat (initramfs)            | 9 punts  |
-| Extra (GRUB)                   | 10 punts  |
+| Criteri                                | Puntuació |
+|----------------------------------------|-----------|
+| Bàsic (script manual)                  | 5 punts   |
+| Intermedi (systemd)                    | 7 punts   |
+| Avançat (initramfs - simple)           | 9 punts   |
+| Extra (initramfs - avançat)            | 10 punts  |
+
 
 
 ## Organització i lliurament
