@@ -88,7 +88,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## Variables `/etc/default/grub` {.smaller}
 
 | Variable | Descripció |
-|---------------------|---------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | `GRUB_BACKGROUND` | Imatge de fons que es mostrarà al menú d'arrencada. |
 | `GRUB_TIMEOUT` | Temps en segons abans de carregar l'entrada predeterminada. |
 | `GRUB_DEFAULT` | Entrada per defecte que es carregarà (index o nom) |
@@ -100,7 +100,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## Paràmetres del kernel més comuns {.smaller}
 
 | Paràmetre | Descripció |
-|---------------------|---------------------------------------------------|
+|----------------------|--------------------------------------------------|
 | `quiet` | Suprimeix els missatges del nucli durant l'arrencada. |
 | `single` | Inicia el sistema en mode d'usuari únic (single-user mode) per a tasques de manteniment. |
 | `nomodeset` | Desactiva la detecció de modes de vídeo, útil per a solucions de problemes amb gràfics. |
@@ -205,7 +205,6 @@ L’**Initramfs** (*Initial RAM Filesystem*) és un petit sistema de fitxers int
 3.  **Creació del sistema de fitxers temporal**
     -   Muntatge de `/proc`, `/sys` i `/dev`.\
     -   Creació de directoris temporals (`/tmp`, `/run`) per permetre que els scripts i utilitats funcionin.
-
 
 ## Etapes de l'Initramfs (II) {.smaller}
 
@@ -349,7 +348,7 @@ mount /dev/mapper/vg-root /mnt
 exec switch_root /mnt /sbin/init
 ```
 :::
-:::
+:::::
 
 ## Exercicis Propostas
 

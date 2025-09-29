@@ -326,6 +326,13 @@ Un cop s'han carregat tots els serveis i el sistema està en marxa, els usuaris 
 -   **\~/.bash_logout**: S'executa quan l'usuari tanca la sessió de shell. Aquí es poden incloure comandes de neteja o tancament.
 -   **\~/.bash_history**: Fitxer que emmagatzema l'històric de les comandes executades per l'usuari en la sessió de shell.
 
+## Exercicis Propostas
+
+-   [Anàlisi del procés d'arrencada amb systemd](../exercises/02-booting/06-ex-week4.qmd)
+-   [Servei de Còpia de Seguretat Automàtica amb systemd](../exercises/02-booting/07-ex-week4.qmd)
+-   Discussió: [**Secure Boot és realment segur?**](https://github.com/amsa-gei-udl-2526-105013/course/issues/3): Cerca notícies recents sobre Secure Boot i comparteix-les al fòrum del curs. Debatiu sobre avantatges, desavantatges, vulnerabilitats conegudes i experiències personals.
+-   [Pràctica 01: Snapshots i restauració amb systemd i initramfs](../projects/01-project/01-project.qmd)
+
 ## That's all
 
 ::::::: columns
