@@ -41,6 +41,8 @@ website:
             text: Unitat 02 · Arrencada del sistema
           - href: ./slides/02-booting-part2.qmd
             text: Unitat 02 · Arrencada del sistema (Part 2)
+          - href: ./slides/02-booting-part3.qmd
+            text: Unitat 02 · Arrencada del sistema (Part 3)
       - section: Activitats
         contents:
           - section: Unitat 01 · Fonaments de l'Administració de Sistemes
