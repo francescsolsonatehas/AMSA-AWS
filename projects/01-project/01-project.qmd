@@ -109,7 +109,7 @@ El document `SOLUCIÓ.md` ha d’incloure:
 - Explicació de cada part de la pràctica i comandes utilitzades.
 - Diferències entre les comandes `cp`, `rsync` i `tar` per fer còpies de seguretat.
 - Conjunt de proves realitzades per validar cada part.
-- Captures de pantalla que mostrin el funcionament correcte.
+- Enregistrament en format vídeo de la consola on es demostri el funcionament correcte de les diferents parts de la pràctica, o bé captures de pantalla on es mostri el procés i els resultats.
 - Documentació o prompts consultats.
 
 
