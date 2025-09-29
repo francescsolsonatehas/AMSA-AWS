@@ -48,7 +48,7 @@ El canvi de **SysVinit** a [**Systemd**](https://systemd.io/) en moltes distribu
 
 ::::: columns
 ::: {.column width="45%"}
-### SysVinit
+#### SysVinit
 
 -   **Seqüencial**: Basat en scripts. *Cada servei depèn de l'execució completa del servei anterior, la qual cosa pot ser lenta*.
 -   **Simple**: Cada servei s'inicia amb un script directament llegible i modificable per l'administrador del sistema.
@@ -56,7 +56,7 @@ El canvi de **SysVinit** a [**Systemd**](https://systemd.io/) en moltes distribu
 :::
 
 ::: {.column width="55%"}
-### Systemd
+#### Systemd
 
 -   **Rendiment**: Capacitat de carregar serveis en paral·lel. Reducció temps d'inici del sistema.
 -   **Modularitat**: Els serveis es gestionen a través d'unitats (*unit files*) que poden especificar dependències, condicions de reinici automàtic,etc.
@@ -67,13 +67,11 @@ El canvi de **SysVinit** a [**Systemd**](https://systemd.io/) en moltes distribu
 
 ## Crítiques a Systemd {.smaller}
 
--   **Complexitat**
-    -   Integra múltiples funcionalitats (gestió de serveis, journal, timers, logind, networkd, etc.) en un sol procés. Això pot augmentar la superfície de fallada i dificultar la depuració.
+-   **Complexitat**: Integra múltiples funcionalitats (gestió de serveis, journal, timers, logind, networkd, etc.) en un sol procés. Això pot augmentar la superfície de fallada i dificultar la depuració.
 -   **Trenca amb la filosofia Unix tradicional**
     -   Unix promou eines petites, especialitzades i composables.\
     -   Systemd concentra moltes tasques en un únic sistema de gestió.
--   **Dependència del sistema**
-    -   Molts scripts, paquets i eines modernes depenen de systemd, dificultant la compatibilitat amb sistemes alternatius (SysVinit, OpenRC).
+-   **Dependència del sistema**: Molts scripts, paquets i eines modernes depenen de systemd, dificultant la compatibilitat amb sistemes alternatius (SysVinit, OpenRC).
 
 ::: fragment
 #### Debat en la comunitat
@@ -106,7 +104,7 @@ Aquests esdeveniments posen de manifest les contrapartides de la complexitat de 
 
 ## Executar els Targets o Runlevels {.smaller}
 
-El **PID 1** executa els *targets* de systemd. En sistemes més antics, s'utilitzaven els *runlevels* d'init. Els targets representen un conjunt de serveis i mòduls que s'executen per a cada estat del sistema. La seva funció és definir l'estat del sistema i els serveis que s'han de carregar en aquest estat. La transició entre els *targets* es pot fer manualment amb la comanda `systemctl isolate` o automàticament amb la comanda `systemctl set-default`.
+El **PID 1** executa els *targets* de systemd o *runlevels* d'init. Els targets representen un conjunt de serveis i mòduls que s'executen per a cada estat del sistema. La seva funció és definir l'estat del sistema i els serveis que s'han de carregar en aquest estat. La transició entre els *targets* es pot fer manualment amb la comanda `systemctl isolate` o automàticament amb la comanda `systemctl set-default`.
 
 ::: fragment
 -   **default.target**: Apunta a *graphical.target* o *multi-user.target*-
@@ -122,13 +120,17 @@ El **PID 1** executa els *targets* de systemd. En sistemes més antics, s'utilit
 
 Els **units** són els fitxers de configuració de **systemd** que defineixen els serveis, ens permeten gestionar-los i controlar-los.
 
--   `/etc/systemd/system/` – Fitxers d'unitat personalitzats per l'administrador.
--   `/run/systemd/system/` – Configuració en temps d'execució, és a dir, afecta només un arrencada única.
--   `/usr/lib/systemd/system/` – Configuració proporcionada per la distribució. A Debian és `/lib/systemd/system/`.
+-   `/etc/systemd/system/`: Fitxers d'unitat personalitzats per l'administrador.
+-   `/run/systemd/system/`: Configuració en temps d'execució, és a dir, afecta només un arrencada única.
+-   `/usr/lib/systemd/system/`: Configuració proporcionada per la distribució. A Debian és `/lib/systemd/system/`.
 
+:::{.fragment}
 Quan hi ha dos fitxers de configuració amb el mateix nom, **systemd** carregarà només un des del directori que estigui més alt en la jerarquia. Per exemple, la configuració a `/etc` sempre sobreescriu la configuració a `/usr`.
+:::
 
+:::{.fragment .center-container}
 Després de canviar la configuració, és necessari recarregar **systemd** amb: `systemctl daemon-reload`.
+:::
 
 ## Tipus d'unitats {.smaller}
 
@@ -142,10 +144,14 @@ Després de canviar la configuració, és necessari recarregar **systemd** amb: 
 
 ## Targets i Systemd {.smaller}
 
+::: center-container
 ![](../figs/slides/02-booting/systemd.png)
+:::
 
 ## Exemple de fitxer d'unitat {.smaller}
 
+::: columns
+::: {.column width="50%"}
 ``` bash
 [Unit]
 Description=CUPS Scheduler
@@ -158,17 +164,27 @@ Type=notify
 Also=cups.socket cups.path
 WantedBy=printer.target
 ```
+:::
+::: {.column width="50%"}
+
+- CUPS (Common Unix Printing System) és un sistema d'impressió utilitzat en sistemes Unix i Linux.
+- Té una dependència amb la xarxa (`After=network.target`), ja que sovint es connecta a impressores de xarxa.
+:::
+:::
+
+- S'inicia amb el comandament `/usr/sbin/cupsd -l`, que posa en marxa el servei d'impressió.
+- Es configura per iniciar-se automàticament quan s'arrenca el sistema (`WantedBy=printer.target`).
+- `Cups.socket` és una unitat de tipus *socket* que permet a CUPS escoltar connexions entrants per a serveis d'impressió.
+- `Cups.path` és una unitat de tipus *path* que monitoritza canvis en fitxers o directoris relacionats amb la configuració d'impressió.
 
 ::: notes
 Aquest fitxer defineix el servei **CUPS** (Common Unix Printing System) és un sistema que té una depenència amb la xarxa (`After=network.target`), s'inicia amb el comandament `/usr/sbin/cupsd -l` i es configura per iniciar-se automàticament quan s'arrenca el sistema (`WantedBy=printer.target`). Printer.target és un *target* que agrupa serveis relacionats amb la impressió. Cups.socket i cups.path són altres unitats que també s'inicien quan s'inicia el servei CUPS ja que estan lligades a aquest servei. El tipus de servei és `notify`, el qual indica que el servei enviarà una notificació a systemd quan estigui llest.
 :::
 
-## Dependències entre unitats {.smaller}
+## Dependències entre unitats (I) {.smaller}
 
 Les unitats són objectes gestionats per **systemd**. Les dependències són associacions entre elles. Cada tipus d'unitat té algunes dependències per defecte (a menys que s'especifiqui el contrari).
 
-::::: columns
-::: {.column width="65%"}
 #### Relacionals
 
 -   **Requires**: Indica que una unitat depèn d'una altra unitat per a la seva activació. Si la unitat requerida no està activa, la unitat que la requereix no s'activarà.
@@ -176,15 +192,14 @@ Les unitats són objectes gestionats per **systemd**. Les dependències són ass
 -   **BindsTo**: Similar a **Requires**, però si la unitat requerida es deté, la unitat que la vincula també es detindrà.
 -   **PartOf**: Indica que una unitat és part d'una altra unitat. Si la unitat pare es deté, la unitat fill també es detindrà.
 -   **Conflicts**: Indica que dues unitats no poden estar actives al mateix temps. Si una unitat s'activa, l'altra es detindrà automàticament.
-:::
 
-::: {.column width="35%"}
+## Dependències entre unitats (II) {.smaller}
+
 #### Ordenació
 
 -   **After**: Indica que una unitat s'ha d'iniciar després d'una altra unitat. No crea una dependència estricta, només defineix l'ordre d'inici.
 -   **Before**: Indica que una unitat s'ha d'iniciar abans d'una altra unitat. No crea una dependència estricta, només defineix l'ordre d'inici.
-:::
-:::::
+
 
 ## Transaccions a systemd (I) {.smaller}
 
