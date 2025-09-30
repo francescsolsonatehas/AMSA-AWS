@@ -63,7 +63,7 @@ En cas de problemes amb el `update`, igual necessitareu fer un `apt upgrade` aba
    - Crea un primer snapshot manualment per tenir una base de dades inicial i anomeneu-lo `snapshot_00000000_000000`, feu servir script com a `root`.
    - Provar l’script manualment i assegurar-se que es poden crear diversos snapshots.
    - Utilitzar un format de nom com `snapshot_YYYYMMDD_HHMMSS` per al directori. 
-   - Els snapshots han de ser còpies completes del sistema, excepte el directori de snapshots.
+   - Els snapshots han de ser còpies completes: `/home, /opt, /bin, /usr` . No cal comprimir aquests snapshots. Poden ser carpetes independents utilitzant la nomenclatura indicada.
    - Implementar una política per mantenir el snapshot inicial i els 3 snapshots més recents, eliminant els més antics.
   
 2. **Automatitzar la creació de snapshots amb `systemd` (3 punts)** ⚙️
