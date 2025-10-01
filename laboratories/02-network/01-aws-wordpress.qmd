@@ -411,22 +411,6 @@ Finalment, connecteu-vos a les instàncies EC2:
 
 > **Consideracions importants**: El servidor VPN ens permet accedir a les instàncies EC2 a través de SSH, però a partir de l'adreça interna (10.0.X.X) de la instància EC2. No podrem accedir a les instàncies EC2 a través de la seva adreça pública ja que hem configurat la VPN per accedir a les subxarxes de la VPC.
 
-
-## Test final
-
-Podeu utilitzar `curl` o recarregar la pàgina web per veure com el balancejador de càrrega distribueix el tràfic entre les instàncies EC2.
-
-```bash
-curl http://AMSA-ALB-XXXXXXX.us-west-2.elb.amazonaws.com
-```
-
-Per observar-ho podeu accedir als logs de les instàncies EC2 i veure com el tràfic es distribueix entre les dues instàncies.
-
-```bash
-sudo tail -f /var/log/httpd/access_log
-```
-
-
 ## Neteja els recursos creats
 
 Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
@@ -435,6 +419,7 @@ Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RD
 
 1. Com milloraríeu els grups de seguretat, quins canvis faríeu?
 2. Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.
+3. Prepara un script que faci una prova de càrrega al balancejador de càrrega i mostri com es distribueix el tràfic entre les instàncies EC2.
 
 
 
