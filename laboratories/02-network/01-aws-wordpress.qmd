@@ -61,10 +61,6 @@ A continuació, afegirem les subxarxes necessàries per a la nostra arquitectura
 
 - **AMSA-Data**: Subxarxa privada per a dades a la zona de disponibilitat **us-east-1c**. *(10.0.5.0/24)*
 
-
-A continuació es mostra un diagrama amb les subxarxes creades, incloent-hi els seus blocs CIDR i zones de disponibilitat associades:
-
-
 ## Taules d'Enrutament i Associacions
 
 Per gestionar les rutes del tràfic i determinar com es distribueix entre les subxarxes, crearem taules de rutes i les associem a les subxarxes corresponents. 
@@ -435,6 +431,10 @@ sudo tail -f /var/log/httpd/access_log
 
 Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
 
+## Exercics Adicionals
+
+1. Com milloraríeu els grups de seguretat, quins canvis faríeu?
+2. Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.
 
 
 
