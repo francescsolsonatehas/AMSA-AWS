@@ -420,6 +420,3 @@ Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RD
 1. Com milloraríeu els grups de seguretat, quins canvis faríeu?
 2. Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.
 3. Prepara un script que faci una prova de càrrega al balancejador de càrrega i mostri com es distribueix el tràfic entre les instàncies EC2.
-
-
-
