@@ -1,0 +1,440 @@
+---
+title: Desplegament d'una aplicació web amb alta disponibilitat amb AWS
+subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
+lang: ca
+---
+
+En aquest laboratori intensiu, dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L'arquitectura es basa en la separació de capes (**pública, aplicació, dades**) i l'ús de **Zones de Disponibilitat (AZ)** per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.
+
+
+- **Instàncies EC2 (WordPress)**: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d'Internet.
+- **Base de Dades RDS (MySQL)**: Servei gestionat d'alta disponibilitat, també en subxarxes privades dedicades.
+- **DMZ**: Una instància EC2 en una subxarxa pública que actuarà com a punt d'accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.
+- **Load Balancer**: El punt d'entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.
+
+## Diagrama de l'Arquitectura
+
+![Esquema de components, conexions i elements de l'arquitectura](../../figs/laboratories/03-aws-wp/wordpress/infra.png) 
+
+La imatge mostra com a través d'internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l'accés segur per a l'administració dels recursos privats.
+
+## Objectius
+
+- Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.
+- Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.
+- Configurar una VPN segura per a l'accés administratiu.
+- Configurar un load balancer per distribuir el tràfic a les instàncies EC2.
+
+## Requeriments Prèvis
+
+- Accés al curs AWS Academy Learner Lab.
+- Completar el laboratori [Desplegament d'una aplicació web amb AWS](../01-foundations/02-aws-wordpress.qmd) per entendre els conceptes bàsics d'AWS i la configuració inicial de WordPress.
+
+## VPC i Subxarxes
+
+El primer pas en la nostra arquitectura és definir una VPC (Virtual Private Cloud) i les subxarxes necessàries per aïllar els diferents components de l'aplicació. La VPC proporcionarà un entorn de xarxa virtualitzat on podrem desplegar els nostres recursos d'AWS. La configurarem amb la xarxa **10.0.0.0/16**, la qual ens proporciona fins a 65.536 adreces IP, més que suficients per al nostre cas d'ús.
+
+:::{.callout-note title="CIDR, Hosts i Adreces Reservades 🧠"}
+La màscara de subxarxa determina el nombre d'adreces IP disponibles dins d'una xarxa o subxarxa. Això s'expressa mitjançant la Notació CIDR (Classless Inter-Domain Routing), on el valor (/n) indica la quantitat de bits reservats per a la part de Xarxa. Una màscara de subxarxa de */16* significa que els primers 16 bits de l'adreça IP estan reservats per a la identificació de la xarxa, deixant els altres 16 bits per a la identificació dels hosts. Això permet tenir fins a 65.536 adreces IP ($2^{32-16}$) dins d'aquesta xarxa.
+
+Quan feu el Subnetting per crear subxarxes dins de la vostra VPC, esteu augmentant el valor CIDR (per exemple, de /16 a /24), per tal de reduir la mida de les subxarxes i aïllar millor el tràfic. Per exemple, una subxarxa amb CIDR /24 té 256 adreces IP ($2^{32-24}$).
+
+Recordeu que el total d'adreces calculat no és el total d'adreces útils per als vostres servidors (hosts). Algunes adreces es reserven per a usos especials, com identificar la xarxa i la difusió (broadcast).
+:::
+
+Podem definir la VPC a través de la interfície web d'AWS, utilitzant els formularis disponibles:
+
+![Definició de la VPC utilitzant AWS](../../figs/laboratories/03-aws-wp/wordpress/vpc.png)
+
+
+### Creació de les subxarxes
+
+A continuació, afegirem les subxarxes necessàries per a la nostra arquitectura.  Aneu a **VPC** → **Subnets** → **Create subnet**. Seleccioneu la VPC que acabem de crear i afegiu les subxarxes següents:
+
+- **AMSA-DMZ-01**: Subxarxa pública a la zona **us-east-1a**. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d'accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. *(10.0.1.0/24)*.
+
+- **AMSA-DMZ-02**: Subxarxa pública a la zona **us-east-1b**. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d'accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. *(10.0.2.0/24)*.
+
+- **AMSA-Private01**: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat **us-east-1a**. *(10.0.3.0/24)*.
+
+- **AMSA-Private02**: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat **us-east-1b**. *(10.0.4.0/24)*
+
+- **AMSA-Data**: Subxarxa privada per a dades a la zona de disponibilitat **us-east-1c**. *(10.0.5.0/24)*
+
+
+A continuació es mostra un diagrama amb les subxarxes creades, incloent-hi els seus blocs CIDR i zones de disponibilitat associades:
+
+
+## Taules d'Enrutament i Associacions
+
+Per gestionar les rutes del tràfic i determinar com es distribueix entre les subxarxes, crearem taules de rutes i les associem a les subxarxes corresponents. 
+
+### Configuració del Gateway d'Internet
+
+Utilitzeum un Gateway d'Internet (IGW) per permetre que les subxarxes públiques (Front-01 i Front-02) tinguin accés a Internet. Crearem el IGW i l'associarem a la nostra VPC.
+
+- **Creació del Gateway d'Internet**:
+
+![Gateway d'Internet per a la VPC](../../figs/laboratories/03-aws-wp/wordpress/ig.png)
+
+- **Associació del Gateway d'Internet amb la VPC**:
+
+![Associació del Gateway d'Internet amb la VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG.png)
+
+
+![Associació del Gateway d'Internet amb la VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG2.png)
+
+- **Taula de rutes per a la subxarxa AMSA-DMZ-01**: La taula de rutes defineix com es dirigeix el tràfic dins de la VPC i cap a l'exterior. Crearem una taula de rutes específica per a la subxarxa **AMSA-DMZ-01**.
+
+    ![Taula de rutes per a la subxarxa AMSA-DMZ-RT](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DMZ-RT.png)
+
+  - **Associació de la taula de rutes amb la subxarxa AMSA-DMZ-01**: Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la subxarxa **AMSA-DMZ-01** anireu a la secció *Subnet Associations* i clicareu a *Edit subnet associations*. A continuació, seleccionarem la taula de rutes **AMSA-DMZ01-RouteTable** i clicarem a *Save*.
+
+    ![Associant la taula de rutes amb la subxarxa](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DMZ-Subnet-Association.png)
+
+    - **Permetem el tràfic de sortida a Internet**: Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la subxarxa **AMSA-DMZ-01** anireu a la secció *Routes* i clicareu a *Edit routes*. A continuació, **Add route** i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el **AMSA-IG**).
+
+      ![Permetem el tràfic amb l'exterior a través del IG](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Routes-DMZ.png)
+
+- Realitzarem el mateix procés per a la subxarxa **AMSA-DMZ-02**. Creació de la **AMSA-DMZ02-RouteTable** i l'associació amb la subxarxa i crearem la ruta al **AMSA-IG**.
+
+- **Taula de rutes per a la subxarxa AMSA-Private01 i AMSA-Private02**: Aquestes xarxes han de poder accedir a Internet. Però no volem que internet tingui accés a les seves EC2. Per tant, necessitem crear un NAT Gateway. I després associar-lo a la subxarxa.
+
+    - **Creació del NAT Gateway**: Per crear un NAT Gateway, necessitem una IP elàstica (Elastic IP). Per tant, primer crearem una IP elàstica i després la utilitzarem per crear el NAT Gateway. L'anomeneu **AMSA-NAT-EIP**.
+  
+        ![Creació de la IP elàstica](../../figs/laboratories/03-aws-wp/wordpress/ElasticIP-NAT.png)
+
+        ![Actualitzar el nom de la IP elàstica](../../figs/laboratories/03-aws-wp/wordpress/ElasticIp-Nat2.png)
+
+    - **Creació del NAT Gateway**: Un cop tenim la IP elàstica, podem crear el NAT Gateway. L'anomeneu **AMSA-NG** i l'associeu a la subxarxa **AMSA-DMZ**. 
+
+        ![Creació del NAT Gateway](../../figs/laboratories/03-aws-wp/wordpress/nat-gw-create.png)
+
+    - Crearem la taula de rutes (*AMSA-Private01-RT*) per a la subxarxa **AMSA-Private01** i l'associarem a la subxarxa. Aquesta taula de rutes permetrà que les instàncies dins d'aquesta subxarxa accedeixin a Internet a través del NAT Gateway.
+
+        ![Taula de rutes per a la subxarxa AMSA-Private01](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Private01-RT.png)
+
+      - **Associació de la taula de rutes amb la subxarxa AMSA-Private01**: Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la subxarxa **AMSA-Private01** anireu a la secció *Subnet Associations* i clicareu a *Edit subnet associations*. A continuació, seleccionarem la taula de rutes **AMSA-Private01-RT** i clicarem a *Save*.
+
+        ![Associant la taula de rutes amb la subxarxa](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Private01-Subnet-Association.png)
+
+      - **Permetem el tràfic de sortida a Internet**: Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la subxarxa **AMSA-Private01** anireu a la secció *Routes* i clicareu a *Edit routes*. A continuació, **Add route** i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el **AMSA-NG**).
+
+        ![Permetem el tràfic amb l'exterior a través del NAT Gateway](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Routes-Private01.png)
+
+    - Repetirem el mateix procés per a la subxarxa **AMSA-Private02**. Creació de la **AMSA-Private02-RT** i l'associació amb la subxarxa i crearem la ruta al **AMSA-NG**.
+
+
+- **Taula de rutes per a AMSA-Data**: La subxarxa **AMSA-Data** no requereix accés directe a Internet. Anomenarem **AMSA-Data-RT**. Només necessita rutes locals per comunicar-se amb altres subxarxes dins de la VPC. Per a això, crearem una taula de rutes i l'associarem a **AMSA-Data**, però sense definir cap ruta.
+
+## Grups de Seguretat
+
+Els grups de seguretat (Security Groups) són una eina per controlar el tràfic de xarxa de les instàncies i altres recursos d’AWS, actuant com un tallafocs virtual. Permeten definir regles que especifiquen quines connexions estan permeses tant d'entrada (inbound) com de sortida (outbound).
+
+- **Trafic inbound**: Permet decidir quins tipus de connexions entrants (cap al recurs) són permeses.
+- **Trafic outbound**: Controla quines connexions sortints (des del recurs cap a altres destinacions) estan autoritzades.
+  
+### Grup de Seguretat per a les instàncies EC2
+
+- **Connexions entrants (inbound)** per als serveis web HTTP (port 80) i HTTPS (port 443), accessibles des de qualsevol origen.
+- **Connexions SSH (port 22)** per a administració remota, també accessibles des de qualsevol origen (inicialment, però més endavant es restringiran).
+- Totes les connexions sortints (**outbound**), que per defecte estan permeses a AWS, cosa que permet a les instàncies EC2 comunicar-se amb altres recursos com ara RDS.
+
+Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la secció *Security Groups* i clicarem a *Create security group*. A continuació, omplirem els camps amb la informació necessària i clicarem a *Create security group*. El podeu anomenar **AMSA-WP-SG**.
+
+![Grup de Seguretat per a les instàncies EC2](../../figs/laboratories/03-aws-wp/wordpress/AMSA-WP-SG.png)
+
+:::{.callout-note title="Nota sobre la seguretat 🔐"}
+En aquest moment, estem permetent tot el tràfic de xarxa per als serveis web i SSH. Quan ho tinguem tot configurat, restringirem aquest accés únicament al trafic entrant provinent del balancejador de càrrega pels serveis web i a la nostra xarxa interna per a SSH.
+:::
+
+### Grup de Seguretat per a la base de dades RDS
+
+- **Connexions inbound**: Només permetrà tràfic al port 3306 (MySQL) i exclusivament des de les instàncies EC2 que pertanyin al grup de seguretat **AMSA-WP-SG**.
+- **Connexions outbound**: Per defecte, AWS permetrà totes les connexions sortints, cosa que garanteix que la base de dades pugui comunicar-se amb altres recursos si és necessari.
+
+Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la secció *Security Groups* i clicarem a *Create security group*. A continuació, omplirem els camps amb la informació necessària i clicarem a *Create security group*.
+
+![Grup de Seguretat per a la base de dades RDS](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png)
+
+### Resum
+
+| Grup de Seguretat | Inbound | Outbound |
+|-------------------|---------|----------|
+| AMSA-WP-SG       | HTTP (80) i HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0| Totes permeses |
+| AMSA-DB-SG        | MySQL (3306) des de AMSA-Web-SG | Totes permeses |
+
+
+## Creació de la Base de Dades RDS
+
+La base de dades ja la vam configurar en el laboratori anterior [Desplegament d'una aplicació web amb AWS](../01-foundations/02-aws-wordpress.qmd). La única diferència és que ara la base de dades es troba en una subxarxa privada i només és accessible des de les instàncies EC2 que pertanyen al grup de seguretat **AMSA-Web-SG**.
+
+- **Compute resources**: Don't connect to an EC2 compute resource
+- **VPC**: AMSA-VPC
+- **Subnet Group**: Create new DB Subnet Group
+- **Public accessibility**: No
+- **VPC security group**: AMSA-DB-SG
+- **Availability Zone**: us-east-1d
+
+
+## Creació de les instàncies EC2
+
+Les instàncies EC2 que allotjaran WordPress es desplegaran en les subxarxes privades, recordeu que vam configurar ansible en el laboratori anterior [Desplegament d'una aplicació web amb AWS](../01-foundations/02-aws-wordpress.qmd). AWS ens permet crear plantilles d'instàncies (**Launch Templates**) que faciliten la creació d'instàncies amb una configuració predefinida. Per tant, crearem una plantilla d'instància que inclogui la configuració necessària per a les nostres instàncies EC2 de WordPress, enlloc d'utiltizar el mètode amb ansible que vam utilitzar en el laboratori anterior.
+
+# Configuració del Servidor Web amb WordPress
+
+1. Creareu una instancia EC2 amb Amazon Linux, seleccionant la VPC **AMSA-VPC** i la subxarxa **AMSA-DMZ**. Assegureu-vos que l'instància utilitzi el grup de seguretat **AMSA-WP-SG**. La podeu anomenar **AMSA-DB-Config**. Seleccionar *assignar ip pública*. Aquesta instància només la farem servir per inicialitzar la base de dades i després la podrem eliminar.
+
+2. Un cop configurada la instància, connecteu-vos-hi mitjançant SSH utilitzant la clau privada corresponent a la clau pública que vau associar a la instància durant la seva creació. I realitzeu la configuració de la base de dades MySQL per a WordPress.
+
+3. Anem a crear una plantilla de llançament (**Launch Template**) per a les instàncies EC2 que allotjaran WordPress. Aquesta plantilla inclourà la configuració necessària per a les instàncies, incloent-hi el script d'instal·lació i configuració de WordPress.
+
+   - Nom de la plantilla: **AMSA-WP-Template**
+   - AMI: Amazon Linux 2023 (64-bit x86)
+   - Instància Type: t2.micro
+   - Key Pair: AMSA-KEY
+   - Subxarxa: No seleccionar cap subxarxa (es seleccionarà dinàmicament)
+   - Grup de Seguretat: *AMSA-WP-SG*
+   - Advanced Details: Afegiu el següent script a la secció de UserData.
+
+:::{.callout-note title="Script d'instal·lació i configuració de WordPress 📝"}
+
+Modifiqueu les dades de connexió a la base de dades segons les vostres dades.
+
+```bash
+#!/bin/bash
+# sudo bash install_wp.sh
+
+# Ajusteu les dades següents segons les vostres dades
+DB_NAME="" 
+DB_USER=""
+DB_USER_PASSWORD=""
+DB_HOST="" 
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Please run this script with sudo or as root."
+    exit 1
+fi
+
+dnf install -y wget php-mysqlnd httpd php-fpm php-mysqli php-json php php-devel php-gd expect
+
+cd /tmp
+wget https://wordpress.org/latest.tar.gz
+tar -xzf latest.tar.gz
+
+# Configure WordPress
+cp wordpress/wp-config-sample.php wordpress/wp-config.php
+sed -i "s/database_name_here/$DB_NAME/g" wordpress/wp-config.php
+sed -i "s/username_here/$DB_USER/g" wordpress/wp-config.php
+sed -i "s/password_here/$DB_USER_PASSWORD/g" wordpress/wp-config.php
+sed -i "s/localhost/$DB_HOST/g" wordpress/wp-config.php
+
+sudo cp -r wordpress/* /var/www/html/
+
+sudo sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/conf/httpd.conf
+
+sudo chown -R apache:apache /var/www
+sudo chmod 2775 /var/www
+
+sudo systemctl restart httpd
+```
+:::
+
+Un cop creada la plantilla de llançament, podeu utilitzar-la per crear instàncies EC2 amb WordPress ja configurat i preparades per connectar amb la vostra base de dades RDS. Aneu a **EC2** i seleccioneu **Launch Instance**. A continuació, seleccioneu la plantilla de llançament **AMSA-WP-Template** i configureu la resta de paràmetres segons les vostres necessitats.
+
+- Nombre d'instàncies: 2
+- Subxarxa: Seleccioneu la subxarxa **AMSA-Private01** per a la primera instància i **AMSA-Private02** per a la segona instància. Les podeu anomenar **AMSA-WP-01** i **AMSA-WP-02** respectivament.
+
+
+:::{.callout-important title="Nota sobre les instàncies EC2 🖥️"}
+Aquestes instàncies no tindran IP pública, ja que només seran accessibles a través del balancejador de càrrega que configurarem més endavant. Ara mateix no podreu accedir-hi directament ni per SSH ni per HTTP.
+:::
+
+
+
+## Configuració del Balancejador de Càrrega
+
+En aquest punt, crearem un balancejador de càrrega per a les nostres instàncies EC2. Aquest balancejador de càrrega serà responsable de distribuir uniformement el tràfic entre les instàncies EC2 que allotgen WordPress.
+
+Existeixen 3 tipus de balancejadors de càrrega a AWS: **Application Load Balancer (ALB)**, **Network Load Balancer (NLB)** i **Gateway Load Balancer (GWLB)**. En aquest cas, utilitzarem un **Application Load Balancer (ALB)**, ja que és el recomanat per a aplicacions web que utiltizen HTTP i HTTPS.
+
+Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral, seleccioneu **Load Balancers** i després **Create Load Balancer**. Seleccioneu **Application Load Balancer** i feu clic a **Create**.
+
+- **Nom del balancejador de càrrega**: AMSA-ALB
+- **Scheme**: Internet-facing
+- **IP Address Type**: IPv4
+
+![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-01.png)
+
+- **VPC**: AMSA-VPC
+- **Availability Zones**: Seleccionar les zones de disponibilitat on tenim la subxarxa pública **AMSA-DMZ-01** (us-east-1a) i les **AMSA-DMZ-02** (us-east-1b).
+
+- **Grups de Seguretat**: Nou grup de seguretat (**AMSA-ALB-SG**), aquest grup de seguretat permetrà el tràfic d'entrada per als ports 80 (HTTP) i 443 (HTTPS) des de qualsevol origen però restringirà el tràfic de sortida a les instàncies EC2 (grup de seguretat **AMSA-WP-SG**).
+
+    ![Grup de Seguretat per al balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/AMSA-ALB-SG.png)
+
+    ![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-03.png)
+
+- **Listeners**: Crearem un listener per al port 80 (HTTP), que redirigirà el tràfic al port 80 de les instàncies EC2. Al port 443 (HTTPS) de moment no configurarem cap redirecció. Per fer-ho, primer haureu de crear un **Target Group**. Aquest grup es necessari per indicar al balancejador de càrrega on enviar el tràfic.
+
+  - *Target Group*:
+    - **Target Type**: Instances
+    - **Nom**: AMSA-WP-TG
+    - **Protocol**: HTTP
+    - **Port**: 80
+    - **VPC**: AMSA-VPC
+    - **Health checks**: HTTP, ruta **/**
+
+
+    ![Configuració del target group](../../figs/laboratories/03-aws-wp/wordpress/tg-03.png)
+
+:::{.callout-note title="Health Check 🎯"}
+El balancejador de càrrega comprova ltg-04a salut de les instàncies EC2 a través del port 80 i la ruta **/**. Això significa que el balancejador de càrrega enviarà tràfic a les instàncies EC2 que responguin correctament a les peticions HTTP a la ruta **/**. Com que les nostres instàncies EC2 tenen WordPress instal·lat, aquestes instàncies respondran correctament a les peticions HTTP a la ruta **/**. *Podem deixar la configuració per defecte*.
+:::
+
+- Seleccionarem les dos instàncies EC2 que allotgen WordPress (AMSA-WP-01 i AMSA-WP-02) i les afegirem al target group. Utilitzant el botó **Include as pending below** i després **Add to registered**.
+
+    ![Configuració del target group](../../figs/laboratories/03-aws-wp/wordpress/tg-04.png)
+
+
+- Un cop creat el target group, el seleccionarem com a target del listener del balancejador de càrrega.
+
+    ![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-05.png)
+
+- Un cop creat el balancejador de càrrega, heu d'esperar uns minuts fins que el seu estat passi de **Provisioning** a **Active**. Un cop l'estat sigui **Active**, podeu accedir al balancejador de càrrega a través de la seva adreça DNS.
+
+![Balancejador de càrrega actiu](../../figs/laboratories/03-aws-wp/wordpress/lb-active.png)
+
+- Ara ja podem accedir al balancejador de càrrega a través de la seva adreça DNS i veure la pàgina d'instal·lació de WordPress:
+
+![Instal·lació de WordPress a través del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/wp-config-01.png)
+
+Procedirem a instal·lar WordPress a través del balancejador de càrrega. Seguiu els passos de la instal·lació i configureu l'usuari administrador i la contrasenya. Ara ja teniu el servidor web configurat amb WordPress i el balancejador de càrrega per distribuir el tràfic entre les instàncies EC2.
+
+## Configuració VPN
+
+### EC2 per desplegar el servidor VPN
+
+Per desplegar el servidor VPN, crearem una nova instància EC2 que actuarà com a servidor VPN. Aquesta instància EC2 haurà d'estar en una subxarxa pública connectada a interent. Anomenarem aquesta instància **AMSA-VPN** i la situarem a la subxarxa pública **AMSA-DMZ**. Aquesta instància EC2 utilitzarà el grup de seguretat **AMSA-VPN-SG** que permetrà el tràfic necessari per al funcionament del servidor VPN.
+
+1. Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral, seleccioneu **Instances** i després **Launch Instances**.
+2. Seleccioneu la imatge **Ubuntu Server 22.04 LTS**.
+3. Seleccioneu la instància **t2.micro**.
+4. Configureu la instància:
+    - **Network**: AMSA-VPC
+    - **Subnet**: Front-01
+    - **Auto-assign Public IP**: Enable
+
+    ![Configuració de la instància EC2 per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-VPN.png)
+
+5. Configureu el grup de seguretat: **AMSA-VPN-SG**.
+
+    Si reviseu la documentació d'instal·lació del servidor OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf). Veure que necessitem els següents ports oberts: **TCP 443, TCP 943, UDP 1194**.
+
+    ![Configuració del grup de seguretat per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png)
+
+6. Connecteu-vos a la instància EC2 a través de la consola online de AWS o amb una connexió SSH i executeu la següent comanda per instal·lar el servidor OpenVPN:
+
+    ```bash
+    sudo apt update -y
+    sudo apt install ca-certificates gnupg wget net-tools -y
+    sudo wget https://as-repository.openvpn.net/as-repo-public.asc -qO /etc/apt/trusted.gpg.d/as-repo-public.asc
+    sudo echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/as-repo-public.asc] http://as-repository.openvpn.net/as/debian jammy main" | sudo tee /etc/apt/sources.list.d/openvpn-as-repo.list
+    sudo apt update && sudo apt install openvpn-as -y
+    ```
+
+    ![Instal·lació del servidor OpenVPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-config.png)
+
+7. Amb aquestes credencials, podreu accedir a la interfície web del servidor OpenVPN a través del vostre navegador web. Navegueu a la IP pública de la instància EC2 (en el meu cas https://44.199.196.242:943/admin), com no tenim el certificat SSL configurat, ens sortirà un missatge d'advertència, ignoreu-lo i continueu. Inicieu sessió amb les credencials que heu configurat anteriorment.
+
+    > Nota: Si heu perdut les credencials de l'usuari `openvpn`, les podeu recuperar consultat el fitxer de logs del servidor OpenVPN. Per exemple, podeu consultar el fitxer de logs amb la següent comanda:
+    >
+    > ```bash
+    > sudo less /usr/local/openvpn_as/init.log 
+    > ```
+
+    ![Interfície web del servidor OpenVPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-login.png)
+
+    - Accepteu els termes de llicència.
+  
+    ![Acceptació dels termes de llicència](../../figs/laboratories/03-aws-wp/wordpress/VPN-accept-terms.png)
+
+    - Aneu a **VPN Server/Network Settings** i configureu el **Hostname or IP Address** amb la IP pública de la instància EC2 on teniu el servidor OpenVPN. Un cop fet, clicareu a **Save**.
+
+        ![Configuració de la IP pública del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-01.png)
+
+
+    - Aneu a **Access Controls/Internet Access and DNS** i seleccioneu l'opció **Split Tunnel** per evitar que tot el tràfic del client sigui redirigit a través de la VPN. Únicament el tràfic dirigit a les subxarxes de la VPC serà redirigit a través de la VPN.
+
+        ![Configuració de Split Tunnel](../../figs/laboratories/03-aws-wp/wordpress/VPN-Split-Tunnel.png)
+
+    - Aneu a **Access Controls/Global Access Rules** i afegiu una regla per permetre el tràfic de la VPN a les subxarxes de la VPC:
+  
+        ![Configuració de les regles d'accés global](../../figs/laboratories/03-aws-wp/wordpress/VPN-Global-Acces.png)
+
+    - Aneu a **User** i creu-vos un usuari i una contrasenya per connectar-vos al servidor VPN.
+
+        ![Creació d'un usuari per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-User.png)
+
+    - Un cop tinguem el fitxer de configuració, ja podeu fer un **Restart** del servei OpenVPN per aplicar tots els canvis. Torneu a accedir a la interfície web del servidor OpenVPN.
+
+    - Aneu a **User/user/Connection Profiles** i creeu un perfil de connexió per defecte. Un cop creat us baixarà un fitxer de configuració que després utilitzarem per connectar-nos al servidor VPN.
+
+        ![Descàrrega del fitxer de configuració del client VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-Connection-Profile.png)
+
+    
+
+    - Installeu l'aplicació [OpenVPN Connect](https://openvpn.net/client/) al vostre ordinador. Aquesta aplicació és el client VPN que utilitzarem per connectar-nos al servidor VPN.
+
+    - Un cop instal·lat, obriu l'aplicació i importeu el fitxer de configuració que heu descarregat anteriorment.
+
+        
+8.  Un cop tot configurat, actualitzarem el grup de seguretat de les instàncies EC2 per permetre el tràfic al port 22 únicament provinent del servidor VPN. Això significa que les instàncies EC2 només acceptaran tràfic SSH del servidor VPN i no de qualsevol altre origen.
+
+    ![Configuració tràfic SSH a Ec2 del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/ec2-ssh-only-vpn.png)
+
+En aquest punt, ja no podreu accedir a les instàncies EC2 on teniu el servei de WordPress a través de SSH, ja que el tràfic SSH només es permet des del servidor VPN. Per accedir a les instàncies EC2, primer heu de connectar-vos al servidor VPN i després connectar-vos a les instàncies EC2. Per fer-ho:
+
+- Importeu el fitxer de configuració del client OpenVPN Connect a l'aplicació i connecteu-vos al servidor VPN.
+  
+    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-01.png)
+
+    > **TroubleShooting**: Si en el fitxer de configuració veieu (**Server Hostname**) una ip del rang 10.0.X.X, això vol dir que la VPN no s'ha configurat correctament. Assegureu-vos de reiniciar el servidor i tornar a descarregar el fitxer de configuració del client, ha de tenir la ip pública del servidor VPN.
+
+- Utilitzeu la mateixa contrasenya del usuari `openvpn` per connectar-vos al servidor VPN.
+
+    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-02.png)
+
+- Si tot ha anat bé, veureu que esteu connectats al servidor VPN.
+
+    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-03.png)
+  
+Finalment, connecteu-vos a les instàncies EC2:
+
+![Accés a les instàncies EC2 a través del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-SSH.png)
+
+> **Consideracions importants**: El servidor VPN ens permet accedir a les instàncies EC2 a través de SSH, però a partir de l'adreça interna (10.0.X.X) de la instància EC2. No podrem accedir a les instàncies EC2 a través de la seva adreça pública ja que hem configurat la VPN per accedir a les subxarxes de la VPC.
+
+
+## Test final
+
+Podeu utilitzar `curl` o recarregar la pàgina web per veure com el balancejador de càrrega distribueix el tràfic entre les instàncies EC2.
+
+```bash
+curl http://AMSA-ALB-XXXXXXX.us-west-2.elb.amazonaws.com
+```
+
+Per observar-ho podeu accedir als logs de les instàncies EC2 i veure com el tràfic es distribueix entre les dues instàncies.
+
+```bash
+sudo tail -f /var/log/httpd/access_log
+```
+
+
+## Neteja els recursos creats
+
+Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
+
+
+
+

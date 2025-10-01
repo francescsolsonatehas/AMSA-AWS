@@ -78,6 +78,10 @@ website:
                 text: Laboratori 01 · Introducció a AWS
               - href: ./laboratories/01-foundations/02-aws-wordpress.qmd
                 text: Laboratori 02 · Desplegament d'una aplicació web amb AWS
+          - section: Networking
+            contents:
+              - href: ./laboratories/02-network/01-aws-wordpress.qmd
+                text: Laboratori 03 · Desplegament d'una aplicació web amb alta disponibilitat amb AWS
       - section: Projectes
         contents:
           - href: ./projects/01-project/01-project.qmd
