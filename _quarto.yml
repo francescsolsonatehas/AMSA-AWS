@@ -43,6 +43,8 @@ website:
             text: Unitat 02 · Arrencada del sistema (Part 2)
           - href: ./slides/02-booting-part3.qmd
             text: Unitat 02 · Arrencada del sistema (Part 3)
+          - href: ./slides/03-filesystem-part1.qmd
+            text: Unitat 03 · Sistemes de fitxers (Part 1)
       - section: Activitats
         contents:
           - section: Unitat 01 · Fonaments de l'Administració de Sistemes
