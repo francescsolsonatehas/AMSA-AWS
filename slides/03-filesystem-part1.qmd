@@ -714,7 +714,11 @@ graph TD
   - L’assignació retardada espera a bloquejar l’espai fins just abans d’escriure, optimitzant la distribució de blocs.
   - Això permet agrupar escriptures i minimitzar la fragmentació.
 
+## Exercicis Propostas
 
+-   [Administració Bàsica de Sistemes de Fitxers](../exercises/03-fs/08-ex-week5.qmd)
+-   Discussió: [**Secure Boot és realment segur?**](https://github.com/amsa-gei-udl-2526-105013/course/issues/3): Cerca notícies recents sobre Secure Boot i comparteix-les al fòrum del curs. Debatiu sobre avantatges, desavantatges, vulnerabilitats conegudes i experiències personals.
+-   [Pràctica 01: Snapshots i restauració amb systemd i initramfs](../projects/01-project/01-project.qmd)
 
 
 ## That's all

@@ -1,5 +1,5 @@
 ---
-title: "Migració de directoris a particions diferents"
+title: "Administració bàsica de Sistemes de Fitxers"
 lang: ca
 ---
 
@@ -154,100 +154,101 @@ En aquest punt podriam optimitzar la configuració particions per a millorar el 
 La opció `defaults` és una col·lecció d'opcions que s'utilitzen per defecte en la majoria de sistemes de fitxers. Aquestes opcions inclouen `rw` (lectura i escriptura), `suid` (permet l'ús de l'atribut suid), és a dir, evita que es puguin exectuar programaes amb permisos de superusuari, `dev` (permet l'ús de dispositius), `exec` (permet l'execució de fitxers binaris), `auto` (muntatge automàtic en l'arrencada del sistema), `nouser` (només l'usuari root pot muntar la partició) i `async` (permet l'escriptura asíncrona).
 :::
 
-    - Comprova les opcions després d'editar el fitxer `/etc/fstab`.
+- Comprova les opcions després d'editar el fitxer `/etc/fstab`.
+
+```bash
+mount | grep /tmp
+```
+
+- Per aplicar les opcions de muntatge a la partició `/tmp`, farem un `reboot` del sistema.
+  
+- Testem les opcions de muntatge de la partició `/tmp`:
+  
+    1. Prova d'executar un programa des de la partició `/tmp` com a usuari no privilegiat.
+
+    ```bash
+    echo "echo 'Hello, World'" > /tmp/hello.sh
+    chmod +x /tmp/hello.sh
+    /tmp/hello.sh
+    bash /tmp/hello.sh
+    ```
+
+    2. Prova de fer el mateix com a usuari privilegiat.
+
+    ```bash
+    su -
+    /tmp/hello.sh
+    bash /tmp/hello.sh
+    ```
+
+    > 👁️ **Observació**:
+    >
+    > Observeu que la opció `noexec` impedeix la execució dels binaris però no ens protegeix contra l'execució de scripts de bash.
+
+    3. Prova d'accedir a un dispositiu creat a `/tmp`:
+
+       - Inicialitza un dispositiu a `/tmp` utilitzant la comanda `mknod`.
 
         ```bash
-        mount | grep /tmp
+        mknod /tmp/dispositiu c 1 3
         ```
-    - Per aplicar les opcions de muntatge a la partició `/tmp`, farem un `reboot` del sistema.
-  
-    - Testem les opcions de muntatge de la partició `/tmp`:
-  
-        1. Prova d'executar un programa des de la partició `/tmp` com a usuari no privilegiat.
 
-            ```bash
-            echo "echo 'Hello, World'" > /tmp/hello.sh
-            chmod +x /tmp/hello.sh
-            /tmp/hello.sh
-            bash /tmp/hello.sh
-             ```
+        > ⚠️ **Compte**:
+        >
+        > La comanda `mknod` única i exclusivament la poden fer els usuaris amb permisos de superusuari. Per tant, feu servir la comanda `su` per a canviar a l'usuari `root` abans de fer servir la comanda `mknod`.
 
-        2. Prova de fer el mateix com a usuari privilegiat.
+       - Per accedir al dispositiu, utilitza la comanda `cat`.
 
-            ```bash
-            su -
-            /tmp/hello.sh
-            bash /tmp/hello.sh
-            ```
+        ```bash
+        cat /tmp/dispositiu
+        ```
 
-            > 👁️ **Observació**:
-            >
-            > Observeu que la opció `noexec` impedeix la execució dels binaris però no ens protegeix contra l'execució de scripts de bash.
+        > 👁️ **Observació**:
+        >
+        > Fixeu-vos que quan intento accedir a un dispositiu al directori actual, no hi ha cap problema. Però quan intento accedir al dispositiu creat a `/tmp`, rebre un missatge d'error indicant que no es pot accedir al dispositiu. Això és degut a la opció `nodev` que impedeix l'accés a dispositius en la partició.
 
-        3. Prova d'accedir a un dispositiu creat a `/tmp`:
+   - Per veure, les implicacions de la opció `nosuid`, podem realitzar el següent experiment:
 
-            - Inicialitza un dispositiu a `/tmp` utilitzant la comanda `mknod`.
+        Per fer-ho, crearem un executable amb c que ens indicarà l'identificador de l'usuari real i l'identificador de l'usuari efectiu. On l'usuari real és l'usuari que ha iniciat la sessió i l'usuari efectiu és l'usuari que executa el programa. Si un programa té el bit `suid` activat, l'usuari efectiu serà l'usuari propietari del programa i no l'usuari que l'ha executat.
 
-                ```bash
-                mknod /tmp/dispositiu c 1 3
-                ```
+        ```c
+        #include <stdio.h>
+        #include <sys/types.h>
+        #include <unistd.h>
 
-                > ⚠️ **Compte**:
-                >
-                > La comanda `mknod` única i exclusivament la poden fer els usuaris amb permisos de superusuari. Per tant, feu servir la comanda `su` per a canviar a l'usuari `root` abans de fer servir la comanda `mknod`.
+        int main() {
+            printf("Effective user ID: %d\n", geteuid());
+            printf("Real user ID: %d\n", getuid());
+            return 0;
+        }
+        ```
 
-            - Per accedir al dispositiu, utilitza la comanda `cat`.
+        Compilem el programa amb la comanda `gcc`.
 
-                ```bash
-                cat /tmp/dispositiu
-                ```
+        ```bash
+        gcc -o /tmp/suid /tmp/suid.c
+        ```
 
-            > 👁️ **Observació**:
-            >
-            > Fixeu-vos que quan intento accedir a un dispositiu al directori actual, no hi ha cap problema. Però quan intento accedir al dispositiu creat a `/tmp`, rebre un missatge d'error indicant que no es pot accedir al dispositiu. Això és degut a la opció `nodev` que impedeix l'accés a dispositius en la partició.
+    - Desactiva la opció `nosuid` i també la opció `noexec` per a la partició `/tmp`. Per fer-ho, utilitza l'usuari `root` per a editar el fitxer `/etc/fstab`.
 
-        4. Per veure, les implicacions de la opció `nosuid`, podem realitzar el següent experiment:
+    - Remunta la partició `/tmp`.
 
-            Per fer-ho, crearem un executable amb c que ens indicarà l'identificador de l'usuari real i l'identificador de l'usuari efectiu. On l'usuari real és l'usuari que ha iniciat la sessió i l'usuari efectiu és l'usuari que executa el programa. Si un programa té el bit `suid` activat, l'usuari efectiu serà l'usuari propietari del programa i no l'usuari que l'ha executat.
+    - Prova d'executar el programa com a usuari no privilegiat.
 
-            ```c
-            #include <stdio.h>
-            #include <sys/types.h>
-            #include <unistd.h>
+        ```bash
+        /tmp/suid
+        ```
 
-            int main() {
-                printf("Effective user ID: %d\n", geteuid());
-                printf("Real user ID: %d\n", getuid());
-                return 0;
-            }
-            ```
+    - Activa la opció `nosuid` i torna a provar d'executar el programa.
 
-            Compilem el programa amb la comanda `gcc`.
-
-            ```bash
-            gcc -o /tmp/suid /tmp/suid.c
-            ```
-
-            - Desactiva la opció `nosuid` i també la opció `noexec` per a la partició `/tmp`. Per fer-ho, utilitza l'usuari `root` per a editar el fitxer `/etc/fstab`.
-
-            - Remunta la partició `/tmp`.
-
-            - Prova d'executar el programa com a usuari no privilegiat.
-
-                ```bash
-                /tmp/suid
-                ```
-
-            - Activa la opció `nosuid` i torna a provar d'executar el programa.
-
-                ```bash
-                /tmp/suid
-                ```
+        ```bash
+        /tmp/suid
+        ```
 
 
-            > 👁️ **Observació**:
-            >
-            > Fixeu-vos que quan la opció `nosuid` està activada, no es pot executar el programa amb permisos de superusuari. Això és important per a evitar que els usuaris no privilegiats puguin executar programes amb permisos de superusuari. Aquesta opció pot permetre escalar privilegis i comprometre la seguretat del sistema.
+    > 👁️ **Observació**:
+    >
+    > Fixeu-vos que quan la opció `nosuid` està activada, no es pot executar el programa amb permisos de superusuari. Això és important per a evitar que els usuaris no privilegiats puguin executar programes amb permisos de superusuari. Aquesta opció pot permetre escalar privilegis i comprometre la seguretat del sistema.
 
 > 🔍  **Pregunta**: *Per què és important tenir els directoris `/var`, `/tmp` i `/opt` en particions diferents?*
 >
@@ -347,30 +348,30 @@ hexedit /dev/nvme0n2p4
 mount /home
 ```
 
-    Si la partició `/home` s'ha corromput, hauríeu de veure un missatge d'error com aquest:
+Si la partició `/home` s'ha corromput, hauríeu de veure un missatge d'error com aquest:
 
-    ![home_corrupte](../../figs/exercises/fs-01/home_corrupte.png)
+![](../../figs/exercises/fs-01/home_corrupte.png)
 
-5. Els diferents sistemes de fitxers tenen eines per a comprovar la integritat dels fitxers. Per exemple, el sistema de fitxers `xfs` té l'eina `xfs_ncheck` que permet comprovar la integritat dels fitxers.
+Els diferents sistemes de fitxers tenen eines per a comprovar la integritat dels fitxers. Per exemple, el sistema de fitxers `xfs` té l'eina `xfs_ncheck` que permet comprovar la integritat dels fitxers.
 
-    ```bash
-    xfs_ncheck /dev/nvme0n2p4
-    ```
+```bash
+xfs_ncheck /dev/nvme0n2p4
+```
 
-6. Per a reparar la partició `/home` utilitzarem l'eina `xfs_repair`.
+Per a reparar la partició `/home` utilitzarem l'eina `xfs_repair`.
 
-    ```bash
-    xfs_repair /dev/nvme0n2p4
-    ```
+```bash
+xfs_repair /dev/nvme0n2p4
+```
 
-7. Un cop reparada la partició `/home`, la muntarem de nou.
+Un cop reparada la partició `/home`, la muntarem de nou.
 
-    ```bash
-    mount /home
-    ```
+```bash
+mount /home
+```
 
-8. Comprovarem que la partició `/home` s'ha muntat correctament i conté els fitxers que havíem creat.
+Comprovarem que la partició `/home` s'ha muntat correctament i conté els fitxers que havíem creat.
 
-    ```bash
-    ls /home
-    ```
+```bash
+ls /home
+```

@@ -69,6 +69,10 @@ website:
                 text: Activitat 6 · Anàlisi del procés d'arrencada amb systemd
               - href: ./exercises/02-booting/07-ex-week4.qmd
                 text: Activitat 7 · Servei de Còpia de Seguretat Automàtica amb systemd
+          - section: Unitat 03 · Sistemes de fitxers
+            contents:
+              - href: ./exercises/03-fs/08-ex-week5.qmd
+                text: Activitat 8 · Administració bàsica de Sistemes de Fitxers
 
       - section: Laboratoris
         contents:
