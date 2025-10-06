@@ -88,7 +88,7 @@ El firmware està emmagatzemat en un xip de memòria flash a la placa base. L’
 ## Diferències entre BIOS i UEFI (I) {.smaller}
 
 | Característica | BIOS | UEFI |
-|------------------|------------------------|------------------------------|
+|-------------------|------------------------|------------------------------|
 | **Emmagatzematge** | Tradicionalment en **ROM** (avui dia flash EEPROM) | **Flash SPI** a la placa base + **EFI System Partition (ESP)** al disc |
 | **Capacitat de disc** | Fins a 2,2 TB (per limitació 32-bit LBA, sectors 512 B) | Fins a 9,4 ZB (GPT) |
 | **Interfície** | Text | Gràfica, amb suport per ratolí i resolucions altes |
@@ -98,7 +98,7 @@ El firmware està emmagatzemat en un xip de memòria flash a la placa base. L’
 ## Diferències entre BIOS i UEFI (II) {.smaller}
 
 | Característica | BIOS | UEFI |
-|------------------|------------------------|------------------------------|
+|-------------------|------------------------|------------------------------|
 | **Velocitat d’arrencada** | Més lenta | Més ràpida gràcies a inicialització paral·lela de drivers i *fast boot* |
 | **Taula de particions** | MBR | GPT |
 | **Nombre màxim de particions** | 4 primàries (amb lògiques dins d’estesa) | Fins a 128 entrades de particions |
@@ -260,7 +260,7 @@ La **consola de la UEFI** és una interfície de línia de comandes que permet i
 ## Comandes de la consola de la UEFI {.smaller}
 
 | Comanda | Funció | Exemple |
-|-----------------|------------------------------|--------------------------|
+|------------------|-----------------------------|-------------------------|
 | **map** | Mostra els dispositius detectats i les unitats lògiques associades | `map fs*` → llista tots els sistemes de fitxers detectats |
 | **mem** | Mostra l’ús de memòria i mapa físic de la RAM | `memmap` → mapa detallat de la memòria física |
 | **ls** | Llista fitxers i directoris dins un FS accessible | `ls fs0:\EFI\Boot` → mostra fitxers de la partició EFI |
@@ -306,7 +306,7 @@ Un **bootloader** és el programa encarregat de:
 ## Diferents gestors d'arrencada {.smaller}
 
 | Bootloader | Compatibilitat | Característiques principals |
-|----------------|----------------|----------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | **LILO** | BIOS | Antic bootloader Linux, obsolet. |
 | **GRUB** | BIOS/UEFI | Popular en Linux; menú configurable; suport multiboot. |
 | **GRUB2** | BIOS/UEFI | Versió moderna; suport FAT, NTFS, ext4; millor multiboot i scripting. |
