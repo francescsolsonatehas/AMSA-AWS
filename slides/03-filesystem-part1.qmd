@@ -28,14 +28,14 @@ La implementació d'un **Sistema de Fitxers (FS)** és essencial per a l'organit
 En els sistemes operatius moderns (*UNIX-like*), el seu rol s'estén molt més enllà de la gestió de dades persistents al disc, abracant una filosofia fonamental.
 :::
 
-::: {.center-container}
+::: center-container
 **Everything is a File**
 :::
 
 ## Necessitat d'un Sistema de Fitxers (II) {.smaller}
 
-| Tipus de Recurs | Exemple de Path | Sistema de Fitxers | Característica |
-| :--- | :--- | :--- |
+| Tipus de Recurs | Exemple de Path | Sistema de Fitxers |
+|:-----------------------|:-----------------------|:-----------------------|
 | **Procés/Estat del Kernel** | `/proc/PID` (p. ex., `/proc/1234/status`) | `procfs` (Memòria, no disc) |
 | **Dispositiu de Blocs** | `/dev/sda1` | `devfs` o `udev` |
 | **Punts de Configuració** | `/etc/hosts`, `/usr/bin/comando` | FS persistent (Ext4, XFS) |
@@ -48,10 +48,10 @@ La implementació d'un sistema de fitxers permet unificar l'accés a recursos he
 
 ## Dispositius i Device Files {.smaller}
 
-Un Fitxer de Dispositiu (*Device File o Node*) és un nom assignat a un dispositiu d'E/S (Entrada/Sortida), ja sigui **físic** (disc, targeta de so) o **lògic** (port de xarxa, terminal). 
+Un Fitxer de Dispositiu (*Device File o Node*) és un nom assignat a un dispositiu d'E/S (Entrada/Sortida), ja sigui **físic** (disc, targeta de so) o **lògic** (port de xarxa, terminal).
 
 | Tipus de Dispositiu | Exemples Comuns | Característica |
-| :--- | :--- | :--- |
+|:-----------------------|:-----------------------|:-----------------------|
 | Blocs (Block Devices) | `/dev/sda` (Disc sencer), `/dev/sdb1` (Partició), `/dev/md0` (RAID) | Transfereixen dades en blocs de mida fixa. Són cachejables i permeten accés aleatori. |
 | Caràcters (Character Devices) | `/dev/ttyX` (Terminals), `/dev/lp0` (Port Paral·lel), `/dev/input/mouse0` | Transfereixen dades seqüencialment caràcter a caràcter. No tenen caching de blocs. |
 
@@ -66,10 +66,10 @@ Un **Sistema de Fitxers (FS)** és la capa lògica fonamental que gestiona l'acc
 ::: {.callout-note title="Múltiples FS actius"}
 És habitual que un sistema operatiu gestioni simultàniament diverses instàncies de sistemes de fitxers diferents:
 
-- **Ext4** per a dades d'usuari (`/home`)
-- **Btrfs** per a backups automàtics
-- **tmpfs** per a fitxers temporals (`/tmp`)
-- **procfs** per a informació del kernel (`/proc`)
+-   **Ext4** per a dades d'usuari (`/home`)
+-   **Btrfs** per a backups automàtics
+-   **tmpfs** per a fitxers temporals (`/tmp`)
+-   **procfs** per a informació del kernel (`/proc`)
 
 Cadascun muntat en un punt d'accés lògic diferent.
 :::
@@ -79,14 +79,13 @@ Cadascun muntat en un punt d'accés lògic diferent.
 Tot i les diferències estructurals a nivell de disc, el **VFS (Virtual Filesystem Switch)** del *kernel* utilitza abstraccions uniformes per oferir una interfície consistent als processos.
 
 | Abstracció | Ubicació | Funció Tècnica | Persistència |
-|:-|:--|:----|:-|
+|:---------------|:---------------|:-----------------------|:---------------|
 | **Superbloc** | Disc + Memòria | Conté **metadata global** del FS: tipus, mida, estat, punters clau | Persistent |
 | **Inode** | Disc + Memòria | **Metadata del fitxer**: permisos, timestamps, punters a blocs de dades | Persistent |
 | **Dentry** | Només Memòria | **Entrada de Directori**: cacheja nom del fitxer ↔ inode | Temporal |
 | **File Object** | Només Memòria | Representa un fitxer obert per un procés (file descriptors) | Temporal |
 
 Permet que un programa pugui treballar amb fitxers *Ext4, XFS, NTFS o FAT32* sense modificar ni una sola línia de codi.
-
 
 ## Jerarquia Lògica de les Abstraccions {.smaller}
 
@@ -145,25 +144,24 @@ Una `Dentry Cache` saturada o poc eficient pot degradar significativament el ren
 :::
 
 ::: notes
-- FileObject: Un procés obre un fitxer, creant un FileObject amb un File Descriptor.
-- Dentry (Cache): El FileObject resol el camí a través d'una cadena de Dentries (des de la muntura fins al fitxer final). El Dentry proporciona l'associació Nom → Inode.
-- Inode: El número d'Inode permet al VFS carregar les metadades on-disk a memòria. Aquesta estructura conté els punters directes i indirectes als blocs de dades.
+-   FileObject: Un procés obre un fitxer, creant un FileObject amb un File Descriptor.
+-   Dentry (Cache): El FileObject resol el camí a través d'una cadena de Dentries (des de la muntura fins al fitxer final). El Dentry proporciona l'associació Nom → Inode.
+-   Inode: El número d'Inode permet al VFS carregar les metadades on-disk a memòria. Aquesta estructura conté els punters directes i indirectes als blocs de dades.
 :::
 
 ## Relacions *In-Memory* del VFS {.smaller}
 
-- Múltiples descriptors de fitxer poden apuntar al mateix fitxer (`dup()`).
-- Múltiples abstraccions de fitxer poden apuntar a la mateixa `Dentry` (obrim el mateix *path* diverses vegades).
-- Múltiples `Dentries` poden apuntar al mateix `Inode` (Hard Links).
+-   Múltiples descriptors de fitxer poden apuntar al mateix fitxer (`dup()`).
+-   Múltiples abstraccions de fitxer poden apuntar a la mateixa `Dentry` (obrim el mateix *path* diverses vegades).
+-   Múltiples `Dentries` poden apuntar al mateix `Inode` (Hard Links).
 
-![](../figs/slides/03-fs/vfs-in-memory.png){width=60%}
-
+![](../figs/slides/03-fs/vfs-in-memory.png){width="60%"}
 
 ## El Superbloc
 
 El **Superbloc** és el punt de referència absolut de qualsevol Sistema de Fitxers (FS). Sense aquesta estructura, el *kernel* no pot ni tan sols intentar muntar el volum.
 
-::: { .callout-important title="Avís"}
+::: {.callout-important title="Avís"}
 Si el **Superbloc** es corromp (per un error de disc o d'E/S), el sistema de fitxers esdevé **inaccessible** fins que es restaura una de les seves còpies de seguretat (*backup copies*).
 :::
 
@@ -171,33 +169,31 @@ Per aquest motiu, els FS moderns mantenen **múltiples còpies** del superbloc d
 
 ## Organització Física del Superbloc {.smaller}
 
-![](../figs/slides/03-fs/superblocs.png){width=70%}
+![](../figs/slides/03-fs/superblocs.png){width="70%"}
 
 ::: notes
 El diagrama mostra que el superbloc es troba típicament a l'inici del sistema de fitxers i que hi ha diversos blocs utilitzats amb diferents propòsits: alguns per emmagatzemar dentries, alguns per emmagatzemar inodes i alguns per emmagatzemar blocs de dades d'usuari. També hi ha blocs utilitzats per gestionar els blocs lliures disponibles (p. ex., mapes de bits per als sistemes de fitxers simples).
 :::
 
-
 ## Abstraccions del Superbloc {.smaller}
 
 | Component | Funció | Ubicació |
-| :- | :---- | :-- |
+|:-----------------|:--------------------------------|:--------------------|
 | **Superbloc** | Conté la metadata global del FS: tipus, mida, estat, i punters clau. | Inici del FS (i còpies de seguretat). |
 | **IMAP (Inode Map)** | Bitmap per a l'assignació i desassignació d'Inodes. Indica quins Inodes estan lliures o en ús dins de la IZONE. | Bloc(s) assignat(s) pel Superbloc. |
 | **DMAP (Data Map)** | Bitmap per a l'assignació i desassignació de Blocs de Dades. Indica quins blocs de la DZONE estan lliures o en ús. | Bloc(s) assignat(s) pel Superbloc. |
 | **IZONE** | Àrea que conté les estructures d'Inode dels fitxers. | Després dels mapes. |
 | **DZONE** | Àrea que conté les dades d'usuari (el contingut real dels fitxers). | Després de la IZONE. |
 
-
 ## Estructura i Implementació del Superbloc {.smaller}
 
 El Superbloc no només s'autodefineix, sinó que defineix l'arquitectura de tota la partició:
 
-* **`fs_type`**: El tipus de FS (p. ex., EXT4\_MAGIC).
-* **`s_blocks_count`**: El nombre total de blocs al FS.
-* **`s_log_block_size`**: Defineix la mida del bloc lògic (p. ex., 1K, 4K). **Tota la I/O es fa en aquesta unitat.**
-* **Punters a Bitmaps**: Adreces del primer bloc de l'**IMAP** i el **DMAP**.
-* **Estat del FS**: Indica si el FS va ser desmuntat netament o si va patir un *crash* (`s_state` - important per al *fsck*).
+-   **`fs_type`**: El tipus de FS (p. ex., EXT4_MAGIC).
+-   **`s_blocks_count`**: El nombre total de blocs al FS.
+-   **`s_log_block_size`**: Defineix la mida del bloc lògic (p. ex., 1K, 4K). **Tota la I/O es fa en aquesta unitat.**
+-   **Punters a Bitmaps**: Adreces del primer bloc de l'**IMAP** i el **DMAP**.
+-   **Estat del FS**: Indica si el FS va ser desmuntat netament o si va patir un *crash* (`s_state` - important per al *fsck*).
 
 ## Mapes de Bits (Bitmaps) {.smaller}
 
@@ -206,12 +202,13 @@ Els mapes de bits són crucials per a l'eficiència en l'assignació:
 1.  **IMAP (Inode Bitmap):** Cada bit representa l'estat d'un únic Inode a la IZONE. `1` = En ús, `0` = Lliure.
 2.  **DMAP (Data Bitmap):** Cada bit representa l'estat d'un únic bloc a la DZONE. `1` = Ocupat per dades, `0` = Lliure per assignació.
 
-::: { .callout-tip }
+::: callout-tip
 #### Optimització (*Caching*)
+
 Quan el FS es munta, el *kernel* carrega el **Superbloc** i, almenys parcialment, els mapes **IMAP** i **DMAP** a la memòria. Això permet que les noves assignacions de fitxers i blocs siguin extremadament ràpides sense requerir una E/S de disc constant.
 :::
 
-:::{ .callout-note title="FS Grans"}
+::: {.callout-note title="FS Grans"}
 Es carreguen parcialment i a demanda per no gastar massa memòria en FS grans.
 :::
 
@@ -219,20 +216,20 @@ Es carreguen parcialment i a demanda per no gastar massa memòria en FS grans.
 
 ## Mapping: Crides de Sistema → VFS {.smaller}
 
-::: columns
+::::: columns
 ::: {.column width="60%"}
 | Crida al Sistema | Operació VFS | Descripció |
-| :- | :- | :--- |
-| `mount()` | `vfs_mount()` | Muntar un FS. |   
+|:------------------|:------------------|:----------------------------------|
+| `mount()` | `vfs_mount()` | Muntar un FS. |
 | `open()` | `vfs_open()` | Obrir un fitxer (i obtenir un FD). |
 | `stat()` / `fstat()` | `vfs_stat()` / `vfs_fstat()` | Consultar atributs del fitxer. |
 | `read()` / `write()` | `vfs_read()` / `vfs_write()` | Llegir o escriure dades. |
 | `create()` / `delete()` | `vfs_create()` / `vfs_unlink()` | Crear i eliminar fitxers. |
 | `close()` | `vfs_close()` | Tancar un fitxer |
 :::
-::: {.column width="40%"}
 
-El VFS és l'abstracció de Linux que permet gestionar múltiples tipus de FS (Ext4, XFS, NTFS) de manera transparent. 
+::: {.column width="40%"}
+El VFS és l'abstracció de Linux que permet gestionar múltiples tipus de FS (Ext4, XFS, NTFS) de manera transparent.
 
 ```{mermaid}
 %%| echo: false
@@ -247,26 +244,24 @@ graph TD
     style C1 fill:#f9f5dd,stroke:#c4aa18
     style C2 fill:#f9f5dd,stroke:#c4aa18
 ```
-
 :::
-:::
+:::::
 
 ## Montatge d'un FS {.smaller}
 
-```bash
+``` bash
 # Sintaxi: mount -t <fs_type> <device> <mount_point>
 mount -t ext4 /dev/nvme0n1p2 /home
 mount -t btrfs /dev/sdb1 /backup
 mount -t tmpfs -o size=1G tmpfs /tmp/ramdisk
 ```
 
-| Pas	| Descripció	| Implicació |
-| :- | :--- | :- |
-| 1. *Entrada/Sortida*	| **Input**: Dispositiu de blocs (Partició). **Output**: Dentry arrel del FS.	|  |
-| 2. *Check Device*	| Validació de l'estructura inicial del FS.	|  |
-| 3. *Llegir Superbloc*	| Determinar paràmetres (mida de bloc, magic number). Carregar el Superbloc a memòria.	| Crític: Estableix el context global. |
-| 4. *Crear Inode i Dentry*	| Localitzar el Root Inode (e.g., inode 2 a Ext4) i crear l'estructura Dentry arrel a la memòria.	| Inici de la navegació lògica. |
-
+| Pas | Descripció | Implicació |
+|:------------------|:----------------------------------|:------------------|
+| 1\. *Entrada/Sortida* | **Input**: Dispositiu de blocs (Partició). **Output**: Dentry arrel del FS. |  |
+| 2\. *Check Device* | Validació de l'estructura inicial del FS. |  |
+| 3\. *Llegir Superbloc* | Determinar paràmetres (mida de bloc, magic number). Carregar el Superbloc a memòria. | Crític: Estableix el context global. |
+| 4\. *Crear Inode i Dentry* | Localitzar el Root Inode (e.g., inode 2 a Ext4) i crear l'estructura Dentry arrel a la memòria. | Inici de la navegació lògica. |
 
 ## Obertura d'un Fitxer {.smaller}
 
@@ -285,9 +280,7 @@ sequenceDiagram
     VFS->>P: 4. Assignar **File Descriptor** (FD)
 ```
 
-
-
-## Consultar Atributs 
+## Consultar Atributs
 
 ```{mermaid}
 %%| echo: false
@@ -301,7 +294,6 @@ sequenceDiagram
     FS-->>VFS: 3. Retornar Atributs
     VFS-->>P: 4. Retornar Atributs UID, GID, Permisos, Mida, Timestamps
 ```
-
 
 ## Operacions de Lectura
 
@@ -319,7 +311,7 @@ sequenceDiagram
     VFS-->>P: 5. Copiar dades a l'espai d'usuari
 ```
 
-## Operacions d'Escriptura 
+## Operacions d'Escriptura
 
 ```{mermaid}
 %%| echo: false
@@ -349,16 +341,14 @@ sequenceDiagram
     J->>BD: Commit transacció journal
 ```
 
-
 ## Escriptura Asíncrona i Writeback {.smaller}
 
 La escriptura asíncrona permet que les operacions d'escriptura es realitzin en segon pla, millorant la resposta del sistema. Les dades es desplacen a la *page cache* i es poden escriure al disc més tard.
 
-- **Dirty Pages:** Pàgines a la memòria que han estat modificades però encara no s'han escrit al disc.
-- **Writeback:** Procés de transferir les *dirty pages* de la memòria al disc.
-- **Journaling:** Mecanisme per assegurar la integritat del FS en cas de fallada durant el writeback.
-- **Flush:** Operació per escriure immediatament les *dirty pages* al disc.
-
+-   **Dirty Pages:** Pàgines a la memòria que han estat modificades però encara no s'han escrit al disc.
+-   **Writeback:** Procés de transferir les *dirty pages* de la memòria al disc.
+-   **Journaling:** Mecanisme per assegurar la integritat del FS en cas de fallada durant el writeback.
+-   **Flush:** Operació per escriure immediatament les *dirty pages* al disc.
 
 ## Creació de Directoris {.smaller}
 
@@ -399,7 +389,7 @@ sequenceDiagram
 El **VFS (Virtual Filesystem Switch)** estableix dos conjunts d'operacions que el *driver* de cada Sistema de Fitxers ha d'implementar. Aquests mètodes permeten al *kernel* interactuar amb les metadades de forma uniforme.
 
 | Operació | Funció Tècnica | Propòsit |
-| :--- | :--- | :--- |
+|:-----------------------|:-----------------------|:-----------------------|
 | **`fill_super()`** | Llegeix l'estat global del FS (total/lliure d'Inodes i Blocs). | Inicialització i muntatge. |
 | **`write_super()`** | Persisteix les estadístiques i l'estat actualitzat al disc. | Canvis en l'assignació. |
 | **`put_super()`** | Allibera la memòria associada a la instància del FS. | Desmuntatge (`umount`). |
@@ -408,15 +398,15 @@ El **VFS (Virtual Filesystem Switch)** estableix dos conjunts d'operacions que e
 
 Malgrat el nom, la majoria d'aquestes operacions tracten amb la gestió de les **Dentries** i la jerarquia de noms de fitxer (no el contingut de l'Inode en si).
 
-* **Creació i Cerca:** `create`, **`lookup`**, `link`, `unlink`.
-* **Directori i Enllaços:** `mkdir`, `rmdir`, `symlink`, `readlink`, `rename`.
+-   **Creació i Cerca:** `create`, **`lookup`**, `link`, `unlink`.
+-   **Directori i Enllaços:** `mkdir`, `rmdir`, `symlink`, `readlink`, `rename`.
 
-::: { .callout-note title="Tipus d'Inode"}
+::: {.callout-note title="Tipus d'Inode"}
 Els *drivers* de FS treballen amb dos tipus d'Inode:
 
 1.  **VFS Inode:** Estructura genèrica utilitzada pel *kernel*.
 2.  **FS Inode:** Estructura interna del *driver* (p. ex., la versió Ext4 o XFS).
-   
+
 El *driver* és responsable de la conversió entre aquestes dues estructures segons sigui necessari.
 :::
 
@@ -426,21 +416,21 @@ El *driver* és responsable de la conversió entre aquestes dues estructures seg
 
 Aquesta *cache* emmagatzema les metadades del fitxer a memòria (l'estructura de l'Inode), evitant lectures repetitives a la **IZONE** del disc.
 
-* **Estructura:** S'indexa mitjançant una **Taula Hash** (*hash table*).
-* **Clau Hash:** Es genera a partir de la tupla **(Superbloc, Número d'Inode)**.
-* **Política:** Els Inodes es mantenen fins que el FS es desmunta, s'elimina el fitxer, o hi ha pressió de memòria (*memory pressure*).
+-   **Estructura:** S'indexa mitjançant una **Taula Hash** (*hash table*).
+-   **Clau Hash:** Es genera a partir de la tupla **(Superbloc, Número d'Inode)**.
+-   **Política:** Els Inodes es mantenen fins que el FS es desmunta, s'elimina el fitxer, o hi ha pressió de memòria (*memory pressure*).
 
 ## Cache de Dentries {.smaller}
 
-La Dcache és l'eina més important per a la resolució ràpida de camins (*path lookup*). **Cacheja la relació Nom $\rightarrow$ Inode.**
+La Dcache és l'eina més important per a la resolució ràpida de camins (*path lookup*). **Cacheja la relació Nom** $\rightarrow$ Inode.
 
 | Estat de la Dentry | Implicació Tècnica |
-| :- | :--- |
+|:------------------------|:----------------------------------------------|
 | **`Used`** | L'objecte està en ús (p. ex., associat a un `FILE Objecte`). El seu `d_inode` és vàlid. |
 | **`Unused`** | El `d_inode` és vàlid, però l'objecte Dentry no està sent utilitzat activament per cap procés. |
 | **`Negative`** | L'`d_inode` no és vàlid. S'utilitza per recordar que un fitxer **no existeix** o ha estat eliminat, evitant cerques futures innecessàries al disc. |
 
-::: { .callout-tip title="Optimització de la Dentry Cache"}
+::: {.callout-tip title="Optimització de la Dentry Cache"}
 L'accés a l'Inode *cache* (per al seu alliberament en condicions de memòria baixa) utilitza l'estat d'ús, basat en el Superbloc i el número d'Inode. La Dentry *cache* també fa servir taules hash per a cerques ultra-ràpides.
 :::
 
@@ -448,14 +438,14 @@ L'accés a l'Inode *cache* (per al seu alliberament en condicions de memòria ba
 
 La **Cache de pàgines** és el mecanisme principal del *kernel* per a la gestió de dades d'E/S, utilitzat per tots els sistemes de fitxers. Emmagatzema els blocs de dades del fitxer a la memòria del sistema,per a la lectura ràpida i per a l'escriptura diferida.
 
-:::{.callout-important title="Gestió de Memòria"}
+::: {.callout-important title="Gestió de Memòria"}
 Linux reutilitza la memòria lliure com a cache, però l’allibera quan un procés necessita RAM.
 :::
 
-* **Dades Cachejades:** Només dades de fitxers, no metadades de nivell de bloc (*block device data*).
-* **Mecanismes d'E/S:** Suporta operacions `read()`, `write()` i **`mmap()`** (mapes de memòria).
+-   **Dades Cachejades:** Només dades de fitxers, no metadades de nivell de bloc (*block device data*).
+-   **Mecanismes d'E/S:** Suporta operacions `read()`, `write()` i **`mmap()`** (mapes de memòria).
 
-::: { .callout-warning title="Estructura Interna: Ràdix-Arbre" }
+::: {.callout-warning title="Estructura Interna: Ràdix-Arbre"}
 La **Cache de pàgines** utilitza una estructura de dades Radix Tree per mapejar de manera eficient els offsets de fitxer a les pàgines de memòria. Això permet accés ràpid a pàgines de dades grans.
 :::
 
@@ -463,23 +453,23 @@ La **Cache de pàgines** utilitza una estructura de dades Radix Tree per mapejar
 
 ## FAT: File Allocation Table {.smaller}
 
-- Sistema de fitxers creat el 1977 i popularitzat gràcies a MS-DOS.
-- Encara popular avui (FAT32): USB, targetes de memòria, partició d'arrencada EFI.
-- **File Allocation Table**: Estructura de llista enllaçada que conté informació sobre els blocs ocupats per cada fitxer.
-- També determina si un bloc està en ús o no.
+-   Sistema de fitxers creat el 1977 i popularitzat gràcies a MS-DOS.
+-   Encara popular avui (FAT32): USB, targetes de memòria, partició d'arrencada EFI.
+-   **File Allocation Table**: Estructura de llista enllaçada que conté informació sobre els blocs ocupats per cada fitxer.
+-   També determina si un bloc està en ús o no.
 
-![](../figs/slides/03-fs/FAT.png){width=60%}
+![](../figs/slides/03-fs/FAT.png){width="60%"}
 
 ## FAT: Organització de Directoris {.smaller}
 
 Els directoris en FAT són fitxers especials que contenen entrades de **32 bytes per a cada fitxer o subdirectori**. Cada entrada inclou: *nom, atributs, timestamps, primer clúster i mida del fitxer*.
 
-| Nom | Index | Dir? | Permisos |
-| :--- | :---: | :---: | :---: |
-| `.` | 2 | Sí | rwx |
-| `Windows` | 3 | Sí | rwx |
-| `Users` | 4 | Sí | rwx |
-| `pagefile.sys` | 5 | No | r-- |
+| Nom            | Index | Dir? | Permisos |
+|:---------------|:-----:|:----:|:--------:|
+| `.`            |   2   |  Sí  |   rwx    |
+| `Windows`      |   3   |  Sí  |   rwx    |
+| `Users`        |   4   |  Sí  |   rwx    |
+| `pagefile.sys` |   5   |  No  |   r--    |
 
 El superbloc actua com a punt de referència per a tot el sistema de fitxers, emmagatzemant informació crítica com la mida del clúster, la ubicació de la FAT i la ubicació del directori arrel.
 
@@ -487,20 +477,19 @@ El superbloc actua com a punt de referència per a tot el sistema de fitxers, em
 
 **Limitacions de capacitat:**
 
-- **FAT32**: màxim 2TB per volum
-- **FAT32**: màxim 4GB per fitxer
+-   **FAT32**: màxim 2TB per volum
+-   **FAT32**: màxim 4GB per fitxer
 
 **Problemes de rendiment:**
 
-- Localització de blocs lliures: **scan complet** de la FAT
-- Fragmentació severa (pobra localitat)
-- Fragmentació de metadata: cerques costoses
-- Llistes enllaçades ineficients per fitxers grans
+-   Localització de blocs lliures: **scan complet** de la FAT
+-   Fragmentació severa (pobra localitat)
+-   Fragmentació de metadata: cerques costoses
+-   Llistes enllaçades ineficients per fitxers grans
 
 **Impacte pràctic:**
 
-- Un fitxer de 16MB (4096 clústers de 4KB) requereix **4096 lectures** de la FAT per accés seqüencial complet
-
+-   Un fitxer de 16MB (4096 clústers de 4KB) requereix **4096 lectures** de la FAT per accés seqüencial complet
 
 ## EXT: Extended File System {.smaller}
 
@@ -508,23 +497,23 @@ Els sistemes **EXT** van ser dissenyats específicament per a Linux com a evoluc
 
 **Evolució:**
 
-- **ext** (1992): Primera versió, problemes de rendiment
-- **ext2** (1993): Inodes, directoris flexibles  
-- **ext3** (2001): **Journaling** per a consistència
-- **ext4** (2008): **Extents**, millor rendiment
+-   **ext** (1992): Primera versió, problemes de rendiment
+-   **ext2** (1993): Inodes, directoris flexibles\
+-   **ext3** (2001): **Journaling** per a consistència
+-   **ext4** (2008): **Extents**, millor rendiment
 
 **Característiques:**
 
-- **Inodes** com a element bàsic
-- **Bitmaps** per gestió d'assignació
-- **Block Groups** per localitat de dades
-- **Journaling** per integritat
+-   **Inodes** com a element bàsic
+-   **Bitmaps** per gestió d'assignació
+-   **Block Groups** per localitat de dades
+-   **Journaling** per integritat
 
 ## EXT: Estructura de l'Inode {.smaller}
 
 L'**inode** és el nucli del sistema EXT. Cada fitxer té almenys un inode que conté tota la seva metadata:
 
-```c
+``` c
 struct ext4_inode {
     uint16_t i_mode;        // Permisos i tipus de fitxer
     uint16_t i_uid;         // User ID del propietari
@@ -557,27 +546,27 @@ Un fitxer de **100MB** (25.600 blocs de 4KB) necessita **2 nivells d'indirecció
 
 ## EXT: Organització {.smaller}
 
-![](../figs/slides/03-fs/ext-filesystem.png){width=70%}
+![](../figs/slides/03-fs/ext-filesystem.png){width="70%"}
 
-- **Bitmap d'Inodes:** mapa de bits d'inodes ocupats/lliures.
-- **Bitmap de Blocs:** mapa de bits de blocs ocupats/lliures.
-- **Taula d'Inodes:** cada entrada és un únic inode.
+-   **Bitmap d'Inodes:** mapa de bits d'inodes ocupats/lliures.
+-   **Bitmap de Blocs:** mapa de bits de blocs ocupats/lliures.
+-   **Taula d'Inodes:** cada entrada és un únic inode.
 
-## EXT3: Problema de Consistència (I)  {.smaller}
+## EXT3: Problema de Consistència (I) {.smaller}
 
 Imagineu que un fitxer necessita augmentar la seva mida, i això requereix assignar un nou bloc de dades i actualitzar l'inode per reflectir aquesta nova assignació. Aquest procés implica múltiples operacions d'escriptura al disc.
 
 ![](../figs/slides/03-fs/ext3-size-increase.png)
 
-## EXT3: Problema de Consistència (II)  {.smaller}
+## EXT3: Problema de Consistència (II) {.smaller}
 
-::: {.center-container}
-Imagina que el procés es veu interromput (crash) a mitja operació. 
+::: center-container
+Imagina que el procés es veu interromput (crash) a mitja operació.
 :::
 
 ![](../figs/slides/03-fs/ext3-crash.png)
 
-## Journaling - Consistència  {.smaller}
+## Journaling - Consistència {.smaller}
 
 ```{mermaid}
 %%| echo: false
@@ -603,43 +592,38 @@ sequenceDiagram
 
 ## Journaling: Modes {.smaller}
 
-- **Journaling Complet:** Tant les dades com les metadades s'escriuen al journal abans d'aplicar-les al sistema de fitxers. Màxima seguretat, però més lent.
+-   **Journaling Complet:** Tant les dades com les metadades s'escriuen al journal abans d'aplicar-les al sistema de fitxers. Màxima seguretat, però més lent.
 
-- **Journaling de Metadades:** Només les metadades s'escriuen al journal. Les dades es poden escriure directament al sistema de fitxers. Equilibri entre seguretat i rendiment.
+-   **Journaling de Metadades:** Només les metadades s'escriuen al journal. Les dades es poden escriure directament al sistema de fitxers. Equilibri entre seguretat i rendiment.
 
-- **Escriptura Diferida (Writeback):** Les dades i les metadades es poden escriure directament al sistema de fitxers sense passar pel journal. Màxim rendiment, però risc de corrupció de dades en cas de fallada.
+-   **Escriptura Diferida (Writeback):** Les dades i les metadades es poden escriure directament al sistema de fitxers sense passar pel journal. Màxim rendiment, però risc de corrupció de dades en cas de fallada.
 
 ## ext3 · Journaling {.smaller}
 
-- **Pre-escriptura (Write-Ahead Logging)**:
-   - Abans d'escriure qualsevol dada o metadada al disc, es registra la intenció d'aquesta escriptura en un registre especial anomenat **journal**. Garanteix que les operacions es completin correctament, fins i tot en cas de fallades.
-
-- **Si escriu el journal correctament**:
-   - La transacció es marca com a completa. Els canvis es poden aplicar al sistema de fitxers de manera segura.
-
-- **Si la escriptura del journal es veu interrompuda**:
-   - La transacció no es completa (pèrdua de dades), però el sistema de fitxers roman consistent.
-
-- **Si el journal s'escriu correctament, però el disc no**:
-   - Temporalment, el sistema de fitxers perd la consistència.El registre té la informació per restaurar-la (durant l'arrencada, els journals inacabats es completen).
-
-
+-   **Pre-escriptura (Write-Ahead Logging)**:
+    -   Abans d'escriure qualsevol dada o metadada al disc, es registra la intenció d'aquesta escriptura en un registre especial anomenat **journal**. Garanteix que les operacions es completin correctament, fins i tot en cas de fallades.
+-   **Si escriu el journal correctament**:
+    -   La transacció es marca com a completa. Els canvis es poden aplicar al sistema de fitxers de manera segura.
+-   **Si la escriptura del journal es veu interrompuda**:
+    -   La transacció no es completa (pèrdua de dades), però el sistema de fitxers roman consistent.
+-   **Si el journal s'escriu correctament, però el disc no**:
+    -   Temporalment, el sistema de fitxers perd la consistència.El registre té la informació per restaurar-la (durant l'arrencada, els journals inacabats es completen).
 
 ## ext4: Extents per a Millor Eficiència {.smaller}
 
 El principal problema (*ext2/ext3*) era la gestió ineficient dels punters a blocs de dades, especialment per a fitxers grans.
 
-:::{.fragment}
+::: fragment
 Un **extends** és un descriptor que representa un rang contigu de blocs, millorant l'eficiència en l'assignació i reduint la fragmentació.
 :::
 
-- Rangs de blocs físics contigus, descrits amb una entrada (bloc inicial + nombre de blocs).
-- Un extent pot mapar fins a 128 MiB (blocs de 4KB) d’espai contigu amb blocs de 4 KiB.
-- L’inode d’ext4 pot contenir directament fins a 4 extents; si el fitxer és gran o fragmentat, s’utilitza una estructura d’arbre (HTree) per indexar més extents.
+-   Rangs de blocs físics contigus, descrits amb una entrada (bloc inicial + nombre de blocs).
+-   Un extent pot mapar fins a 128 MiB (blocs de 4KB) d’espai contigu amb blocs de 4 KiB.
+-   L’inode d’ext4 pot contenir directament fins a 4 extents; si el fitxer és gran o fragmentat, s’utilitza una estructura d’arbre (HTree) per indexar més extents.
 
 ## ext4: Estructura d'un Extent {.smaller}
 
-```c
+``` c
 struct ext4_extent {
     uint32_t ee_block;      // Bloc lògic inicial al fitxer
     uint16_t ee_len;        // Longitud en blocs (màxim 32.768)
@@ -666,21 +650,18 @@ graph TD
 
 ## ext4: HTree/Btree {.smaller}
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
-- Un **B-tree** és una estructura d'arbre auto-balancejada que manté dades ordenades i permet cerques, insercions i eliminacions en temps logarítmic. 
+-   Un **B-tree** és una estructura d'arbre auto-balancejada que manté dades ordenades i permet cerques, insercions i eliminacions en temps logarítmic.
 
+-   Un **HTree** és una variant de *B-tree* utilitzada específicament per indexar fitxers i directoris en **ext4**.
 
-- Un **HTree** és una variant de *B-tree* utilitzada específicament per indexar fitxers i directoris en **ext4**. 
-  
-- La principal diferència és que les entrades es distribueixen en nodes fulla i no fulla, amb una estructura de capçalera específica per a cada node.
+-   La principal diferència és que les entrades es distribueixen en nodes fulla i no fulla, amb una estructura de capçalera específica per a cada node.
 
-- **Inode/Arrel**: Apunta a la capçalera de l’HTree.
-
-
+-   **Inode/Arrel**: Apunta a la capçalera de l’HTree.
 :::
-::: {.column width="50%"}
 
+::: {.column width="50%"}
 ```{mermaid}
 %%| echo: false
 graph TD
@@ -698,28 +679,26 @@ graph TD
     D4 --> E5[Extent 5]
 ```
 
-- **Nodes no fulla**: Indexen altres nodes, permetent que l’arbre creixi i es mantingui balancejat.
-- **Nodes fulla**: Contenen les extents, que són rangs de blocs físics contigus.
-- **Extents**: Descriuen els blocs reals del fitxer o directori.
-
+-   **Nodes no fulla**: Indexen altres nodes, permetent que l’arbre creixi i es mantingui balancejat.
+-   **Nodes fulla**: Contenen les extents, que són rangs de blocs físics contigus.
+-   **Extents**: Descriuen els blocs reals del fitxer o directori.
 :::
-:::
+:::::
 
 ## ext4 · Assignació multibloc i retrassada {.smaller}
 
-- **Assignació Multibloc**:
-  - ext4 pot assignar múltiples blocs a la vegada, agrupant blocs consecutius per minimitzar la fragmentació.
-  - Això redueix la sobrecàrrega d'assignació i millora la localitat de les dades.
-- **Assignació Retardada**:
-  - L’assignació retardada espera a bloquejar l’espai fins just abans d’escriure, optimitzant la distribució de blocs.
-  - Això permet agrupar escriptures i minimitzar la fragmentació.
+-   **Assignació Multibloc**:
+    -   ext4 pot assignar múltiples blocs a la vegada, agrupant blocs consecutius per minimitzar la fragmentació.
+    -   Això redueix la sobrecàrrega d'assignació i millora la localitat de les dades.
+-   **Assignació Retardada**:
+    -   L’assignació retardada espera a bloquejar l’espai fins just abans d’escriure, optimitzant la distribució de blocs.
+    -   Això permet agrupar escriptures i minimitzar la fragmentació.
 
 ## Exercicis Propostas
 
 -   [Administració Bàsica de Sistemes de Fitxers](../exercises/03-fs/08-ex-week5.qmd)
 -   Discussió: [**Secure Boot és realment segur?**](https://github.com/amsa-gei-udl-2526-105013/course/issues/3): Cerca notícies recents sobre Secure Boot i comparteix-les al fòrum del curs. Debatiu sobre avantatges, desavantatges, vulnerabilitats conegudes i experiències personals.
 -   [Pràctica 01: Snapshots i restauració amb systemd i initramfs](../projects/01-project/01-project.qmd)
-
 
 ## That's all
 
@@ -737,5 +716,3 @@ Els sistemes de fitxers són complexos i crítics per al rendiment i la fiabilit
 ![](https://static.posters.cz/image/750/posters/looney-tunes-thats-all-folks-i295.jpg){width="70%"}
 :::
 :::::::
-
-

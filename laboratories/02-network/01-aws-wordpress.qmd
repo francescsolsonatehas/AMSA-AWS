@@ -317,7 +317,7 @@ Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral
     ![Configuració del target group](../../figs/laboratories/03-aws-wp/wordpress/tg-03.png)
 
 :::{.callout-note title="Health Check 🎯"}
-El balancejador de càrrega comprova ltg-04a salut de les instàncies EC2 a través del port 80 i la ruta **/**. Això significa que el balancejador de càrrega enviarà tràfic a les instàncies EC2 que responguin correctament a les peticions HTTP a la ruta **/**. Com que les nostres instàncies EC2 tenen WordPress instal·lat, aquestes instàncies respondran correctament a les peticions HTTP a la ruta **/**. *Podem deixar la configuració per defecte*.
+El balancejador de càrrega comprova la salut de les instàncies EC2 a través del port 80 i la ruta **/**. Això significa que el balancejador de càrrega enviarà tràfic a les instàncies EC2 que responguin correctament a les peticions HTTP a la ruta **/**. Com que les nostres instàncies EC2 tenen WordPress instal·lat, aquestes instàncies respondran correctament a les peticions HTTP a la ruta **/**. *Podem deixar la configuració per defecte*. La instal·lació de WordPress inclou una pàgina d'inici que respondrà amb 302 (Found) quan s'accedeixi a la ruta arrel (/), per això pot passar que el health check mostri que la instància no està saludable. Un cop configurat el WordPress, el health check mostrarà que la instància està saludable.
 :::
 
 - Seleccionarem les dos instàncies EC2 que allotgen WordPress (AMSA-WP-01 i AMSA-WP-02) i les afegirem al target group. Utilitzant el botó **Include as pending below** i després **Add to registered**.
@@ -350,14 +350,14 @@ Per desplegar el servidor VPN, crearem una nova instància EC2 que actuarà com 
 3. Seleccioneu la instància **t2.micro**.
 4. Configureu la instància:
     - **Network**: AMSA-VPC
-    - **Subnet**: Front-01
+    - **Subnet**: AMSA-DMZ-01
     - **Auto-assign Public IP**: Enable
 
     ![Configuració de la instància EC2 per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-VPN.png)
 
 5. Configureu el grup de seguretat: **AMSA-VPN-SG**.
 
-    Si reviseu la documentació d'instal·lació del servidor OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf). Veure que necessitem els següents ports oberts: **TCP 443, TCP 943, UDP 1194**.
+    Si reviseu la documentació d'instal·lació del servidor OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf). Veure que necessitem els següents ports oberts: **TCP 943, UDP 1194**.
 
     ![Configuració del grup de seguretat per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png)
 
@@ -452,3 +452,11 @@ Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RD
 1. Com milloraríeu els grups de seguretat, quins canvis faríeu?
 2. Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.
 3. Prepara un script que faci una prova de càrrega al balancejador de càrrega i mostri com es distribueix el tràfic entre les instàncies EC2.
+4. Genera un infra_v3.yaml que contingui tota la infraestructura com a codi.
+
+## Recursos Addicionals
+
+- [infra_v1.yaml](src/infra-v1.yaml): Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d'AWS utilitzant AWS CloudFormation fins a la creació de templates de llançament.
+- [infra_v2.yaml](src/infra-v2.yaml): Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d'AWS utilitzant AWS CloudFormation sense el load balancer ni les instancies EC2 corresponents als WordPress.
+
+

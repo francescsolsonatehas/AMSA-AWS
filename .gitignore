@@ -2,3 +2,4 @@
 docs
 .DS_Store
 **/*.quarto_ipynb
+slides/0X-*.qmd
