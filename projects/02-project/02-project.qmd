@@ -1,0 +1,63 @@
+---
+title: "Pràctica 02: Diagnòstic i resolució d'incidències en un servidor"
+subtitle: "Unitat 3 · Administració i Manteniment de Sistemes i Aplicacions (AMSA)"
+author: "Jordi Mateo Fornés <jordi.mateo@udl.cat>"
+format: html
+lang: ca
+---
+
+## Instruccions generals
+
+Aquesta pràctica és un **hack-the-box** de diagnosi i resolució d’incidències en un servidor Linux. El professor us proporcionarà una màquina virtual amb diversos problemes que haureu d’identificar i solucionar en format contrarellotge (temps limitat de la classe).
+
+- ⏱ **Durada**: 2 hores
+- 🖥️ **Entorn**: màquina virtual facilitada pel professor
+- 👥 **Treball**: en grups de 2–3 persones
+- 📄 **Entrega**: informe en Markdown amb les evidències (veure més detalls)
+
+
+Podeu utilitzar qualsevol comanda i cercar informació en línia. Actueu amb cura i preserveu evidències abans de fer canvis irreversibles.
+
+## Context
+
+Heu rebut una trucada d’un client que té problemes amb el seu servidor Linux. La imatge de la màquina virtual que us ha facilitat conté el servidor del client. La vostra missió és identificar tots els problemes ocults al sistema, explicar-ne la causa, aplicar solucions raonades i deixar el sistema operatiu i net. Per a cada problema heu de documentar el procés de **diagnosi i resolució**.
+
+## Procediment
+
+1. Arrencar la màquina virtual i observar el comportament inicial.
+2. Investigar sistemàticament (logs, dispositius, serveis, espai, permisos).
+3. Apliar solucions i verificar la recuperació.
+4. Documentar el procés de diagnosi i resolució.
+
+## Tasques
+- Comproveu els logs del sistema (dmesg, journalctl, /var/log/syslog).
+- Verifiqueu l'estat dels serveis amb systemctl.
+- Comproveu l'espai en disc amb la comanda `df`.
+- Reviseu els permisos dels fitxers i directoris rellevants.
+- Es molt important que l'usuari `jordi` tingui un programa amb `c` anomenat `hola` a `/home/jordi/bin/hola` que imprimeixi `Hola, món!` quan s'executi.
+- Es molt important que elimineu l'arxiu `/srv/lab/passwords.txt` que conté contrasenyes en text pla i que no s'hauria d'haver creat mai.
+- Reporteu els logs amb evidències de cada problema, reviseu els logs també entre arrencades.
+
+## Entrega
+
+Entregueu un informe en format Markdown al repositori [Classroom](https://classroom.github.com/a/XXXX) amb el nom de l'arxiu `practica02.md` que contingui:
+
+- Símptoma observat (captura o sortida de comandes).
+- Comandes utilitzades per diagnosticar.
+- Solució aplicada (i per què).
+- Recomanació per evitar-ho en futur.
+- Arxius d’evidència: export de journals i logs rellevants.
+- Llista de comandes executades (p. ex. un commands.txt amb les comandes clau).
+
+## Avaluació
+
+|Criteri|Percentatge|
+|---|---|
+|Identificació correcta dels problemes|40%|
+|Solucions aplicades i afecte rebut|30%|
+|Qualitat de la documentació i evidències|20%|
+|Bona pràctica operativa (preservar evidències, justificar canvis)|10%|
+
+---
+
+> Happy SysAdmin! 🕵️‍♂️
