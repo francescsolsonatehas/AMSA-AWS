@@ -105,10 +105,18 @@ Migrar el contingut de la carpeta `/home` a un dispositiu **RAID5** format per q
     mount /dev/md0 /home
     ```
 
+8. Obtenim el UUID del dispositiu RAID5 amb la comanda:
+
+    ```bash
+    blkid /dev/md0
+    ```
+9. Fem una còpia de seguretat del fitxer `/etc/fstab`:
+
+    ```bash
 8. Per fer que el muntatge sigui permanent, afegim la següent línia al fitxer `/etc/fstab`:
 
     ```bash
-    /dev/md0  /home  xfs  defaults  0 0
+    UUID=<UUID>  /home  xfs  defaults  0 0
     ```
 
 ### ✅ Resultat final
@@ -131,7 +139,7 @@ Ara simularem una fallada en un dels discs durs virtuals del RAID5. I observarem
 2. Simulem la fallada d'un disc dur virtual del RAID5:
 
     ```bash
-    mdadm --manage /dev/md0 --fail /dev/vdc
+    mdadm --manage /dev/md127 --fail /dev/vdc
     ```
 
 3. Comprovem que podem accedir al fitxer de text creat anteriorment:
@@ -143,7 +151,7 @@ Ara simularem una fallada en un dels discs durs virtuals del RAID5. I observarem
 4. Ara intentarem simular la fallada d'un segon disc dur virtual del RAID5:
 
     ```bash
-    mdadm --manage /dev/md0 --fail /dev/vdd
+    mdadm --manage /dev/md127 --fail /dev/vdd
     ```
 
 5. Comprovem que el sistema ens avisa que no es pot fallar un segon disc perquè el RAID5 només tolera la fallada d'un disc:
