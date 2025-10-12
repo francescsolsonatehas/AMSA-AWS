@@ -534,6 +534,30 @@ La opció `--monitor` permet monitorar un dispositiu RAID en temps real. Obtenin
 ```bash
 mdadm --monitor /dev/[nom]
 ```
+
+## Ensamblatge `--assemble`
+
+- Permet muntar un array RAID existent. 
+- Aquesta opció no crea un nou array, sinó que reuneix un array existent a partir dels dispositius que especifiquem.
+
+```bash
+mdadm --assemble /dev/[nom] [dispositius]
+```
+
+- Cada cop que el sistema s’inicia, aquesta opció s’executa al kernel. Escaneja els discs, busca els superblocks i reconstrueix tots els arrays per a nosaltres.
+
+## Initramfs i RAID {.smaller}
+
+En entorns amb RAID, **initramfs** inclou els binaris i la configuració necessaris per gestionar els arrays RAID. Durant la fase d'arrencada, es fa servir la comanda:
+
+```bash
+mdadm --assemble --scan
+```
+
+Detecta i munta automàticament tots els arrays definits a `/etc/mdadm/mdadm.conf`. Això assegura que les particions RAID estiguin operatives abans de muntar la partició root i iniciar el sistema operatiu.
+
+A més, initramfs pot incloure scripts per comprovar la integritat dels dispositius RAID i gestionar fallades de discs durant l'arrencada, assegurant un boot fiable en entorns amb mirroring (RAID1).
+
 ## Actualització amb `--grow` {.smaller}
 
 Aquesta opció permet actualitzar un dispositiu RAID. Per exemple, canviar el RAID, augmentar el nombre de dispositius o canviar la mida dels blocs.
@@ -567,8 +591,21 @@ rm /dev/[nom]
 ```
 :::
 
-# Casos Pràctics
+## `/etc/mdadm/mdadm.conf` {.smaller}
 
+Aquest fitxer conté informació que permet al sistema reconèixer i muntar automàticament els arrays RAID durant l’arrencada i també proporciona paràmetres per a la creació, monitorització i manteniment dels arrays.
+
+```text
+ARRAY /dev/md0 UUID=12345678:90ab:cdef:1234:567890abcdef
+ARRAY /dev/md1 UUID=abcdef12:3456:7890:abcd:ef1234567890
+```
+
+- `ARRAY`: indica un dispositiu RAID gestionat per mdadm.
+- `/dev/mdX`: dispositiu de bloc que representa l’array RAID.
+- `UUID`: identificador únic de l’array RAID, utilitzat per assegurar que el sistema connecta correctament les particions corresponents encara que canviïn els noms dels dispositius físics (per exemple, vdb1 esdevé vdc1).
+
+
+# Casos Pràctics
 
 ## Cas Pràctic (I) {.smaller}
 
@@ -600,16 +637,28 @@ Assumeix un servidor de bases de dades on la integritat de les dades es crítica
 
 - En aquest cas, el **RAID 10** seria la millor opció. Aquest RAID combina les característiques del RAID 1 i del RAID 0, oferint tant redundància com una millora en la velocitat de lectura i escriptura. Això és important per a un servidor de bases de dades on la integritat de les dades és crítica i les transaccions han de ser ràpides.
 
+## Exercici {.smaller}
+
+1. Configuració d'un RAID 1 a AlmaLinux amb una instal·lació neta.
+2. Migració de `/home` a un RAID 1 en un sistema Debian existent.
+3. Simulació de fallada d'un disc en un RAID 5.
+4. Migració d'un sistema `legacy` a un sistema amb RAIDs.
+
+::: center-container
+[Exercicis: Administrant RAIDs](../exercises/03-fs/09-ex-week6.qmd)
+:::
+
 ## That's all
 
 ::::::: columns
 :::: {.column width="45%"}
 ::: {.callout-note title="Take Home Message"}
-Els RAIDs són un conjunt de dispositius d'emmagatzematge que es combinen per a formar un sistema d'emmagatzematge únic.
-- El principal objectiu d'aquesta combinació és tolerar les fallades que es poden produir en els dispositius d'emmagatzematge mitjançant la **redundància**.
-- Un altre objectiu important dels RAIDs és millorar el rendiment del sistema mitjançant la **distribució** de les dades entre els diferents dispositius.
+- RAID manté les dades, però la bona administració manté el servei.
+- La redundància no és seguretat si no s’ha provat mai l’arrencada.
+- Configurar RAID és fàcil; garantir que arrenca quan els discs fallen és el camí de l'administrador.
+- RAID no és substitut de les còpies de seguretat.
 :::
-::::
+:::
 
 ::: {.column width="5%"}
 :::
