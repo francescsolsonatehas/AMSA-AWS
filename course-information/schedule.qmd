@@ -23,4 +23,4 @@ A continuació es presenta un calendari complet dels temes, el contingut del cur
 | 5 | Laboratori |08/10/25 | **Networking**  |   |    | [🧪](/laboratories/02-network/01-aws-wordpress.html#prepare) |
 | 6    | Teoria             |13/10/25    | **Unitat 03**: Sistemes de fitxers (Part 2)            | [📖](../slides/03-filesystem-part2.html#prepare){aria-label="Sistemes de fitxers (Part 2) "}  |    |  |  | [📝](../exercises/03-fs/09-ex-week6.qmd) 
 | 6 | Laboratori |15/10/25 | (Vaga general)  |   |    | |
-| 7   | Teoria             |20/10/25    | **Unitat 03**: Sistemes de fitxers (Part 3)            | [📖](../slides/03-filesystem-part3.html#prepare){aria-label="Sistemes de fitxers (Part 3) "}  |    |  |  | 
+| 7   | Teoria             |20/10/25    | **Unitat 03**: Sistemes de fitxers (Part 3)            | [📖](../slides/03-filesystem-part3.html#prepare){aria-label="Sistemes de fitxers (Part 3) "}  |    |  |  | [📝](../exercises/03-fs/10-ex-week7.qmd) || 

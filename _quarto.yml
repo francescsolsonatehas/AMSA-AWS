@@ -79,6 +79,8 @@ website:
                 text: Activitat 8 · Administració bàsica de Sistemes de Fitxers
               - href: ./exercises/03-fs/09-ex-week6.qmd
                 text: Activitat 9 · Configuració de RAIDs amb mdadm
+              - href: ./exercises/03-fs/10-ex-week7.qmd
+                text: Activitat 10 · Administració de volums lògics amb LVM
 
       - section: Laboratoris
         contents:
