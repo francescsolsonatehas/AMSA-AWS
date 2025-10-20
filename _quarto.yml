@@ -47,6 +47,8 @@ website:
             text: Unitat 03 · Sistemes de fitxers (Part 1)
           - href: ./slides/03-filesystem-part2.qmd
             text: Unitat 03 · Sistemes de fitxers (Part 2)
+          - href: ./slides/03-filesystem-part3.qmd
+            text: Unitat 03 · Sistemes de fitxers (Part 3)
       - section: Activitats
         contents:
           - section: Unitat 01 · Fonaments de l'Administració de Sistemes
