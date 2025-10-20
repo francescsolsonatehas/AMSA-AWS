@@ -676,6 +676,10 @@ lvreduce -L 6GB /dev/datavg/home
 ```
 :::
 
+## Exercicis
+
+- [Deplegament d'un servidor web amb LVM](../exercises/03-fs/10-ex-week7.qmd)
+
 
 ## That's all
 
