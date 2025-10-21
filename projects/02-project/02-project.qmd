@@ -13,7 +13,7 @@ Aquesta pràctica és un **hack-the-box** de diagnosi i resolució d’incidènc
 - ⏱ **Durada**: 2 hores
 - 🖥️ **Entorn**: màquina virtual facilitada pel professor
 - 👥 **Treball**: en grups de 2–3 persones
-- 📄 **Entrega**: informe en Markdown amb les evidències (veure més detalls)
+- 📄 **Entrega**: informe en paper
 
 
 Podeu utilitzar qualsevol comanda i cercar informació en línia. Actueu amb cura i preserveu evidències abans de fer canvis irreversibles.
@@ -24,23 +24,44 @@ Heu rebut una trucada d’un client que té problemes amb el seu servidor Linux.
 
 ## Procediment
 
-1. Arrencar la màquina virtual i observar el comportament inicial.
-2. Investigar sistemàticament (logs, dispositius, serveis, espai, permisos).
-3. Apliar solucions i verificar la recuperació.
-4. Documentar el procés de diagnosi i resolució.
+1. Arrencar la màquina virtual i observar el comportament inicial.  
+2. Investigar sistemàticament per identificar problemes i causes. 
+3. Aplicar solucions i verificar la recuperació.  
+4. Documentar tot el procés de diagnosi i resolució.
 
 ## Tasques
-- Comproveu els logs del sistema (dmesg, journalctl, /var/log/syslog).
+
+- Comproveu els logs del sistema (`dmesg`, `journalctl`, `/var/log/syslog`).
 - Verifiqueu l'estat dels serveis amb systemctl.
 - Comproveu l'espai en disc amb la comanda `df`.
 - Reviseu els permisos dels fitxers i directoris rellevants.
 - Es molt important que l'usuari `jordi` tingui un programa amb `c` anomenat `hola` a `/home/jordi/bin/hola` que imprimeixi `Hola, món!` quan s'executi.
 - Es molt important que elimineu l'arxiu `/srv/lab/passwords.txt` que conté contrasenyes en text pla i que no s'hauria d'haver creat mai.
 - Reporteu els logs amb evidències de cada problema, reviseu els logs també entre arrencades.
+  
+> ⚠️ Recordeu: no coneixeu cap password inicialment. 
+> El sistema té 2 usuaris: `root` i `jordi`. 
+
 
 ## Entrega
 
-Entregueu un informe en format Markdown al repositori [Classroom](https://classroom.github.com/a/XXXX) amb el nom de l'arxiu `practica02.md` que contingui:
+Entregueu un informe:
+
+1. Descripció del sistema:
+
+| Element                 | Dispositiu (e.g. /dev/sda1) | Punts de muntatge | Tipus FS | UUID | Mida | Espai lliure | Inodes totals | Inodes lliures | Notes |
+| ----------------------- | --------------------------: | ----------------- | -------- | ---- | ---: | -----------: | ------------: | -------------: | ----- |
+| |                            |                   |          |      |      |              |               |                |       |
+
+2. Per a cada problema identificat, incloeu:
+
+| Problema | Símptoma | Comandes de diagnosi | Solució aplicada | Recomanació futura | Evidències |
+| -------- | -------- | -------------------- | ---------------- | ------------------ | ---------- |
+|          |          |                      |                  |                    |            |
+
+3. Feu una recomanació general per millorar la seguretat i estabilitat del sistema.
+
+### Contingut de l'informe
 
 - Símptoma observat (captura o sortida de comandes).
 - Comandes utilitzades per diagnosticar.

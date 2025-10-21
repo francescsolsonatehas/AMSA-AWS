@@ -100,6 +100,8 @@ website:
         contents:
           - href: ./projects/01-project/01-project.qmd
             text: Projecte 1 · Snapshots i Backups amb systemd i initramfs
+          - href: ./projects/02-project/02-project.qmd
+            text: Projecte 2 · Diagnòstic i Resolució d'Incidències
 
   
 format:
