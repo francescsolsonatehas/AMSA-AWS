@@ -13,7 +13,7 @@ Aquesta pràctica és un **hack-the-box** de diagnosi i resolució d’incidènc
 - ⏱ **Durada**: 2 hores
 - 🖥️ **Entorn**: màquina virtual facilitada pel professor
 - 👥 **Treball**: en grups de 2–3 persones
-- 📄 **Entrega**: informe en paper
+- 📄 **Entrega**: Informe en format pdf al campus virtual.
 
 
 Podeu utilitzar qualsevol comanda i cercar informació en línia. Actueu amb cura i preserveu evidències abans de fer canvis irreversibles.
@@ -39,8 +39,8 @@ Heu rebut una trucada d’un client que té problemes amb el seu servidor Linux.
 - Es molt important que elimineu l'arxiu `/srv/lab/passwords.txt` que conté contrasenyes en text pla i que no s'hauria d'haver creat mai.
 - Reporteu els logs amb evidències de cada problema, reviseu els logs també entre arrencades.
   
-> ⚠️ Recordeu: no coneixeu cap password inicialment. 
 > El sistema té 2 usuaris: `root` i `jordi`. 
+> Els passwords d'aquests usuaris són 1234.
 
 
 ## Entrega
