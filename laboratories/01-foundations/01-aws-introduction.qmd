@@ -1,7 +1,7 @@
 ---
 title: Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands
 subtitle: Practical Labs on Systems and Applications Administration
-lang: ca
+lang: en
 ---
 
 ##  Preparing the Remote Work Environment {#preparant-lentorn-de-treball-remot}
@@ -16,11 +16,11 @@ To prepare the work environment on AWS, we will follow these steps:
 
 ### Step 1: Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
-Check your email to see if you have received an email from AWS Academy with the subject "Course Invitation". If you haven’t received it, let me know. The email will contain a button labeled Get Started. Click this button to begin the registration process.
+Check your email to see if you have received an email from AWS Academy with the subject *Course Invitation*. If you haven’t received it, let me know. The email will contain a button labeled **Get Started**. Click this button to begin the registration process.
 
 ![](../../figs/laboratories/01-intro/login0.png)
 
-After clicking the Get Started button, you will be redirected to the AWS Academy login page. Now click the Create my account button to start the registration process, as shown below:
+After clicking the **Get Started** button, you will be redirected to the AWS Academy login page. Now click the **Create my account** button to start the registration process, as shown below:
 
 ![](../../figs/laboratories/01-intro/login1.png)
 
@@ -28,85 +28,78 @@ Choose a password and complete the registration process. Once you have completed
 
 ### Step 2: Accessing the AWS Dashboard {#pas-2-acces-al-tauler-daws}
 
-Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the Courses tab (1) on the left side of the screen. You will see a list of courses available to you. Click the AWS Academy Learner Lab course (2), as shown in the screenshot below:
+Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the **Courses** tab (1) on the left side of the screen. You will see a list of courses available to you. Click the course **AWS Academy Learner Lab**  (2), as shown in the screenshot below:
 
 ![](../../figs/laboratories/01-intro/login2.png)
 
 ::: {.callout-note}
-El curs **AWS Academy Learner Lab** és el curs que utilitzareu per completar els laboratoris pràctics
+The course **AWS Academy Learner Lab**  is the course you will use for these practical labs.
+
 :::
 
-::: {.callout-warning}
-Tingueu en compte que només hi ha un curs a la captura de pantalla següent, no és el que hauríeu de veure, hauríeu de veure dos cursos, un per al **AWS Academy Cloud Foundations** i un per al **AWS Academy Learner Lab**. Si no veieu el curs **AWS Academy Cloud Foundations** i voleu tenir accés a ell, feu-m'ho saber.
-:::
-
-Ara hem de buscar la pestanya **Modules** (1) a la part esquerra de la pantalla. Feu clic en ella i veureu una llista de mòduls disponibles per a vosaltres. Feu clic en el mòdul **AWS Academy Learner Lab** (2), com es mostra a continuació:
+Now we need to look for the **Modules** tab (1) on the left side of the screen. Click on it and you will see a list of modules available to you. Click on the **AWS Academy Learner Lab **module (2), as shown below:
 
 ![](../../figs/laboratories/01-intro/login3.png)
 
-Ara se us demanarà que accepteu els termes i condicions del curs. Feu-ho desplaçant-vos fins al final de la pàgina i fent clic al botó **I Agree**.
+You will now be asked to accept the course terms and conditions. Do this by scrolling to the bottom of the page and clicking the button  **I Agree**.
 
 ![](../../figs/laboratories/01-intro/login4.png)
 
-Després d'acceptar els termes i condicions, ara només heu de fer clic al botó **Start Lab**.
+After accepting the terms and conditions, you just need to click the button **Start Lab**.
 
 ![](../../figs/laboratories/01-intro/login5.png)
 
-Ara doneu-li uns minuts per carregar. Veureu aquesta animació mentre el laboratori s'està preparant per a vosaltres:
+Now give it a few minutes to load. You will see this animation while the lab is being prepared for you:
 
 ![](../../figs/laboratories/01-intro/login6.png)
 
-Finalment, quan el laboratori estigui llest, veureu que el punt al costat de **AWS** és verd. També veureu un temporitzador que compta enrere des de 4 hores. Aquest és el temps que teniu per treballar al laboratori. A l'esquerra del temporitzador veureu com va el vostre pressupost. Teniu un pressupost de 50 dòlars per gastar en serveis d'AWS. Feu clic a **AWS** per accedir al tauler d'AWS, com es mostra a continuació:
+Finally, when the lab is ready, you will see that the dot next to AWS is green. You will also see a timer counting down from 4 hours. This is the time you have to work in the lab. To the left of the timer, you will see your budget status. You have a budget of $50 to spend on AWS services. Click on AWS to access the AWS dashboard, as shown below:
 
 ![](../../figs/laboratories/01-intro/login7.png)
 
 
 ::: {.callout-important title="Consideracions sobre els laboratoris"}
-- Els laboratoris són un entorn real d'AWS, per tant, és important que tingueu cura dels recursos i de les vostres accions.
-- Si superes el pressupost de 50 dòlars, ja no tindràs accés al tauler d'AWS i **perdràs la teva feina**. Assegureu-vos de vigilar el pressupost, és responsabilitat de cada estudiant mantenir-se dins del pressupost.
-- Els laboratoris tenen una durada de 4 hores. Un cop passades les 4 hores, la sessió expirarà i no podreu accedir al tauler d'AWS. No obstant això, això no vol dir que perdràs el teu treball automàticament. Les tasques i recursos que has creat (com ara instàncies EC2, buckets de S3, etc.) es mantindran accessibles entre sessions, sempre que no els eliminis manualment. Podeu tornar a iniciar el laboratori de forma il·limitada, però és una bona pràctica aturar o tancar manualment els serveis que ja no necessiteu per evitar que consumeixin recursos innecessàriament.
+The labs are a real AWS environment, so it’s important to be careful with resources and your actions.
 
-Per tant, si comences un laboratori i el deixes a mig fer, podràs reprendre'l en una sessió posterior. 
+- If you exceed the $50 budget, you will no longer have access to the AWS dashboard and you will lose your work. Make sure to monitor your budget — it is each student’s responsibility to stay within the limit.
+- The labs last for 4 hours. Once the 4 hours have passed, the session will expire and you will not be able to access the AWS dashboard. However, this does not mean you will automatically lose your work. 
+- The tasks and resources you have created (such as EC2 instances, S3 buckets, etc.) will remain accessible between sessions, as long as you do not delete them manually. You can restart the lab as many times as you want, but it is good practice to stop or shut down services you no longer need to avoid consuming unnecessary resources by clicking **Reset**.
+- Therefore, if you start a lab and leave it unfinished, you will be able to resume it in a later session.Per tant, si comences un laboratori i el deixes a mig fer, podràs reprendre'l en una sessió posterior. 
 :::
 
-Genial! Ara heu accedit al tauler d'AWS. Veureu una pantalla similar a la següent:
+Great! You have now accessed the AWS dashboard. You will see a screen similar to the one below:
 
 ![](../../figs/laboratories/01-intro/login8.png)
 
 ### Pas 3: Creació d'un parell de claus SSH {#pas-3-importació-de-la-clau-pública-a-aws}
 
-La clau SSH és un mecanisme de seguretat que permet l'autenticació segura entre dos sistemes. El servidor d'Amazon EC2 té la clau pública i el client (el vostre ordinador local) té la clau privada. Quan el client es connecta al servidor, el servidor comprova si la clau pública del client coincideix amb la clau privada del servidor. Si les claus coincideixen, el client es connecta al servidor. Per tant, la clau privada no s'ha de compartir amb ningú. Mentre que la clau pública es pot compartir amb qualsevol i la podeu fer servir en múltiples servidors. A dia d'avui, no hi ha cap mecanisme per obtenir la clau privada a partir de la clau pública.
+The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.
 
-Per crear un parell de claus SSH, utilitzarem la comanda `ssh-keygen`. Aquesta comanda està disponible a la majoria dels sistemes operatius, inclosos Linux, MacOS i Windows (a través de PowerShell o Windows Subsystem for Linux - WSL). Si utilitzeu Windows i no teniu accés a `ssh-keygen`, podeu utilitzar eines com PuTTYgen per generar les claus SSH.
+To create an SSH key pair, we will use the **ssh-keygen** command. This command is available on most operating systems, including Linux, macOS, and Windows (via PowerShell or Windows Subsystem for Linux - WSL). If you are using Windows and do not have access to ssh-keygen, you can use tools like PuTTYgen to generate SSH keys.
 
-Aquesta comanda té diversos paràmetres que permeten personalitzar la clau SSH. Els paràmetres més comuns són:
+This command has several parameters that allow you to customize the SSH key. The most common parameters are:
 
-* `-t`: Especifica el tipus de xifratge de la clau. Els tipus més comuns són rsa, dsa, ecdsa i ed25519.
-* `-f`: Especifica el nom del fitxer on es guardarà la clau.
-* `-b`: Especifica la longitud de la clau en bits.
+* `-t`: Specifies the encryption type of the key. The most common types are rsa, dsa, ecdsa, and ed25519.
+* `-f`: Specifies the name of the file where the key will be saved.
+* `-b`: Specifies the length of the key in bits.
 
-::: {.callout-note}
-És molt important entendre quan estem treballant al nostre ordinador local i quan estem treballant a la màquina remota. El primer pas sempre serà obrir un terminal al nostre propi ordinador, però un cop ens connectem a la màquina remota mitjançant l'ordre SSH, encara que sembli que res no ha canviat, el terminal ara està **connectat a la màquina remota**. Això vol dir que a partir d'ara les ordres que escrivim s'executaran a la màquina remota, no al nostre ordinador local. Si no esteu segurs si esteu treballant al vostre ordinador local o a la màquina remota, només heu d'escriure `pwd` i veure quin és el resultat. Si és el vostre ordinador local, veureu la ruta al directori en què esteu al vostre ordinador local, si és la màquina remota, veureu la ruta al directori en què esteu a la màquina remota. `pwd` significa `print working directory`.
-::: 
-
-El primer pas per crear el parell de claus SSH serà assegurar-nos que el directori `.ssh` existeix. Per fer-ho, obriu un terminal al vostre ordinador local i escriviu la següent ordre:
+The first step to create the SSH key pair is to make sure the **.ssh** directory exists. To do this, open a terminal on your local computer and type the following command:
 
 ```bash
 mkdir .ssh
 ```
 
 ::: {.callout-warning}
-Si el directori `.ssh` ja existeix, obtindreu un error indicant que el directori ja existeix. Això és normal, només vol dir que el directori ja estava allà.
+If the **.ssh** directory already exists, you will get an error indicating that the directory already exists. This is normal; it simply means the directory was already there.
 :::
 
-Ara crearem el parell de claus SSH. Escriviu la següent ordre:
+Now we will create the SSH key pair. Type the following command:
 
 ```bash
 ssh-keygen -t rsa -f .ssh/aws-keypair
 ```
 
-Se us demanarà que introduïu una contrasenya. Podeu deixar-la buida prement `Enter` dues vegades (us recomano fer-ho per simplicitat, si no, cada vegada que us connecteu a la màquina remota haureu d'introduir la contrasenya). Hauríeu de veure una sortida similar a la següent:
-
+You will be asked to enter a passphrase. You can leave it empty by pressing `Enter` twice (I recommend doing this for simplicity; otherwise, you will have to enter the passphrase every time you connect to the remote machine). You should see an output similar to the following:
 ```
 Generating public/private rsa key pair.
 Enter passphrase (empty for no passphrase):
@@ -128,14 +121,13 @@ SHA256:uhINFvYaJh6MbwFQCXdZyrW7W46jFGHUhLglDgQ5OYE ferran@DESKTOP-0841
 +----[SHA256]-----+
 ```
 
-Aquí, `ssh-keygen` és l'ordre per generar el parell de claus, `-t rsa` especifica el tipus de clau a crear, en aquest cas una clau RSA, i `-f .ssh/aws-keypair` especifica el nom del fitxer per al parell de claus. Podeu anomenar el fitxer com vulgueu, però és important recordar el nom que li heu donat. En aquest cas, l'estem anomenant `aws-keypair`. Us recomano que el nomeu igual que jo per no confondre-us més endavant.
-
+**ssh-keygen** is the command to generate the key pair. The **-t rsa** option specifies the type of key to create, in this case an RSA key, and **-f .ssh/aws-keypair** specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.
 
 :::{.callout-tip title="Entendre les claus SSH - Veure video"}
-Es clau entendre com funcionen les claus públiques i privades i com s'utilitzen per establir una connexió SSH, **heu de veure [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
+It is essential to understand how public and private keys work and how they are used to establish a connection SSH, **see [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
 :::
 
-Una altra vegada, podem comprovar el contingut del directori `.ssh` escrivint la següent ordre:
+We can check the contents of the directory `.ssh` with:
 
 ```bash
 ls .ssh
