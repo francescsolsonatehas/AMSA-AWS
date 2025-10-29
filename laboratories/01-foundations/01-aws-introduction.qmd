@@ -1,39 +1,39 @@
 ---
-title: Unitat 1 · Laboratori de preparació i comandes bàsiques d'administració
-subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
+title: Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands
+subtitle: Practical Labs on Systems and Applications Administration
 lang: ca
 ---
 
-##  Preparant l'entorn de treball  remot {#preparant-lentorn-de-treball-remot}
+##  Preparing the Remote Work Environment {#preparant-lentorn-de-treball-remot}
 
-Per preparar l'entorn de treball a AWS, seguirem els següents passos:
+To prepare the work environment on AWS, we will follow these steps:
 
-1. Crear un compte d'AWS Academy
-2. Accedir al tauler d'AWS
-3. Crear un parell de claus SSH
-4. Llançar una instància EC2
-5. Connectar-se a la instància EC2 mitjançant SSH
+1. Create an AWS Academy account
+2. Access the AWS dashboard
+3. Create an SSH key pair
+4. Launch an EC2 instance
+5. Connect to the EC2 instance via SSH
 
-### Pas 1: Creació d'un compte d'AWS Academy {#pas-1-creacio-dun-compte-daws-academy}
+### Step 1: Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
-Reviseu el vostre correu electrònic per veure si heu rebut un correu electrònic d'AWS Academy amb l'assumpte *Invitació al curs*. Si no l'heu rebut, feu-m'ho saber. El correu electrònic contindrà un botó amb el text **Get Started**. Feu clic en aquest botó per iniciar el procés de registre.
+Check your email to see if you have received an email from AWS Academy with the subject "Course Invitation". If you haven’t received it, let me know. The email will contain a button labeled Get Started. Click this button to begin the registration process.
 
 ![](../../figs/laboratories/01-intro/login0.png)
 
-Després de fer clic al botó **Get Started**, sereu redirigits a la pàgina d'inici de sessió d'AWS Academy. Ara heu de fer clic al botó **Create my account** per iniciar el procés de registre, com es mostra a continuació:
+After clicking the Get Started button, you will be redirected to the AWS Academy login page. Now click the Create my account button to start the registration process, as shown below:
 
 ![](../../figs/laboratories/01-intro/login1.png)
 
-Seleccioneu una contrasenya i completeu el procés de registre. Un cop hàgiu completat el procés de registre, sereu redirigits al tauler d'AWS Academy. Enhorabona! Heu creat amb èxit el vostre compte d'AWS Academy.
+Choose a password and complete the registration process. Once you have completed the registration, you will be redirected to the AWS Academy dashboard. Congratulations! You have successfully created your AWS Academy account.
 
-### Pas 2: Accés al tauler d'AWS {#pas-2-acces-al-tauler-daws}
+### Step 2: Accessing the AWS Dashboard {#pas-2-acces-al-tauler-daws}
 
-Ara que heu creat el vostre compte d'AWS Academy, podeu accedir al tauler d'AWS. El primer que heu de fer és fer clic a la pestanya **Courses** (1) a la part esquerra de la pantalla. Veureu una llista de cursos disponibles per a vosaltres. Feu clic al curs **AWS Academy Learner Lab** (2), com es mostra a la captura de pantalla següent:
+Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the Courses tab (1) on the left side of the screen. You will see a list of courses available to you. Click the AWS Academy Learner Lab course (2), as shown in the screenshot below:
 
 ![](../../figs/laboratories/01-intro/login2.png)
 
 ::: {.callout-note}
-El curs **AWS Academy Learner Lab** és el curs que utilitzareu per completar els laboratoris pràctics, si recordeu a la primera sessió vam parlar del curs **AWS Academy Cloud Foundations**, que no és obligatori però és altament recomanat per a aquells que vulguin tenir una base més sòlida i obtenir el 5% de l'apartat (*Async Activities		AWS*). 
+El curs **AWS Academy Learner Lab** és el curs que utilitzareu per completar els laboratoris pràctics
 :::
 
 ::: {.callout-warning}
