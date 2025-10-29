@@ -418,7 +418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</a></li>
   <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">Step 2: Accessing the AWS Dashboard</a></li>
-  <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creació d’un parell de claus SSH</a></li>
+  <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creating an SSH key pair</a></li>
   <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">Pas 4: Importació de la clau pública a AWS</a></li>
   <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Pas 5: Creació d’una instància EC2</a></li>
   <li><a href="#pas-6-connexio-a-la-instancia-ec2" id="toc-pas-6-connexio-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-6-connexio-a-la-instancia-ec2">Pas 6: Connexió a la instància EC2</a></li>
@@ -528,7 +528,7 @@ Note
 <p><img src="../../figs/laboratories/01-intro/login8.png" class="img-fluid"></p>
 </section>
 <section id="pas-3-importació-de-la-clau-pública-a-aws" class="level3">
-<h3 class="anchored" data-anchor-id="pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creació d’un parell de claus SSH</h3>
+<h3 class="anchored" data-anchor-id="pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creating an SSH key pair</h3>
 <p>The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.</p>
 <p>To create an SSH key pair, we will use the <strong>ssh-keygen</strong> command. This command is available on most operating systems, including Linux, macOS, and Windows (via PowerShell or Windows Subsystem for Linux - WSL). If you are using Windows and do not have access to ssh-keygen, you can use tools like PuTTYgen to generate SSH keys.</p>
 <p>This command has several parameters that allow you to customize the SSH key. The most common parameters are:</p>
@@ -573,7 +573,7 @@ SHA256:uhINFvYaJh6MbwFQCXdZyrW7W46jFGHUhLglDgQ5OYE ferran@DESKTOP-0841
 |   .. .*         |
 |    .o+..        |
 +----[SHA256]-----+</code></pre>
-<p><strong>ssh-keygen</strong> is the command to generate the key pair. The <strong>-t rsa</strong> option specifies the type of key to create, in this case an RSA key, and <strong>-f .ssh/aws-keypair</strong> specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.</p>
+<p><code>ssh-keygen</code> is the command to generate the key pair. The <strong>-t rsa</strong> option specifies the type of key to create, in this case an RSA key, and <strong>-f .ssh/aws-keypair</strong> specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Entendre les claus SSH - Veure video">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
