@@ -71,7 +71,7 @@ Great! You have now accessed the AWS dashboard. You will see a screen similar to
 
 ![](../../figs/laboratories/01-intro/login8.png)
 
-### Pas 3: Creació d'un parell de claus SSH {#pas-3-importació-de-la-clau-pública-a-aws}
+### Pas 3: Creating an SSH key pair {#pas-3-importació-de-la-clau-pública-a-aws}
 
 The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.
 
@@ -121,7 +121,7 @@ SHA256:uhINFvYaJh6MbwFQCXdZyrW7W46jFGHUhLglDgQ5OYE ferran@DESKTOP-0841
 +----[SHA256]-----+
 ```
 
-**ssh-keygen** is the command to generate the key pair. The **-t rsa** option specifies the type of key to create, in this case an RSA key, and **-f .ssh/aws-keypair** specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.
+`ssh-keygen` is the command to generate the key pair. The **-t rsa** option specifies the type of key to create, in this case an RSA key, and **-f .ssh/aws-keypair** specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.
 
 :::{.callout-tip title="Entendre les claus SSH - Veure video"}
 It is essential to understand how public and private keys work and how they are used to establish a connection SSH, **see [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
