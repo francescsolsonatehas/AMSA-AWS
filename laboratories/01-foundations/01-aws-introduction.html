@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Unitat 1 · Laboratori de preparació i comandes bàsiques d’administració – AMSA - Fall 2025</title>
+<title>Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -414,10 +414,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">En aquesta pàgina</h2>
    
   <ul>
-  <li><a href="#preparant-lentorn-de-treball-remot" id="toc-preparant-lentorn-de-treball-remot" class="nav-link active" data-scroll-target="#preparant-lentorn-de-treball-remot">Preparant l’entorn de treball remot</a>
+  <li><a href="#preparant-lentorn-de-treball-remot" id="toc-preparant-lentorn-de-treball-remot" class="nav-link active" data-scroll-target="#preparant-lentorn-de-treball-remot">Preparing the Remote Work Environment</a>
   <ul class="collapse">
-  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Pas 1: Creació d’un compte d’AWS Academy</a></li>
-  <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">Pas 2: Accés al tauler d’AWS</a></li>
+  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</a></li>
+  <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">Step 2: Accessing the AWS Dashboard</a></li>
   <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creació d’un parell de claus SSH</a></li>
   <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">Pas 4: Importació de la clau pública a AWS</a></li>
   <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Pas 5: Creació d’una instància EC2</a></li>
@@ -442,8 +442,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Laboratoris</li><li class="breadcrumb-item"><a href="../../laboratories/01-introduction.html">Unitat 01 · Fonaments de l’Administració de Sistemes</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">Laboratori 01 · Introducció a AWS</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Unitat 1 · Laboratori de preparació i comandes bàsiques d’administració</h1>
-<p class="subtitle lead">Laboratoris Pràctics d’Administració de Sistemes i Aplicacions</p>
+<h1 class="title">Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands</h1>
+<p class="subtitle lead">Practical Labs on Systems and Applications Administration</p>
 </div>
 
 
@@ -461,26 +461,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="preparant-lentorn-de-treball-remot" class="level2">
-<h2 class="anchored" data-anchor-id="preparant-lentorn-de-treball-remot">Preparant l’entorn de treball remot</h2>
-<p>Per preparar l’entorn de treball a AWS, seguirem els següents passos:</p>
+<h2 class="anchored" data-anchor-id="preparant-lentorn-de-treball-remot">Preparing the Remote Work Environment</h2>
+<p>To prepare the work environment on AWS, we will follow these steps:</p>
 <ol type="1">
-<li>Crear un compte d’AWS Academy</li>
-<li>Accedir al tauler d’AWS</li>
-<li>Crear un parell de claus SSH</li>
-<li>Llançar una instància EC2</li>
-<li>Connectar-se a la instància EC2 mitjançant SSH</li>
+<li>Create an AWS Academy account</li>
+<li>Access the AWS dashboard</li>
+<li>Create an SSH key pair</li>
+<li>Launch an EC2 instance</li>
+<li>Connect to the EC2 instance via SSH</li>
 </ol>
 <section id="pas-1-creacio-dun-compte-daws-academy" class="level3">
-<h3 class="anchored" data-anchor-id="pas-1-creacio-dun-compte-daws-academy">Pas 1: Creació d’un compte d’AWS Academy</h3>
-<p>Reviseu el vostre correu electrònic per veure si heu rebut un correu electrònic d’AWS Academy amb l’assumpte <em>Invitació al curs</em>. Si no l’heu rebut, feu-m’ho saber. El correu electrònic contindrà un botó amb el text <strong>Get Started</strong>. Feu clic en aquest botó per iniciar el procés de registre.</p>
+<h3 class="anchored" data-anchor-id="pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</h3>
+<p>Check your email to see if you have received an email from AWS Academy with the subject “Course Invitation”. If you haven’t received it, let me know. The email will contain a button labeled Get Started. Click this button to begin the registration process.</p>
 <p><img src="../../figs/laboratories/01-intro/login0.png" class="img-fluid"></p>
-<p>Després de fer clic al botó <strong>Get Started</strong>, sereu redirigits a la pàgina d’inici de sessió d’AWS Academy. Ara heu de fer clic al botó <strong>Create my account</strong> per iniciar el procés de registre, com es mostra a continuació:</p>
+<p>After clicking the Get Started button, you will be redirected to the AWS Academy login page. Now click the Create my account button to start the registration process, as shown below:</p>
 <p><img src="../../figs/laboratories/01-intro/login1.png" class="img-fluid"></p>
-<p>Seleccioneu una contrasenya i completeu el procés de registre. Un cop hàgiu completat el procés de registre, sereu redirigits al tauler d’AWS Academy. Enhorabona! Heu creat amb èxit el vostre compte d’AWS Academy.</p>
+<p>Choose a password and complete the registration process. Once you have completed the registration, you will be redirected to the AWS Academy dashboard. Congratulations! You have successfully created your AWS Academy account.</p>
 </section>
 <section id="pas-2-acces-al-tauler-daws" class="level3">
-<h3 class="anchored" data-anchor-id="pas-2-acces-al-tauler-daws">Pas 2: Accés al tauler d’AWS</h3>
-<p>Ara que heu creat el vostre compte d’AWS Academy, podeu accedir al tauler d’AWS. El primer que heu de fer és fer clic a la pestanya <strong>Courses</strong> (1) a la part esquerra de la pantalla. Veureu una llista de cursos disponibles per a vosaltres. Feu clic al curs <strong>AWS Academy Learner Lab</strong> (2), com es mostra a la captura de pantalla següent:</p>
+<h3 class="anchored" data-anchor-id="pas-2-acces-al-tauler-daws">Step 2: Accessing the AWS Dashboard</h3>
+<p>Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the Courses tab (1) on the left side of the screen. You will see a list of courses available to you. Click the AWS Academy Learner Lab course (2), as shown in the screenshot below:</p>
 <p><img src="../../figs/laboratories/01-intro/login2.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -492,7 +492,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El curs <strong>AWS Academy Learner Lab</strong> és el curs que utilitzareu per completar els laboratoris pràctics, si recordeu a la primera sessió vam parlar del curs <strong>AWS Academy Cloud Foundations</strong>, que no és obligatori però és altament recomanat per a aquells que vulguin tenir una base més sòlida i obtenir el 5% de l’apartat (<em>Async Activities AWS</em>).</p>
+<p>El curs <strong>AWS Academy Learner Lab</strong> és el curs que utilitzareu per completar els laboratoris pràctics</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
