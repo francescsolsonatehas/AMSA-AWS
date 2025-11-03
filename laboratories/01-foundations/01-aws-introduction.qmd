@@ -1,5 +1,5 @@
 ---
-title: Unit 1 · Executing a Python scrpt in a EC2 instance
+title: Executing a Python script in a EC2 instance
 lang: en
 ---
 
