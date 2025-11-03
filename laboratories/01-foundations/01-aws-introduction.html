@@ -423,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">7. Working in the EC2 instance</a>
   <ul class="collapse">
   <li><a href="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" id="toc-pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">7.1. Transferring a data file to the EC2 instance EC2</a></li>
-  <li><a href="#pas-1-configuracio-de-lentorn-remot-a-lec2" id="toc-pas-1-configuracio-de-lentorn-remot-a-lec2" class="nav-link" data-scroll-target="#pas-1-configuracio-de-lentorn-remot-a-lec2">7.2. Remote environment setup on EC2</a></li>
+  <li><a href="#pas-1-configuracio-de-lentorn-remot-a-lec2" id="toc-pas-1-configuracio-de-lentorn-remot-a-lec2" class="nav-link" data-scroll-target="#pas-1-configuracio-de-lentorn-remot-a-lec2">7.2. Setup and Python script execution in the EC2</a></li>
   </ul></li>
   <li><a href="#neteja-final" id="toc-neteja-final" class="nav-link" data-scroll-target="#neteja-final">8. Cleanup</a></li>
   </ul>
@@ -460,8 +460,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Creating an EC2 instance</p></li>
 <li><p>Connecting to the EC2 instance</p></li>
 <li><p>Working in the EC2 instance</p>
-<p>7.1: Transferring a data file to the EC2 instance EC2</p>
-<p>7.2: Remote environment setup on EC2</p></li>
+<p>7.1. Transferring a data file to the EC2 instance EC2</p>
+<p>7.2. Setup and Python script execution in the EC2</p></li>
 <li><p>Cleanup</p></li>
 </ol>
 <section id="pas-1-creacio-dun-compte-daws-academy" class="level2">
@@ -754,7 +754,7 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="pas-1-configuracio-de-lentorn-remot-a-lec2" class="level3">
-<h3 class="anchored" data-anchor-id="pas-1-configuracio-de-lentorn-remot-a-lec2">7.2. Remote environment setup on EC2</h3>
+<h3 class="anchored" data-anchor-id="pas-1-configuracio-de-lentorn-remot-a-lec2">7.2. Setup and Python script execution in the EC2</h3>
 <p>First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via <code>ssh</code> as we did earlier and run the following commands to install the required tools.</p>
 <ol type="1">
 <li>Connect to the EC2 instance:</li>
