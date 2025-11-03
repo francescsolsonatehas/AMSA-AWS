@@ -414,7 +414,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link active" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">1. Creating an AWS Academy Account</a></li>
+  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link active" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">1. Creating an AWS Academy Account</a>
+  <ul class="collapse">
   <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">2. Accessing the AWS Dashboard</a></li>
   <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">3. Creating an SSH key pair</a></li>
   <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">4. Importing the public key into AWS</a></li>
@@ -422,6 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pas-6-connexio-a-la-instancia-ec2" id="toc-pas-6-connexio-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-6-connexio-a-la-instancia-ec2">6. Connecting to the EC2 instance</a></li>
   <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">7. Working in the EC2 instance</a></li>
   <li><a href="#neteja-final" id="toc-neteja-final" class="nav-link" data-scroll-target="#neteja-final">8. Cleanup</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -458,14 +460,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Working in the EC2 instance 7.1: Transferring a data file to the EC2 instance EC2 7.2: Remote environment setup on EC2</li>
 <li>Cleanup</li>
 </ol>
-<section id="pas-1-creacio-dun-compte-daws-academy" class="level3">
-<h3 class="anchored" data-anchor-id="pas-1-creacio-dun-compte-daws-academy">1. Creating an AWS Academy Account</h3>
+<section id="pas-1-creacio-dun-compte-daws-academy" class="level1">
+<h1>1. Creating an AWS Academy Account</h1>
 <p>Check your email to see if you have received an email from AWS Academy with the subject <em>Course Invitation</em>. If you haven’t received it, let me know. The email will contain a button labeled <strong>Get Started</strong>. Click this button to begin the registration process.</p>
 <p><img src="../../figs/laboratories/01-intro/login0.png" class="img-fluid"></p>
 <p>After clicking the <strong>Get Started</strong> button, you will be redirected to the AWS Academy login page. Now click the <strong>Create my account</strong> button to start the registration process, as shown below:</p>
 <p><img src="../../figs/laboratories/01-intro/login1.png" class="img-fluid"></p>
 <p>Choose a password and complete the registration process. Once you have completed the registration, you will be redirected to the AWS Academy dashboard. Congratulations! You have successfully created your AWS Academy account.</p>
-</section>
 <section id="pas-2-acces-al-tauler-daws" class="level3">
 <h3 class="anchored" data-anchor-id="pas-2-acces-al-tauler-daws">2. Accessing the AWS Dashboard</h3>
 <p>Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the <strong>Courses</strong> tab (1) on the left side of the screen. You will see a list of courses available to you. Click the course <strong>AWS Academy Learner Lab</strong> (2), as shown in the screenshot below:</p>
@@ -845,6 +846,7 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <p>Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on <code>Instance state</code> and then on <code>Terminate instance</code>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
