@@ -14,9 +14,9 @@ Contents:
 7. Working in the EC2 instance
 	7.1: Transferring a data file to the EC2 instance EC2
 	7.2: Remote environment setup on EC2 
+8. Cleanup
 
-
-### Step 1: Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
+### 1. Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
 Check your email to see if you have received an email from AWS Academy with the subject *Course Invitation*. If you haven’t received it, let me know. The email will contain a button labeled **Get Started**. Click this button to begin the registration process.
 
@@ -28,7 +28,7 @@ After clicking the **Get Started** button, you will be redirected to the AWS Aca
 
 Choose a password and complete the registration process. Once you have completed the registration, you will be redirected to the AWS Academy dashboard. Congratulations! You have successfully created your AWS Academy account.
 
-### Step 2: Accessing the AWS Dashboard {#pas-2-acces-al-tauler-daws}
+### 2. Accessing the AWS Dashboard {#pas-2-acces-al-tauler-daws}
 
 Now that you have created your AWS Academy account, you can access the AWS dashboard. The first thing you need to do is click the **Courses** tab (1) on the left side of the screen. You will see a list of courses available to you. Click the course **AWS Academy Learner Lab**  (2), as shown in the screenshot below:
 
@@ -73,7 +73,7 @@ Great! You have now accessed the AWS dashboard. You will see a screen similar to
 
 ![](../../figs/laboratories/01-intro/login8.png)
 
-### Step 3: Creating an SSH key pair {#pas-3-importació-de-la-clau-pública-a-aws}
+### 3. Creating an SSH key pair {#pas-3-importació-de-la-clau-pública-a-aws}
 
 The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.
 
@@ -156,7 +156,7 @@ ls -a .ssh
 
 We have created an SSH key pair that we can use to connect to remote machines. Next, we will import our public key into AWS.
 
-### Step 4: Importing the public key into AWS {#pas-4-importacio-de-la-clau-publica-a-aws}
+### 4. Importing the public key into AWS {#pas-4-importacio-de-la-clau-publica-a-aws}
 
 Now that we’ve created our SSH key pair, we need to import the public key into AWS so we can use it to connect to the EC2 instances we’ll create later.
 To do this, we need to go back to the AWS dashboard, which is where we left off after completing  [Step 2](#pas-2-acces-al-tauler-daws).
@@ -184,7 +184,7 @@ If you’re having trouble with this, I recommend using the terminal to copy the
 
 You should now see the key pair you just imported in the list of key pairs. There will probably be another key pair there — that’s fine, you can ignore it. Perfect! You’ve now imported the public key into AWS. Next, we’ll create an EC2 instance and configure it to use the key pair we just imported.
 
-### Step 5: Creating an EC2 instance {#pas-5-creacio-duna-instancia-ec2}
+### 5. Creating an EC2 instance {#pas-5-creacio-duna-instancia-ec2}
 
 The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service, just like we did at the beginning of [Step 3](#pas-3-importació-de-la-clau-pública-a-aws):
 
@@ -201,7 +201,7 @@ Leave everything as it is except for the `Key pair (login)` option (you’ll nee
 We now have a running EC2 instance with our public key imported. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.
 
 
-### Step 6: Connecting to the EC2 instance {#pas-6-connexio-a-la-instancia-ec2}
+### 6. Connecting to the EC2 instance {#pas-6-connexio-a-la-instancia-ec2}
 
 Before connecting to the remote machine, I want you to try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is `pwd`, which stands for `print working directory`, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is `whoami`, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.
 
@@ -276,11 +276,11 @@ ec2-user
 
 
 
-### Step 7:  Working in the EC2 instance {#execucio-en-el-nostre-laboratori-remot}
+### 7.  Working in the EC2 instance {#execucio-en-el-nostre-laboratori-remot}
 
 This step will cover file transfer between the local machine and the remote machine. Additionally, we will use a Python script to simulate a workload and generate a graph from a data file. 
 
-#### Step 7.1: Transferring a data file to the EC2 instance EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
+#### 7.1. Transferring a data file to the EC2 instance EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
 
 To transfer a data file  (`workload.csv`) to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.
 
@@ -297,7 +297,7 @@ exit
 ```
 
 
-#### Step 7.2: Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
+#### 7.2. Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
 
 First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via `ssh` as we did earlier and run the following commands to install the required tools.
 
@@ -413,6 +413,6 @@ python3 -c "print('Hello World from the virtual environment')"
 
 Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
 
-## Cleanup {#neteja-final}
+### 8. Cleanup {#neteja-final}
 
 Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on `Instance state` and then on `Terminate instance`.
