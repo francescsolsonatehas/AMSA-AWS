@@ -13,9 +13,9 @@ lang: en
 6. Connecting to the EC2 instance
 7. Working in the EC2 instance
 
-	7.1: Transferring a data file to the EC2 instance EC2
+	7.1. Transferring a data file to the EC2 instance EC2
 
-	7.2: Remote environment setup on EC2 
+	7.2. Setup and Python script execution in the EC2 
 8. Cleanup
 
 ## 1. Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
@@ -299,7 +299,7 @@ exit
 ```
 
 
-### 7.2. Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
+### 7.2. Setup and Python script execution in the EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
 
 First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via `ssh` as we did earlier and run the following commands to install the required tools.
 
