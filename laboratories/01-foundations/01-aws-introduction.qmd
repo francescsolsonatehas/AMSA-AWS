@@ -301,26 +301,26 @@ ssh -i .ssh/aws-keypair ec2-user@<public-ip>
   sudo yum install python3 -y # Instal·la Python si no està instal·lat
   ```
 
-4. Crea un entorn virtual per a Python:
+4. Create a virtual environment for Python:
 
   ```bash
   python3 -m venv myenv
   source myenv/bin/activate
   ```
 
-5. Comprova l'entorn virtual amb un `Hello World`:
+5. Check the virtual environment with a `Hello World`:
 
 ```bash
 python3 -c "print('Hello World from the virtual environment')"
   ```
   
-6. Instal·la les biblioteques necessàries per al nostre script:
+6. Install the necessary libraries for our script:
 
   ```bash
   pip install pandas matplotlib psutil
   ```
 
-7.Create a virtual environment for Python:
+7. Create a virtual environment for Python:
 
   ```bash
   mkdir lab01-workload-simulation
