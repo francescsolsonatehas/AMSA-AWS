@@ -1,5 +1,5 @@
 ---
-title: "AMSA: Adminiatració i Manteniment de Sistemes i Aplicacions"
+title: "AMSA: Administration and Maintenance of Systems and Applications"
 format:
     html:
         toc: false
