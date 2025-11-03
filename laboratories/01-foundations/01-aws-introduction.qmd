@@ -3,7 +3,7 @@ title: Unit 1 · Executing a Python scrpt in a EC2 instance
 lang: en
 ---
 
-Contents:
+**Contents**
 
 1. Creating an AWS Academy account
 2. Accessing the AWS dashboard
