@@ -20,10 +20,10 @@ This lab is designed to provide the knowledge and skills necessary to manage and
 
 
 
-[Laboratori 1: Laboratori de preparació i comandes bàsiques d'administració](/laboratories/01-foundations/01-aws-introduction.qmd)
+[Lab 1: Executing a Python script in a EC2 instance](/laboratories/01-foundations/01-aws-introduction.qmd)
 
 
 
-[Laboratori 2: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/01-foundations/02-aws-wordpress.qmd)
+[Lab 2: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/01-foundations/02-aws-wordpress.qmd)
 
 ![](/figs/laboratories/02-aws-wp/architecture.png)
