@@ -313,11 +313,7 @@ ssh -i .ssh/aws-keypair ec2-user@<public-ip>
 ```bash
 python3 -c "print('Hello World from the virtual environment')"
   ```
-
-::: {.callout-important title="Exercici"}
-Ara utiltiza la comanda `exit` per sortir de la màquina remota. Un cop al teu ordinador local, torna a connectar-te a la màquina remota amb SSH i torna a executar la comanda `python3 -c "print('Hello World from the virtual environment')"`. Quin és el resultat? Per què és diferent del que has obtingut abans? Com ho podem solucionar?
-:::
-
+  
 6. Instal·la les biblioteques necessàries per al nostre script:
 
   ```bash
@@ -429,6 +425,6 @@ get workload_analysis.png
 exit
 ```
 
-## Neteja final {#neteja-final}
+## Cleanup {#neteja-final}
 
 Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on `Instance state` and then on `Terminate instance`.
