@@ -2230,7 +2230,7 @@
     "href": "index.html",
     "title": "AMSA: Administration and Maintenance of Systems and Applications",
     "section": "",
-    "text": "Welcome to the AWS (Amazon Web Services) lab. This lab is designed to provide the knowledge and skills necessary to manage and maintain computer systems in professional environments.\n\n\n\nCourse Title\nSystems and Applications Administration and Management\n\n\nSemester\n1st Semester of the Bachelor’s Degree in Computer Engineering\n\n\nCourse Year\nThird Year\n\n\nProfessor\nFrancesc Solsona\n\n\nSchool\n\n\n\nUniversity\n\n\n\nDepartment\n\n\n\n\nLaboratori 1: Laboratori de preparació i comandes bàsiques d’administració\nLaboratori 2: Desplegament d’una aplicació web amb WordPress a AWS"
+    "text": "Welcome to the AWS (Amazon Web Services) lab. This lab is designed to provide the knowledge and skills necessary to manage and maintain computer systems in professional environments.\n\n\n\nCourse Title\nSystems and Applications Administration and Management\n\n\nSemester\n1st Semester of the Bachelor’s Degree in Computer Engineering\n\n\nCourse Year\nThird Year\n\n\nProfessor\nFrancesc Solsona\n\n\nSchool\n\n\n\nUniversity\n\n\n\nDepartment\n\n\n\n\nLab 1: Executing a Python script in a EC2 instance\nLab 2: Desplegament d’una aplicació web amb WordPress a AWS"
   },
   {
     "objectID": "laboratories/01-introduction.html#laboratori-1-fonaments-de-ladministració-de-sistemes-amb-aws",
