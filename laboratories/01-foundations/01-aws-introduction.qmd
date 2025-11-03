@@ -13,6 +13,7 @@ To prepare the work environment on AWS, we will follow these steps:
 3. Create an SSH key pair
 4. Launch an EC2 instance
 5. Connect to the EC2 instance via SSH
+6. Executing a Python script in the EC2 instance
 
 ### Step 1: Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
