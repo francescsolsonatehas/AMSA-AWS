@@ -423,17 +423,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Step 5: Creating an EC2 instance</a></li>
   <li><a href="#pas-6-connexio-a-la-instancia-ec2" id="toc-pas-6-connexio-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-6-connexio-a-la-instancia-ec2">Step 6: Connecting to the EC2 instance</a></li>
   </ul></li>
-  <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">Execució en el nostre laboratori remot</a>
+  <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">Working in EC2</a>
   <ul class="collapse">
-  <li><a href="#pas-1-configuracio-de-lentorn-remot-a-lec2" id="toc-pas-1-configuracio-de-lentorn-remot-a-lec2" class="nav-link" data-scroll-target="#pas-1-configuracio-de-lentorn-remot-a-lec2">Pas 1: Configuració de l’entorn remot a l’EC2</a></li>
-  <li><a href="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" id="toc-pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">Pas 2: Transferència del fitxer de dades a la instància EC2</a></li>
-  </ul></li>
-  <li><a href="#tasques-basiques-dadministracio" id="toc-tasques-basiques-dadministracio" class="nav-link" data-scroll-target="#tasques-basiques-dadministracio">Eines bàsqiques d’administració</a>
-  <ul class="collapse">
-  <li><a href="#gestio-de-lespai-en-disc" id="toc-gestio-de-lespai-en-disc" class="nav-link" data-scroll-target="#gestio-de-lespai-en-disc">Gestió de l’espai en disc</a></li>
+  <li><a href="#pas-1-configuracio-de-lentorn-remot-a-lec2" id="toc-pas-1-configuracio-de-lentorn-remot-a-lec2" class="nav-link" data-scroll-target="#pas-1-configuracio-de-lentorn-remot-a-lec2">Step 1: Remote environment setup on EC2</a></li>
+  <li><a href="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" id="toc-pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">Step 2: Transferring the data file to the EC2 instance EC2</a></li>
   </ul></li>
   <li><a href="#neteja-final" id="toc-neteja-final" class="nav-link" data-scroll-target="#neteja-final">Neteja final</a></li>
-  <li><a href="#entrega-del-laboratori" id="toc-entrega-del-laboratori" class="nav-link" data-scroll-target="#entrega-del-laboratori">Entrega del laboratori</a></li>
   </ul>
 </nav>
     </div>
@@ -692,23 +687,24 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El ordinador local que utilitzo és un portàtil amb Windows, així que la sortida serà diferent de la vostra si esteu utilitzant un Mac o un ordinador amb Linux. Substitueix <code>fnao</code> pel vostre nom d’usuari i <code>C:\Users\fnao</code> per la ruta al vostre directori d’usuari.</p>
+<p>The local computer I’m using is a Windows laptop, so the output will be different from yours if you’re using a Mac or a computer running Linux. Replace <code>fnao</code> with your own username and <code>C:\Users\fnao</code> with the path to your user directory.</p>
 </div>
 </div>
-<p>Per connectar-nos a la instància EC2, utilitzarem el terminal del nostre ordinador local. Així com vam fer al principi <a href="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3</a>, obriu un terminal al vostre ordinador local. Utilitzarem l’ordre <code>ssh</code> per connectar-nos a la màquina remota. L’ordre tindrà aquest aspecte:</p>
+<p>o connect to the EC2 instance, we will use the terminal on our local computer, just as we did at the beginning <a href="#pas-3-importació-de-la-clau-pública-a-aws">Step 3</a>, Open a terminal on your local computer. We will use the <code>ssh</code> command to connect to the remote machine. The command will look like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Haureu de substituir <code>&lt;public-ip&gt;</code> per la IP pública de la instància EC2. Per trobar la IP pública, torneu al tauler d’EC2 i feu clic a <code>Instances</code> a la part esquerra de la pantalla. Veureu una llista d’instàncies, feu clic a la instància que heu creat. Veureu la IP pública a la part inferior de la pantalla com es mostra a continuació:</p>
+<p>You will need to replace <code>&lt;public-ip&gt;</code> with the public IP of the EC2 instance. To find the public IP, go back to the EC2 dashboard and click on <code>Instances</code>, on the left side of the screen. You will see a list of instances—click on the one you created. You will see the public IP at the bottom of the screen, as shown below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/01-intro/ec2-3.png" class="img-fluid figure-img"></p>
 <figcaption>AWS Dashboard</figcaption>
 </figure>
 </div>
-<p>Tant l’adreça <code>Public IPv4 address</code> com el <code>Public IPv4 DNS</code> es poden utilitzar com a <code>&lt;public-ip&gt;</code> a l’ordre <code>ssh</code>. Copieu el que preferiu i enganxeu-lo a l’ordre <code>ssh</code>. L’ordre hauria d’assemblar-se a alguna cosa així si utilitzeu l’adreça IP:</p>
+<p>Both the <code>Public IPv4 address</code> and the <code>Public IPv4 DNS</code> can be used as <code>&lt;public-ip&gt;</code> in the <code>ssh</code> command. Copy whichever you prefer and paste it into the <code>ssh</code> command. The command should look something like this if you use the IP address:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@98.84.68.70</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>o així si utilitzeu el DNS:</p>
+<p>or like this if you use the DNS:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@ec2-98-84-68-70.compute-1.amazonaws.com</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Si és la primera vegada que us connecteu a la màquina remota, obtindreu una advertència. Això és normal, només heu d’escriure <code>yes</code> i prémer <code>Enter</code>. Ara hauríeu de estar connectats a la màquina remota. Veureu un missatge similar al següent:</p>
+<p>If this is the first time you’re connecting to the remote machine, you’ll get a warning. This is normal—just type <code>yes</code> and press <code>Enter</code>. You should now be connected to the remote machine. You’ll see a message similar to the following:</p>
 <pre><code>   ,     #_
    ~\_  ####_        Amazon Linux 2023
   ~~  \_#####\
@@ -731,57 +727,33 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Investiga quin és el significat i la importànica del missatge que acceptes quan et connectes per primera vegada a la màquina remota. Per què és important acceptar aquest missatge? Què significa? Quines implicacions té?</p>
+<p>Investigate the meaning and importance of the message you accept when connecting to the remote machine for the first time. Why is it important to accept this message? What does it mean? What are its implications?</p>
 </div>
 </div>
-<p>Fantàstic! Ara esteu connectats a la màquina remota. És important entendre que a partir d’ara, les ordres que escrivim s’executaran a la màquina remota, no al nostre ordinador local. Per comprovar-ho, escriviu les ordres <code>pwd</code> i <code>whoami</code> com vam fer al nostre ordinador local. Veureu que la sortida és diferent. A continuació es mostra la sortida que obtinc a la màquina remota:</p>
+<p>You are now connected to the remote machine. It’s important to understand that from this point on, the commands we type will be executed on the remote machine, not on our local computer. To verify this, type the commands <code>pwd</code> and <code>whoami</code> as we did on our local computer. You’ll see that the output is different. Below is the output I get on the remote machine:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-86-82</span> ~]$ pwd</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/ec2-user</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-86-82</span> ~]$ whoami</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ec2-user</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-86-82</span> ~]$</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Aquesta vegada la sortida hauria de ser la mateixa que la meva. Observeu que el prompt <code>[ec2-user@ip-172-31-86-82 ~]$</code> és diferent, però això no forma part de les sortides de les ordres. Les sortides de les ordres són <code>pwd</code> i <code>whoami</code>, que són <code>home/ec2-user</code> i <code>ec2-user</code> respectivament. El prompt és només una manera de mostrar-vos on esteu al sistema de fitxers i qui sou com a usuari connectat.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Exercici">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exercici
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Utilitza la comanada <code>lastlog</code> i investiga com administrador com podem trueure partit d’aquesta informació.</p>
-</div>
-</div>
 </section>
 </section>
 <section id="execucio-en-el-nostre-laboratori-remot" class="level2">
-<h2 class="anchored" data-anchor-id="execucio-en-el-nostre-laboratori-remot">Execució en el nostre laboratori remot</h2>
-<p>En aquest apartat de laboratori, treballarem la comunicació amb servidors remots i la transferència de fitxers entre la màquina local i la màquina remota. Utilitzarem un script de Python per simular una càrrega de treball i generar un gràfic a partir d’un fitxer de dades. Aquest laboratori es durà a terme a la instància EC2 que hem creat anteriorment.</p>
+<h2 class="anchored" data-anchor-id="execucio-en-el-nostre-laboratori-remot">Working in EC2</h2>
+<p>En aquest apartat es veurà la transferència de fitxers entre la màquina local i la màquina remota. A més, utilitzarem un script de Python per simular una càrrega de treball i generar un gràfic a partir d’un fitxer de dades.</p>
 <section id="pas-1-configuracio-de-lentorn-remot-a-lec2" class="level3">
-<h3 class="anchored" data-anchor-id="pas-1-configuracio-de-lentorn-remot-a-lec2">Pas 1: Configuració de l’entorn remot a l’EC2</h3>
-<p>Primer, hem de preparar l’entorn a la nostra instància EC2. Això inclou instal·lar les eines necessàries per executar el nostre script de Python i gestionar les dades. Per tant, ens connectarem a la instància EC2 mitjançant SSH com hem fet anteriorment i executarem les següents ordres per instal·lar les eines necessàries.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connecta't a la instància EC2</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h3 class="anchored" data-anchor-id="pas-1-configuracio-de-lentorn-remot-a-lec2">Step 1: Remote environment setup on EC2</h3>
+<p>First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via <code>ssh</code> as we did earlier and run the following commands to install the required tools.</p>
 <ol type="1">
-<li>Actualització del sistema:</li>
+<li>Connect to the EC2 instance:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>System update:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum update <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="2" type="1">
-<li>Comprova si tens instal·lat Python i, si no, instal·la’l:</li>
+<ol start="3" type="1">
+<li>Check if Python is installed, and if not, install it:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span> <span class="co"># Comprova si Python està instal·lat</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install python3 <span class="at">-y</span> <span class="co"># Instal·la Python si no està instal·lat</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -811,13 +783,11 @@ Note
 <li>Instal·la les biblioteques necessàries per al nostre script:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pandas matplotlib psutil</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="7" type="1">
-<li>Crea un directori per al projecte i entra-hi:</li>
-</ol>
+<p>7.Create a virtual environment for Python:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> lab01-workload-simulation</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lab01-workload-simulation</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="8" type="1">
-<li>Crea el fitxer del script de Python, utilitzant <code>vi</code> o <code>vim</code>:</li>
+<li>Create the Python script file, using <code>vi</code> or <code>vim</code>:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vi</span> simulate_workload.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
@@ -869,111 +839,40 @@ Note
 <span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="9" type="1">
-<li>Si el fitxer existeix, pots executar-lo amb la següent ordre:</li>
+<li>SIf the file exists, you can run it with the following command:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simulate_workload.py workload.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>En aquest punt, hauríeu de veure un error indicant que el fitxer <code>workload.csv</code> no existeix. Això és normal perquè encara no hem pujat el fitxer de dades a la instància EC2.</p>
+<p>At this point, you should see an error indicating that the file <code>workload.csv</code> does not exist. This is normal because we haven’t uploaded the data file to the EC2 instance yet.</p>
 </section>
 <section id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" class="level3">
-<h3 class="anchored" data-anchor-id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">Pas 2: Transferència del fitxer de dades a la instància EC2</h3>
-<p>Per transferir el fitxer de dades <code>workload.csv</code> a la instància EC2, utilitzarem SFTP (SSH File Transfer Protocol). SFTP és un protocol segur per transferir fitxers entre un ordinador local i una màquina remota. Utilitzarem el mateix parell de claus SSH que vam crear anteriorment per autenticar-nos a la instància EC2.</p>
+<h3 class="anchored" data-anchor-id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">Step 2: Transferring the data file to the EC2 instance EC2</h3>
+<p>To transfer the <code>workload.csv</code> data file to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.</p>
 <ul>
-<li>Descarrega’t el fitxer de dades <a href="./sources/workload.csv"><code>workload.csv</code></a> al teu ordinador local.</li>
-<li>Utilitza SFTP per pujar el fitxer de dades a la instància EC2:</li>
+<li>Download the data file <a href="./sources/workload.csv"><code>workload.csv</code></a> to your local computer.</li>
+<li>Use SFTP to upload the data file to the EC2 instance:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Substitueix &lt;public-ip&gt; per la IP pública de la teva instància EC2</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace &lt;public-ip&gt; with the public IP of your EC2 instance</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span>:/home/ec2-user/lab01-workload-simulation</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixa el fitxer workload.csv del directori remot a la màquina local</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the workload.csv file from the remote directory to your local machine</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">put</span> workload.csv</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tanca la sessió SFTP</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the SFTP session</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Torna a connectar-te a la instància EC2 mitjançant SSH, i executa el programa de Python de nou:</li>
+<li>Reconnect to the EC2 instance via SSH, and run the Python program again:</li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simulate_workload.py workload.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ara hauria de funcionar correctament i generar un fitxer d’imatge amb el gràfic de la càrrega de treball. Pots comprovar que el fitxer d’imatge s’ha creat correctament amb l’ordre <code>ls -l</code>. Un cop la imatge s’ha generat, pots utilitzar SFTP per baixar-la a la teva màquina local:</p>
+<p>Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Substitueix &lt;public-ip&gt; per la IP pública de la teva instància EC2</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span>:/home/ec2-user/lab01-workload-simulation</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Baixa el fitxer workload_analysis.png del directori remot a la màquina local</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">get</span> workload_analysis.png</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tanca la sessió SFTP</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-important callout-titled" title="Exercicis">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exercicis
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Com podem descarregar tots els fitxers d’un directori remot a la nostra màquina local utilitzant el protocol SFTP? Per exemple, imagina que necessites descarregar tot el contingut del directori remot anomenat lab-workload-simulation. Explica els passos o la comanda que utilitzaries per dur a terme aquesta tasca de manera eficient.</li>
-<li>Com podem descarregar un fitxer específic des d’una URL directament a un servidor remot? Per a fer-ho més pràctic, prepara un script que, donada una URL, descarregui un fitxer directament al servidor remot sense passar-lo per la màquina local. Fes el test amb el fitxer <code>workload.csv</code> que hem utilitzat en aquest laboratori.</li>
-</ol>
-</div>
-</div>
-</section>
-</section>
-<section id="tasques-basiques-dadministracio" class="level2">
-<h2 class="anchored" data-anchor-id="tasques-basiques-dadministracio">Eines bàsqiques d’administració</h2>
-<p>En aquest apartat, explorarem algunes tasques bàsiques d’administració que podem realitzar en un servidor Linux. Aquestes tasques inclouen la gestió de l’espai en disc.</p>
-<section id="gestio-de-lespai-en-disc" class="level3">
-<h3 class="anchored" data-anchor-id="gestio-de-lespai-en-disc">Gestió de l’espai en disc</h3>
-<p>Amb la comanda <code>df -h</code> podem veure l’espai en disc disponible i utilitzat a les particions del sistema. Aquesta comanda ens mostrarà informació sobre l’espai en disc de cada partició, incloent-hi la mida total, l’espai utilitzat, l’espai disponible i el punt de muntatge. En aquest curs estudiarem el sistema de fitxers en profunditat, però ara només introduirem la comanda i veurem el seu resultat.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-30-17</span> ~]$ df <span class="at">-h</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Filesystem</span>        Size  Used Avail Use% Mounted on</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">devtmpfs</span>          4.0M     0  4.0M   0% /dev</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">tmpfs</span>             453M     0  453M   0% /dev/shm</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">tmpfs</span>             181M  424K  181M   1% /run</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/nvme0n1p1</span>    8.0G  2.0G  6.1G  25% /</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ex">tmpfs</span>             453M     0  453M   0% /tmp</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">/dev/nvme0n1p128</span>   10M  1.3M  8.7M  13% /boot/efi</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ex">tmpfs</span>              91M     0   91M   0% /run/user/1000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>En aquest cas, podem veure que la partició <code>/dev/nvme0n1p1</code> té una mida total de 8.0 GB, amb 2.0 GB utilitzats i 6.1 GB disponibles. Això significa que el 25% de l’espai en disc està utilitzat. El seu punt de muntatge és <code>/</code>, que és el directori arrel del sistema de fitxers. La resta de particions les podem ignorar per ara i les veurem en detall més endavant.</p>
-<p>A més, també podem utilitzar la comanda <code>du</code> per veure l’espai en disc utilitzat per un directori específic. Per exemple, si volem veure l’espai en disc utilitzat pel directori <code>/home/ec2-user</code>, podem utilitzar la comanda següent:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-30-17</span> ~]$ du <span class="at">-sh</span> /home/ec2-user</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">301M</span>    /home/ec2-user</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Aquesta comanda ens mostrarà l’espai en disc utilitzat pel directori <code>/home/ec2-user</code> i tots els seus subdirectoris. L’opció <code>-s</code> indica que volem un resum de l’espai utilitzat, i l’opció <code>-h</code> mostra la sortida en un format llegible per humans (per exemple, en KB, MB, GB). En aquest cas, podem veure que el directori <code>/home/ec2-user</code> utilitza 301 MB d’espai en disc.</p>
-<p>Podem crear un fitxer de prova per veure com afecta l’espai en disc. Per exemple, podem crear un fitxer de text gran amb la comanda <code>dd</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dd</span> if=/dev/zero of=largefile.txt bs=1M count=100</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Aquesta comanda crearà un fitxer anomenat <code>largefile.txt</code> de 100 MB ple de zeros. Ara podem tornar a executar la comanda <code>du -sh /home/ec2-user</code> per veure com ha canviat l’espai en disc utilitzat pel directori <code>/home/ec2-user</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-30-17</span> ~]$ du <span class="at">-sh</span> /home/ec2-user</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">401M</span>    /home/ec2-user</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Per eliminar el fitxer que hem creat, podem utilitzar la comanda <code>rm</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> largefile.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-default callout-important callout-titled" title="Exercici">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exercici
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Completa aquest script perque ens permeti llegir un fitxer de text línia a línia, cada linia conté el nom i la mida en MB d’un fitxer que volem crear. El script ha de crear els fitxers amb la mida especificada al directori on s’executa el script.</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">nom_fitxer</span> <span class="va">mida_mb</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="2" type="1">
-<li>Utiltiza la comanda <code>du</code>, <code>sort</code>, <code>head</code>, <code>tail</code> per obtenir el fitxer més gran i el més petit del directori on s’executa el script.</li>
-<li>Utilitza la comanda <code>find</code> per trobar tots els fitxers més grans de 10 MB al directori on s’executa el script.</li>
-</ol>
-</div>
-</div>
 </section>
 </section>
 <section id="neteja-final" class="level2">
 <h2 class="anchored" data-anchor-id="neteja-final">Neteja final</h2>
-<p>Un cop hàgiu acabat el laboratori, és important que tanqueu la instància EC2 per evitar costos innecessaris. Per fer-ho, torneu al tauler d’EC2 i seleccioneu la instància que heu creat. A la part superior de la pantalla, feu clic a <code>Instance state</code> i després a <code>Terminate instance</code>.</p>
-</section>
-<section id="entrega-del-laboratori" class="level2">
-<h2 class="anchored" data-anchor-id="entrega-del-laboratori">Entrega del laboratori</h2>
-<p>Per a l’entrega d’aquest laboratori, heu de preparar un document PDF amb les respostes completes a tots els exercicis. Un cop finalitzat, cal que el pengeu al <a href="https://cv.udl.cat/">Campus Virtual</a>, a l’apartat designat per al Laboratori 1.</p>
+<p>Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on <code>Instance state</code> and then on <code>Terminate instance</code>.</p>
 
 
 </section>
