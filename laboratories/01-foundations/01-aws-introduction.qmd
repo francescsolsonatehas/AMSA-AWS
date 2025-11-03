@@ -12,7 +12,9 @@ lang: en
 5. Creating an EC2 instance
 6. Connecting to the EC2 instance
 7. Working in the EC2 instance
+
 	7.1: Transferring a data file to the EC2 instance EC2
+
 	7.2: Remote environment setup on EC2 
 8. Cleanup
 
