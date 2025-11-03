@@ -33,7 +33,7 @@ This lab is designed to provide the knowledge and skills necessary to manage and
 ![](/figs/laboratories/02-aws-wp/architecture.png)
 
 ::: {.fragment style="text-align: center;"}
-[🧪 Laboratori 02: Desplegament d'una aplicació web amb WordPress a AWS](../laboratories/01-foundations/02-aws-wordpress.qmd)
+[🧪 Laboratori 02: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/01-foundations/02-aws-wordpress.qmd)
 :::
 
 ![](/figs/humor/system_adminsis.png){width="400px" style="display: block; margin-left: auto; margin-right: auto;"}
