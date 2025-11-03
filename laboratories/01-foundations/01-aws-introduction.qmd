@@ -5,12 +5,16 @@ lang: en
 
 Contents:
 
-1. Create an AWS Academy account
-2. Access the AWS dashboard
-3. Create an SSH key pair
-4. Launch an EC2 instance
-5. Connect to the EC2 instance via SSH
-6. Executing a Python script in the EC2 instance
+1. Creating an AWS Academy account
+2. Accessing the AWS dashboard
+3. Creating an SSH key pair
+4. Importing the public key into AWS
+5. Creating an EC2 instance
+6. Connecting to the EC2 instance
+7. Working in the EC2 instance
+	7.1: Transferring a data file to the EC2 instance EC2
+	7.2: Remote environment setup on EC2 
+
 
 ### Step 1: Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
@@ -272,11 +276,28 @@ ec2-user
 
 
 
-## Working in EC2{#execucio-en-el-nostre-laboratori-remot}
+### Step 7:  Working in the EC2 instance {#execucio-en-el-nostre-laboratori-remot}
 
-En aquest apartat es veurà la transferència de fitxers entre la màquina local i la màquina remota. A més, utilitzarem un script de Python per simular una càrrega de treball i generar un gràfic a partir d'un fitxer de dades. 
+This step will cover file transfer between the local machine and the remote machine. Additionally, we will use a Python script to simulate a workload and generate a graph from a data file. 
 
-### Step 1: Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
+#### Step 7.1: Transferring a data file to the EC2 instance EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
+
+To transfer a data file  (`workload.csv`) to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.
+
+1. Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
+2. Use SFTP to upload the data file to the EC2 instance:
+
+```bash
+# Replace <public-ip> with the public IP of your EC2 instance
+sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
+# Download the workload.csv file from the remote directory to your local machine
+put workload.csv
+# Close the SFTP session
+exit
+```
+
+
+#### Step 7.2: Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
 
 First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via `ssh` as we did earlier and run the following commands to install the required tools.
 
@@ -388,29 +409,7 @@ python3 -c "print('Hello World from the virtual environment')"
   ```bash
   python3 simulate_workload.py workload.csv
   ```
-At this point, you should see an error indicating that the file `workload.csv` does not exist. This is normal because we haven’t uploaded the data file to the EC2 instance yet.
 
-### Step 2: Transferring the data file to the EC2 instance EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
-
-To transfer the `workload.csv` data file to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.
-
-1. Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
-2. Use SFTP to upload the data file to the EC2 instance:
-
-```bash
-# Replace <public-ip> with the public IP of your EC2 instance
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
-# Download the workload.csv file from the remote directory to your local machine
-put workload.csv
-# Close the SFTP session
-exit
-```
-
-3. Reconnect to the EC2 instance via SSH, and run the Python program again:
-
-```bash
-python3 simulate_workload.py workload.csv
-```
 
 Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
 
