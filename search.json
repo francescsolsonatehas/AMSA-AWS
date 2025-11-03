@@ -2230,7 +2230,21 @@
     "href": "index.html",
     "title": "AMSA: Administration and Maintenance of Systems and Applications",
     "section": "",
-    "text": "Welcome to the AWS (Amazon Web Services) lab. This lab is designed to provide the knowledge and skills necessary to manage and maintain computer systems in professional environments.\n\n\n\nCourse Title\nSystems and Applications Administration and Management\n\n\nSemester\n1st Semester of the Bachelor’s Degree in Computer Engineering\n\n\nCourse Year\nThird Year\n\n\nProfessor\nFrancesc Solsona\n\n\nSchool\n\n\n\nUniversity\n\n\n\nDepartment"
+    "text": "Welcome to the AWS (Amazon Web Services) lab. This lab is designed to provide the knowledge and skills necessary to manage and maintain computer systems in professional environments."
+  },
+  {
+    "objectID": "index.html#laboratori-1-fonaments-de-ladministració-de-sistemes-amb-aws",
+    "href": "index.html#laboratori-1-fonaments-de-ladministració-de-sistemes-amb-aws",
+    "title": "AMSA: Administration and Maintenance of Systems and Applications",
+    "section": "Laboratori 1: Fonaments de l’Administració de Sistemes amb AWS",
+    "text": "Laboratori 1: Fonaments de l’Administració de Sistemes amb AWS\n\n🧪 Laboratori 01: Laboratori de preparació i comandes bàsiques d’administració"
+  },
+  {
+    "objectID": "index.html#laboratori-2-desplegament-duna-aplicació-web-amb-wordpress-a-aws",
+    "href": "index.html#laboratori-2-desplegament-duna-aplicació-web-amb-wordpress-a-aws",
+    "title": "AMSA: Administration and Maintenance of Systems and Applications",
+    "section": "Laboratori 2: Desplegament d’una aplicació web amb WordPress a AWS",
+    "text": "Laboratori 2: Desplegament d’una aplicació web amb WordPress a AWS\n\nEsquema de l’arquitectura\n\n\n🧪 Laboratori 02: Desplegament d’una aplicació web amb WordPress a AWS"
   },
   {
     "objectID": "projects/01-project/01-project.html",
