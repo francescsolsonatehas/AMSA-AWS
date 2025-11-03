@@ -214,11 +214,10 @@ PS C:\Users\fnao>
 ```
 
 ::: {.callout-warning}
-El ordinador local que utilitzo és un portàtil amb Windows, així que la sortida serà diferent de la vostra si esteu utilitzant un Mac o un ordinador amb Linux.
-Substitueix `fnao` pel vostre nom d'usuari i `C:\Users\fnao` per la ruta al vostre directori d'usuari.
+The local computer I’m using is a Windows laptop, so the output will be different from yours if you’re using a Mac or a computer running Linux. Replace `fnao` with your own username and `C:\Users\fnao` with the path to your user directory.
 :::
 
-Per connectar-nos a la instància EC2, utilitzarem el terminal del nostre ordinador local. Així com vam fer al principi [Pas 3](#pas-3-importació-de-la-clau-pública-a-aws), obriu un terminal al vostre ordinador local. Utilitzarem l'ordre `ssh` per connectar-nos a la màquina remota. L'ordre tindrà aquest aspecte:
+o connect to the EC2 instance, we will use the terminal on our local computer, just as we did at the beginning [Step 3](#pas-3-importació-de-la-clau-pública-a-aws), Open a terminal on your local computer. We will use the `ssh` command to connect to the remote machine. The command will look like this:
 
 ```bash
 ssh -i .ssh/aws-keypair ec2-user@<public-ip>
@@ -226,21 +225,23 @@ ssh -i .ssh/aws-keypair ec2-user@<public-ip>
 
 Haureu de substituir `<public-ip>` per la IP pública de la instància EC2. Per trobar la IP pública, torneu al tauler d'EC2 i feu clic a `Instances` a la part esquerra de la pantalla. Veureu una llista d'instàncies, feu clic a la instància que heu creat. Veureu la IP pública a la part inferior de la pantalla com es mostra a continuació:
 
+You will need to replace `<public-ip>` with the public IP of the EC2 instance. To find the public IP, go back to the EC2 dashboard and click on `Instances`, on the left side of the screen. You will see a list of instances—click on the one you created. You will see the public IP at the bottom of the screen, as shown below:
+
 ![AWS Dashboard](../../figs/laboratories/01-intro/ec2-3.png)
 
-Tant l'adreça `Public IPv4 address` com el `Public IPv4 DNS` es poden utilitzar com a `<public-ip>` a l'ordre `ssh`. Copieu el que preferiu i enganxeu-lo a l'ordre `ssh`. L'ordre hauria d'assemblar-se a alguna cosa així si utilitzeu l'adreça IP:
+Both the `Public IPv4 address` and the `Public IPv4 DNS` can be used as `<public-ip>` in the `ssh` command. Copy whichever you prefer and paste it into the `ssh` command. The command should look something like this if you use the IP address:
 
 ```bash
 ssh -i .ssh/aws-keypair ec2-user@98.84.68.70
 ```
 
-o així si utilitzeu el DNS:
+or like this if you use the DNS:
 
 ```bash
 ssh -i .ssh/aws-keypair ec2-user@ec2-98-84-68-70.compute-1.amazonaws.com
 ```
 
-Si és la primera vegada que us connecteu a la màquina remota, obtindreu una advertència. Això és normal, només heu d'escriure `yes` i prémer `Enter`. Ara hauríeu de estar connectats a la màquina remota. Veureu un missatge similar al següent:
+If this is the first time you’re connecting to the remote machine, you’ll get a warning. This is normal—just type `yes` and press `Enter`. You should now be connected to the remote machine. You’ll see a message similar to the following:
 
 ```
    ,     #_
@@ -258,10 +259,10 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 ```
 
 ::: {.callout-important title="Exercici"}
-Investiga quin és el significat i la importànica del missatge que acceptes quan et connectes per primera vegada a la màquina remota. Per què és important acceptar aquest missatge? Què significa? Quines implicacions té?
+Investigate the meaning and importance of the message you accept when connecting to the remote machine for the first time. Why is it important to accept this message? What does it mean? What are its implications?
 :::
 
-Fantàstic! Ara esteu connectats a la màquina remota. És important entendre que a partir d'ara, les ordres que escrivim s'executaran a la màquina remota, no al nostre ordinador local. Per comprovar-ho, escriviu les ordres `pwd` i `whoami` com vam fer al nostre ordinador local. Veureu que la sortida és diferent. A continuació es mostra la sortida que obtinc a la màquina remota:
+You are now connected to the remote machine. It’s important to understand that from this point on, the commands we type will be executed on the remote machine, not on our local computer. To verify this, type the commands `pwd` and `whoami` as we did on our local computer. You’ll see that the output is different. Below is the output I get on the remote machine:
 
 ```bash
 [ec2-user@ip-172-31-86-82 ~]$ pwd
@@ -271,37 +272,29 @@ ec2-user
 [ec2-user@ip-172-31-86-82 ~]$
 ```
 
-::: {.callout-note}
-Aquesta vegada la sortida hauria de ser la mateixa que la meva. Observeu que el prompt `[ec2-user@ip-172-31-86-82 ~]$` és diferent, però això no forma part de les sortides de les ordres. Les sortides de les ordres són `pwd` i `whoami`, que són `home/ec2-user` i `ec2-user` respectivament. El prompt és només una manera de mostrar-vos on esteu al sistema de fitxers i qui sou com a usuari connectat.
-:::
 
 
-::: {.callout-important title="Exercici"}
+## Working in EC2{#execucio-en-el-nostre-laboratori-remot}
 
-Utilitza la comanada `lastlog` i investiga com administrador com podem trueure partit d'aquesta informació.
+En aquest apartat es veurà la transferència de fitxers entre la màquina local i la màquina remota. A més, utilitzarem un script de Python per simular una càrrega de treball i generar un gràfic a partir d'un fitxer de dades. 
 
-:::
+### Step 1: Remote environment setup on EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
 
-## Execució en el nostre laboratori remot {#execucio-en-el-nostre-laboratori-remot}
+First, we need to prepare the environment on our EC2 instance. This includes installing the necessary tools to run our Python script and manage data. So, we’ll connect to the EC2 instance via `ssh` as we did earlier and run the following commands to install the required tools.
 
-En aquest apartat de laboratori, treballarem la comunicació amb servidors remots i la transferència de fitxers entre la màquina local i la màquina remota. Utilitzarem un script de Python per simular una càrrega de treball i generar un gràfic a partir d'un fitxer de dades. Aquest laboratori es durà a terme a la instància EC2 que hem creat anteriorment.
-
-### Pas 1: Configuració de l'entorn remot a l'EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
-
-Primer, hem de preparar l'entorn a la nostra instància EC2. Això inclou instal·lar les eines necessàries per executar el nostre script de Python i gestionar les dades. Per tant, ens connectarem a la instància EC2 mitjançant SSH com hem fet anteriorment i executarem les següents ordres per instal·lar les eines necessàries.
+1. Connect to the EC2 instance:
 
 ```bash
-# Connecta't a la instància EC2
 ssh -i .ssh/aws-keypair ec2-user@<public-ip>
 ```
 
-1. Actualització del sistema:
+2. System update:
 
   ```bash
   sudo yum update -y
   ```
 
-2. Comprova si tens instal·lat Python i, si no, instal·la'l:
+3. Check if Python is installed, and if not, install it:
 
   ```bash
   python3 --version # Comprova si Python està instal·lat
@@ -331,14 +324,14 @@ Ara utiltiza la comanda `exit` per sortir de la màquina remota. Un cop al teu o
   pip install pandas matplotlib psutil
   ```
 
-7. Crea un directori per al projecte i entra-hi:
+7.Create a virtual environment for Python:
 
   ```bash
   mkdir lab01-workload-simulation
   cd lab01-workload-simulation
   ```
 
-8. Crea el fitxer del script de Python, utilitzant `vi` o `vim`:
+8. Create the Python script file, using `vi` or `vim`:
 
   ```bash
   vi simulate_workload.py
@@ -396,37 +389,36 @@ Ara utiltiza la comanda `exit` per sortir de la màquina remota. Un cop al teu o
       main()
   ```
 
-9.  Si el fitxer existeix, pots executar-lo amb la següent ordre:
+9.  SIf the file exists, you can run it with the following command:
 
   ```bash
   python3 simulate_workload.py workload.csv
   ```
+At this point, you should see an error indicating that the file `workload.csv` does not exist. This is normal because we haven’t uploaded the data file to the EC2 instance yet.
 
-En aquest punt, hauríeu de veure un error indicant que el fitxer `workload.csv` no existeix. Això és normal perquè encara no hem pujat el fitxer de dades a la instància EC2.
+### Step 2: Transferring the data file to the EC2 instance EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
 
-### Pas 2: Transferència del fitxer de dades a la instància EC2 {#pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2}
+To transfer the `workload.csv` data file to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.
 
-Per transferir el fitxer de dades `workload.csv` a la instància EC2, utilitzarem SFTP (SSH File Transfer Protocol). SFTP és un protocol segur per transferir fitxers entre un ordinador local i una màquina remota. Utilitzarem el mateix parell de claus SSH que vam crear anteriorment per autenticar-nos a la instància EC2.
-
-- Descarrega't el fitxer de dades [`workload.csv`](./sources/workload.csv) al teu ordinador local.
-- Utilitza SFTP per pujar el fitxer de dades a la instància EC2:
+- Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
+- Use SFTP to upload the data file to the EC2 instance:
 
 ```bash
-# Substitueix <public-ip> per la IP pública de la teva instància EC2
+# Replace <public-ip> with the public IP of your EC2 instance
 sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
-# Baixa el fitxer workload.csv del directori remot a la màquina local
+# Download the workload.csv file from the remote directory to your local machine
 put workload.csv
-# Tanca la sessió SFTP
+# Close the SFTP session
 exit
 ```
 
-- Torna a connectar-te a la instància EC2 mitjançant SSH, i executa el programa de Python de nou:
+- Reconnect to the EC2 instance via SSH, and run the Python program again:
 
 ```bash
 python3 simulate_workload.py workload.csv
 ```
 
-Ara hauria de funcionar correctament i generar un fitxer d'imatge amb el gràfic de la càrrega de treball. Pots comprovar que el fitxer d'imatge s'ha creat correctament amb l'ordre `ls -l`. Un cop la imatge s'ha generat, pots utilitzar SFTP per baixar-la a la teva màquina local:
+Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
 
 ```bash
 # Substitueix <public-ip> per la IP pública de la teva instància EC2
@@ -437,78 +429,6 @@ get workload_analysis.png
 exit
 ```
 
-::: {.callout-important title="Exercicis"}
-1. Com podem descarregar tots els fitxers d'un directori remot a la nostra màquina local utilitzant el protocol SFTP? Per exemple, imagina que necessites descarregar tot el contingut del directori remot anomenat lab-workload-simulation. Explica els passos o la comanda que utilitzaries per dur a terme aquesta tasca de manera eficient.
-2. Com podem descarregar un fitxer específic des d'una URL directament a un servidor remot? Per a fer-ho més pràctic, prepara un script que, donada una URL, descarregui un fitxer directament al servidor remot sense passar-lo per la màquina local. Fes el test amb el fitxer `workload.csv` que hem utilitzat en aquest laboratori.
-:::
-
-
-## Eines bàsqiques d'administració {#tasques-basiques-dadministracio}
-
-En aquest apartat, explorarem algunes tasques bàsiques d'administració que podem realitzar en un servidor Linux. Aquestes tasques inclouen la gestió de l'espai en disc.
-
-### Gestió de l'espai en disc {#gestio-de-lespai-en-disc}
-
-Amb la comanda `df -h` podem veure l'espai en disc disponible i utilitzat a les particions del sistema. Aquesta comanda ens mostrarà informació sobre l'espai en disc de cada partició, incloent-hi la mida total, l'espai utilitzat, l'espai disponible i el punt de muntatge. En aquest curs estudiarem el sistema de fitxers en profunditat, però ara només introduirem la comanda i veurem el seu resultat.
-
-```bash
-[ec2-user@ip-172-31-30-17 ~]$ df -h
-Filesystem        Size  Used Avail Use% Mounted on
-devtmpfs          4.0M     0  4.0M   0% /dev
-tmpfs             453M     0  453M   0% /dev/shm
-tmpfs             181M  424K  181M   1% /run
-/dev/nvme0n1p1    8.0G  2.0G  6.1G  25% /
-tmpfs             453M     0  453M   0% /tmp
-/dev/nvme0n1p128   10M  1.3M  8.7M  13% /boot/efi
-tmpfs              91M     0   91M   0% /run/user/1000
-```
-
-En aquest cas, podem veure que la partició `/dev/nvme0n1p1` té una mida total de 8.0 GB, amb 2.0 GB utilitzats i 6.1 GB disponibles. Això significa que el 25% de l'espai en disc està utilitzat. El seu punt de muntatge és `/`, que és el directori arrel del sistema de fitxers. La resta de particions les podem ignorar per ara i les veurem en detall més endavant.
-
-A més, també podem utilitzar la comanda `du` per veure l'espai en disc utilitzat per un directori específic. Per exemple, si volem veure l'espai en disc utilitzat pel directori `/home/ec2-user`, podem utilitzar la comanda següent:
-
-```bash
-[ec2-user@ip-172-31-30-17 ~]$ du -sh /home/ec2-user
-301M    /home/ec2-user
-```
-Aquesta comanda ens mostrarà l'espai en disc utilitzat pel directori `/home/ec2-user` i tots els seus subdirectoris. L'opció `-s` indica que volem un resum de l'espai utilitzat, i l'opció `-h` mostra la sortida en un format llegible per humans (per exemple, en KB, MB, GB). En aquest cas, podem veure que el directori `/home/ec2-user` utilitza 301 MB d'espai en disc.
-
-Podem crear un fitxer de prova per veure com afecta l'espai en disc. Per exemple, podem crear un fitxer de text gran amb la comanda `dd`:
-
-```bash
-dd if=/dev/zero of=largefile.txt bs=1M count=100
-```
-
-Aquesta comanda crearà un fitxer anomenat `largefile.txt` de 100 MB ple de zeros. Ara podem tornar a executar la comanda `du -sh /home/ec2-user` per veure com ha canviat l'espai en disc utilitzat pel directori `/home/ec2-user`:
-
-```bash
-[ec2-user@ip-172-31-30-17 ~]$ du -sh /home/ec2-user
-401M    /home/ec2-user
-```
-
-Per eliminar el fitxer que hem creat, podem utilitzar la comanda `rm`:
-
-```bash
-rm largefile.txt
-```
-
-:::{.callout-important title="Exercici"}
-1. Completa aquest script perque ens permeti llegir un fitxer de text línia a línia, cada linia conté el nom i la mida en MB d'un fitxer que volem crear. El script ha de crear els fitxers amb la mida especificada al directori on s'executa el script. 
-
-  ```bash
-  while read -r nom_fitxer mida_mb; do
-    
-  done < "$1"
-  ```
-2. Utiltiza la comanda `du`, `sort`, `head`, `tail` per obtenir el fitxer més gran i el més petit del directori on s'executa el script.
-3. Utilitza la comanda `find` per trobar tots els fitxers més grans de 10 MB al directori on s'executa el script.
-:::
-
 ## Neteja final {#neteja-final}
 
-Un cop hàgiu acabat el laboratori, és important que tanqueu la instància EC2 per evitar costos innecessaris. Per fer-ho, torneu al tauler d'EC2 i seleccioneu la instància que heu creat. A la part superior de la pantalla, feu clic a `Instance state` i després a `Terminate instance`.
-
-## Entrega del laboratori {#entrega-del-laboratori}
-
-Per a l'entrega d'aquest laboratori, heu de preparar un document PDF amb les respostes completes a tots els exercicis. Un cop finalitzat, cal que el pengeu al [Campus Virtual](https://cv.udl.cat/), a l'apartat designat per al Laboratori 1.
-
+Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on `Instance state` and then on `Terminate instance`.
