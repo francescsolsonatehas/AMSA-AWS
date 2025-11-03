@@ -16,7 +16,7 @@ Contents:
 	7.2: Remote environment setup on EC2 
 8. Cleanup
 
-### 1. Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
+# 1. Creating an AWS Academy Account {#pas-1-creacio-dun-compte-daws-academy}
 
 Check your email to see if you have received an email from AWS Academy with the subject *Course Invitation*. If you haven’t received it, let me know. The email will contain a button labeled **Get Started**. Click this button to begin the registration process.
 
