@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands – AMSA - Fall 2025</title>
+<title>Unit 1 · Lab for Preparation and Basic Administration Commands – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -418,9 +418,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</a></li>
   <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">Step 2: Accessing the AWS Dashboard</a></li>
-  <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creating an SSH key pair</a></li>
-  <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">Pas 4: Importació de la clau pública a AWS</a></li>
-  <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Pas 5: Creació d’una instància EC2</a></li>
+  <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Step 3: Creating an SSH key pair</a></li>
+  <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">Step 4: Importing the public key into AWS</a></li>
+  <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Step 5: Creating an EC2 instance</a></li>
   <li><a href="#pas-6-connexio-a-la-instancia-ec2" id="toc-pas-6-connexio-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-6-connexio-a-la-instancia-ec2">Pas 6: Connexió a la instància EC2</a></li>
   </ul></li>
   <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">Execució en el nostre laboratori remot</a>
@@ -442,7 +442,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Laboratoris</li><li class="breadcrumb-item"><a href="../../laboratories/01-introduction.html">Unitat 01 · Fonaments de l’Administració de Sistemes</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">Laboratori 01 · Introducció a AWS</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands</h1>
+<h1 class="title">Unit 1 · Lab for Preparation and Basic Administration Commands</h1>
 <p class="subtitle lead">Practical Labs on Systems and Applications Administration</p>
 </div>
 
@@ -505,13 +505,13 @@ Note
 <p><img src="../../figs/laboratories/01-intro/login6.png" class="img-fluid"></p>
 <p>Finally, when the lab is ready, you will see that the dot next to AWS is green. You will also see a timer counting down from 4 hours. This is the time you have to work in the lab. To the left of the timer, you will see your budget status. You have a budget of $50 to spend on AWS services. Click on AWS to access the AWS dashboard, as shown below:</p>
 <p><img src="../../figs/laboratories/01-intro/login7.png" class="img-fluid"></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Consideracions sobre els laboratoris">
+<div class="callout callout-style-default callout-important callout-titled" title="Considerations about the laboratories">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Consideracions sobre els laboratoris
+<span class="screen-reader-only">Important</span>Considerations about the laboratories
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -528,7 +528,7 @@ Note
 <p><img src="../../figs/laboratories/01-intro/login8.png" class="img-fluid"></p>
 </section>
 <section id="pas-3-importació-de-la-clau-pública-a-aws" class="level3">
-<h3 class="anchored" data-anchor-id="pas-3-importació-de-la-clau-pública-a-aws">Pas 3: Creating an SSH key pair</h3>
+<h3 class="anchored" data-anchor-id="pas-3-importació-de-la-clau-pública-a-aws">Step 3: Creating an SSH key pair</h3>
 <p>The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.</p>
 <p>To create an SSH key pair, we will use the <strong>ssh-keygen</strong> command. This command is available on most operating systems, including Linux, macOS, and Windows (via PowerShell or Windows Subsystem for Linux - WSL). If you are using Windows and do not have access to ssh-keygen, you can use tools like PuTTYgen to generate SSH keys.</p>
 <p>This command has several parameters that allow you to customize the SSH key. The most common parameters are:</p>
@@ -589,7 +589,7 @@ SHA256:uhINFvYaJh6MbwFQCXdZyrW7W46jFGHUhLglDgQ5OYE ferran@DESKTOP-0841
 </div>
 <p>We can check the contents of the directory <code>.ssh</code> with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> .ssh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Hauríem de veure ara dos fitxers, <code>aws-keypair</code> i <code>aws-keypair.pub</code>. El primer és la clau privada i el segon és la clau pública. La clau privada mai s’ha de compartir amb ningú, mentre que la clau pública és la que s’ha de compartir amb la màquina remota. Una ordre útil per inspeccionar el contingut d’un fitxer és <code>cat</code>. Per exemple, per veure el contingut de la clau pública, escriviu la següent ordre:</p>
+<p>We should now see two files, <code>aws-keypair</code> and <code>aws-keypair.pub</code>. The first is the private key and the second is the public key. The private key should never be shared with anyone, while the public key is the one that should be shared with the remote machine. A useful command to inspect the contents of a file is `cat. For example, to view the contents of the public key, type the following command:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> .ssh/aws-keypair.pub</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -601,15 +601,16 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>També podeu inspeccionar el contingut de la carpeta <code>.ssh</code> i dels fitxers que hi ha dins utilitzant l’Explorador de fitxers (o Finder en dispositius Mac). Però <strong>tingueu cura</strong>, per defecte, les carpetes i fitxers que comencen amb un <code>.</code> (com <code>.ssh</code>) estan ocults en la majoria d’exploradors de fitxers i si voleu poder veure’ls, haureu d’habilitar l’opció per mostrar fitxers ocults. Consulteu <a href="https://en.eloutput.com/Tutorials/step-by-step/show-hidden-files-windows-macos/">aquest tutorial</a> per veure com fer-ho al vostre sistema operatiu. Una altra cosa a tenir en compte és que les extensions de fitxer (és a dir, la part del nom del fitxer que ve després del darrer <code>.</code>) també solen estar ocultes, això vol dir que a l’Explorador de fitxers potser veieu dos fitxers anomenats <code>aws-keypair</code> quan en realitat un és <code>aws-keypair</code> i l’altre és <code>aws-keypair.pub</code>. Aquí teniu <a href="https://www.gottheknack.com/a-how-to/file-systems/file-ext-and-details-view/file-ext-and-details-view.html">un tutorial</a> sobre com mostrar les extensions de fitxer al vostre sistema operatiu.</p>
-<p>No cal que us preocupeu per res d’això si esteu utilitzant el terminal, el terminal us mostrarà els fitxers i les seves extensions tal com són. <strong>Però per veure fitxers i carpetes ocults (aquells que comencen amb un <code>.</code>) haureu d’utilitzar l’ordre <code>ls -a</code></strong>.</p>
+<p>You can also inspect the contents of the <code>.ssh</code> folder and the files inside it using the File Explorer (or Finder on Mac devices). But be careful — by default, folders and files that start with a dot, <code>.</code> (like <code>.ssh</code>) are hidden in most file explorers, and if you want to see them, you’ll need to enable the option to show hidden files. Check <a href="https://en.eloutput.com/Tutorials/step-by-step/show-hidden-files-windows-macos/">this tutorial</a> to see how to do it on your operating system.</p>
+<p>Another thing to keep in mind is that file extensions (i.e., the part of the file name that comes after the last <code>.</code>) are also usually hidden. This means that in the File Explorer you might see two files named <code>aws-keypair</code> when in reality one is <code>aws-keypair</code> and the other is <code>aws-keypair.pub</code>. Here’s [a tutorial]https://www.gottheknack.com/a-how-to/file-systems/file-ext-and-details-view/file-ext-and-details-view.html) on how to show file extensions on your operating system.</p>
+<p>You don’t need to worry about any of this if you’re using the terminal — the terminal will show files and their extensions as they are. <strong>However, to view hidden files and folders (those that start with a <code>.</code>), you’ll need to use the command <code>ls -a</code></strong>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-a</span> .ssh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Hem creat un parell de claus SSH que podem utilitzar per connectar-nos a màquines remotes. A continuació, importarem la nostra clau pública a AWS.</p>
+<p>We have created an SSH key pair that we can use to connect to remote machines. Next, we will import our public key into AWS.</p>
 </section>
 <section id="pas-4-importacio-de-la-clau-publica-a-aws" class="level3">
-<h3 class="anchored" data-anchor-id="pas-4-importacio-de-la-clau-publica-a-aws">Pas 4: Importació de la clau pública a AWS</h3>
+<h3 class="anchored" data-anchor-id="pas-4-importacio-de-la-clau-publica-a-aws">Step 4: Importing the public key into AWS</h3>
 <p>Ara que hem creat el nostre parell de claus SSH, hem d’importar la clau pública a AWS per poder utilitzar-la per connectar-nos a les instàncies EC2 que crearem més endavant. Per fer-ho, hem de tornar al tauler d’AWS, que és on vam acabar després de completar <a href="#pas-2-acces-al-tauler-daws">el Pas 2</a>.</p>
 <p>Ara anirem a la barra de cerca i buscarem el servei <code>EC2</code>. Escriviu <code>EC2</code> a la barra de cerca i feu clic al servei <code>EC2</code>, com es mostra a continuació:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -618,14 +619,14 @@ Note
 <figcaption>AWS Dashboard</figcaption>
 </figure>
 </div>
-<p>Ara veureu el tauler d’EC2. A la part esquerra de la pantalla, veureu una llista d’opcions. Feu clic a <code>Key Pairs</code> (Pares de claus) i després a <code>Create key pair</code> (Crear parell de claus), com es mostra a continuació:</p>
+<p>Ara veureu el tauler d’EC2. A la part esquerra de la pantalla, veureu una llista d’opcions. Feu clic a <code>Import key pair</code>, com es mostra a continuació:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/01-intro/keypair1.png" class="img-fluid figure-img"></p>
 <figcaption>AWS Dashboard</figcaption>
 </figure>
 </div>
-<p>Ara heu de donar un nom al parell de claus. Podeu anomenar-lo com vulgueu, però us suggereixo que el anomeneu <code>aws-keypair</code> per mantenir les coses simples. Assegureu-vos que l’opció <code>Key type</code> (Tipus de clau) estigui configurada a <code>RSA</code> i que l’opció <code>Private key file format</code> (Format del fitxer de clau privada) estigui configurada a <code>PEM</code>. Això és important perquè la clau privada s’ha d’utilitzar en format PEM per connectar-se a la màquina remota. Feu clic a <code>Create key pair</code> (Crear parell de claus), com es mostra a continuació:</p>
+<p>Now you need to give a name to the key pair. You can name it whatever you like, but I suggest naming it <code>aws-keypair</code> to keep things simple. You can now insert the public key into the text box, or you can click the Browse button to select the public key file from your computer. Just click <code>Browse</code>, navigate to the <code>.ssh</code> folder, and select the <code>aws-keypair.pub</code> file. But remember, the file must be the public key file, not the private key file. That means the file must have the <code>.pub</code> extension. Once you’ve selected the file, click <code>Import Key Pair</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/01-intro/keypair2.png" class="img-fluid figure-img"></p>
@@ -642,14 +643,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Podeu també fer clic al botó <code>Browse</code> per seleccionar el fitxer de clau pública des del vostre ordinador. Només cal que feu clic a <code>Browse</code>, navegueu fins a la carpeta <code>.ssh</code> i seleccioneu el fitxer <code>aws-keypair.pub</code>. Però recordeu, el fitxer ha de ser el fitxer de clau pública, no el fitxer de clau privada. És a dir, el fitxer ha de tenir l’extensió <code>.pub</code>. Un cop hàgiu seleccionat el fitxer, feu clic a <code>Import Key Pair</code>.</p>
 <p>Recordeu que com s’ha explicat a la nota anterior, potser no veureu la carpeta <code>.ssh</code> a l’explorador de fitxers i potser no veureu l’extensió <code>.pub</code> del fitxer. Si teniu problemes amb això, us recomano utilitzar el terminal per copiar el contingut del fitxer com es mostra a la captura de pantalla anterior.</p>
 </div>
 </div>
-<p>Ara hauríeu de veure el parell de claus que acabeu d’importar a la llista de parells de claus. Probablement hi haurà un altre parell de claus allà, això està bé, podeu ignorar-lo. Perfecte! Ara heu importat la clau pública a AWS. A continuació, crearem una instància EC2 i la configurarem per utilitzar el parell de claus que acabem d’importar.</p>
+<p>You should now see the key pair you just imported in the list of key pairs. There will probably be another key pair there — that’s fine, you can ignore it. Perfect! You’ve now imported the public key into AWS. Next, we’ll create an EC2 instance and configure it to use the key pair we just imported.</p>
 </section>
 <section id="pas-5-creacio-duna-instancia-ec2" class="level3">
-<h3 class="anchored" data-anchor-id="pas-5-creacio-duna-instancia-ec2">Pas 5: Creació d’una instància EC2</h3>
+<h3 class="anchored" data-anchor-id="pas-5-creacio-duna-instancia-ec2">Step 5: Creating an EC2 instance</h3>
 <p>El primer pas serà anar al tauler d’EC2. Podeu fer-ho escrivint <code>EC2</code> a la barra de cerca i fent clic al servei <code>EC2</code>, com vam fer al principi del <a href="#pas-3-importació-de-la-clau-pública-a-aws">Pas 3</a>:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
