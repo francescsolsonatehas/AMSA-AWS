@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Unit 1 · Lab for Preparation and Basic Administration Commands – AMSA - Fall 2025</title>
+<title>Unit 1 · Executing a Python scrpt in a EC2 instance – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -414,15 +414,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#preparant-lentorn-de-treball-remot" id="toc-preparant-lentorn-de-treball-remot" class="nav-link active" data-scroll-target="#preparant-lentorn-de-treball-remot">Preparing the Remote Work Environment</a>
-  <ul class="collapse">
-  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</a></li>
+  <li><a href="#pas-1-creacio-dun-compte-daws-academy" id="toc-pas-1-creacio-dun-compte-daws-academy" class="nav-link active" data-scroll-target="#pas-1-creacio-dun-compte-daws-academy">Step 1: Creating an AWS Academy Account</a></li>
   <li><a href="#pas-2-acces-al-tauler-daws" id="toc-pas-2-acces-al-tauler-daws" class="nav-link" data-scroll-target="#pas-2-acces-al-tauler-daws">Step 2: Accessing the AWS Dashboard</a></li>
   <li><a href="#pas-3-importació-de-la-clau-pública-a-aws" id="toc-pas-3-importació-de-la-clau-pública-a-aws" class="nav-link" data-scroll-target="#pas-3-importació-de-la-clau-pública-a-aws">Step 3: Creating an SSH key pair</a></li>
   <li><a href="#pas-4-importacio-de-la-clau-publica-a-aws" id="toc-pas-4-importacio-de-la-clau-publica-a-aws" class="nav-link" data-scroll-target="#pas-4-importacio-de-la-clau-publica-a-aws">Step 4: Importing the public key into AWS</a></li>
   <li><a href="#pas-5-creacio-duna-instancia-ec2" id="toc-pas-5-creacio-duna-instancia-ec2" class="nav-link" data-scroll-target="#pas-5-creacio-duna-instancia-ec2">Step 5: Creating an EC2 instance</a></li>
   <li><a href="#pas-6-connexio-a-la-instancia-ec2" id="toc-pas-6-connexio-a-la-instancia-ec2" class="nav-link" data-scroll-target="#pas-6-connexio-a-la-instancia-ec2">Step 6: Connecting to the EC2 instance</a></li>
-  </ul></li>
   <li><a href="#execucio-en-el-nostre-laboratori-remot" id="toc-execucio-en-el-nostre-laboratori-remot" class="nav-link" data-scroll-target="#execucio-en-el-nostre-laboratori-remot">Working in EC2</a>
   <ul class="collapse">
   <li><a href="#pas-1-configuracio-de-lentorn-remot-a-lec2" id="toc-pas-1-configuracio-de-lentorn-remot-a-lec2" class="nav-link" data-scroll-target="#pas-1-configuracio-de-lentorn-remot-a-lec2">Step 1: Remote environment setup on EC2</a></li>
@@ -437,8 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Laboratoris</li><li class="breadcrumb-item"><a href="../../laboratories/01-introduction.html">Unitat 01 · Fonaments de l’Administració de Sistemes</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">Laboratori 01 · Introducció a AWS</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Unit 1 · Lab for Preparation and Basic Administration Commands</h1>
-<p class="subtitle lead">Practical Labs on Systems and Applications Administration</p>
+<h1 class="title">Unit 1 · Executing a Python scrpt in a EC2 instance</h1>
 </div>
 
 
@@ -455,9 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="preparant-lentorn-de-treball-remot" class="level2">
-<h2 class="anchored" data-anchor-id="preparant-lentorn-de-treball-remot">Preparing the Remote Work Environment</h2>
-<p>To prepare the work environment on AWS, we will follow these steps:</p>
+<p>Contents:</p>
 <ol type="1">
 <li>Create an AWS Academy account</li>
 <li>Access the AWS dashboard</li>
@@ -737,7 +731,6 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-86-82</span> ~]$ whoami</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ec2-user</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[ec2-user@ip-172-31-86-82</span> ~]$</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
 </section>
 <section id="execucio-en-el-nostre-laboratori-remot" class="level2">
 <h2 class="anchored" data-anchor-id="execucio-en-el-nostre-laboratori-remot">Working in EC2</h2>
