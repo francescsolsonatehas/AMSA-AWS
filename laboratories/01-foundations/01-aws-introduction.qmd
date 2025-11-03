@@ -385,7 +385,7 @@ python3 -c "print('Hello World from the virtual environment')"
       main()
   ```
 
-9.  If the file exists, you can run it with the following command:
+9.  Run the script with the following command:
 
   ```bash
   python3 simulate_workload.py workload.csv
@@ -396,8 +396,8 @@ At this point, you should see an error indicating that the file `workload.csv` d
 
 To transfer the `workload.csv` data file to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.
 
-- Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
-- Use SFTP to upload the data file to the EC2 instance:
+1. Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
+2. Use SFTP to upload the data file to the EC2 instance:
 
 ```bash
 # Replace <public-ip> with the public IP of your EC2 instance
@@ -408,7 +408,7 @@ put workload.csv
 exit
 ```
 
-- Reconnect to the EC2 instance via SSH, and run the Python program again:
+3. Reconnect to the EC2 instance via SSH, and run the Python program again:
 
 ```bash
 python3 simulate_workload.py workload.csv
