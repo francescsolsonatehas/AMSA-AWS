@@ -1,12 +1,9 @@
 ---
-title: Unit 1 · Lab for Preparation and Basic Administration Commands
-subtitle: Practical Labs on Systems and Applications Administration
+title: Unit 1 · Executing a Python scrpt in a EC2 instance
 lang: en
 ---
 
-##  Preparing the Remote Work Environment {#preparant-lentorn-de-treball-remot}
-
-To prepare the work environment on AWS, we will follow these steps:
+Contents:
 
 1. Create an AWS Academy account
 2. Access the AWS dashboard
