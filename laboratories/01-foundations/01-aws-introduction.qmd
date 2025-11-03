@@ -416,15 +416,6 @@ python3 simulate_workload.py workload.csv
 
 Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
 
-```bash
-# Substitueix <public-ip> per la IP pública de la teva instància EC2
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
-# Baixa el fitxer workload_analysis.png del directori remot a la màquina local
-get workload_analysis.png
-# Tanca la sessió SFTP
-exit
-```
-
 ## Cleanup {#neteja-final}
 
 Once you’ve finished the lab, it’s important to shut down the EC2 instance to avoid unnecessary costs. To do this, go back to the EC2 dashboard and select the instance you created. At the top of the screen, click on `Instance state` and then on `Terminate instance`.
