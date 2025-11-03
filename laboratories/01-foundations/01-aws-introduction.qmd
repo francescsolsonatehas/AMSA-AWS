@@ -156,9 +156,10 @@ We have created an SSH key pair that we can use to connect to remote machines. N
 
 ### Step 4: Importing the public key into AWS {#pas-4-importacio-de-la-clau-publica-a-aws}
 
-Ara que hem creat el nostre parell de claus SSH, hem d'importar la clau pública a AWS per poder utilitzar-la per connectar-nos a les instàncies EC2 que crearem més endavant. Per fer-ho, hem de tornar al tauler d'AWS, que és on vam acabar després de completar [el Pas 2](#pas-2-acces-al-tauler-daws).
+Now that we’ve created our SSH key pair, we need to import the public key into AWS so we can use it to connect to the EC2 instances we’ll create later.
+To do this, we need to go back to the AWS dashboard, which is where we left off after completing  [Step 2](#pas-2-acces-al-tauler-daws).
 
-Ara anirem a la barra de cerca i buscarem el servei `EC2`. Escriviu `EC2` a la barra de cerca i feu clic al servei `EC2`, com es mostra a continuació:
+Now we’ll go to the search bar and look for the `EC2` service. Type `EC2` into the search bar and click on the `EC2` service, as shown below:
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
 
@@ -175,32 +176,34 @@ Once you’ve selected the file, click `Import Key Pair`.
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair2.png)
 
 ::: {.callout-note}
-Recordeu que com s'ha explicat a la nota anterior, potser no veureu la carpeta `.ssh` a l'explorador de fitxers i potser no veureu l'extensió `.pub` del fitxer. Si teniu problemes amb això, us recomano utilitzar el terminal per copiar el contingut del fitxer com es mostra a la captura de pantalla anterior.
+Remember, as explained in the previous note, you might not see the .ssh folder in the file explorer, and you might not see the `.pub` extension of the file.
+If you’re having trouble with this, I recommend using the terminal to copy the contents of the file, as shown in the screenshot above.
 :::
 
 You should now see the key pair you just imported in the list of key pairs. There will probably be another key pair there — that’s fine, you can ignore it. Perfect! You’ve now imported the public key into AWS. Next, we’ll create an EC2 instance and configure it to use the key pair we just imported.
 
 ### Step 5: Creating an EC2 instance {#pas-5-creacio-duna-instancia-ec2}
 
-El primer pas serà anar al tauler d'EC2. Podeu fer-ho escrivint `EC2` a la barra de cerca i fent clic al servei `EC2`, com vam fer al principi del [Pas 3](#pas-3-importació-de-la-clau-pública-a-aws):
+The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service, just like we did at the beginning of [Step 3](#pas-3-importació-de-la-clau-pública-a-aws):
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
 
-Un cop estigueu al tauler d'EC2, feu clic a `Instances` > `Launch Instance`, com es mostra a continuació:
+Once you're on the EC2 dashboard, click on `Instances` > `Launch Instance`, as shown below:
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/ec2-1.png)
 
-Deixeu-ho tot com està excepte l'opció `Key pair (login)` (Parell de claus (inici de sessió)) (haureu de desplaçar-vos cap avall per trobar-la). Feu clic al menú desplegable i seleccioneu el parell de claus que heu importat anteriorment. En aquest cas, hauria de ser `aws-keypair`. Feu clic a `Launch instance`, com es mostra a continuació:
+Leave everything as it is except for the `Key pair (login)` option (you’ll need to scroll down to find it). Click the dropdown menu and select the key pair you imported earlier. In this case, it should be `aws-keypair`. Click `Launch instance`, as shown below
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/ec2-2.png)
 
-Ara tenim una instància EC2 en execució amb la nostra clau pública importada. Això significa que tenim una màquina remota a AWS a la qual podem connectar-nos des del nostre ordinador local mitjançant SSH. Vegem com fer-ho.
+We now have a running EC2 instance with our public key imported. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.
 
-### Pas 6: Connexió a la instància EC2 {#pas-6-connexio-a-la-instancia-ec2}
 
-Abans de connectar-nos a la màquina remota, vull que proveu alguns ordres al vostre ordinador local que després repetirem un cop estiguem connectats a la màquina remota. Una de les ordres és `pwd`, que significa `print working directory`, com ja s'ha comentat anteriorment. Aquesta ordre us mostrarà la ruta al directori en què esteu actualment. L'altra ordre és `whoami`, que us mostrarà el nom d'usuari amb el qual heu iniciat sessió. Proveu aquestes ordres al vostre ordinador local i recordeu-ne la sortida. Les repetirem un cop estiguem connectats a la màquina remota.
+### Step 6: Connecting to the EC2 instance {#pas-6-connexio-a-la-instancia-ec2}
 
-A continuació es mostra la sortida que obtinc al meu ordinador local:
+Before connecting to the remote machine, I want you to try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is `pwd`, which stands for `print working directory`, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is `whoami`, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.
+
+Below is the output I get on my local computer:
 
 ```powershell
 PS C:\Users\fnao> pwd
