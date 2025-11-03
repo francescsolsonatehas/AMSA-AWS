@@ -828,7 +828,7 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>    main()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="9" type="1">
-<li>If the file exists, you can run it with the following command:</li>
+<li>Run the script with the following command:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simulate_workload.py workload.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>At this point, you should see an error indicating that the file <code>workload.csv</code> does not exist. This is normal because we haven’t uploaded the data file to the EC2 instance yet.</p>
@@ -836,19 +836,19 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <section id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2" class="level3">
 <h3 class="anchored" data-anchor-id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">Step 2: Transferring the data file to the EC2 instance EC2</h3>
 <p>To transfer the <code>workload.csv</code> data file to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.</p>
-<ul>
+<ol type="1">
 <li>Download the data file <a href="./sources/workload.csv"><code>workload.csv</code></a> to your local computer.</li>
 <li>Use SFTP to upload the data file to the EC2 instance:</li>
-</ul>
+</ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace &lt;public-ip&gt; with the public IP of your EC2 instance</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span>:/home/ec2-user/lab01-workload-simulation</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the workload.csv file from the remote directory to your local machine</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">put</span> workload.csv</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the SFTP session</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
+<ol start="3" type="1">
 <li>Reconnect to the EC2 instance via SSH, and run the Python program again:</li>
-</ul>
+</ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> simulate_workload.py workload.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:</p>
 </section>
