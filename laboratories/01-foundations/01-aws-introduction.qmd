@@ -1,5 +1,5 @@
 ---
-title: Unitat 1 · Unit 1 · Lab for Preparation and Basic Administration Commands
+title: Unit 1 · Lab for Preparation and Basic Administration Commands
 subtitle: Practical Labs on Systems and Applications Administration
 lang: en
 ---
@@ -58,7 +58,7 @@ Finally, when the lab is ready, you will see that the dot next to AWS is green. 
 ![](../../figs/laboratories/01-intro/login7.png)
 
 
-::: {.callout-important title="Consideracions sobre els laboratoris"}
+::: {.callout-important title="Considerations about the laboratories"}
 The labs are a real AWS environment, so it’s important to be careful with resources and your actions.
 
 - If you exceed the $50 budget, you will no longer have access to the AWS dashboard and you will lose your work. Make sure to monitor your budget — it is each student’s responsibility to stay within the limit.
@@ -71,7 +71,7 @@ Great! You have now accessed the AWS dashboard. You will see a screen similar to
 
 ![](../../figs/laboratories/01-intro/login8.png)
 
-### Pas 3: Creating an SSH key pair {#pas-3-importació-de-la-clau-pública-a-aws}
+### Step 3: Creating an SSH key pair {#pas-3-importació-de-la-clau-pública-a-aws}
 
 The SSH key is a security mechanism that enables secure authentication between two systems. The Amazon EC2 server holds the public key, and the client (your local computer) holds the private key. When the client connects to the server, the server checks whether the client’s public key matches the server’s private key. If the keys match, the client connects to the server. Therefore, the private key must never be shared with anyone, while the public key can be shared freely and used on multiple servers. Currently, there is no mechanism to obtain the private key from the public key.
 
@@ -133,25 +133,28 @@ We can check the contents of the directory `.ssh` with:
 ls .ssh
 ```
 
-Hauríem de veure ara dos fitxers, `aws-keypair` i `aws-keypair.pub`. El primer és la clau privada i el segon és la clau pública. La clau privada mai s'ha de compartir amb ningú, mentre que la clau pública és la que s'ha de compartir amb la màquina remota. Una ordre útil per inspeccionar el contingut d'un fitxer és `cat`. Per exemple, per veure el contingut de la clau pública, escriviu la següent ordre:
+We should now see two files, `aws-keypair` and `aws-keypair.pub`. The first is the private key and the second is the public key. The private key should never be shared with anyone, while the public key is the one that should be shared with the remote machine. A useful command to inspect the contents of a file is `cat. For example, to view the contents of the public key, type the following command:
 
 ```bash
 cat .ssh/aws-keypair.pub
 ```
 
 ::: {.callout-note}
-També podeu inspeccionar el contingut de la carpeta `.ssh` i dels fitxers que hi ha dins utilitzant l'Explorador de fitxers (o Finder en dispositius Mac). Però **tingueu cura**, per defecte, les carpetes i  fitxers que comencen amb un `.` (com `.ssh`) estan ocults en la majoria d'exploradors de fitxers i si voleu poder veure'ls, haureu d'habilitar l'opció per mostrar fitxers ocults. Consulteu [aquest tutorial](https://en.eloutput.com/Tutorials/step-by-step/show-hidden-files-windows-macos/) per veure com fer-ho al vostre sistema operatiu. Una altra cosa a tenir en compte és que les extensions de fitxer (és a dir, la part del nom del fitxer que ve després del darrer `.`) també solen estar ocultes, això vol dir que a l'Explorador de fitxers potser veieu dos fitxers anomenats `aws-keypair` quan en realitat un és `aws-keypair` i l'altre és `aws-keypair.pub`. Aquí teniu [un tutorial](https://www.gottheknack.com/a-how-to/file-systems/file-ext-and-details-view/file-ext-and-details-view.html) sobre com mostrar les extensions de fitxer al vostre sistema operatiu.
+You can also inspect the contents of the `.ssh` folder and the files inside it using the File Explorer (or Finder on Mac devices). But be careful — by default, folders and files that start with a dot,  `.` (like `.ssh`) are hidden in most file explorers, and if you want to see them, you'll need to enable the option to show hidden files. Check [this tutorial](https://en.eloutput.com/Tutorials/step-by-step/show-hidden-files-windows-macos/) to see how to do it on your operating system.
 
-No cal que us preocupeu per res d'això si esteu utilitzant el terminal, el terminal us mostrarà els fitxers i les seves extensions tal com són. **Però per veure fitxers i carpetes ocults (aquells que comencen amb un `.`) haureu d'utilitzar l'ordre `ls -a`**.
+Another thing to keep in mind is that file extensions (i.e., the part of the file name that comes after the last `.`) are also usually hidden. This means that in the File Explorer you might see two files named `aws-keypair` when in reality one is `aws-keypair` and the other is `aws-keypair.pub`. Here's [a tutorial]https://www.gottheknack.com/a-how-to/file-systems/file-ext-and-details-view/file-ext-and-details-view.html) on how to show file extensions on your operating system.
+
+You don’t need to worry about any of this if you’re using the terminal — the terminal will show files and their extensions as they are.
+**However, to view hidden files and folders (those that start with a `.`), you’ll need to use the command `ls -a`**.
 
 ```bash
 ls -a .ssh
 ```
 :::
 
-Hem creat un parell de claus SSH que podem utilitzar per connectar-nos a màquines remotes. A continuació, importarem la nostra clau pública a AWS.
+We have created an SSH key pair that we can use to connect to remote machines. Next, we will import our public key into AWS.
 
-### Pas 4: Importació de la clau pública a AWS {#pas-4-importacio-de-la-clau-publica-a-aws}
+### Step 4: Importing the public key into AWS {#pas-4-importacio-de-la-clau-publica-a-aws}
 
 Ara que hem creat el nostre parell de claus SSH, hem d'importar la clau pública a AWS per poder utilitzar-la per connectar-nos a les instàncies EC2 que crearem més endavant. Per fer-ho, hem de tornar al tauler d'AWS, que és on vam acabar després de completar [el Pas 2](#pas-2-acces-al-tauler-daws).
 
@@ -159,24 +162,25 @@ Ara anirem a la barra de cerca i buscarem el servei `EC2`. Escriviu `EC2` a la b
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
 
-Ara veureu el tauler d'EC2. A la part esquerra de la pantalla, veureu una llista d'opcions. Feu clic a `Key Pairs` (Pares de claus) i després a `Create key pair` (Crear parell de claus), com es mostra a continuació:
+Ara veureu el tauler d'EC2. A la part esquerra de la pantalla, veureu una llista d'opcions. Feu clic a `Import key pair`, com es mostra a continuació:
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair1.png)
 
-Ara heu de donar un nom al parell de claus. Podeu anomenar-lo com vulgueu, però us suggereixo que el anomeneu `aws-keypair` per mantenir les coses simples. Assegureu-vos que l'opció `Key type` (Tipus de clau) estigui configurada a `RSA` i que l'opció `Private key file format` (Format del fitxer de clau privada) estigui configurada a `PEM`. Això és important perquè la clau privada s'ha d'utilitzar en format PEM per connectar-se a la màquina remota. Feu clic a `Create key pair` (Crear parell de claus), com es mostra a continuació:
+Now you need to give a name to the key pair. You can name it whatever you like, but I suggest naming it `aws-keypair` to keep things simple.
+You can now insert the public key into the text box, or you can click the Browse button to select the public key file from your computer.
+Just click `Browse`, navigate to the `.ssh` folder, and select the `aws-keypair.pub` file.
+But remember, the file must be the public key file, not the private key file. That means the file must have the `.pub` extension.
+Once you’ve selected the file, click `Import Key Pair`.
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair2.png)
 
 ::: {.callout-note}
-
-Podeu també fer clic al botó `Browse` per seleccionar el fitxer de clau pública des del vostre ordinador. Només cal que feu clic a `Browse`, navegueu fins a la carpeta `.ssh` i seleccioneu el fitxer `aws-keypair.pub`. Però recordeu, el fitxer ha de ser el fitxer de clau pública, no el fitxer de clau privada. És a dir, el fitxer ha de tenir l'extensió `.pub`. Un cop hàgiu seleccionat el fitxer, feu clic a `Import Key Pair`.
-
 Recordeu que com s'ha explicat a la nota anterior, potser no veureu la carpeta `.ssh` a l'explorador de fitxers i potser no veureu l'extensió `.pub` del fitxer. Si teniu problemes amb això, us recomano utilitzar el terminal per copiar el contingut del fitxer com es mostra a la captura de pantalla anterior.
 :::
 
-Ara hauríeu de veure el parell de claus que acabeu d'importar a la llista de parells de claus. Probablement hi haurà un altre parell de claus allà, això està bé, podeu ignorar-lo. Perfecte! Ara heu importat la clau pública a AWS. A continuació, crearem una instància EC2 i la configurarem per utilitzar el parell de claus que acabem d'importar.
+You should now see the key pair you just imported in the list of key pairs. There will probably be another key pair there — that’s fine, you can ignore it. Perfect! You’ve now imported the public key into AWS. Next, we’ll create an EC2 instance and configure it to use the key pair we just imported.
 
-### Pas 5: Creació d'una instància EC2 {#pas-5-creacio-duna-instancia-ec2}
+### Step 5: Creating an EC2 instance {#pas-5-creacio-duna-instancia-ec2}
 
 El primer pas serà anar al tauler d'EC2. Podeu fer-ho escrivint `EC2` a la barra de cerca i fent clic al servei `EC2`, com vam fer al principi del [Pas 3](#pas-3-importació-de-la-clau-pública-a-aws):
 
