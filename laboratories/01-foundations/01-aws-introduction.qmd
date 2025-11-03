@@ -385,7 +385,7 @@ python3 -c "print('Hello World from the virtual environment')"
       main()
   ```
 
-9.  SIf the file exists, you can run it with the following command:
+9.  If the file exists, you can run it with the following command:
 
   ```bash
   python3 simulate_workload.py workload.csv
