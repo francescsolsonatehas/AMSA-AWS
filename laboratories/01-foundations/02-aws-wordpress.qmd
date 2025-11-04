@@ -1,5 +1,5 @@
 ---
-title: 1 · Deploying a web application
+title: 2 · Deploying a web application
 lang: en
 ---
 
@@ -35,6 +35,7 @@ Feu clic a **View Connection Details** per veure la password generada. Si no ho 
 :::
 
 3. Espereu uns minuts fins que la columna **Status** estigui en verd i posi **Available**. 
+
 4. Un cop la base de dades estigui disponible, fem clic a la base de dades i anem a la pestanya **Connectivity & security** per veure els detalls de connexió.
 
     * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
@@ -43,14 +44,24 @@ Feu clic a **View Connection Details** per veure la password generada. Si no ho 
     * Database name: `wordpress`
 
 
-4. Ara ja podem connectar-nos a la base de dades amb un client MySQL com **MySQL Workbench** o **phpMyAdmin**.
+5. Afegir una regla al **Security Group** de la base de dades per permetre connexions des de la instància EC2.
 
-    * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
-    * Port: `3306`
-    * Username: `admin`
-    * Password: `XXXXXXXXXXXXXXX` (la que heu generat abans)
+	5.1. Anem a la consola d'**Amazon RDS**.
+	5.2. Seleccionem la nostra instància de base de dades.
+	5.3. A la secció de **Connectivity & security**, busquem el **Security Group** associat a la base de dades.
+	5.4. Fem clic al **Security Group** per editar les regles (semblant a *default sg-0efc4051ab6288a2d*). 
+	5.5. Afegim una nova regla d'entrada (Inbound rule) per permetre connexions des de l'adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió **MySQL/Aurora** i introduïm l'adreça IP de la instància 			EC2. Per fer-ho, has de clicar a **Edit inbound rules** i després afegir la regla següent:
 
-5. Per testejar la connexió, necessitem un client MySQL. La manera més senzilla és crear una instància EC2 i instal·lar el client MySQL.
+	  ```plaintext
+    		Type: MySQL/Aurora
+    		Protocol: TCP
+    		Port Range: 3306
+    		Source: Custom
+    		Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)
+  	```
+
+
+6. Per testejar la connexió, necessitem un client MySQL. La manera més senzilla és crear una instància EC2 i instal·lar el client MySQL.
   
   - Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).
   - Connecta't a la instància EC2 via SSH.
@@ -63,36 +74,14 @@ Feu clic a **View Connection Details** per veure la password generada. Si no ho 
     sudo dnf install mariadb105 -y
     ```
 
-  - Connecta't a la base de dades RDS des de la instància EC2:
+ 6. Connecta't a la base de dades RDS des de la instància EC2:
 
     ```bash
     mysql -h hostname -u admin -p
     # Introdueix la contrassenya quan et demani
     ```
 
-En aquest punt, observarem que no ens podem connectar a la base de dades. Això és degut a que la base de dades està protegida per un **Security Group** que no permet connexions des de l'exterior. Per solucionar-ho, hem d'afegir una regla al **Security Group** de la base de dades per permetre connexions des de la instància EC2.
-
-1. Anem a la consola d'**Amazon RDS**.
-2. Seleccionem la nostra instància de base de dades.
-3. A la secció de **Connectivity & security**, busquem el **Security Group** associat a la base de dades.
-4. Fem clic al **Security Group** per editar les regles (semblant a *default sg-0efc4051ab6288a2d*). 
-5. Afegim una nova regla d'entrada (Inbound rule) per permetre connexions des de l'adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió **MySQL/Aurora** i introduïm l'adreça IP de la instància EC2. Per fer-ho, has de clicar a **Edit inbound rules** i després afegir la regla següent:
-
-  ```plaintext
-    Type: MySQL/Aurora
-    Protocol: TCP
-    Port Range: 3306
-    Source: Custom
-    Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)
-  ```
-
-::: {.callout-note title="Observació"}
-Aquesta regla permetrà connexions a la base de dades des de qualsevol instància EC2 que utilitzi aquest grup de seguretat (launch-wizard-1).
-:::
-
-6. Guardem les regles i tornem a intentar connectar-nos a la base de dades des de la instància EC2.
-7. Si tot ha anat bé, ara sí que ens podrem connectar a la base de dades.
-8. Un cop connectats, ja podem crear la base de dades **wordpress** i l'usuari **wordpress** amb tots els permisos.
+7. Crear la base de dades **wordpress** i l'usuari **wordpress** amb tots els permisos.
 
     ```sql
     CREATE DATABASE wordpress;
@@ -101,9 +90,9 @@ Aquesta regla permetrà connexions a la base de dades des de qualsevol instànci
     FLUSH PRIVILEGES;
     exit
     ```
-9. Ja tenim la base de dades preparada per a la instal·lació de WordPress.
+8. Ja tenim la base de dades preparada per a la instal·lació de WordPress.
 
-### Instal·lació de WordPress a l'instància EC2
+## 2.  Instal·lació de WordPress a l'instància EC2
 
 1. Per instal·lar WordPress, primer hem d'instal·lar un servidor web (Apache):
 
