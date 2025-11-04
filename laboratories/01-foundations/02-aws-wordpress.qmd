@@ -44,10 +44,14 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 5. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
-	5.1. Go to the console of **Amazon RDS**.
-	5.2. Select our database instance.
-	5.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database.
-	5.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*). 
+	5.1. Go to the console of **Amazon RDS**
+	
+	5.2. Select our database instance
+	
+	5.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database
+	
+	5.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*)
+	
 	5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
 
 	  ```plaintext
