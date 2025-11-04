@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.25">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Unitat 1 · Desplegament d’una aplicació web amb AWS – AMSA - Fall 2025</title>
+<title>1 · Deploying a web application – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,17 +89,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Cap resultat",
-    "search-matching-documents-text": "documents que coincideixen",
-    "search-copy-link-title": "Copia l'enllaç a la cerca",
-    "search-hide-matches-text": "Amaga les coincidències addicionals",
-    "search-more-match-text": "altra coincidència en aquest document",
-    "search-more-matches-text": "altres coincidències en aquest document",
-    "search-clear-button-title": "Neteja",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel·la",
-    "search-submit-button-title": "Envia",
-    "search-label": "Cerca"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -112,11 +112,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deployment a web application</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deploying a web application</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">AWS Laboratories</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Commuta la secció">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -156,13 +156,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../laboratories/01-foundations/02-aws-wordpress.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2 · Deployment a web application</span></a>
+ <span class="menu-text">2 · Deploying a web application</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../laboratories/02-network/01-aws-wordpress.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3 · Deployment a web application with high availability</span></a>
+ <span class="menu-text">3 · Deploying a web application with high availability</span></a>
   </div>
 </li>
       </ul>
@@ -174,11 +174,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En aquesta pàgina</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objectius" id="toc-objectius" class="nav-link active" data-scroll-target="#objectius">Objectius</a></li>
-  <li><a href="#bases-de-dades-rds" id="toc-bases-de-dades-rds" class="nav-link" data-scroll-target="#bases-de-dades-rds">Bases de dades RDS</a>
+  <li><a href="#creating-a-data-base-db-with-rds" id="toc-creating-a-data-base-db-with-rds" class="nav-link active" data-scroll-target="#creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</a>
   <ul class="collapse">
   <li><a href="#installació-de-wordpress-a-linstància-ec2" id="toc-installació-de-wordpress-a-linstància-ec2" class="nav-link" data-scroll-target="#installació-de-wordpress-a-linstància-ec2">Instal·lació de WordPress a l’instància EC2</a></li>
   </ul></li>
@@ -191,10 +190,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deployment a web application</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deploying a web application</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Unitat 1 · Desplegament d’una aplicació web amb AWS</h1>
-<p class="subtitle lead">Laboratoris Pràctics d’Administració de Sistemes i Aplicacions</p>
+<h1 class="title">1 · Deploying a web application</h1>
 </div>
 
 
@@ -211,20 +209,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="objectius" class="level2">
-<h2 class="anchored" data-anchor-id="objectius">Objectius</h2>
-<p>Desplegar una aplicació web utilitzant serveis d’AWS. En concret, es desplegarà una aplicació WordPress utilitzant Amazon EC2 com a servidor web i Amazon RDS com a base de dades.</p>
-</section>
-<section id="bases-de-dades-rds" class="level2">
-<h2 class="anchored" data-anchor-id="bases-de-dades-rds">Bases de dades RDS</h2>
-<p>El servei de bases de dades relacional d’Amazon Web Services (RDS) és una opció molt interessant per a desplegar bases de dades MySQL, MariaDB, PostgreSQL, Oracle, SQL Server i Aurora. Aquest servei ofereix una gestió fàcil i eficient de les bases de dades, així com la possibilitat de fer còpies de seguretat, escalabilitat i alta disponibilitat.</p>
+<p><strong>CONTENTS:</strong></p>
 <ol type="1">
-<li><p>Anem a la consola de <strong>Amazon RDS</strong>.</p></li>
-<li><p>A la consola de <strong>Amazon RDS</strong>, fem clic a <strong>Create database</strong>.</p>
+<li>Creating a Data Base with RDS</li>
+<li>Accessing the AWS dashboard</li>
+<li>Creating an SSH key pair</li>
+<li>Importing the public key into AWS</li>
+<li>Creating an EC2 instance</li>
+<li>Connecting to the EC2 instance</li>
+</ol>
+<section id="creating-a-data-base-db-with-rds" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</h2>
+<p>AWS’ relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.</p>
+<ol type="1">
+<li><p>Let’s go to the console of <strong>Amazon RDS</strong>.</p></li>
+<li><p>In the <strong>Amazon RDS</strong> console, click on <strong>Create database</strong>.</p>
 <ul>
-<li>Seleccionem el mode <strong>Standard Create</strong>.</li>
-<li>Seleccionem el motor de base de dades <strong>MySQL</strong>.</li>
-<li>Seleccionem la versió de la base de dades <strong>MySQL 8.0.42</strong>.</li>
+<li>Select mode <strong>Standard Create</strong>.</li>
+<li>Select data base engine <strong>MySQL</strong>.</li>
+<li>Select the data base version <strong>MySQL 8.0.42</strong>.</li>
 <li>Seleccionem la plantilla <strong>Sandbox</strong>.</li>
 <li>Nom de la base de dades <strong>wordpress</strong>.</li>
 <li>Master username <strong>admin</strong>.</li>
@@ -271,10 +274,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Busquem el paquet a instal·lar</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Connecta’t a la base de dades RDS des de la instància EC2:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
 <p>En aquest punt, observarem que no ens podem connectar a la base de dades. Això és degut a que la base de dades està protegida per un <strong>Security Group</strong> que no permet connexions des de l’exterior. Per solucionar-ho, hem d’afegir una regla al <strong>Security Group</strong> de la base de dades per permetre connexions des de la instància EC2.</p>
 <ol type="1">
@@ -295,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Observació
+<span class="screen-reader-only">Note</span>Observació
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -310,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> wordpress.<span class="op">*</span> <span class="kw">TO</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span>;</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FLUSH</span> <span class="kw">PRIVILEGES</span>;</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Ja tenim la base de dades preparada per a la instal·lació de WordPress.</p></li>
 </ol>
 <section id="installació-de-wordpress-a-linstància-ec2" class="level3">
@@ -319,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Per instal·lar WordPress, primer hem d’instal·lar un servidor web (Apache):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start httpd</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Nota">
 <div class="callout-header d-flex align-content-center">
@@ -327,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Consell</span>Nota
+<span class="screen-reader-only">Tip</span>Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -343,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Consell</span>Nota
+<span class="screen-reader-only">Tip</span>Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -369,7 +372,7 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Consell</span>Nota
+<span class="screen-reader-only">Tip</span>Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -380,16 +383,16 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <li><p>Un cop afegida la regla, ja podem accedir a l’adreça IP pública de la instància EC2 des del navegador web. Haurem de veure la pàgina per defecte d’Apache.</p></li>
 <li><p>Un requisit per a WordPress és tenir PHP instal·lat. Instal·lem PHP i les extensions necessàries:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Reiniciem el servei Apache per carregar les extensions de PHP:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Ara ja podem instal·lar WordPress. Primer, descarreguem l’última versió de WordPress i la desem a la carpeta per defecte d’Apache:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Ara podeu accedir a l’adreça IP pública de la instància EC2 des del navegador web. Haureu de veure la pàgina d’instal·lació de WordPress.</p></li>
 <li><p>Seguiu els passos de la instal·lació de WordPress:</p>
 <ul>
@@ -434,11 +437,11 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <p>Aquest mètode encara no és ideal, ja que encara estem fent la instal·lació manualment (hem de connectar-nos a l’EC2 i executar l’script). Una forma encara millor és utilitzar eines d’automatització com <a href="https://www.ansible.com/">Ansible</a>.</p>
 <p>El primer pas és instal·lar Ansible a la nostra màquina local (si no el tenim instal·lat). Si no voleu fer-ho a la vostra màquina local, podeu utilitzar una altra instància EC2 per fer-ho. Per tant, crearem 2 instàncies EC2: una per fer d’Ansible i una altra per instal·lar WordPress, les podeu anomenar <code>ansible</code> i <code>webserver</code>.</p>
 <p>A les dues màquines EC2 heu d’instal·lar el programari <code>ansible</code> amb la comanda següent:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install ansible <span class="at">-y</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install ansible <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Ansible utilitza el protocol SSH per connectar-se a les màquines remotes, per tant, heu de tenir accés SSH a la màquina <code>webserver</code> des de la màquina <code>ansible</code>. Per fer-ho, podeu crear un parell de claus SSH a la màquina <code>ansible</code> i afegir la clau pública al fitxer <code>~/.ssh/authorized_keys</code> de la màquina <code>webserver</code>.</p>
 <p>Un cop tingueu accés SSH a la màquina <code>webserver</code> des de la màquina <code>ansible</code>, podeu crear un fitxer d’inventari d’Ansible per definir la màquina <code>webserver</code>. Creeu un fitxer anomenat <code>hosts</code> amb el contingut següent (substituïu <code>&lt;IP_INSTANCIA_EC2&gt;</code> per l’adreça IP pública de la vostra instància EC2) i <code>~/.ssh/my-key-pair</code> per la ruta a la vostra clau privada SSH:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[webserver]</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;IP_INSTANCIA_EC2&gt; ansible_user</span><span class="ot">=</span><span class="st">ec2-user ansible_ssh_private_key_file=~/.ssh/my-key-pair</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;IP_INSTANCIA_EC2&gt; ansible_user</span><span class="ot">=</span><span class="st">ec2-user ansible_ssh_private_key_file=~/.ssh/my-key-pair</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On <ip_instancia_ec2> és l’adreça IP pública de la vostra instància EC2 on voleu instal·lar WordPress i la ruta <code>~/.ssh/my-key-pair</code> és la ruta a la vostra clau privada SSH que us permet accedir a la instància EC2.</ip_instancia_ec2></p>
 <p>A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la màquina <code>webserver</code>. Un playbook és un fitxer YAML que defineix les tasques que Ansible ha d’executar a les màquines remotes. Podeu descargar el fitxer <a href="./sources/wordpress.yml"><code>wordpress.yml</code></a> o bé crear-lo amb el contingut següent (substituïu <code>&lt;RDS_ENDPOINT&gt;</code> per l’endpoint de la vostra base de dades RDS):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
@@ -504,9 +507,9 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>          define('WP_DEBUG', false);</span>
 <span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>          if ( !defined('ABSPATH') )</span>
 <span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>            define('ABSPATH', __DIR__ . '/');</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>          require_once ABSPATH . 'wp-settings.php';</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>          require_once ABSPATH . 'wp-settings.php';</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Finalment, executeu el playbook d’Ansible per instal·lar WordPress a la vostra instància EC2.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-playbook</span> <span class="at">-i</span> hosts wordpress.yml</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-playbook</span> <span class="at">-i</span> hosts wordpress.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Un cop finalitzat, podeu accedir a l’adreça IP pública de la instància EC2 des del navegador web i completar la instal·lació de WordPress com s’ha descrit anteriorment.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Exercici">
 <div class="callout-header d-flex align-content-center">
@@ -573,12 +576,12 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copiat!");
+      button.setAttribute("title", "Copied!");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copiat!");
+        button.setAttribute("data-bs-title", "Copied!");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
