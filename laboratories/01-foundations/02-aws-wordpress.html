@@ -178,10 +178,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#creating-a-data-base-db-with-rds" id="toc-creating-a-data-base-db-with-rds" class="nav-link active" data-scroll-target="#creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</a></li>
-  <li><a href="#installació-de-wordpress-a-linstància-ec2" id="toc-installació-de-wordpress-a-linstància-ec2" class="nav-link" data-scroll-target="#installació-de-wordpress-a-linstància-ec2">2. Instal·lació de WordPress a l’instància EC2</a></li>
-  <li><a href="#automatizació-de-la-installació" id="toc-automatizació-de-la-installació" class="nav-link" data-scroll-target="#automatizació-de-la-installació">Automatizació de la instal·lació</a></li>
-  <li><a href="#entrega-del-laboratori" id="toc-entrega-del-laboratori" class="nav-link" data-scroll-target="#entrega-del-laboratori">Entrega del laboratori</a></li>
-  <li><a href="#neteja-els-recursos-creats" id="toc-neteja-els-recursos-creats" class="nav-link" data-scroll-target="#neteja-els-recursos-creats">Neteja els recursos creats</a></li>
+  <li><a href="#installing-wordpress-on-the-ec2-instance" id="toc-installing-wordpress-on-the-ec2-instance" class="nav-link" data-scroll-target="#installing-wordpress-on-the-ec2-instance">2. Installing WordPress on the EC2 instance</a></li>
+  <li><a href="#cleanup" id="toc-cleanup" class="nav-link" data-scroll-target="#cleanup">Cleanup</a></li>
   </ul>
 </nav>
     </div>
@@ -210,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>CONTENTS:</strong></p>
 <ol type="1">
 <li>Creating a Data Base with RDS</li>
-<li>Accessing the AWS dashboard</li>
+<li>Installing WordPress on the EC2 instance</li>
 <li>Creating an SSH key pair</li>
 <li>Importing the public key into AWS</li>
 <li>Creating an EC2 instance</li>
@@ -252,34 +250,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       Port Range: 3306
       Source: Custom
       Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
-<li><p>o test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p></li>
+<li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p></li>
 </ol>
 <ul>
-<li><p>Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).</p></li>
-<li><p>Connecta’t a la instància EC2 via SSH.</p></li>
-<li><p>Instal·la el client MySQL:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Busquem el paquet a instal·lar</span></span>
+<li><p>Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)</p></li>
+<li><p>Connect to the EC2 instance via SSH</p></li>
+<li><p>Install the MySQL client:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar el paquet a instal·lar</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
 <ol start="6" type="1">
-<li><p>Connecta’t a la base de dades RDS des de la instància EC2:</p>
+<li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Crear la base de dades <strong>wordpress</strong> i l’usuari <strong>wordpress</strong> amb tots els permisos.</p>
+<li><p>Create the database <strong>wordpress</strong> and user <strong>wordpress</strong> with all permissions</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpress;</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> wordpress.<span class="op">*</span> <span class="kw">TO</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span>;</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FLUSH</span> <span class="kw">PRIVILEGES</span>;</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Ja tenim la base de dades preparada per a la instal·lació de WordPress.</p></li>
+<li><p>We already have the database ready for the WordPress installation</p></li>
 </ol>
 </section>
-<section id="installació-de-wordpress-a-linstància-ec2" class="level2">
-<h2 class="anchored" data-anchor-id="installació-de-wordpress-a-linstància-ec2">2. Instal·lació de WordPress a l’instància EC2</h2>
+<section id="installing-wordpress-on-the-ec2-instance" class="level2">
+<h2 class="anchored" data-anchor-id="installing-wordpress-on-the-ec2-instance">2. Installing WordPress on the EC2 instance</h2>
 <ol type="1">
-<li><p>Per instal·lar WordPress, primer hem d’instal·lar un servidor web (Apache):</p>
+<li><p>To install WordPress, a web server must be installed first (Apache):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start httpd</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
@@ -294,217 +292,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Observeu que l’ordre <em>start</em> inicia el servei Apache, però no el fa arrencar automàticament en reiniciar la màquina. Per això, hem d’executar també l’ordre <em>enable</em>.</p>
+<p>Note that the start command <em>start</em> the Apache service, but it does not make it start automatically when the machine is rebooted. Therefore, we also need to run the <em>enable</em> command</p>
 </div>
 </div>
 <ol start="2" type="1">
-<li>Per defecte, el grup de seguretat de la instància EC2 no permet connexions HTTP (port 80). Podeu comprovar-ho intentant accedir a l’adreça IP pública de la instància EC2 des del navegador web. Veureu que no es pot connectar.</li>
+<li>By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. You will see that it cannot connect.</li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Nota">
+<div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Nota
+<span class="screen-reader-only">Tip</span>Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si feu clic a l’enllaç de l’adreça IP pública intentarà accedir per https, però com que no tenim certificat SSL, no funcionarà. Modifiqueu manualment la url per http://<adreça_ip_publica>.</adreça_ip_publica></p>
+<p>If you click the link to the public IP address, it will try to access via HTTPS, but since we don’t have an SSL certificate, it won’t work. Manually modify the URL to http://<public_ip_addres></public_ip_addres></p>
 </div>
 </div>
 <ol start="3" type="1">
-<li><p>Hem d’afegir una regla d’entrada al grup de seguretat per permetre connexions HTTP.</p>
+<li><p>We need to add an inbound rule to the security group to allow HTTP connections:</p>
 <ul>
-<li>Anem a la consola d’<strong>EC2</strong>.</li>
-<li>Seleccionem la nostra instància EC2.</li>
-<li>A la secció de <strong>Security</strong>, fem clic al <strong>Security Group</strong> associat a la instància (launch-wizard-1).</li>
-<li>Afegim una nova regla d’entrada (Inbound rule) per permetre connexions HTTP:</li>
+<li>Go to the console of ’<strong>EC2</strong></li>
+<li>Select our EC2 instance</li>
+<li>In the section of <strong>Security</strong>, “click on the <strong>Security Group</strong> associated with the instance (launch-wizard-1).</li>
+<li>Add a new inbound rule to allow HTTP connections:</li>
 </ul>
 <pre class="plaintext"><code>Type: HTTP
 Protocol: TCP
 Port Range: 80
 Source: Anywhere (0.0.0.0/0)</code></pre></li>
 </ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Nota">
+<div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Nota
+<span class="screen-reader-only">Tip</span>Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Aquesta regla permetrà connexions HTTP des de qualsevol lloc.</p>
+<p>This rule will allow HTTP connections from anywhere</p>
 </div>
 </div>
-<ol start="3" type="1">
-<li><p>Un cop afegida la regla, ja podem accedir a l’adreça IP pública de la instància EC2 des del navegador web. Haurem de veure la pàgina per defecte d’Apache.</p></li>
-<li><p>Un requisit per a WordPress és tenir PHP instal·lat. Instal·lem PHP i les extensions necessàries:</p>
+<ol start="4" type="1">
+<li><p>Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache’s default page</p></li>
+<li><p>A requirement for WordPress is to have PHP installed. Let’s install PHP and the necessary extensions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Reiniciem el servei Apache per carregar les extensions de PHP:</p>
+<li><p>Restart the Apache service to load the PHP extensions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Ara ja podem instal·lar WordPress. Primer, descarreguem l’última versió de WordPress i la desem a la carpeta per defecte d’Apache:</p>
+<li><p>Now we can install WordPress. First, we download the latest version of WordPress and save it to Apache’s default directory:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Ara podeu accedir a l’adreça IP pública de la instància EC2 des del navegador web. Haureu de veure la pàgina d’instal·lació de WordPress.</p></li>
-<li><p>Seguiu els passos de la instal·lació de WordPress:</p>
+<li><p>Access the public IP address of the EC2 instance from your web browser. You should see the WordPress installation page</p></li>
+<li><p>Follow the steps of the WordPress installation:</p>
 <ul>
-<li>Seleccioneu l’idioma (<em>català</em>).</li>
-<li>Feu clic a <strong>Continua</strong>.</li>
-<li>Feu clic a <strong>Som-hi!</strong>.</li>
-<li>Introduïu les dades de connexió a la base de dades:
+<li>Select the language (<em>català</em>).</li>
+<li>Click on <strong>Continua</strong></li>
+<li>Click on <strong>Som-hi!</strong></li>
+<li>Enter the database connection details:
 <ul>
 <li>Database Name: <code>wordpress</code></li>
-<li>Username: <code>wordpress</code> (usuari creat abans)</li>
-<li>Password: <code>wordpress</code> (contrasenya creada abans)</li>
-<li>Database Host: l’endpoint de la base de dades RDS (per exemple, <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code>)</li>
-<li>Table Prefix: <code>wp_</code> (podeu deixar-ho per defecte)</li>
+<li>Username: <code>wordpress</code> (previously created user)</li>
+<li>Password: <code>wordpress</code> (password created earlier)</li>
+<li>Database Host: the RDS database endpoint (for example: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code>)</li>
+<li>Table Prefix: <code>wp_</code> (default)</li>
 </ul></li>
-<li>Feu clic a <strong>Envia</strong>.</li>
-<li>Si tot és correcte, feu clic a <strong>Executa la instal·lació</strong>.</li>
-<li>Introduïu el títol del lloc (<strong>AMSA Lab02</strong>), el nom d’usuari (<strong>jordi</strong>), la contrassenya (<strong>9T3nEBqnFqDW3uhc7S</strong>) i el correu electrònic (<strong>jordi@example.com</strong>, pot ser qualsevol).</li>
-<li>Feu clic a <strong>Instal·la WordPress</strong>.</li>
-<li>Un cop acabada la instal·lació, feu clic a <strong>Inicia sessió</strong> i introduïu les credencials que heu creat.</li>
+<li>Click on <strong>Envia</strong></li>
+<li>If everything is correct, click on <strong>Executa la instal·lació</strong></li>
+<li>Enter the site title (<strong>AMSA Lab02</strong>), el nom d’usuari (<strong>francesc</strong>), the password (<strong>9T3nEBqnFqDW3uhc7S</strong>) and the email (<strong>francesc.solsona@udl.cat</strong>)</li>
+<li>Click on <strong>Instal·la WordPress</strong></li>
+<li>Once the installation is complete, click on <strong>Inicia sessió</strong> and enter the credentials you created</li>
 </ul></li>
 </ol>
 </section>
-<section id="automatizació-de-la-installació" class="level2">
-<h2 class="anchored" data-anchor-id="automatizació-de-la-installació">Automatizació de la instal·lació</h2>
-<p>Fins ara hem fet la instal·lació de WordPress manualment (pas a pas amb ordres a l’EC2). Una manera més eficient és automatitzar aquest procés utilitzant un script en bash.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Exercici">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exercici
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Creeu un script en bash que faci la instal·lació de WordPress a la instància EC2.</li>
-</ol>
-</div>
-</div>
-<p>Aquest mètode encara no és ideal, ja que encara estem fent la instal·lació manualment (hem de connectar-nos a l’EC2 i executar l’script). Una forma encara millor és utilitzar eines d’automatització com <a href="https://www.ansible.com/">Ansible</a>.</p>
-<p>El primer pas és instal·lar Ansible a la nostra màquina local (si no el tenim instal·lat). Si no voleu fer-ho a la vostra màquina local, podeu utilitzar una altra instància EC2 per fer-ho. Per tant, crearem 2 instàncies EC2: una per fer d’Ansible i una altra per instal·lar WordPress, les podeu anomenar <code>ansible</code> i <code>webserver</code>.</p>
-<p>A les dues màquines EC2 heu d’instal·lar el programari <code>ansible</code> amb la comanda següent:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> yum install ansible <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ansible utilitza el protocol SSH per connectar-se a les màquines remotes, per tant, heu de tenir accés SSH a la màquina <code>webserver</code> des de la màquina <code>ansible</code>. Per fer-ho, podeu crear un parell de claus SSH a la màquina <code>ansible</code> i afegir la clau pública al fitxer <code>~/.ssh/authorized_keys</code> de la màquina <code>webserver</code>.</p>
-<p>Un cop tingueu accés SSH a la màquina <code>webserver</code> des de la màquina <code>ansible</code>, podeu crear un fitxer d’inventari d’Ansible per definir la màquina <code>webserver</code>. Creeu un fitxer anomenat <code>hosts</code> amb el contingut següent (substituïu <code>&lt;IP_INSTANCIA_EC2&gt;</code> per l’adreça IP pública de la vostra instància EC2) i <code>~/.ssh/my-key-pair</code> per la ruta a la vostra clau privada SSH:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[webserver]</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;IP_INSTANCIA_EC2&gt; ansible_user</span><span class="ot">=</span><span class="st">ec2-user ansible_ssh_private_key_file=~/.ssh/my-key-pair</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>On <ip_instancia_ec2> és l’adreça IP pública de la vostra instància EC2 on voleu instal·lar WordPress i la ruta <code>~/.ssh/my-key-pair</code> és la ruta a la vostra clau privada SSH que us permet accedir a la instància EC2.</ip_instancia_ec2></p>
-<p>A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la màquina <code>webserver</code>. Un playbook és un fitxer YAML que defineix les tasques que Ansible ha d’executar a les màquines remotes. Podeu descargar el fitxer <a href="./sources/wordpress.yml"><code>wordpress.yml</code></a> o bé crear-lo amb el contingut següent (substituïu <code>&lt;RDS_ENDPOINT&gt;</code> per l’endpoint de la vostra base de dades RDS):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> webserver</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">become</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Actualitzar repositoris</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">dnf</span><span class="kw">:</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">"*"</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> latest</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instal·lar Apache i PHP amb extensions</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">dnf</span><span class="kw">:</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> httpd</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-mysqlnd</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-gd</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-xml</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-json</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-intl</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="kw">-</span><span class="at"> php-cli</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Activar i arrencar Apache</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">systemd</span><span class="kw">:</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> httpd</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> started</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Descarregar WordPress</span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">get_url</span><span class="kw">:</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">url</span><span class="kw">:</span><span class="at"> https://wordpress.org/latest.tar.gz</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> /tmp/latest.tar.gz</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Descomprimir WordPress</span></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">unarchive</span><span class="kw">:</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">src</span><span class="kw">:</span><span class="at"> /tmp/latest.tar.gz</span></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> /var/www/html/</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">remote_src</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">extra_opts</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">--strip-components=</span><span class="dv">1</span><span class="kw">]</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Assignar permisos correctes</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">file</span><span class="kw">:</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /var/www/html</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">owner</span><span class="kw">:</span><span class="at"> apache</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">group</span><span class="kw">:</span><span class="at"> apache</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="st">'0755'</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">recurse</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Crear arxiu wp-config.php bàsic</span></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">copy</span><span class="kw">:</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> /var/www/html/wp-config.php</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="fu">        content</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>          &lt;?php</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>          define('DB_NAME', 'wordpress');</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>          define('DB_USER', 'wordpress');</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>          define('DB_PASSWORD', 'wordpress');</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>          define('DB_HOST', '&lt;RDS_ENDPOINT&gt;');</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>          define('DB_CHARSET', 'utf8');</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>          define('DB_COLLATE', '');</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>          $table_prefix = 'wp_';</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>          define('WP_DEBUG', false);</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>          if ( !defined('ABSPATH') )</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>            define('ABSPATH', __DIR__ . '/');</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>          require_once ABSPATH . 'wp-settings.php';</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Finalment, executeu el playbook d’Ansible per instal·lar WordPress a la vostra instància EC2.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-playbook</span> <span class="at">-i</span> hosts wordpress.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Un cop finalitzat, podeu accedir a l’adreça IP pública de la instància EC2 des del navegador web i completar la instal·lació de WordPress com s’ha descrit anteriorment.</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Exercici">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exercici
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Reviseu la documentació d’Ansible per utilitzar variables i millorar el playbook <code>wordpress.yml</code> fent-lo més genèric.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="entrega-del-laboratori" class="level2">
-<h2 class="anchored" data-anchor-id="entrega-del-laboratori">Entrega del laboratori</h2>
-<p>Heu de pujar al <a href="https://cv.udl.cat/">Campus Virtual</a>, un document amb les següents captures de pantalla:</p>
-<ul>
-<li>Pantalla de la consola d’Amazon RDS amb la base de dades creada.</li>
-<li>Pantalla de la consola d’EC2 amb la instància EC2 creada (eg. podeu fer servir <code>history</code> per veure les ordres que heu executat).</li>
-<li>Pantalla del navegador web amb la pàgina d’inici de sessió de WordPress.</li>
-<li>Pantalla del tauler d’administració de WordPress.</li>
-<li>Pantalla del playbook d’Ansible executat correctament.</li>
-</ul>
-<p>A més, heu d’incloure el contingut dels següents fitxers:</p>
-<ul>
-<li>Script d’Ansible modificat amb variables (si heu fet l’exercici).</li>
-<li>Script en bash per instal·lar WordPress (si heu fet l’exercici).</li>
-</ul>
-</section>
-<section id="neteja-els-recursos-creats" class="level2">
-<h2 class="anchored" data-anchor-id="neteja-els-recursos-creats">Neteja els recursos creats</h2>
-<p>Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d’AWS.</p>
+<section id="cleanup" class="level2">
+<h2 class="anchored" data-anchor-id="cleanup">Cleanup</h2>
+<p>Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.</p>
 
 
 </section>
