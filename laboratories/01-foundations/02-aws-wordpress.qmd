@@ -7,10 +7,7 @@ lang: en
 
 1. Creating a Data Base with RDS
 2. Installing WordPress on the EC2 instance
-3. Creating an SSH key pair
-4. Importing the public key into AWS
-5. Creating an EC2 instance
-6. Connecting to the EC2 instance
+3. Cleanup
 
 ## 1. Creating a Data Base (DB) with RDS
 
@@ -177,7 +174,7 @@ This rule will allow HTTP connections from anywhere
     - Click on **Instal·la WordPress**
     - Once the installation is complete, click on **Inicia sessió** and enter the credentials you created
 
-## Cleanup
+## 3. Cleanup
 
 Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.
 
