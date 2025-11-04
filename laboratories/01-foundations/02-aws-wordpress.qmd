@@ -3,6 +3,10 @@ title: Deploying a web application
 lang: en
 ---
 
+**ARCHITECTURE:**
+
+![](architecture.png)
+
 **CONTENTS:**
 
 1. Creating a Data Base with RDS
