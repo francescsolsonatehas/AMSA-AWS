@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1 · Deploying a web application – AMSA - Fall 2025</title>
+<title>2 · Deploying a web application – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -177,10 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#creating-a-data-base-db-with-rds" id="toc-creating-a-data-base-db-with-rds" class="nav-link active" data-scroll-target="#creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</a>
-  <ul class="collapse">
-  <li><a href="#installació-de-wordpress-a-linstància-ec2" id="toc-installació-de-wordpress-a-linstància-ec2" class="nav-link" data-scroll-target="#installació-de-wordpress-a-linstància-ec2">Instal·lació de WordPress a l’instància EC2</a></li>
-  </ul></li>
+  <li><a href="#creating-a-data-base-db-with-rds" id="toc-creating-a-data-base-db-with-rds" class="nav-link active" data-scroll-target="#creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</a></li>
+  <li><a href="#installació-de-wordpress-a-linstància-ec2" id="toc-installació-de-wordpress-a-linstància-ec2" class="nav-link" data-scroll-target="#installació-de-wordpress-a-linstància-ec2">2. Instal·lació de WordPress a l’instància EC2</a></li>
   <li><a href="#automatizació-de-la-installació" id="toc-automatizació-de-la-installació" class="nav-link" data-scroll-target="#automatizació-de-la-installació">Automatizació de la instal·lació</a></li>
   <li><a href="#entrega-del-laboratori" id="toc-entrega-del-laboratori" class="nav-link" data-scroll-target="#entrega-del-laboratori">Entrega del laboratori</a></li>
   <li><a href="#neteja-els-recursos-creats" id="toc-neteja-els-recursos-creats" class="nav-link" data-scroll-target="#neteja-els-recursos-creats">Neteja els recursos creats</a></li>
@@ -192,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deploying a web application</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">1 · Deploying a web application</h1>
+<h1 class="title">2 · Deploying a web application</h1>
 </div>
 
 
@@ -258,57 +256,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Username: <code>admin</code></li>
 <li>Database name: <code>wordpress</code></li>
 </ul></li>
-<li><p>Ara ja podem connectar-nos a la base de dades amb un client MySQL com <strong>MySQL Workbench</strong> o <strong>phpMyAdmin</strong>.</p>
-<ul>
-<li>Hostname: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code></li>
-<li>Port: <code>3306</code></li>
-<li>Username: <code>admin</code></li>
-<li>Password: <code>XXXXXXXXXXXXXXX</code> (la que heu generat abans)</li>
-</ul></li>
+<li><p>Afegir una regla al <strong>Security Group</strong> de la base de dades per permetre connexions des de la instància EC2.</p>
+<p>5.1. Anem a la consola d’<strong>Amazon RDS</strong>. 5.2. Seleccionem la nostra instància de base de dades. 5.3. A la secció de <strong>Connectivity &amp; security</strong>, busquem el <strong>Security Group</strong> associat a la base de dades. 5.4. Fem clic al <strong>Security Group</strong> per editar les regles (semblant a <em>default sg-0efc4051ab6288a2d</em>). 5.5. Afegim una nova regla d’entrada (Inbound rule) per permetre connexions des de l’adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió <strong>MySQL/Aurora</strong> i introduïm l’adreça IP de la instància EC2. Per fer-ho, has de clicar a <strong>Edit inbound rules</strong> i després afegir la regla següent:</p>
+<pre class="plaintext"><code>      Type: MySQL/Aurora
+      Protocol: TCP
+      Port Range: 3306
+      Source: Custom
+      Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
 <li><p>Per testejar la connexió, necessitem un client MySQL. La manera més senzilla és crear una instància EC2 i instal·lar el client MySQL.</p></li>
 </ol>
 <ul>
 <li><p>Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).</p></li>
 <li><p>Connecta’t a la instància EC2 via SSH.</p></li>
 <li><p>Instal·la el client MySQL:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Busquem el paquet a instal·lar</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Connecta’t a la base de dades RDS des de la instància EC2:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Busquem el paquet a instal·lar</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
-<p>En aquest punt, observarem que no ens podem connectar a la base de dades. Això és degut a que la base de dades està protegida per un <strong>Security Group</strong> que no permet connexions des de l’exterior. Per solucionar-ho, hem d’afegir una regla al <strong>Security Group</strong> de la base de dades per permetre connexions des de la instància EC2.</p>
-<ol type="1">
-<li>Anem a la consola d’<strong>Amazon RDS</strong>.</li>
-<li>Seleccionem la nostra instància de base de dades.</li>
-<li>A la secció de <strong>Connectivity &amp; security</strong>, busquem el <strong>Security Group</strong> associat a la base de dades.</li>
-<li>Fem clic al <strong>Security Group</strong> per editar les regles (semblant a <em>default sg-0efc4051ab6288a2d</em>).</li>
-<li>Afegim una nova regla d’entrada (Inbound rule) per permetre connexions des de l’adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió <strong>MySQL/Aurora</strong> i introduïm l’adreça IP de la instància EC2. Per fer-ho, has de clicar a <strong>Edit inbound rules</strong> i després afegir la regla següent:</li>
-</ol>
-<pre class="plaintext"><code>  Type: MySQL/Aurora
-  Protocol: TCP
-  Port Range: 3306
-  Source: Custom
-  Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre>
-<div class="callout callout-style-default callout-note callout-titled" title="Observació">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Observació
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Aquesta regla permetrà connexions a la base de dades des de qualsevol instància EC2 que utilitzi aquest grup de seguretat (launch-wizard-1).</p>
-</div>
-</div>
 <ol start="6" type="1">
-<li><p>Guardem les regles i tornem a intentar connectar-nos a la base de dades des de la instància EC2.</p></li>
-<li><p>Si tot ha anat bé, ara sí que ens podrem connectar a la base de dades.</p></li>
-<li><p>Un cop connectats, ja podem crear la base de dades <strong>wordpress</strong> i l’usuari <strong>wordpress</strong> amb tots els permisos.</p>
+<li><p>Connecta’t a la base de dades RDS des de la instància EC2:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Crear la base de dades <strong>wordpress</strong> i l’usuari <strong>wordpress</strong> amb tots els permisos.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpress;</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> wordpress.<span class="op">*</span> <span class="kw">TO</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span>;</span>
@@ -316,8 +286,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Ja tenim la base de dades preparada per a la instal·lació de WordPress.</p></li>
 </ol>
-<section id="installació-de-wordpress-a-linstància-ec2" class="level3">
-<h3 class="anchored" data-anchor-id="installació-de-wordpress-a-linstància-ec2">Instal·lació de WordPress a l’instància EC2</h3>
+</section>
+<section id="installació-de-wordpress-a-linstància-ec2" class="level2">
+<h2 class="anchored" data-anchor-id="installació-de-wordpress-a-linstància-ec2">2. Instal·lació de WordPress a l’instància EC2</h2>
 <ol type="1">
 <li><p>Per instal·lar WordPress, primer hem d’instal·lar un servidor web (Apache):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
@@ -414,7 +385,6 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <li>Un cop acabada la instal·lació, feu clic a <strong>Inicia sessió</strong> i introduïu les credencials que heu creat.</li>
 </ul></li>
 </ol>
-</section>
 </section>
 <section id="automatizació-de-la-installació" class="level2">
 <h2 class="anchored" data-anchor-id="automatizació-de-la-installació">Automatizació de la instal·lació</h2>
