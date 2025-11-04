@@ -1,5 +1,5 @@
 ---
-title: 2 · Deploying a web application
+title: Deploying a web application
 lang: en
 ---
 
@@ -17,26 +17,24 @@ lang: en
 AWS' relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.
 
 1. Let's go to the console of **Amazon RDS**.
-2. In the **Amazon RDS** console, click on **Create database**.
 
-    * Select mode **Standard Create**.
-    * Select data base engine **MySQL**.
-    * Select the data base version **MySQL 8.0.42**.
-    * Seleccionem la plantilla **Sandbox**.
-    * Nom de la base de dades **wordpress**.
-    * Master username **admin**.
-    * Gestió de credencials: **self-managed**.
-    * Seleccioneu *auto-generate a password*.
+2. In the **Amazon RDS** console, click on **Create database**
 
-    La resta de paràmetres els deixarem per defecte. Una vegada acabat, fem clic a **Create database**.
+    * Select mode **Standard Create**
+    * Select data base engine **MySQL**
+    * Select the data base version **MySQL 8.0.42**
+    * Select the template **Sandbox**
+    * Name of the database **wordpress**
+    * Master username **admin**
+    * Credential management: **self-managed**
+    * Select **set a password**
 
-::: {.callout-important title="Contrassenya"}
-Feu clic a **View Connection Details** per veure la password generada. Si no ho feu, haureu d'anar a modificar, regenerar la password i aplicar els canvis.
-:::
+    Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
 
-3. Espereu uns minuts fins que la columna **Status** estigui en verd i posi **Available**. 
 
-4. Un cop la base de dades estigui disponible, fem clic a la base de dades i anem a la pestanya **Connectivity & security** per veure els detalls de connexió.
+3. Wait a few minutes until the column **Status** turns green and says **Available**. 
+
+4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
     * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
     * Port: `3306`
@@ -44,13 +42,13 @@ Feu clic a **View Connection Details** per veure la password generada. Si no ho 
     * Database name: `wordpress`
 
 
-5. Afegir una regla al **Security Group** de la base de dades per permetre connexions des de la instància EC2.
+5. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
-	5.1. Anem a la consola d'**Amazon RDS**.
-	5.2. Seleccionem la nostra instància de base de dades.
-	5.3. A la secció de **Connectivity & security**, busquem el **Security Group** associat a la base de dades.
-	5.4. Fem clic al **Security Group** per editar les regles (semblant a *default sg-0efc4051ab6288a2d*). 
-	5.5. Afegim una nova regla d'entrada (Inbound rule) per permetre connexions des de l'adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió **MySQL/Aurora** i introduïm l'adreça IP de la instància 			EC2. Per fer-ho, has de clicar a **Edit inbound rules** i després afegir la regla següent:
+	5.1. Go to the console of **Amazon RDS**.
+	5.2. Select our database instance.
+	5.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database.
+	5.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*). 
+	5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
 
 	  ```plaintext
     		Type: MySQL/Aurora
@@ -61,7 +59,7 @@ Feu clic a **View Connection Details** per veure la password generada. Si no ho 
   	```
 
 
-6. Per testejar la connexió, necessitem un client MySQL. La manera més senzilla és crear una instància EC2 i instal·lar el client MySQL.
+6. o test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
   
   - Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).
   - Connecta't a la instància EC2 via SSH.
