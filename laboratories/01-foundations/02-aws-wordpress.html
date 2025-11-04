@@ -242,7 +242,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Database name: <code>wordpress</code></li>
 </ul></li>
 <li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
-<p>5.1. Go to the console of <strong>Amazon RDS</strong>. 5.2. Select our database instance. 5.3.In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database. 5.4. Click on the <strong>Security Group</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). 5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
+<p>5.1. Go to the console of <strong>Amazon RDS</strong></p>
+<p>5.2. Select our database instance</p>
+<p>5.3.In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
+<p>5.4. Click on the <strong>Security Group</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>)</p>
+<p>5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
 <pre class="plaintext"><code>      Type: MySQL/Aurora
       Protocol: TCP
       Port Range: 3306
