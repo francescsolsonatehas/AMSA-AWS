@@ -1478,8 +1478,8 @@
     "objectID": "laboratories/01-foundations/02-aws-wordpress.html#cleanup",
     "href": "laboratories/01-foundations/02-aws-wordpress.html#cleanup",
     "title": "Deploying a web application",
-    "section": "Cleanup",
-    "text": "Cleanup\nOnce completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.",
+    "section": "3. Cleanup",
+    "text": "3. Cleanup\nOnce completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.",
     "crumbs": [
       "AWS Laboratories",
       "2 · Deploying a web application"
