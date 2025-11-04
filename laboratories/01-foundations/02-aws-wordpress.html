@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2 · Deploying a web application – AMSA - Fall 2025</title>
+<title>Deploying a web application – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/01-aws-introduction.html">AWS Laboratories</a></li><li class="breadcrumb-item"><a href="../../laboratories/01-foundations/02-aws-wordpress.html">2 · Deploying a web application</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">2 · Deploying a web application</h1>
+<h1 class="title">Deploying a web application</h1>
 </div>
 
 
@@ -221,49 +221,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>AWS’ relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.</p>
 <ol type="1">
 <li><p>Let’s go to the console of <strong>Amazon RDS</strong>.</p></li>
-<li><p>In the <strong>Amazon RDS</strong> console, click on <strong>Create database</strong>.</p>
+<li><p>In the <strong>Amazon RDS</strong> console, click on <strong>Create database</strong></p>
 <ul>
-<li>Select mode <strong>Standard Create</strong>.</li>
-<li>Select data base engine <strong>MySQL</strong>.</li>
-<li>Select the data base version <strong>MySQL 8.0.42</strong>.</li>
-<li>Seleccionem la plantilla <strong>Sandbox</strong>.</li>
-<li>Nom de la base de dades <strong>wordpress</strong>.</li>
-<li>Master username <strong>admin</strong>.</li>
-<li>Gestió de credencials: <strong>self-managed</strong>.</li>
-<li>Seleccioneu <em>auto-generate a password</em>.</li>
+<li>Select mode <strong>Standard Create</strong></li>
+<li>Select data base engine <strong>MySQL</strong></li>
+<li>Select the data base version <strong>MySQL 8.0.42</strong></li>
+<li>Select the template <strong>Sandbox</strong></li>
+<li>Name of the database <strong>wordpress</strong></li>
+<li>Master username <strong>admin</strong></li>
+<li>Credential management: <strong>self-managed</strong></li>
+<li>Select <strong>set a password</strong></li>
 </ul>
-<p>La resta de paràmetres els deixarem per defecte. Una vegada acabat, fem clic a <strong>Create database</strong>.</p></li>
-</ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Contrassenya">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Contrassenya
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Feu clic a <strong>View Connection Details</strong> per veure la password generada. Si no ho feu, haureu d’anar a modificar, regenerar la password i aplicar els canvis.</p>
-</div>
-</div>
-<ol start="3" type="1">
-<li><p>Espereu uns minuts fins que la columna <strong>Status</strong> estigui en verd i posi <strong>Available</strong>.</p></li>
-<li><p>Un cop la base de dades estigui disponible, fem clic a la base de dades i anem a la pestanya <strong>Connectivity &amp; security</strong> per veure els detalls de connexió.</p>
+<p>Save the password. Leave the rest of the parameters as default. Once finished, click <strong>Create database</strong>.</p></li>
+<li><p>Wait a few minutes until the column <strong>Status</strong> turns green and says <strong>Available</strong>.</p></li>
+<li><p>Once the database is available, click on the database and go to the tab <strong>Connectivity &amp; security</strong> to view the connection details.</p>
 <ul>
 <li>Hostname: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code></li>
 <li>Port: <code>3306</code></li>
 <li>Username: <code>admin</code></li>
 <li>Database name: <code>wordpress</code></li>
 </ul></li>
-<li><p>Afegir una regla al <strong>Security Group</strong> de la base de dades per permetre connexions des de la instància EC2.</p>
-<p>5.1. Anem a la consola d’<strong>Amazon RDS</strong>. 5.2. Seleccionem la nostra instància de base de dades. 5.3. A la secció de <strong>Connectivity &amp; security</strong>, busquem el <strong>Security Group</strong> associat a la base de dades. 5.4. Fem clic al <strong>Security Group</strong> per editar les regles (semblant a <em>default sg-0efc4051ab6288a2d</em>). 5.5. Afegim una nova regla d’entrada (Inbound rule) per permetre connexions des de l’adreça IP de la nostra instància EC2. Seleccionem el tipus de connexió <strong>MySQL/Aurora</strong> i introduïm l’adreça IP de la instància EC2. Per fer-ho, has de clicar a <strong>Edit inbound rules</strong> i després afegir la regla següent:</p>
+<li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
+<p>5.1. Go to the console of <strong>Amazon RDS</strong>. 5.2. Select our database instance. 5.3.In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database. 5.4. Click on the <strong>Security Group</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). 5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
 <pre class="plaintext"><code>      Type: MySQL/Aurora
       Protocol: TCP
       Port Range: 3306
       Source: Custom
       Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
-<li><p>Per testejar la connexió, necessitem un client MySQL. La manera més senzilla és crear una instància EC2 i instal·lar el client MySQL.</p></li>
+<li><p>o test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p></li>
 </ol>
 <ul>
 <li><p>Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).</p></li>
