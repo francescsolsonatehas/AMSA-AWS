@@ -6,7 +6,7 @@ lang: en
 **CONTENTS:**
 
 1. Creating a Data Base with RDS
-2. Accessing the AWS dashboard
+2. Installing WordPress on the EC2 instance
 3. Creating an SSH key pair
 4. Importing the public key into AWS
 5. Creating an EC2 instance
@@ -63,27 +63,27 @@ AWS' relational database service (RDS) is a very interesting option for deployin
   	```
 
 
-6. o test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
+6. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
   
-  - Crea una instància EC2 amb Amazon Linux 2023 (igual que en el laboratori anterior).
-  - Connecta't a la instància EC2 via SSH.
-  - Instal·la el client MySQL:
+  - Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)
+  - Connect to the EC2 instance via SSH
+  - Install the MySQL client:
 
     ```bash
-    # Busquem el paquet a instal·lar
+    # Buscar el paquet a instal·lar
     dnf search mysql
     # Instal·lem el client mariadb
     sudo dnf install mariadb105 -y
     ```
 
- 6. Connecta't a la base de dades RDS des de la instància EC2:
+ 6. Connect to the RDS database from the EC2 instance:
 
     ```bash
     mysql -h hostname -u admin -p
     # Introdueix la contrassenya quan et demani
     ```
 
-7. Crear la base de dades **wordpress** i l'usuari **wordpress** amb tots els permisos.
+7. Create the database **wordpress** and user **wordpress** with all permissions
 
     ```sql
     CREATE DATABASE wordpress;
@@ -92,11 +92,11 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     FLUSH PRIVILEGES;
     exit
     ```
-8. Ja tenim la base de dades preparada per a la instal·lació de WordPress.
+8. We already have the database ready for the WordPress installation
 
-## 2.  Instal·lació de WordPress a l'instància EC2
+## 2.  Installing WordPress on the EC2 instance
 
-1. Per instal·lar WordPress, primer hem d'instal·lar un servidor web (Apache):
+1. To install WordPress, a web server must be installed first (Apache):
 
     ```bash
     sudo dnf install httpd -y
@@ -105,21 +105,21 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     ```
 
 ::: {.callout-tip title="Nota"}
-Observeu que l'ordre *start* inicia el servei Apache, però no el fa arrencar automàticament en reiniciar la màquina. Per això, hem d'executar també l'ordre *enable*.
+Note that the start command *start* the Apache service, but it does not make it start automatically when the machine is rebooted. Therefore, we also need to run the *enable* command
 :::
 
-2. Per defecte, el grup de seguretat de la instància EC2 no permet connexions HTTP (port 80). Podeu comprovar-ho intentant accedir a l'adreça IP pública de la instància EC2 des del navegador web. Veureu que no es pot connectar. 
+2. By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. You will see that it cannot connect.
 
-::: {.callout-tip title="Nota"}
-Si feu clic a l'enllaç de l'adreça IP pública intentarà accedir per https, però com que no tenim certificat SSL, no funcionarà. Modifiqueu manualment la url per http://<adreça_ip_publica>.
+::: {.callout-tip title="Note"}
+If you click the link to the public IP address, it will try to access via HTTPS, but since we don't have an SSL certificate, it won't work. Manually modify the URL to http://<public_ip_addres>
 :::
    
-3. Hem d'afegir una regla d'entrada al grup de seguretat per permetre connexions HTTP.
+3. We need to add an inbound rule to the security group to allow HTTP connections:
 
-    - Anem a la consola d'**EC2**.
-    - Seleccionem la nostra instància EC2.
-    - A la secció de **Security**, fem clic al **Security Group** associat a la instància (launch-wizard-1).
-    - Afegim una nova regla d'entrada (Inbound rule) per permetre connexions HTTP:
+    - Go to the console of '**EC2**
+    - Select our EC2 instance
+    - In the section of **Security**, "click on the **Security Group** associated with the instance (launch-wizard-1).
+    - Add a new inbound rule to allow HTTP connections:
 
     ```plaintext
     Type: HTTP
@@ -128,26 +128,26 @@ Si feu clic a l'enllaç de l'adreça IP pública intentarà accedir per https, p
     Source: Anywhere (0.0.0.0/0)
     ```
 
-::: {.callout-tip title="Nota"}
-Aquesta regla permetrà connexions HTTP des de qualsevol lloc.
+::: {.callout-tip title="Note"}
+This rule will allow HTTP connections from anywhere
 :::
 
-3. Un cop afegida la regla, ja podem accedir a l'adreça IP pública de la instància EC2 des del navegador web. Haurem de veure la pàgina per defecte d'Apache.
+4. Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache's default page
 
-4. Un requisit per a WordPress és tenir PHP instal·lat. Instal·lem PHP i les extensions necessàries:
+5. A requirement for WordPress is to have PHP installed. Let's install PHP and the necessary extensions:
 
     ```bash
     sudo dnf install php8.1 -y
     sudo dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo -y
     ```
 
-5. Reiniciem el servei Apache per carregar les extensions de PHP:
+6. Restart the Apache service to load the PHP extensions:
 
     ```bash
     sudo systemctl restart httpd
     ```
 
-6. Ara ja podem instal·lar WordPress. Primer, descarreguem l'última versió de WordPress i la desem a la carpeta per defecte d'Apache:
+7. Now we can install WordPress. First, we download the latest version of WordPress and save it to Apache's default directory:
 
     ```bash
     cd /tmp
@@ -158,153 +158,26 @@ Aquesta regla permetrà connexions HTTP des de qualsevol lloc.
     sudo chown -R apache:apache /var/www/html/
     ```
 
-7. Ara podeu accedir a l'adreça IP pública de la instància EC2 des del navegador web. Haureu de veure la pàgina d'instal·lació de WordPress.
-8. Seguiu els passos de la instal·lació de WordPress:
+8. Access the public IP address of the EC2 instance from your web browser. You should see the WordPress installation page
 
-    - Seleccioneu l'idioma (*català*).
-    - Feu clic a **Continua**.
-    - Feu clic a **Som-hi!**.
-    - Introduïu les dades de connexió a la base de dades:
+9. Follow the steps of the WordPress installation:
+
+    - Select the language (*català*).
+    - Click on **Continua**
+    - Click on **Som-hi!**
+    - Enter the database connection details:
       - Database Name: `wordpress`
-      - Username: `wordpress` (usuari creat abans)
-      - Password: `wordpress` (contrasenya creada abans)
-      - Database Host: l'endpoint de la base de dades RDS (per exemple, `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`)
-      - Table Prefix: `wp_` (podeu deixar-ho per defecte)
-    - Feu clic a **Envia**.
-    - Si tot és correcte, feu clic a **Executa la instal·lació**.
-    - Introduïu el títol del lloc (**AMSA Lab02**), el nom d'usuari (**jordi**), la contrassenya (**9T3nEBqnFqDW3uhc7S**) i el correu electrònic (**jordi@example.com**, pot ser qualsevol).
-    - Feu clic a **Instal·la WordPress**.
-    - Un cop acabada la instal·lació, feu clic a **Inicia sessió** i introduïu les credencials que heu creat.
+      - Username: `wordpress` (previously created user)
+      - Password: `wordpress` (password created earlier)
+      - Database Host: the RDS database endpoint (for example: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`)
+      - Table Prefix: `wp_` (default)
+    - Click on **Envia**
+    - If everything is correct, click on **Executa la instal·lació**
+    - Enter the site title (**AMSA Lab02**), el nom d'usuari (**francesc**), the password (**9T3nEBqnFqDW3uhc7S**) and the email (**francesc.solsona@udl.cat**)
+    - Click on **Instal·la WordPress**
+    - Once the installation is complete, click on **Inicia sessió** and enter the credentials you created
 
-## Automatizació de la instal·lació
+## Cleanup
 
-Fins ara hem fet la instal·lació de WordPress manualment (pas a pas amb ordres a l’EC2). Una manera més eficient és automatitzar aquest procés utilitzant un script en bash.
-
-::: {.callout-important title="Exercici"}
-1. Creeu un script en bash que faci la instal·lació de WordPress a la instància EC2.
-:::
-
-Aquest mètode encara no és ideal, ja que encara estem fent la instal·lació manualment (hem de connectar-nos a l’EC2 i executar l’script). Una forma encara millor és utilitzar eines d’automatització com [Ansible](https://www.ansible.com/).
-
-El primer pas és instal·lar Ansible a la nostra màquina local (si no el tenim instal·lat). Si no voleu fer-ho a la vostra màquina local, podeu utilitzar una altra instància EC2 per fer-ho. Per tant, crearem 2 instàncies EC2: una per fer d’Ansible i una altra per instal·lar WordPress, les podeu anomenar `ansible` i `webserver`.
-
-A les dues màquines EC2 heu d’instal·lar el programari `ansible` amb la comanda següent:
-
-```bash
-sudo yum install ansible -y
-```
-
-Ansible utilitza el protocol SSH per connectar-se a les màquines remotes, per tant, heu de tenir accés SSH a la màquina `webserver` des de la màquina `ansible`. Per fer-ho, podeu crear un parell de claus SSH a la màquina `ansible` i afegir la clau pública al fitxer `~/.ssh/authorized_keys` de la màquina `webserver`. 
-
-Un cop tingueu accés SSH a la màquina `webserver` des de la màquina `ansible`, podeu crear un fitxer d’inventari d’Ansible per definir la màquina `webserver`. Creeu un fitxer anomenat `hosts` amb el contingut següent (substituïu `<IP_INSTANCIA_EC2>` per l’adreça IP pública de la vostra instància EC2) i `~/.ssh/my-key-pair` per la ruta a la vostra clau privada SSH:
-
-  ```ini
-  [webserver]
-  <IP_INSTANCIA_EC2> ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/my-key-pair
-  ```
-
-  On <IP_INSTANCIA_EC2> és l'adreça IP pública de la vostra instància EC2 on voleu instal·lar WordPress i la ruta `~/.ssh/my-key-pair` és la ruta a la vostra clau privada SSH que us permet accedir a la instància EC2.
-
-A continuació, creeu un playbook d’Ansible per instal·lar WordPress a la màquina `webserver`. Un playbook és un fitxer YAML que defineix les tasques que Ansible ha d’executar a les màquines remotes. Podeu descargar el fitxer [`wordpress.yml`](./sources/wordpress.yml) o bé crear-lo amb el contingut següent (substituïu `<RDS_ENDPOINT>` per l’endpoint de la vostra base de dades RDS):
-
-
-```yaml
----
-- hosts: webserver
-  become: yes
-  tasks:
-    - name: Actualitzar repositoris
-      dnf:
-        name: "*"
-        state: latest
-
-    - name: Instal·lar Apache i PHP amb extensions
-      dnf:
-        name: 
-          - httpd
-          - php
-          - php-mysqlnd
-          - php-gd
-          - php-xml
-          - php-json
-          - php-intl
-          - php-cli
-        state: present
-
-    - name: Activar i arrencar Apache
-      systemd:
-        name: httpd
-        state: started
-        enabled: yes
-
-    - name: Descarregar WordPress
-      get_url:
-        url: https://wordpress.org/latest.tar.gz
-        dest: /tmp/latest.tar.gz
-
-    - name: Descomprimir WordPress
-      unarchive:
-        src: /tmp/latest.tar.gz
-        dest: /var/www/html/
-        remote_src: yes
-        extra_opts: [--strip-components=1]
-
-    - name: Assignar permisos correctes
-      file:
-        path: /var/www/html
-        owner: apache
-        group: apache
-        mode: '0755'
-        recurse: yes
-
-    - name: Crear arxiu wp-config.php bàsic
-      copy:
-        dest: /var/www/html/wp-config.php
-        content: |
-          <?php
-          define('DB_NAME', 'wordpress');
-          define('DB_USER', 'wordpress');
-          define('DB_PASSWORD', 'wordpress');
-          define('DB_HOST', '<RDS_ENDPOINT>');
-          define('DB_CHARSET', 'utf8');
-          define('DB_COLLATE', '');
-          $table_prefix = 'wp_';
-          define('WP_DEBUG', false);
-          if ( !defined('ABSPATH') )
-            define('ABSPATH', __DIR__ . '/');
-          require_once ABSPATH . 'wp-settings.php';
-  ```
-
-Finalment, executeu el playbook d’Ansible per instal·lar WordPress a la vostra instància EC2.
-
-  ```bash
-  ansible-playbook -i hosts wordpress.yml
-  ```
-
-Un cop finalitzat, podeu accedir a l'adreça IP pública de la instància EC2 des del navegador web i completar la instal·lació de WordPress com s'ha descrit anteriorment.
-
-::: {.callout-important title="Exercici"}
-1. Reviseu la documentació d'Ansible per utilitzar variables i millorar el playbook `wordpress.yml` fent-lo més genèric.
-:::
-
-## Entrega del laboratori
-
-Heu de pujar al [Campus Virtual](https://cv.udl.cat/), un document amb les següents captures de pantalla:
-  
-- Pantalla de la consola d'Amazon RDS amb la base de dades creada.
-- Pantalla de la consola d'EC2 amb la instància EC2 creada (eg. podeu fer servir `history` per veure les ordres que heu executat).
-- Pantalla del navegador web amb la pàgina d'inici de sessió de WordPress.
-- Pantalla del tauler d'administració de WordPress.
-- Pantalla del playbook d'Ansible executat correctament.
-
-A més, heu d'incloure el contingut dels següents fitxers:
-
-- Script d'Ansible modificat amb variables (si heu fet l'exercici).
-- Script en bash per instal·lar WordPress (si heu fet l'exercici).
-
-## Neteja els recursos creats
-
-Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
-
-
+Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.
 
