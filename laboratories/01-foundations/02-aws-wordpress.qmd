@@ -1,23 +1,27 @@
 ---
-title: Unitat 1 · Desplegament d'una aplicació web amb AWS
-subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
-lang: ca
+title: 1 · Deploying a web application
+lang: en
 ---
 
-## Objectius
+**CONTENTS:**
 
-Desplegar una aplicació web utilitzant serveis d'AWS. En concret, es desplegarà una aplicació WordPress utilitzant Amazon EC2 com a servidor web i Amazon RDS com a base de dades.
+1. Creating a Data Base with RDS
+2. Accessing the AWS dashboard
+3. Creating an SSH key pair
+4. Importing the public key into AWS
+5. Creating an EC2 instance
+6. Connecting to the EC2 instance
 
-## Bases de dades RDS
+## 1. Creating a Data Base (DB) with RDS
 
-El servei de bases de dades relacional d'Amazon Web Services (RDS) és una opció molt interessant per a desplegar bases de dades MySQL, MariaDB, PostgreSQL, Oracle, SQL Server i Aurora. Aquest servei ofereix una gestió fàcil i eficient de les bases de dades, així com la possibilitat de fer còpies de seguretat, escalabilitat i alta disponibilitat.
+AWS' relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.
 
-1. Anem a la consola de **Amazon RDS**.
-2. A la consola de **Amazon RDS**, fem clic a **Create database**.
+1. Let's go to the console of **Amazon RDS**.
+2. In the **Amazon RDS** console, click on **Create database**.
 
-    * Seleccionem el mode **Standard Create**.
-    * Seleccionem el motor de base de dades **MySQL**.
-    * Seleccionem la versió de la base de dades **MySQL 8.0.42**.
+    * Select mode **Standard Create**.
+    * Select data base engine **MySQL**.
+    * Select the data base version **MySQL 8.0.42**.
     * Seleccionem la plantilla **Sandbox**.
     * Nom de la base de dades **wordpress**.
     * Master username **admin**.
