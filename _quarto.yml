@@ -29,7 +29,7 @@ website:
     search: false
     collapse-level: 1
     contents:
-      - section: Laboratories
+      - section: AWS Laboratories
         contents:
           - href: ./laboratories/01-foundations/01-aws-introduction.qmd
             text: 1 · Executing a Python script in a EC2 instance
