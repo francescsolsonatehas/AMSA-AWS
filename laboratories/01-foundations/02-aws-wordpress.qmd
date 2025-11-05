@@ -105,7 +105,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     sudo systemctl enable httpd
     ```
 
-::: {.callout-tip title="Nota"}
+::: {.callout-tip title="Note"}
 Note that the start command *start* the Apache service, but it does not make it start automatically when the machine is rebooted. Therefore, we also need to run the *enable* command
 :::
 
