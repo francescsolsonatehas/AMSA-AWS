@@ -5,7 +5,7 @@ lang: en
 
 **ARCHITECTURE:**
 
-![](./architecture.png)
+![](architecture.png)
 
 **CONTENTS:**
 
