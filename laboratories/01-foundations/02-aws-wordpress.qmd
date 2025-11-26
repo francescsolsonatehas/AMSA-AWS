@@ -7,8 +7,6 @@ lang: en
 
 ![](/figs/laboratories/02-aws-wp/architecture.png)
 
-![](./architecture.png)
-
 **CONTENTS:**
 
 1. Creating a Data Base with RDS
