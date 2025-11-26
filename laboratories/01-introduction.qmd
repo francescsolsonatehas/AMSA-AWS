@@ -21,7 +21,7 @@ execute:
 
 ## Objectius del laboratori
 
--   Accedir a la plataforma de computació en núvol AWS a travvés AWS Educate.
+-   Accedir a la plataforma de computació en núvol AWS a través de AWS Educate.
 -   Entendre els conceptes bàsic d'aministració remota a través de SSH.
 -   Ús d'autenticació amb claus SSH.
 -   Crear i gestionar màquines virtuals a AWS EC2.
