@@ -17,12 +17,3 @@ This lab is designed to provide the knowledge and skills necessary to manage and
 | **School**              | [![](figs/corporative/institute.png){width="200px"} ](https://www.eps.udl.cat)                   |
 | **University**          | [![](figs/corporative/university.png){width="200px"} ](https://www.udl.cat)                   | 
 | **Department**          | [![](figs/corporative/department.png){width="200px"} ](https://deidd.udl.cat/)              |
-
-
-[Lab 1: Executing a Python script in a EC2 instance](/laboratories/01-foundations/01-aws-introduction.qmd)
-
-[Lab 2: Desplegament d'una aplicació web amb WordPress a AWS](/laboratories/01-foundations/02-aws-wordpress.qmd)
-
-![](/figs/laboratories/02-aws-wp/architecture.png)
-
-![](/figs/humor/administrador_sistemes.png)
