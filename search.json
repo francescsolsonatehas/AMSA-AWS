@@ -1541,27 +1541,27 @@
     "href": "laboratories/02-network/01-aws-wordpress.html",
     "title": "Deployment of a high-availability web application with AWS",
     "section": "",
-    "text": "En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (pública, aplicació, dades) i l’ús de Zones de Disponibilitat (AZ) per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.",
+    "text": "En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (pública, aplicació, dades) i l’ús de Availability Zones (AZ) per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.",
     "crumbs": [
       "3 · Deploying a web application with high availability"
     ]
   },
   {
-    "objectID": "laboratories/02-network/01-aws-wordpress.html#objectius",
-    "href": "laboratories/02-network/01-aws-wordpress.html#objectius",
+    "objectID": "laboratories/02-network/01-aws-wordpress.html#goal",
+    "href": "laboratories/02-network/01-aws-wordpress.html#goal",
     "title": "Deployment of a high-availability web application with AWS",
-    "section": "Objectius",
-    "text": "Objectius\n\nDissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.\nConfigurar VPCs, subxarxes, taules de rutes i grups de seguretat.\nConfigurar una VPN segura per a l’accés administratiu.\nConfigurar un load balancer per distribuir el tràfic a les instàncies EC2.\nInstàncies EC2 (WordPress): Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.\nBase de Dades RDS (MySQL): Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.\nDMZ: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.\nLoad Balancer: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.",
+    "section": "Goal",
+    "text": "Goal\n\nDissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.\nConfigurar VPCs, subxarxes, taules de rutes i grups de seguretat.\nConfigurar una VPN segura per a l’accés administratiu.\nConfigurar un load balancer per distribuir el tràfic a les instàncies EC2.\nInstàncies EC2 (WordPress): Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.\nBase de Dades RDS (MySQL): Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.\nDMZ: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.\nLoad Balancer: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.",
     "crumbs": [
       "3 · Deploying a web application with high availability"
     ]
   },
   {
-    "objectID": "laboratories/02-network/01-aws-wordpress.html#diagrama-de-larquitectura",
-    "href": "laboratories/02-network/01-aws-wordpress.html#diagrama-de-larquitectura",
+    "objectID": "laboratories/02-network/01-aws-wordpress.html#architecture",
+    "href": "laboratories/02-network/01-aws-wordpress.html#architecture",
     "title": "Deployment of a high-availability web application with AWS",
-    "section": "Diagrama de l’Arquitectura",
-    "text": "Diagrama de l’Arquitectura\n\n\n\nEsquema de components, conexions i elements de l’arquitectura\n\n\nLa imatge mostra com a través d’internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l’accés segur per a l’administració dels recursos privats.",
+    "section": "Architecture",
+    "text": "Architecture\n\n\n\nEsquema de components, conexions i elements de l’arquitectura\n\n\nLa imatge mostra com a través d’internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l’accés segur per a l’administració dels recursos privats.",
     "crumbs": [
       "3 · Deploying a web application with high availability"
     ]

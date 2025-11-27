@@ -195,8 +195,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#objectius" id="toc-objectius" class="nav-link active" data-scroll-target="#objectius">Objectius</a></li>
-  <li><a href="#diagrama-de-larquitectura" id="toc-diagrama-de-larquitectura" class="nav-link" data-scroll-target="#diagrama-de-larquitectura">Diagrama de l’Arquitectura</a></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link active" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a></li>
   <li><a href="#requeriments-prèvis" id="toc-requeriments-prèvis" class="nav-link" data-scroll-target="#requeriments-prèvis">Requeriments Prèvis</a></li>
   <li><a href="#vpc-i-subxarxes" id="toc-vpc-i-subxarxes" class="nav-link" data-scroll-target="#vpc-i-subxarxes">VPC i Subxarxes</a>
   <ul class="collapse">
@@ -251,22 +251,22 @@ window.Quarto = {
 </header>
 
 
-<p>En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (<strong>pública, aplicació, dades</strong>) i l’ús de <strong>Zones de Disponibilitat (AZ)</strong> per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.</p>
-<section id="objectius" class="level2">
-<h2 class="anchored" data-anchor-id="objectius">Objectius</h2>
+<p>En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (<strong>pública, aplicació, dades</strong>) i l’ús de <strong>Availability Zones (AZ)</strong> per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.</p>
+<section id="goal" class="level2">
+<h2 class="anchored" data-anchor-id="goal">Goal</h2>
 <ul>
 <li><p>Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.</p></li>
 <li><p>Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.</p></li>
 <li><p>Configurar una VPN segura per a l’accés administratiu.</p></li>
 <li><p>Configurar un load balancer per distribuir el tràfic a les instàncies EC2.</p></li>
-<li><p><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</p></li>
+<li><p><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</p></li>
 <li><p><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</p></li>
 <li><p><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</p></li>
 <li><p><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</p></li>
 </ul>
 </section>
-<section id="diagrama-de-larquitectura" class="level2">
-<h2 class="anchored" data-anchor-id="diagrama-de-larquitectura">Diagrama de l’Arquitectura</h2>
+<section id="architecture" class="level2">
+<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/infra.png" class="img-fluid figure-img"></p>
