@@ -197,12 +197,12 @@ window.Quarto = {
   <ul>
   <li><a href="#vpc-and-subnets" id="toc-vpc-and-subnets" class="nav-link active" data-scroll-target="#vpc-and-subnets">1. VPC and Subnets</a>
   <ul class="collapse">
-  <li><a href="#creació-de-les-subxarxes" id="toc-creació-de-les-subxarxes" class="nav-link" data-scroll-target="#creació-de-les-subxarxes">Creació de les subxarxes</a></li>
+  <li><a href="#creating-the-subnets" id="toc-creating-the-subnets" class="nav-link" data-scroll-target="#creating-the-subnets">1.2. Creating the Subnets</a></li>
   </ul></li>
-  <li><a href="#taules-denrutament-i-associacions" id="toc-taules-denrutament-i-associacions" class="nav-link" data-scroll-target="#taules-denrutament-i-associacions">Taules d’Enrutament i Associacions</a>
+  <li><a href="#routing-tables-and-associations" id="toc-routing-tables-and-associations" class="nav-link" data-scroll-target="#routing-tables-and-associations">2. Routing Tables and Associations</a>
   <ul class="collapse">
-  <li><a href="#configuració-del-gateway-dinternet" id="toc-configuració-del-gateway-dinternet" class="nav-link" data-scroll-target="#configuració-del-gateway-dinternet">Configuració del Gateway d’Internet</a></li>
-  <li><a href="#creació-de-les-taules-de-rutes" id="toc-creació-de-les-taules-de-rutes" class="nav-link" data-scroll-target="#creació-de-les-taules-de-rutes">Creació de les taules de rutes</a></li>
+  <li><a href="#internet-gateway-configuration" id="toc-internet-gateway-configuration" class="nav-link" data-scroll-target="#internet-gateway-configuration">2.1. Internet Gateway Configuration</a></li>
+  <li><a href="#creation-of-route-tables" id="toc-creation-of-route-tables" class="nav-link" data-scroll-target="#creation-of-route-tables">2.2. Creation of Route Tables</a></li>
   </ul></li>
   <li><a href="#grups-de-seguretat" id="toc-grups-de-seguretat" class="nav-link" data-scroll-target="#grups-de-seguretat">Grups de Seguretat</a>
   <ul class="collapse">
@@ -253,11 +253,11 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/infra.png" class="img-fluid figure-img"></p>
-<figcaption>Esquema de components, conexions i elements de l’arquitectura</figcaption>
+<figcaption>Diagram of components, connections, and elements of the architecture</figcaption>
 </figure>
 </div>
 <p>The image shows how, through the internet, users access the Load Balancer, which distributes traffic to the EC2 instances hosting WordPress. These instances connect to the RDS database to manage WordPress content. The EC2 instance in the DMZ allows secure access for the administration of private resources</p>
-<p><strong>Components</strong></p>
+<p><strong>Components:</strong></p>
 <ul>
 <li><strong>VPC, subnets, route tables, and security groups</strong>.</li>
 <li>Secure <strong>VPN</strong> for administrative access.</li>
@@ -288,14 +288,14 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/vpc.png" class="img-fluid figure-img"></p>
-<figcaption>Definició de la VPC utilitzant AWS</figcaption>
+<figcaption>VPC definition</figcaption>
 </figure>
 </div>
-<section id="creació-de-les-subxarxes" class="level3">
-<h3 class="anchored" data-anchor-id="creació-de-les-subxarxes">Creació de les subxarxes</h3>
-<p>A continuació, afegirem les subxarxes necessàries per a la nostra arquitectura. Aneu a <strong>VPC</strong> → <strong>Subnets</strong> → <strong>Create subnet</strong>. Seleccioneu la VPC que acabem de crear i afegiu les subxarxes següents:</p>
+<section id="creating-the-subnets" class="level3">
+<h3 class="anchored" data-anchor-id="creating-the-subnets">1.2. Creating the Subnets</h3>
+<p>Add the necessary subnets for our architecture. Go to <strong>VPC</strong> → <strong>Subnets</strong> → <strong>Create subnet</strong>. Select the VPC we just created and add the following subnets:</p>
 <ul>
-<li><strong>AMSA-DMZ-01</strong>: Subxarxa pública a la zona <strong>us-east-1a</strong>. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. <em>(10.0.1.0/24)</em>.</li>
+<li><strong>AMSA-DMZ-01</strong>: Public subnet in the zone <strong>us-east-1a</strong>. This subnet will host the EC2 instance that will serve as a secure access bridge (via SSH tunnel) for managing all private resources. <em>(10.0.1.0/24)</em>.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -304,7 +304,7 @@ window.Quarto = {
 </figure>
 </div>
 <ul>
-<li><strong>AMSA-DMZ-02</strong>: Subxarxa pública a la zona <strong>us-east-1b</strong>. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. <em>(10.0.2.0/24)</em>.</li>
+<li><strong>AMSA-DMZ-02</strong>: Public subnet in the zone <strong>us-east-1b</strong>. This subnet will host the EC2 instance that will serve as a secure access bridge (via SSH tunnel) for managing all private resources. <em>(10.0.2.0/24)</em>.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -313,7 +313,7 @@ window.Quarto = {
 </figure>
 </div>
 <ul>
-<li><strong>AMSA-Private01</strong>: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat <strong>us-east-1a</strong>. <em>(10.0.3.0/24)</em>.</li>
+<li><strong>AMSA-Private01</strong>: Private subnet for the WordPress instances in the availability zone <strong>us-east-1a</strong>. <em>(10.0.3.0/24)</em>.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -322,7 +322,7 @@ window.Quarto = {
 </figure>
 </div>
 <ul>
-<li><strong>AMSA-Private02</strong>: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat <strong>us-east-1b</strong>. <em>(10.0.4.0/24)</em></li>
+<li><strong>AMSA-Private02</strong>: Private subnet for the WordPress instances in the availability zone <strong>us-east-1b</strong>. <em>(10.0.4.0/24)</em></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -331,7 +331,7 @@ window.Quarto = {
 </figure>
 </div>
 <ul>
-<li><strong>AMSA-Data</strong>: Subxarxa privada per a dades a la zona de disponibilitat <strong>us-east-1c</strong>. <em>(10.0.5.0/24)</em></li>
+<li><strong>AMSA-Data</strong>: Private subnet for the WordPress instances in the availability zone <strong>us-east-1c</strong>. <em>(10.0.5.0/24)</em></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -341,30 +341,30 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="taules-denrutament-i-associacions" class="level2">
-<h2 class="anchored" data-anchor-id="taules-denrutament-i-associacions">Taules d’Enrutament i Associacions</h2>
-<p>Per gestionar les rutes del tràfic i determinar com es distribueix entre les subxarxes, crearem taules de rutes i les associem a les subxarxes corresponents.</p>
-<section id="configuració-del-gateway-dinternet" class="level3">
-<h3 class="anchored" data-anchor-id="configuració-del-gateway-dinternet">Configuració del Gateway d’Internet</h3>
-<p>Utilitzarem un <strong>Gateway d’Internet (IGW)</strong> per permetre que les subxarxes públiques <em>(AMSA-DMZ-01 i AMSA-DMZ-02</em>) tinguin accés a Internet tant per a tràfic entrant com sortint. Per fer-ho, primer crearem el IGW i després l’associarem a la nostra VPC.</p>
-<p>El primer pas és crear el Gateway d’Internet. Aneu a <strong>VPC</strong> → <strong>Internet Gateways</strong> → <strong>Create internet gateway</strong>. Un cop creat, l’anomeneu <strong>AMSA-IG</strong>.</p>
+<section id="routing-tables-and-associations" class="level2">
+<h2 class="anchored" data-anchor-id="routing-tables-and-associations">2. Routing Tables and Associations</h2>
+<p>To manage traffic routes and determine how it is distributed among the subnets, we will create route tables and associate them with the corresponding subnets..</p>
+<section id="internet-gateway-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="internet-gateway-configuration">2.1. Internet Gateway Configuration</h3>
+<p>We will use an <strong>Internet Gateway (IGW)</strong> to allow the public subnets <em>(AMSA-DMZ-01 and AMSA-DMZ-02)</em> to have both inbound and outbound Internet access. To do this, we will first create the IGW and then associate it with our VPC.</p>
+<p>The first step is to create the Internet Gateway. Go to <strong>VPC</strong> → <strong>Internet Gateways</strong> → <strong>Create internet gateway</strong>. Once created, name it <strong>AMSA-IG</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/ig.png" class="img-fluid figure-img"></p>
-<figcaption>Gateway d’Internet per a la VPC</figcaption>
+<figcaption>Internet Gateway for the VPC</figcaption>
 </figure>
 </div>
-<p>El segon pas és associar el Gateway d’Internet amb la VPC. Seleccioneu el Gateway d’Internet que acabem de crear i feu clic a <strong>Actions</strong> → <strong>Attach to VPC</strong>. Seleccioneu la VPC <strong>AMSA-VPC</strong> i feu clic a <strong>Attach internet gateway</strong>.</p>
+<p>The second step is to associate the Internet Gateway with the VPC. Select the Internet Gateway we just created and click on <strong>Actions</strong> → <strong>Attach to VPC</strong>. Select the VPC <strong>AMSA-VPC</strong> and click on <strong>Attach internet gateway</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/attachIG.png" class="img-fluid figure-img"></p>
-<figcaption>Associació del Gateway d’Internet amb la VPC</figcaption>
+<figcaption>Association of the Internet Gateway with the VPC</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/attachIG2.png" class="img-fluid figure-img"></p>
-<figcaption>Associació del Gateway d’Internet amb la VPC</figcaption>
+<figcaption>Association of the Internet Gateway with the VPC</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Attached IGW 🛑">
@@ -377,13 +377,13 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Assegureu-vos que el Gateway d’Internet estigui correctament associat a la VPC. Si no està associat, les subxarxes públiques no podran accedir a Internet.</p>
+<p>Make sure the Internet Gateway is correctly associated with the VPC. If it is not associated, the public subnets will not be able to access the Internet.</p>
 </div>
 </div>
 </section>
-<section id="creació-de-les-taules-de-rutes" class="level3">
-<h3 class="anchored" data-anchor-id="creació-de-les-taules-de-rutes">Creació de les taules de rutes</h3>
-<p>Cada subxarxa necessita una taula de rutes per definir com es dirigeix el tràfic sortint i entrant. Crearem taules de rutes específiques per a cada tipus de subxarxa (pública i privada) i les associem a les subxarxes corresponents.</p>
+<section id="creation-of-route-tables" class="level3">
+<h3 class="anchored" data-anchor-id="creation-of-route-tables">2.2. Creation of Route Tables</h3>
+<p>Each subnet needs a route table to define how inbound and outbound traffic is directed. We will create specific route tables for each type of subnet (public and private) and associate them with the corresponding subnets.</p>
 <section id="enrutament-per-a-les-subxarxes-públiques-dmz" class="level4">
 <h4 class="anchored" data-anchor-id="enrutament-per-a-les-subxarxes-públiques-dmz">Enrutament per a les subxarxes públiques (DMZ)</h4>
 <p>El primer pas és crear la taula de rutes per a les subxarxes públiques. Aneu a <strong>VPC</strong> → <strong>Route Tables</strong> → <strong>Create route table</strong>. Seleccioneu la VPC <strong>AMSA-VPC</strong> i anomeneu la taula de rutes <strong>AMSA-DMZ01-RT</strong>.</p>
