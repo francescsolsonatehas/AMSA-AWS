@@ -14,12 +14,11 @@ The image shows how, through the internet, users access the Load Balancer, which
 
 **Components**
 
-- VPCs, subxarxes, taules de rutes i grups de seguretat.
-- VPN segura per a l'accés administratiu.
-- Load balancer per distribuir el tràfic a les instàncies EC2:
-
-     - **Instàncies EC2 (WordPress)**: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d'Internet.
-     - **Base de Dades RDS (MySQL)**: Servei gestionat d'alta disponibilitat, també en subxarxes privades dedicades.
+- **VPC, subnets, route tables, and security groups**.
+- Secure **VPN** for administrative access.
+- EC2 instances distributed across private subnets in different AZs, accessible only through the Load Balancer, never directly from the Internet.”.
+- **Load balancer** to distribute traffic to EC2 (WordPress) instances.
+- High available **Data Base RDS (MySQL)** located in dedicated private subnets.
     - **DMZ**: Una instància EC2 en una subxarxa pública que actuarà com a punt d'accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.
      - **Load Balancer**: El punt d'entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.
 
