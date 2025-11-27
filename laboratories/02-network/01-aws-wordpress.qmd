@@ -1,10 +1,16 @@
 ---
-title: Desplegament d'una aplicació web amb alta disponibilitat amb AWS
-subtitle: Laboratoris Pràctics d'Administració de Sistemes i Aplicacions
-lang: ca
+title: Deployment of a high-availability web application with AWS
+lang: en
 ---
 
-En aquest laboratori intensiu, dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L'arquitectura es basa en la separació de capes (**pública, aplicació, dades**) i l'ús de **Zones de Disponibilitat (AZ)** per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.
+En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L'arquitectura es basa en la separació de capes (**pública, aplicació, dades**) i l'ús de **Zones de Disponibilitat (AZ)** per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.
+
+## Objectius
+
+- Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.
+- Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.
+- Configurar una VPN segura per a l'accés administratiu.
+- Configurar un load balancer per distribuir el tràfic a les instàncies EC2.
 
 
 - **Instàncies EC2 (WordPress)**: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d'Internet.
@@ -18,12 +24,6 @@ En aquest laboratori intensiu, dissenyarem i implementarem una arquitectura de x
 
 La imatge mostra com a través d'internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l'accés segur per a l'administració dels recursos privats.
 
-## Objectius
-
-- Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.
-- Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.
-- Configurar una VPN segura per a l'accés administratiu.
-- Configurar un load balancer per distribuir el tràfic a les instàncies EC2.
 
 ## Requeriments Prèvis
 
