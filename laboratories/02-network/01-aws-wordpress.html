@@ -261,13 +261,10 @@ window.Quarto = {
 <ul>
 <li><strong>VPC, subnets, route tables, and security groups</strong>.</li>
 <li>Secure <strong>VPN</strong> for administrative access.</li>
-<li>EC2 instances distributed across private subnets in different AZs, accessible only through the Load Balancer, never directly from the Internet.”.</li>
-<li><strong>Load balancer</strong> to distribute traffic to EC2 (WordPress) instances.</li>
-<li>High available <strong>Data Base RDS (MySQL)</strong> located in dedicated private subnets.
-<ul>
-<li><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</li>
-<li><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</li>
-</ul></li>
+<li>Wordpress EC2 instances distributed across private subnets in different AZs, accessible only through the Load Balancer, never directly from the Internet.”.</li>
+<li><strong>Load Balancer</strong> which acts as a public entry point that ensures the uniform distribution of traffic to the WordPress EC2 instances.</li>
+<li>High available <strong>Data Base RDS (MySQL)</strong> located in dedicated private subnets.</li>
+<li><strong>DMZ</strong>designed with an EC2 instance in a public subnet that will act as a secure access point (via SSH tunnel) for managing all private resources.</li>
 </ul>
 <section id="vpc-i-subxarxes" class="level2">
 <h2 class="anchored" data-anchor-id="vpc-i-subxarxes">1. VPC i Subxarxes</h2>
