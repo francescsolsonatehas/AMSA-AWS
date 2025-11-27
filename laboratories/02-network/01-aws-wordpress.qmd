@@ -8,11 +8,11 @@ lang: en
 
 In this lab, we will design and implement a robust and secure network architecture to host a WordPress application. The architecture is based on the  use of 2 **Availability Zones (AZ)** located in 1 **Region** to ensure that our WordPress is highly available and fault-tolerant.
 
-![Esquema de components, conexions i elements de l'arquitectura](../../figs/laboratories/03-aws-wp/wordpress/infra.png) 
+![Diagram of components, connections, and elements of the architecture](../../figs/laboratories/03-aws-wp/wordpress/infra.png) 
 
 The image shows how, through the internet, users access the Load Balancer, which distributes traffic to the EC2 instances hosting WordPress. These instances connect to the RDS database to manage WordPress content. The EC2 instance in the DMZ allows secure access for the administration of private resources
 
-**Components**
+**Components:**
 
 - **VPC, subnets, route tables, and security groups**.
 - Secure **VPN** for administrative access.
@@ -36,59 +36,59 @@ Remember that the total calculated addresses are not the total usable addresses 
 
 Podem definir la VPC a través de la interfície web d'AWS, utilitzant els formularis disponibles:
 
-![Definició de la VPC utilitzant AWS](../../figs/laboratories/03-aws-wp/wordpress/vpc.png)
+![VPC definition](../../figs/laboratories/03-aws-wp/wordpress/vpc.png)
 
 
-### Creació de les subxarxes
+### 1.2. Creating the Subnets
 
-A continuació, afegirem les subxarxes necessàries per a la nostra arquitectura.  Aneu a **VPC** → **Subnets** → **Create subnet**. Seleccioneu la VPC que acabem de crear i afegiu les subxarxes següents:
+Add the necessary subnets for our architecture. Go to **VPC** → **Subnets** → **Create subnet**. Select the VPC we just created and add the following subnets:
 
-- **AMSA-DMZ-01**: Subxarxa pública a la zona **us-east-1a**. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d'accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. *(10.0.1.0/24)*.
+- **AMSA-DMZ-01**: Public subnet in the zone **us-east-1a**. This subnet will host the EC2 instance that will serve as a secure access bridge (via SSH tunnel) for managing all private resources. *(10.0.1.0/24)*.
 
 ![AMSA-DMZ-01](../../figs/laboratories/03-aws-wp/AMSA-DMZ-01.png)
 
-- **AMSA-DMZ-02**: Subxarxa pública a la zona **us-east-1b**. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d'accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. *(10.0.2.0/24)*.
+- **AMSA-DMZ-02**: Public subnet in the zone **us-east-1b**. This subnet will host the EC2 instance that will serve as a secure access bridge (via SSH tunnel) for managing all private resources. *(10.0.2.0/24)*.
 
 ![AMSA-DMZ-02](../../figs/laboratories/03-aws-wp/AMSA-DMZ-02.png)
 
-- **AMSA-Private01**: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat **us-east-1a**. *(10.0.3.0/24)*.
+- **AMSA-Private01**: Private subnet for the WordPress instances in the availability zone **us-east-1a**. *(10.0.3.0/24)*.
 
 ![AMSA-Private01](../../figs/laboratories/03-aws-wp/AMSA-Private01.png)
 
-- **AMSA-Private02**: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat **us-east-1b**. *(10.0.4.0/24)*
+- **AMSA-Private02**: Private subnet for the WordPress instances in the availability zone **us-east-1b**. *(10.0.4.0/24)*
 
 ![AMSA-Private02](../../figs/laboratories/03-aws-wp/AMSA-Private02.png)
 
-- **AMSA-Data**: Subxarxa privada per a dades a la zona de disponibilitat **us-east-1c**. *(10.0.5.0/24)*
+- **AMSA-Data**: Private subnet for the WordPress instances in the availability zone **us-east-1c**. *(10.0.5.0/24)*
 
 ![AMSA-Data](../../figs/laboratories/03-aws-wp/AMSA-Data.png)
 
-## Taules d'Enrutament i Associacions
+## 2. Routing Tables and Associations
 
-Per gestionar les rutes del tràfic i determinar com es distribueix entre les subxarxes, crearem taules de rutes i les associem a les subxarxes corresponents. 
+To manage traffic routes and determine how it is distributed among the subnets, we will create route tables and associate them with the corresponding subnets.. 
 
-### Configuració del Gateway d'Internet
+### 2.1. Internet Gateway Configuration
 
-Utilitzarem un **Gateway d'Internet (IGW)** per permetre que les subxarxes públiques *(AMSA-DMZ-01 i AMSA-DMZ-02*) tinguin accés a Internet tant per a tràfic entrant com sortint. Per fer-ho, primer crearem el IGW i després l'associarem a la nostra VPC. 
+We will use an **Internet Gateway (IGW)** to allow the public subnets *(AMSA-DMZ-01 and AMSA-DMZ-02)* to have both inbound and outbound Internet access. To do this, we will first create the IGW and then associate it with our VPC.
 
-El primer pas és crear el Gateway d'Internet. Aneu a **VPC** → **Internet Gateways** → **Create internet gateway**. Un cop creat, l'anomeneu **AMSA-IG**.
+The first step is to create the Internet Gateway. Go to **VPC** → **Internet Gateways** → **Create internet gateway**. Once created, name it  **AMSA-IG**.
 
-![Gateway d'Internet per a la VPC](../../figs/laboratories/03-aws-wp/wordpress/ig.png)
+![Internet Gateway for the VPC](../../figs/laboratories/03-aws-wp/wordpress/ig.png)
 
-El segon pas és associar el Gateway d'Internet amb la VPC. Seleccioneu el Gateway d'Internet que acabem de crear i feu clic a **Actions** → **Attach to VPC**. Seleccioneu la VPC **AMSA-VPC** i feu clic a **Attach internet gateway**.
+The second step is to associate the Internet Gateway with the VPC. Select the Internet Gateway we just created and click on **Actions** → **Attach to VPC**. Select the VPC **AMSA-VPC** and click on **Attach internet gateway**.
 
-![Associació del Gateway d'Internet amb la VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG.png)
+![Association of the Internet Gateway with the VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG.png)
 
 
-![Associació del Gateway d'Internet amb la VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG2.png)
+![Association of the Internet Gateway with the VPC](../../figs/laboratories/03-aws-wp/wordpress/attachIG2.png)
 
 :::{.callout-warning title="Attached IGW 🛑"}
-Assegureu-vos que el Gateway d'Internet estigui correctament associat a la VPC. Si no està associat, les subxarxes públiques no podran accedir a Internet.
+Make sure the Internet Gateway is correctly associated with the VPC. If it is not associated, the public subnets will not be able to access the Internet.
 :::
 
-### Creació de les taules de rutes
+### 2.2. Creation of Route Tables
 
-Cada subxarxa necessita una taula de rutes per definir com es dirigeix el tràfic sortint i entrant. Crearem taules de rutes específiques per a cada tipus de subxarxa (pública i privada) i les associem a les subxarxes corresponents.
+Each subnet needs a route table to define how inbound and outbound traffic is directed. We will create specific route tables for each type of subnet (public and private) and associate them with the corresponding subnets.
 
 
 #### Enrutament per a les subxarxes públiques (DMZ)
