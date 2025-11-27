@@ -5,7 +5,7 @@ lang: en
 
 **ARCHITECTURE:**
 
-![](/figs/laboratories/02-aws-wp/architecture.png)
+![](/figs/laboratories/02-aws-wp/ArquitecturaWordpress.png)
 
 **CONTENTS:**
 
@@ -37,10 +37,10 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
-    - Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
-    - Port: `3306`
-    - Username: `admin`
-    - Database name: `wordpress`
+    * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
+    * Port: `3306`
+    * Username: `admin`
+    * Database name: `wordpress`
 
 
 5. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
