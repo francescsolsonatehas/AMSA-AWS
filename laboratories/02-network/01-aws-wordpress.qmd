@@ -3,9 +3,9 @@ title: Deployment of a high-availability web application with AWS
 lang: en
 ---
 
-En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L'arquitectura es basa en la separació de capes (**pública, aplicació, dades**) i l'ús de **Zones de Disponibilitat (AZ)** per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.
+En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L'arquitectura es basa en la separació de capes (**pública, aplicació, dades**) i l'ús de **Availability Zones (AZ)** per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.
 
-## Objectius
+## Goal
 
 - Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.
 - Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.
@@ -13,12 +13,12 @@ En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robus
 - Configurar un load balancer per distribuir el tràfic a les instàncies EC2.
 
 
-- **Instàncies EC2 (WordPress)**: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d'Internet.
+- **Instàncies EC2 (WordPress)**: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d'Internet.
 - **Base de Dades RDS (MySQL)**: Servei gestionat d'alta disponibilitat, també en subxarxes privades dedicades.
 - **DMZ**: Una instància EC2 en una subxarxa pública que actuarà com a punt d'accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.
 - **Load Balancer**: El punt d'entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.
 
-## Diagrama de l'Arquitectura
+## Architecture
 
 ![Esquema de components, conexions i elements de l'arquitectura](../../figs/laboratories/03-aws-wp/wordpress/infra.png) 
 
