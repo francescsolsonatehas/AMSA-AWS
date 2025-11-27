@@ -5,7 +5,7 @@ lang: en
 
 **ARCHITECTURE:**
 
-![](/figs/laboratories/02-aws-wp/ArchitecturaWordpress.png)
+![](/figs/laboratories/02-aws-wp/ArquitecturaWordpress.png)
 
 **CONTENTS:**
 
