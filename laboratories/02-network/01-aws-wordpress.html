@@ -259,12 +259,12 @@ window.Quarto = {
 <p>The image shows how, through the internet, users access the Load Balancer, which distributes traffic to the EC2 instances hosting WordPress. These instances connect to the RDS database to manage WordPress content. The EC2 instance in the DMZ allows secure access for the administration of private resources</p>
 <p><strong>Components</strong></p>
 <ul>
-<li><p>VPCs, subxarxes, taules de rutes i grups de seguretat.</p></li>
-<li><p>VPN segura per a l’accés administratiu.</p></li>
-<li><p>Load balancer per distribuir el tràfic a les instàncies EC2:</p>
+<li><strong>VPC, subnets, route tables, and security groups</strong>.</li>
+<li>Secure <strong>VPN</strong> for administrative access.</li>
+<li>EC2 instances distributed across private subnets in different AZs, accessible only through the Load Balancer, never directly from the Internet.”.</li>
+<li><strong>Load balancer</strong> to distribute traffic to EC2 (WordPress) instances.</li>
+<li>High available <strong>Data Base RDS (MySQL)</strong> located in dedicated private subnets.
 <ul>
-<li><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</li>
-<li><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</li>
 <li><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</li>
 <li><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</li>
 </ul></li>
