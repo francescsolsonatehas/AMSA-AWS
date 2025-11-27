@@ -195,10 +195,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#goal" id="toc-goal" class="nav-link active" data-scroll-target="#goal">Goal</a></li>
-  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a></li>
-  <li><a href="#requeriments-prèvis" id="toc-requeriments-prèvis" class="nav-link" data-scroll-target="#requeriments-prèvis">Requeriments Prèvis</a></li>
-  <li><a href="#vpc-i-subxarxes" id="toc-vpc-i-subxarxes" class="nav-link" data-scroll-target="#vpc-i-subxarxes">VPC i Subxarxes</a>
+  <li><a href="#vpc-i-subxarxes" id="toc-vpc-i-subxarxes" class="nav-link active" data-scroll-target="#vpc-i-subxarxes">1. VPC i Subxarxes</a>
   <ul class="collapse">
   <li><a href="#creació-de-les-subxarxes" id="toc-creació-de-les-subxarxes" class="nav-link" data-scroll-target="#creació-de-les-subxarxes">Creació de les subxarxes</a></li>
   </ul></li>
@@ -251,39 +248,29 @@ window.Quarto = {
 </header>
 
 
-<p>En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (<strong>pública, aplicació, dades</strong>) i l’ús de <strong>Availability Zones (AZ)</strong> per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.</p>
-<section id="goal" class="level2">
-<h2 class="anchored" data-anchor-id="goal">Goal</h2>
-<ul>
-<li><p>Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.</p></li>
-<li><p>Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.</p></li>
-<li><p>Configurar una VPN segura per a l’accés administratiu.</p></li>
-<li><p>Configurar un load balancer per distribuir el tràfic a les instàncies EC2.</p></li>
-<li><p><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</p></li>
-<li><p><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</p></li>
-<li><p><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</p></li>
-<li><p><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</p></li>
-</ul>
-</section>
-<section id="architecture" class="level2">
-<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<p><strong>ARCHITECTURE</strong></p>
+<p>In this lab, we will design and implement a robust and secure network architecture to host a WordPress application. The architecture is based on the use of 2 <strong>Availability Zones (AZ)</strong> located in 1 <strong>Region</strong> to ensure that our WordPress is highly available and fault-tolerant.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/infra.png" class="img-fluid figure-img"></p>
 <figcaption>Esquema de components, conexions i elements de l’arquitectura</figcaption>
 </figure>
 </div>
-<p>La imatge mostra com a través d’internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l’accés segur per a l’administració dels recursos privats.</p>
-</section>
-<section id="requeriments-prèvis" class="level2">
-<h2 class="anchored" data-anchor-id="requeriments-prèvis">Requeriments Prèvis</h2>
+<p>The image shows how, through the internet, users access the Load Balancer, which distributes traffic to the EC2 instances hosting WordPress. These instances connect to the RDS database to manage WordPress content. The EC2 instance in the DMZ allows secure access for the administration of private resources</p>
+<p><strong>Components</strong></p>
 <ul>
-<li>Accés al curs AWS Academy Learner Lab.</li>
-<li>Completar el laboratori <a href="../../laboratories/01-foundations/02-aws-wordpress.html">Desplegament d’una aplicació web amb AWS</a> per entendre els conceptes bàsics d’AWS i la configuració inicial de WordPress.</li>
+<li><p>VPCs, subxarxes, taules de rutes i grups de seguretat.</p></li>
+<li><p>VPN segura per a l’accés administratiu.</p></li>
+<li><p>Load balancer per distribuir el tràfic a les instàncies EC2:</p>
+<ul>
+<li><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</li>
+<li><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</li>
+<li><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</li>
+<li><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</li>
+</ul></li>
 </ul>
-</section>
 <section id="vpc-i-subxarxes" class="level2">
-<h2 class="anchored" data-anchor-id="vpc-i-subxarxes">VPC i Subxarxes</h2>
+<h2 class="anchored" data-anchor-id="vpc-i-subxarxes">1. VPC i Subxarxes</h2>
 <p>El primer pas en la nostra arquitectura és definir una VPC (Virtual Private Cloud) i les subxarxes necessàries per aïllar els diferents components de l’aplicació. La VPC proporcionarà un entorn de xarxa virtualitzat on podrem desplegar els nostres recursos d’AWS. La configurarem amb la xarxa <strong>10.0.0.0/16</strong>, la qual ens proporciona fins a 65.536 adreces IP, més que suficients per al nostre cas d’ús.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="CIDR, Hosts i Adreces Reservades 🧠">
 <div class="callout-header d-flex align-content-center">

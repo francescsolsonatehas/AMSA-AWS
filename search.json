@@ -1411,7 +1411,7 @@
     "href": "laboratories/01-foundations/02-aws-wordpress.html",
     "title": "Deploying a web application",
     "section": "",
-    "text": "ARCHITECTURE:\nCONTENTS:",
+    "text": "ARCHITECTURE\nCONTENTS:",
     "crumbs": [
       "2 · Deploying a web application"
     ]
@@ -1541,37 +1541,7 @@
     "href": "laboratories/02-network/01-aws-wordpress.html",
     "title": "Deployment of a high-availability web application with AWS",
     "section": "",
-    "text": "En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (pública, aplicació, dades) i l’ús de Availability Zones (AZ) per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.",
-    "crumbs": [
-      "3 · Deploying a web application with high availability"
-    ]
-  },
-  {
-    "objectID": "laboratories/02-network/01-aws-wordpress.html#goal",
-    "href": "laboratories/02-network/01-aws-wordpress.html#goal",
-    "title": "Deployment of a high-availability web application with AWS",
-    "section": "Goal",
-    "text": "Goal\n\nDissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.\nConfigurar VPCs, subxarxes, taules de rutes i grups de seguretat.\nConfigurar una VPN segura per a l’accés administratiu.\nConfigurar un load balancer per distribuir el tràfic a les instàncies EC2.\nInstàncies EC2 (WordPress): Distribuïdes en subxarxes privades de diferents AZ, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.\nBase de Dades RDS (MySQL): Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.\nDMZ: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.\nLoad Balancer: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.",
-    "crumbs": [
-      "3 · Deploying a web application with high availability"
-    ]
-  },
-  {
-    "objectID": "laboratories/02-network/01-aws-wordpress.html#architecture",
-    "href": "laboratories/02-network/01-aws-wordpress.html#architecture",
-    "title": "Deployment of a high-availability web application with AWS",
-    "section": "Architecture",
-    "text": "Architecture\n\n\n\nEsquema de components, conexions i elements de l’arquitectura\n\n\nLa imatge mostra com a través d’internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l’accés segur per a l’administració dels recursos privats.",
-    "crumbs": [
-      "3 · Deploying a web application with high availability"
-    ]
-  },
-  {
-    "objectID": "laboratories/02-network/01-aws-wordpress.html#requeriments-prèvis",
-    "href": "laboratories/02-network/01-aws-wordpress.html#requeriments-prèvis",
-    "title": "Deployment of a high-availability web application with AWS",
-    "section": "Requeriments Prèvis",
-    "text": "Requeriments Prèvis\n\nAccés al curs AWS Academy Learner Lab.\nCompletar el laboratori Desplegament d’una aplicació web amb AWS per entendre els conceptes bàsics d’AWS i la configuració inicial de WordPress.",
+    "text": "ARCHITECTURE\nIn this lab, we will design and implement a robust and secure network architecture to host a WordPress application. The architecture is based on the use of 2 Availability Zones (AZ) located in 1 Region to ensure that our WordPress is highly available and fault-tolerant.\nThe image shows how, through the internet, users access the Load Balancer, which distributes traffic to the EC2 instances hosting WordPress. These instances connect to the RDS database to manage WordPress content. The EC2 instance in the DMZ allows secure access for the administration of private resources\nComponents",
     "crumbs": [
       "3 · Deploying a web application with high availability"
     ]
@@ -1580,8 +1550,8 @@
     "objectID": "laboratories/02-network/01-aws-wordpress.html#vpc-i-subxarxes",
     "href": "laboratories/02-network/01-aws-wordpress.html#vpc-i-subxarxes",
     "title": "Deployment of a high-availability web application with AWS",
-    "section": "VPC i Subxarxes",
-    "text": "VPC i Subxarxes\nEl primer pas en la nostra arquitectura és definir una VPC (Virtual Private Cloud) i les subxarxes necessàries per aïllar els diferents components de l’aplicació. La VPC proporcionarà un entorn de xarxa virtualitzat on podrem desplegar els nostres recursos d’AWS. La configurarem amb la xarxa 10.0.0.0/16, la qual ens proporciona fins a 65.536 adreces IP, més que suficients per al nostre cas d’ús.\n\n\n\n\n\n\nNoteCIDR, Hosts i Adreces Reservades 🧠\n\n\n\nLa màscara de subxarxa determina el nombre d’adreces IP disponibles dins d’una xarxa o subxarxa. Això s’expressa mitjançant la Notació CIDR (Classless Inter-Domain Routing), on el valor (/n) indica la quantitat de bits reservats per a la part de Xarxa. Una màscara de subxarxa de /16 significa que els primers 16 bits de l’adreça IP estan reservats per a la identificació de la xarxa, deixant els altres 16 bits per a la identificació dels hosts. Això permet tenir fins a 65.536 adreces IP (\\(2^{32-16}\\)) dins d’aquesta xarxa.\nQuan feu el Subnetting per crear subxarxes dins de la vostra VPC, esteu augmentant el valor CIDR (per exemple, de /16 a /24), per tal de reduir la mida de les subxarxes i aïllar millor el tràfic. Per exemple, una subxarxa amb CIDR /24 té 256 adreces IP (\\(2^{32-24}\\)).\nRecordeu que el total d’adreces calculat no és el total d’adreces útils per als vostres servidors (hosts). Algunes adreces es reserven per a usos especials, com identificar la xarxa i la difusió (broadcast).\n\n\nPodem definir la VPC a través de la interfície web d’AWS, utilitzant els formularis disponibles:\n\n\n\nDefinició de la VPC utilitzant AWS\n\n\n\nCreació de les subxarxes\nA continuació, afegirem les subxarxes necessàries per a la nostra arquitectura. Aneu a VPC → Subnets → Create subnet. Seleccioneu la VPC que acabem de crear i afegiu les subxarxes següents:\n\nAMSA-DMZ-01: Subxarxa pública a la zona us-east-1a. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. (10.0.1.0/24).\n\n\n\n\nAMSA-DMZ-01\n\n\n\nAMSA-DMZ-02: Subxarxa pública a la zona us-east-1b. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. (10.0.2.0/24).\n\n\n\n\nAMSA-DMZ-02\n\n\n\nAMSA-Private01: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat us-east-1a. (10.0.3.0/24).\n\n\n\n\nAMSA-Private01\n\n\n\nAMSA-Private02: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat us-east-1b. (10.0.4.0/24)\n\n\n\n\nAMSA-Private02\n\n\n\nAMSA-Data: Subxarxa privada per a dades a la zona de disponibilitat us-east-1c. (10.0.5.0/24)\n\n\n\n\nAMSA-Data",
+    "section": "1. VPC i Subxarxes",
+    "text": "1. VPC i Subxarxes\nEl primer pas en la nostra arquitectura és definir una VPC (Virtual Private Cloud) i les subxarxes necessàries per aïllar els diferents components de l’aplicació. La VPC proporcionarà un entorn de xarxa virtualitzat on podrem desplegar els nostres recursos d’AWS. La configurarem amb la xarxa 10.0.0.0/16, la qual ens proporciona fins a 65.536 adreces IP, més que suficients per al nostre cas d’ús.\n\n\n\n\n\n\nNoteCIDR, Hosts i Adreces Reservades 🧠\n\n\n\nLa màscara de subxarxa determina el nombre d’adreces IP disponibles dins d’una xarxa o subxarxa. Això s’expressa mitjançant la Notació CIDR (Classless Inter-Domain Routing), on el valor (/n) indica la quantitat de bits reservats per a la part de Xarxa. Una màscara de subxarxa de /16 significa que els primers 16 bits de l’adreça IP estan reservats per a la identificació de la xarxa, deixant els altres 16 bits per a la identificació dels hosts. Això permet tenir fins a 65.536 adreces IP (\\(2^{32-16}\\)) dins d’aquesta xarxa.\nQuan feu el Subnetting per crear subxarxes dins de la vostra VPC, esteu augmentant el valor CIDR (per exemple, de /16 a /24), per tal de reduir la mida de les subxarxes i aïllar millor el tràfic. Per exemple, una subxarxa amb CIDR /24 té 256 adreces IP (\\(2^{32-24}\\)).\nRecordeu que el total d’adreces calculat no és el total d’adreces útils per als vostres servidors (hosts). Algunes adreces es reserven per a usos especials, com identificar la xarxa i la difusió (broadcast).\n\n\nPodem definir la VPC a través de la interfície web d’AWS, utilitzant els formularis disponibles:\n\n\n\nDefinició de la VPC utilitzant AWS\n\n\n\nCreació de les subxarxes\nA continuació, afegirem les subxarxes necessàries per a la nostra arquitectura. Aneu a VPC → Subnets → Create subnet. Seleccioneu la VPC que acabem de crear i afegiu les subxarxes següents:\n\nAMSA-DMZ-01: Subxarxa pública a la zona us-east-1a. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. (10.0.1.0/24).\n\n\n\n\nAMSA-DMZ-01\n\n\n\nAMSA-DMZ-02: Subxarxa pública a la zona us-east-1b. Aquesta subxarxa allotjarà la instància EC2 que farà de pont segur d’accés (mitjançant túnel SSH) per a la gestió de tots els recursos privats. (10.0.2.0/24).\n\n\n\n\nAMSA-DMZ-02\n\n\n\nAMSA-Private01: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat us-east-1a. (10.0.3.0/24).\n\n\n\n\nAMSA-Private01\n\n\n\nAMSA-Private02: Subxarxa privada per a les instàncies de WordPress a la zona de disponibilitat us-east-1b. (10.0.4.0/24)\n\n\n\n\nAMSA-Private02\n\n\n\nAMSA-Data: Subxarxa privada per a dades a la zona de disponibilitat us-east-1c. (10.0.5.0/24)\n\n\n\n\nAMSA-Data",
     "crumbs": [
       "3 · Deploying a web application with high availability"
     ]
