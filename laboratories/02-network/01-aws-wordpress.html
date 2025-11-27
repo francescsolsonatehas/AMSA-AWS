@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.26">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Desplegament d’una aplicació web amb alta disponibilitat amb AWS – AMSA - Fall 2025</title>
+<title>Deployment of a high-availability web application with AWS – AMSA - Fall 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,17 +89,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Cap resultat",
-    "search-matching-documents-text": "documents que coincideixen",
-    "search-copy-link-title": "Copia l'enllaç a la cerca",
-    "search-hide-matches-text": "Amaga les coincidències addicionals",
-    "search-more-match-text": "altra coincidència en aquest document",
-    "search-more-matches-text": "altres coincidències en aquest document",
-    "search-clear-button-title": "Neteja",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel·la",
-    "search-submit-button-title": "Envia",
-    "search-label": "Cerca"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -141,11 +141,11 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../laboratories/02-network/01-aws-wordpress.html">3 · Deploying a web application with high availability</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Commuta la navegació de la barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
@@ -192,11 +192,11 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En aquesta pàgina</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#diagrama-de-larquitectura" id="toc-diagrama-de-larquitectura" class="nav-link active" data-scroll-target="#diagrama-de-larquitectura">Diagrama de l’Arquitectura</a></li>
-  <li><a href="#objectius" id="toc-objectius" class="nav-link" data-scroll-target="#objectius">Objectius</a></li>
+  <li><a href="#objectius" id="toc-objectius" class="nav-link active" data-scroll-target="#objectius">Objectius</a></li>
+  <li><a href="#diagrama-de-larquitectura" id="toc-diagrama-de-larquitectura" class="nav-link" data-scroll-target="#diagrama-de-larquitectura">Diagrama de l’Arquitectura</a></li>
   <li><a href="#requeriments-prèvis" id="toc-requeriments-prèvis" class="nav-link" data-scroll-target="#requeriments-prèvis">Requeriments Prèvis</a></li>
   <li><a href="#vpc-i-subxarxes" id="toc-vpc-i-subxarxes" class="nav-link" data-scroll-target="#vpc-i-subxarxes">VPC i Subxarxes</a>
   <ul class="collapse">
@@ -234,8 +234,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Desplegament d’una aplicació web amb alta disponibilitat amb AWS</h1>
-<p class="subtitle lead">Laboratoris Pràctics d’Administració de Sistemes i Aplicacions</p>
+<h1 class="title">Deployment of a high-availability web application with AWS</h1>
 </div>
 
 
@@ -252,13 +251,20 @@ window.Quarto = {
 </header>
 
 
-<p>En aquest laboratori intensiu, dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (<strong>pública, aplicació, dades</strong>) i l’ús de <strong>Zones de Disponibilitat (AZ)</strong> per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.</p>
+<p>En aquest laboratori dissenyarem i implementarem una arquitectura de xarxa robusta i segura per allotjar una aplicació de WordPress. L’arquitectura es basa en la separació de capes (<strong>pública, aplicació, dades</strong>) i l’ús de <strong>Zones de Disponibilitat (AZ)</strong> per garantir que el nostre WordPress sigui altament disponible i resistent a fallades.</p>
+<section id="objectius" class="level2">
+<h2 class="anchored" data-anchor-id="objectius">Objectius</h2>
 <ul>
-<li><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</li>
-<li><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</li>
-<li><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</li>
-<li><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</li>
+<li><p>Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.</p></li>
+<li><p>Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.</p></li>
+<li><p>Configurar una VPN segura per a l’accés administratiu.</p></li>
+<li><p>Configurar un load balancer per distribuir el tràfic a les instàncies EC2.</p></li>
+<li><p><strong>Instàncies EC2 (WordPress)</strong>: Distribuïdes en subxarxes privades de diferents AZs, accessibles només a través del Balancejador de Càrrega, mai directament des d’Internet.</p></li>
+<li><p><strong>Base de Dades RDS (MySQL)</strong>: Servei gestionat d’alta disponibilitat, també en subxarxes privades dedicades.</p></li>
+<li><p><strong>DMZ</strong>: Una instància EC2 en una subxarxa pública que actuarà com a punt d’accés segur (mitjançant túnel SSH) per a la gestió de tots els recursos privats.</p></li>
+<li><p><strong>Load Balancer</strong>: El punt d’entrada públic que assegura la distribució uniforme del tràfic a les instàncies de WordPress.</p></li>
 </ul>
+</section>
 <section id="diagrama-de-larquitectura" class="level2">
 <h2 class="anchored" data-anchor-id="diagrama-de-larquitectura">Diagrama de l’Arquitectura</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -268,15 +274,6 @@ window.Quarto = {
 </figure>
 </div>
 <p>La imatge mostra com a través d’internet, els usuaris accedeixen al Load Balancer, que distribueix el tràfic a les instàncies EC2 que allotgen WordPress. Aquestes instàncies es connecten a la base de dades RDS per gestionar el contingut de WordPress. La instància EC2 en la DMZ permet l’accés segur per a l’administració dels recursos privats.</p>
-</section>
-<section id="objectius" class="level2">
-<h2 class="anchored" data-anchor-id="objectius">Objectius</h2>
-<ul>
-<li>Dissenyar i implementar una arquitectura de xarxa segura i altament disponible a AWS.</li>
-<li>Configurar VPCs, subxarxes, taules de rutes i grups de seguretat.</li>
-<li>Configurar una VPN segura per a l’accés administratiu.</li>
-<li>Configurar un load balancer per distribuir el tràfic a les instàncies EC2.</li>
-</ul>
 </section>
 <section id="requeriments-prèvis" class="level2">
 <h2 class="anchored" data-anchor-id="requeriments-prèvis">Requeriments Prèvis</h2>
@@ -294,7 +291,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>CIDR, Hosts i Adreces Reservades 🧠
+<span class="screen-reader-only">Note</span>CIDR, Hosts i Adreces Reservades 🧠
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -392,7 +389,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Alerta</span>Attached IGW 🛑
+<span class="screen-reader-only">Warning</span>Attached IGW 🛑
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -432,7 +429,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Alerta</span>AMSA-DMZ-02 🛑
+<span class="screen-reader-only">Warning</span>AMSA-DMZ-02 🛑
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -449,7 +446,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>NAT Gateway 🧠
+<span class="screen-reader-only">Note</span>NAT Gateway 🧠
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -497,7 +494,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Alerta</span>AMSA-Private02 🛑
+<span class="screen-reader-only">Warning</span>AMSA-Private02 🛑
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -538,7 +535,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Nota sobre la seguretat 🔐
+<span class="screen-reader-only">Note</span>Nota sobre la seguretat 🔐
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -628,7 +625,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Script d’instal·lació i configuració de WordPress 📝
+<span class="screen-reader-only">Note</span>Script d’instal·lació i configuració de WordPress 📝
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -667,7 +664,7 @@ window.Quarto = {
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 2775 /var/www</span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <p>Un cop creada la plantilla de llançament, podeu utilitzar-la per crear instàncies EC2 amb WordPress ja configurat i preparades per connectar amb la vostra base de dades RDS. Aneu a <strong>EC2</strong> i seleccioneu <strong>Launch Instance</strong>. A continuació, seleccioneu la plantilla de llançament <strong>AMSA-WP-Template</strong> i configureu la resta de paràmetres segons les vostres necessitats.</p>
@@ -745,7 +742,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Health Check 🎯
+<span class="screen-reader-only">Note</span>Health Check 🎯
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -820,7 +817,7 @@ window.Quarto = {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ca-certificates gnupg wget net-tools <span class="at">-y</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget https://as-repository.openvpn.net/as-repo-public.asc <span class="at">-qO</span> /etc/apt/trusted.gpg.d/as-repo-public.asc</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">"deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/as-repo-public.asc] http://as-repository.openvpn.net/as/debian jammy main"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/openvpn-as-repo.list</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install openvpn-as <span class="at">-y</span></span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install openvpn-as <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-config.png" class="img-fluid figure-img"></p>
@@ -830,7 +827,7 @@ window.Quarto = {
 <li><p>Amb aquestes credencials, podreu accedir a la interfície web del servidor OpenVPN a través del vostre navegador web. Navegueu a la IP pública de la instància EC2 (en el meu cas https://44.199.196.242:943/admin), com no tenim el certificat SSL configurat, ens sortirà un missatge d’advertència, ignoreu-lo i continueu. Inicieu sessió amb les credencials que heu configurat anteriorment.</p>
 <blockquote class="blockquote">
 <p>Nota: Si heu perdut les credencials de l’usuari <code>openvpn</code>, les podeu recuperar consultat el fitxer de logs del servidor OpenVPN. Per exemple, podeu consultar el fitxer de logs amb la següent comanda:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> less /usr/local/openvpn_as/init.log </span></code></pre></div><button title="Copia al porta-retalls" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> less /usr/local/openvpn_as/init.log </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -984,12 +981,12 @@ window.Quarto = {
       // flash "checked"
       button.classList.add('code-copy-button-checked');
       var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copiat!");
+      button.setAttribute("title", "Copied!");
       let tooltip;
       if (window.bootstrap) {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copiat!");
+        button.setAttribute("data-bs-title", "Copied!");
         tooltip = new bootstrap.Tooltip(button, 
           { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
