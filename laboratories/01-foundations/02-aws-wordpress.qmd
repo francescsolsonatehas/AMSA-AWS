@@ -3,7 +3,7 @@ title: Deploying a web application
 lang: en
 ---
 
-**ARCHITECTURE:**
+**ARCHITECTURE**
 
 ![](/figs/laboratories/02-aws-wp/ArchitectureWordpress.png)
 
