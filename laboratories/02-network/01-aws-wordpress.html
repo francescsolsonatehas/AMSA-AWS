@@ -195,7 +195,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#vpc-i-subxarxes" id="toc-vpc-i-subxarxes" class="nav-link active" data-scroll-target="#vpc-i-subxarxes">1. VPC i Subxarxes</a>
+  <li><a href="#vpc-and-subnets" id="toc-vpc-and-subnets" class="nav-link active" data-scroll-target="#vpc-and-subnets">1. VPC and Subnets</a>
   <ul class="collapse">
   <li><a href="#creació-de-les-subxarxes" id="toc-creació-de-les-subxarxes" class="nav-link" data-scroll-target="#creació-de-les-subxarxes">Creació de les subxarxes</a></li>
   </ul></li>
@@ -264,24 +264,24 @@ window.Quarto = {
 <li>Wordpress EC2 instances distributed across private subnets in different AZs, accessible only through the Load Balancer, never directly from the Internet.”.</li>
 <li><strong>Load Balancer</strong> which acts as a public entry point that ensures the uniform distribution of traffic to the WordPress EC2 instances.</li>
 <li>High available <strong>Data Base RDS (MySQL)</strong> located in dedicated private subnets.</li>
-<li><strong>DMZ</strong>designed with an EC2 instance in a public subnet that will act as a secure access point (via SSH tunnel) for managing all private resources.</li>
+<li><strong>DMZ</strong> designed with an EC2 instance in a public subnet that will act as a secure access point (via SSH tunnel) for managing all private resources.</li>
 </ul>
-<section id="vpc-i-subxarxes" class="level2">
-<h2 class="anchored" data-anchor-id="vpc-i-subxarxes">1. VPC i Subxarxes</h2>
-<p>El primer pas en la nostra arquitectura és definir una VPC (Virtual Private Cloud) i les subxarxes necessàries per aïllar els diferents components de l’aplicació. La VPC proporcionarà un entorn de xarxa virtualitzat on podrem desplegar els nostres recursos d’AWS. La configurarem amb la xarxa <strong>10.0.0.0/16</strong>, la qual ens proporciona fins a 65.536 adreces IP, més que suficients per al nostre cas d’ús.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="CIDR, Hosts i Adreces Reservades 🧠">
+<section id="vpc-and-subnets" class="level2">
+<h2 class="anchored" data-anchor-id="vpc-and-subnets">1. VPC and Subnets</h2>
+<p>The first step in our architecture is to define a VPC (Virtual Private Cloud) and the necessary subnets to isolate the different components of the application. The VPC will provide a virtualized network environment where we can deploy our AWS resources. We will configure it with the network <strong>10.0.0.0/16</strong>, which gives us up to 65,536 IP addresses, more than enough for our use case.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="CIDR, Hosts and Reserved Adresses 🧠">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>CIDR, Hosts i Adreces Reservades 🧠
+<span class="screen-reader-only">Note</span>CIDR, Hosts and Reserved Adresses 🧠
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La màscara de subxarxa determina el nombre d’adreces IP disponibles dins d’una xarxa o subxarxa. Això s’expressa mitjançant la Notació CIDR (Classless Inter-Domain Routing), on el valor (/n) indica la quantitat de bits reservats per a la part de Xarxa. Una màscara de subxarxa de <em>/16</em> significa que els primers 16 bits de l’adreça IP estan reservats per a la identificació de la xarxa, deixant els altres 16 bits per a la identificació dels hosts. Això permet tenir fins a 65.536 adreces IP (<span class="math inline">\(2^{32-16}\)</span>) dins d’aquesta xarxa.</p>
-<p>Quan feu el Subnetting per crear subxarxes dins de la vostra VPC, esteu augmentant el valor CIDR (per exemple, de /16 a /24), per tal de reduir la mida de les subxarxes i aïllar millor el tràfic. Per exemple, una subxarxa amb CIDR /24 té 256 adreces IP (<span class="math inline">\(2^{32-24}\)</span>).</p>
-<p>Recordeu que el total d’adreces calculat no és el total d’adreces útils per als vostres servidors (hosts). Algunes adreces es reserven per a usos especials, com identificar la xarxa i la difusió (broadcast).</p>
+<p>The subnet mask determines the number of IP addresses available within a network or subnet. This is expressed using CIDR notation (Classless Inter-Domain Routing), where the value (/n) indicates the number of bits reserved for the Network portion. A subnet mask of /16 means that the first 16 bits of the IP address are reserved for network identification, leaving the other 16 bits for host identification. This allows up to 65,536 IP addresses (<span class="math inline">\(2^{32-16}\)</span>) within that network.</p>
+<p>When you perform subnetting to create subnets within your VPC, you increase the CIDR value (for example, from /16 to /24) to reduce the size of the subnets and better isolate traffic. For example, a subnet with CIDR /24 has 256 IP addresses (<span class="math inline">\(2^{32-24}\)</span>).</p>
+<p>Remember that the total calculated addresses are not the total usable addresses for your servers (hosts). Some addresses are reserved for special uses, such as network identification and broadcast.</p>
 </div>
 </div>
 <p>Podem definir la VPC a través de la interfície web d’AWS, utilitzant els formularis disponibles:</p>
