@@ -238,18 +238,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       Port Range: 3306
       Source: Custom
       Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
-<li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p></li>
-</ol>
+<li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p>
 <ul>
-<li><p>Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)</p></li>
-<li><p>Connect to the EC2 instance via SSH</p></li>
-<li><p>Install the MySQL client:</p>
+<li>Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)</li>
+<li>Connect to the EC2 instance via SSH</li>
+<li>Install the MySQL client:</li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar el paquet a instal·lar</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-</ul>
-<ol start="6" type="1">
 <li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
