@@ -202,11 +202,11 @@ window.Quarto = {
   <li><a href="#routing-tables-and-associations" id="toc-routing-tables-and-associations" class="nav-link" data-scroll-target="#routing-tables-and-associations">2. Routing Tables and Associations</a>
   <ul class="collapse">
   <li><a href="#internet-gateway-configuration" id="toc-internet-gateway-configuration" class="nav-link" data-scroll-target="#internet-gateway-configuration">2.1. Internet Gateway Configuration</a></li>
-  <li><a href="#creation-of-route-tables" id="toc-creation-of-route-tables" class="nav-link" data-scroll-target="#creation-of-route-tables">2.2. Creation of Route Tables</a></li>
+  <li><a href="#creation-of-routing-tables" id="toc-creation-of-routing-tables" class="nav-link" data-scroll-target="#creation-of-routing-tables">2.2. Creation of Routing Tables</a></li>
   </ul></li>
-  <li><a href="#grups-de-seguretat" id="toc-grups-de-seguretat" class="nav-link" data-scroll-target="#grups-de-seguretat">Grups de Seguretat</a>
+  <li><a href="#grups-de-seguretat" id="toc-grups-de-seguretat" class="nav-link" data-scroll-target="#grups-de-seguretat">3. Grups de Seguretat</a>
   <ul class="collapse">
-  <li><a href="#grup-de-seguretat-per-a-les-instàncies-ec2" id="toc-grup-de-seguretat-per-a-les-instàncies-ec2" class="nav-link" data-scroll-target="#grup-de-seguretat-per-a-les-instàncies-ec2">Grup de Seguretat per a les instàncies EC2</a></li>
+  <li><a href="#grup-de-seguretat-per-a-les-instàncies-ec2" id="toc-grup-de-seguretat-per-a-les-instàncies-ec2" class="nav-link" data-scroll-target="#grup-de-seguretat-per-a-les-instàncies-ec2">3.1. Grup de Seguretat per a les instàncies EC2</a></li>
   <li><a href="#grup-de-seguretat-per-a-la-base-de-dades-rds" id="toc-grup-de-seguretat-per-a-la-base-de-dades-rds" class="nav-link" data-scroll-target="#grup-de-seguretat-per-a-la-base-de-dades-rds">Grup de Seguretat per a la base de dades RDS</a></li>
   <li><a href="#resum" id="toc-resum" class="nav-link" data-scroll-target="#resum">Resum</a></li>
   </ul></li>
@@ -219,9 +219,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#ec2-per-desplegar-el-servidor-vpn" id="toc-ec2-per-desplegar-el-servidor-vpn" class="nav-link" data-scroll-target="#ec2-per-desplegar-el-servidor-vpn">EC2 per desplegar el servidor VPN</a></li>
   </ul></li>
-  <li><a href="#neteja-els-recursos-creats" id="toc-neteja-els-recursos-creats" class="nav-link" data-scroll-target="#neteja-els-recursos-creats">Neteja els recursos creats</a></li>
-  <li><a href="#exercics-adicionals" id="toc-exercics-adicionals" class="nav-link" data-scroll-target="#exercics-adicionals">Exercics Adicionals</a></li>
-  <li><a href="#recursos-addicionals" id="toc-recursos-addicionals" class="nav-link" data-scroll-target="#recursos-addicionals">Recursos Addicionals</a></li>
+  <li><a href="#cleanup" id="toc-cleanup" class="nav-link" data-scroll-target="#cleanup">Cleanup</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -381,30 +379,30 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="creation-of-route-tables" class="level3">
-<h3 class="anchored" data-anchor-id="creation-of-route-tables">2.2. Creation of Route Tables</h3>
+<section id="creation-of-routing-tables" class="level3">
+<h3 class="anchored" data-anchor-id="creation-of-routing-tables">2.2. Creation of Routing Tables</h3>
 <p>Each subnet needs a route table to define how inbound and outbound traffic is directed. We will create specific route tables for each type of subnet (public and private) and associate them with the corresponding subnets.</p>
-<section id="enrutament-per-a-les-subxarxes-públiques-dmz" class="level4">
-<h4 class="anchored" data-anchor-id="enrutament-per-a-les-subxarxes-públiques-dmz">Enrutament per a les subxarxes públiques (DMZ)</h4>
-<p>El primer pas és crear la taula de rutes per a les subxarxes públiques. Aneu a <strong>VPC</strong> → <strong>Route Tables</strong> → <strong>Create route table</strong>. Seleccioneu la VPC <strong>AMSA-VPC</strong> i anomeneu la taula de rutes <strong>AMSA-DMZ01-RT</strong>.</p>
+<section id="routing-for-public-subnets-dmz" class="level4">
+<h4 class="anchored" data-anchor-id="routing-for-public-subnets-dmz">2.2.1. Routing for public subnets (DMZ)</h4>
+<p>The first step is to create the route table for the public subnets. Go to <strong>VPC</strong> → <strong>Route Tables</strong> → <strong>Create route table</strong>. Select VPC <strong>AMSA-VPC</strong> and name the route table <strong>AMSA-DMZ01-RT</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/AMSA-DMZ01-RT.png" class="img-fluid figure-img"></p>
-<figcaption>Taula de rutes per a la subxarxa AMSA-DMZ01-RT</figcaption>
+<figcaption>Route table for the subnet AMSA-DMZ01-RT</figcaption>
 </figure>
 </div>
-<p>El segon pas és associar la taula de rutes (<em>AMSA-DMZ01-RT</em>) amb la subxarxa <strong>AMSA-DMZ-01</strong> i permetre el tràfic de sortida a Internet a través del Gateway d’Internet que hem creat anteriorment.</p>
+<p>The second step is to associate the route table (<em>AMSA-DMZ01-RT</em>) with the subnet <strong>AMSA-DMZ-01</strong> allow outbound traffic to the Internet through the Internet Gateway we created earlier.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/AMSA-DMZ-Subnet-Association.png" class="img-fluid figure-img"></p>
-<figcaption>Associació de la taula de rutes amb la subxarxa AMSA-DMZ-01</figcaption>
+<figcaption>Association of the route table with the subnet AMSA-DMZ-01</figcaption>
 </figure>
 </div>
-<p>El tercer pas és permetre el tràfic de sortida a Internet a través del Gateway d’Internet que hem creat anteriorment. Per fer-ho aneu a la secció <em>Routes</em> i clicareu a <em>Edit routes</em>. A continuació, <strong>Add route</strong> i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el <strong>AMSA-IG</strong>).</p>
+<p>The third step is to allow outbound traffic to the Internet through the Internet Gateway we created earlier. To do this, go to the section <em>Routes</em> and click on <em>Edit routes</em>. Next, <strong>Add route</strong> and edit (Destination: 0.0.0.0/0; Target:Seleccionar el <strong>AMSA-IG</strong>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/IG.png" class="img-fluid figure-img"></p>
-<figcaption>Permetem el tràfic amb l’exterior a través del IG</figcaption>
+<figcaption>Allowing traffic with the outside through the IG</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="AMSA-DMZ-02 🛑">
@@ -417,12 +415,12 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Realitzeu els mateixos passos per a la subxarxa <strong>AMSA-DMZ-02</strong>, modificant només el nom de la taula de rutes i l’associació amb la subxarxa.</p>
+<p>Perform the same steps for the subnet <strong>AMSA-DMZ-02</strong>, modifying only the name of the route table and the association with the subnet.</p>
 </div>
 </div>
 </section>
 <section id="enrutament-per-a-les-subxarxes-privades" class="level4">
-<h4 class="anchored" data-anchor-id="enrutament-per-a-les-subxarxes-privades">Enrutament per a les subxarxes privades</h4>
+<h4 class="anchored" data-anchor-id="enrutament-per-a-les-subxarxes-privades">2.2.2. Enrutament per a les subxarxes privades</h4>
 <p>Les subxarxes privades no tenen accés directe a Internet per motius de seguretat. Per tant, necessitem configurar les taules de rutes per a aquestes subxarxes de manera que puguin accedir a Internet a través d’un NAT Gateway (Network Address Translation Gateway). Això permetrà que les instàncies dins de les subxarxes privades puguin iniciar connexions cap a l’exterior, però impedirà que l’exterior iniciï connexions cap a elles.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="NAT Gateway 🧠">
 <div class="callout-header d-flex align-content-center">
@@ -487,20 +485,20 @@ window.Quarto = {
 </div>
 </section>
 <section id="enrutament-per-a-la-subxarxa-de-dades-amsa-data" class="level4">
-<h4 class="anchored" data-anchor-id="enrutament-per-a-la-subxarxa-de-dades-amsa-data">Enrutament per a la subxarxa de dades (AMSA-Data)</h4>
+<h4 class="anchored" data-anchor-id="enrutament-per-a-la-subxarxa-de-dades-amsa-data">2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)</h4>
 <p>La subxarxa <strong>AMSA-Data</strong> no allotjarà instàncies que necessitin accés a Internet. Per tant, no necessitem configurar cap ruta per a aquesta subxarxa. Crearem una taula de rutes buida i l’associarem a la subxarxa <strong>AMSA-Data</strong>. Aquesta xarxa serà completament aïllada i només permetrà la comunicació interna dins de la VPC.</p>
 </section>
 </section>
 </section>
 <section id="grups-de-seguretat" class="level2">
-<h2 class="anchored" data-anchor-id="grups-de-seguretat">Grups de Seguretat</h2>
+<h2 class="anchored" data-anchor-id="grups-de-seguretat">3. Grups de Seguretat</h2>
 <p>Els grups de seguretat (Security Groups) són una eina per controlar el tràfic de xarxa de les instàncies i altres recursos d’AWS, actuant com un tallafocs virtual. Permeten definir regles que especifiquen quines connexions estan permeses tant d’entrada (inbound) com de sortida (outbound).</p>
 <ul>
 <li><strong>Trafic inbound</strong>: Permet decidir quins tipus de connexions entrants (cap al recurs) són permeses.</li>
 <li><strong>Trafic outbound</strong>: Controla quines connexions sortints (des del recurs cap a altres destinacions) estan autoritzades.</li>
 </ul>
 <section id="grup-de-seguretat-per-a-les-instàncies-ec2" class="level3">
-<h3 class="anchored" data-anchor-id="grup-de-seguretat-per-a-les-instàncies-ec2">Grup de Seguretat per a les instàncies EC2</h3>
+<h3 class="anchored" data-anchor-id="grup-de-seguretat-per-a-les-instàncies-ec2">3.1. Grup de Seguretat per a les instàncies EC2</h3>
 <ul>
 <li><strong>Connexions entrants (inbound)</strong> per als serveis web HTTP (port 80) i HTTPS (port 443), accessibles des de qualsevol origen.</li>
 <li><strong>Connexions SSH (port 22)</strong> per a administració remota, també accessibles des de qualsevol origen (inicialment, però més endavant es restringiran).</li>
@@ -915,25 +913,9 @@ window.Quarto = {
 </blockquote>
 </section>
 </section>
-<section id="neteja-els-recursos-creats" class="level2">
-<h2 class="anchored" data-anchor-id="neteja-els-recursos-creats">Neteja els recursos creats</h2>
-<p>Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d’AWS.</p>
-</section>
-<section id="exercics-adicionals" class="level2">
-<h2 class="anchored" data-anchor-id="exercics-adicionals">Exercics Adicionals</h2>
-<ol type="1">
-<li>Com milloraríeu els grups de seguretat, quins canvis faríeu?</li>
-<li>Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.</li>
-<li>Prepara un script que faci una prova de càrrega al balancejador de càrrega i mostri com es distribueix el tràfic entre les instàncies EC2.</li>
-<li>Genera un infra_v3.yaml que contingui tota la infraestructura com a codi.</li>
-</ol>
-</section>
-<section id="recursos-addicionals" class="level2">
-<h2 class="anchored" data-anchor-id="recursos-addicionals">Recursos Addicionals</h2>
-<ul>
-<li><a href="src/infra-v1.yaml">infra_v1.yaml</a>: Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d’AWS utilitzant AWS CloudFormation fins a la creació de templates de llançament.</li>
-<li><a href="src/infra-v2.yaml">infra_v2.yaml</a>: Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d’AWS utilitzant AWS CloudFormation sense el load balancer ni les instancies EC2 corresponents als WordPress.</li>
-</ul>
+<section id="cleanup" class="level2">
+<h2 class="anchored" data-anchor-id="cleanup">Cleanup</h2>
+<p>Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.</p>
 
 
 </section>
