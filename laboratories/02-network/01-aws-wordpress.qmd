@@ -286,18 +286,18 @@ Navigate to the AWS console and select the **EC2** service. In the sidebar, sele
 - **Scheme**: Internet-facing
 - **IP Address Type**: IPv4
 
-![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-01.png)
+![Load Balancer Configuration](../../figs/laboratories/03-aws-wp/wordpress/lb-01.png)
 
 - **VPC**: AMSA-VPC
-- **Availability Zones**: Seleccionar les zones de disponibilitat on tenim la subxarxa pública **AMSA-DMZ-01** (us-east-1a) i les **AMSA-DMZ-02** (us-east-1b).
+- **Availability Zones**: Select the availability zones where we have the public subnet **AMSA-DMZ-01** (us-east-1a) and **AMSA-DMZ-02** (us-east-1b).
 
-- **Grups de Seguretat**: Nou grup de seguretat (**AMSA-ALB-SG**), aquest grup de seguretat permetrà el tràfic d'entrada per als ports 80 (HTTP) i 443 (HTTPS) des de qualsevol origen però restringirà el tràfic de sortida a les instàncies EC2 (grup de seguretat **AMSA-WP-SG**).
+- **Grups de Seguretat**: New security group (**AMSA-ALB-SG**), this security group will allow inbound traffic for ports 80 (HTTP) and 443 (HTTPS) from any source but will restrict outbound traffic to the EC2 instances (security group **AMSA-WP-SG**).
 
-    ![Grup de Seguretat per al balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/AMSA-ALB-SG.png)
+    ![Security Group for the Load Balancer](../../figs/laboratories/03-aws-wp/wordpress/AMSA-ALB-SG.png)
 
-    ![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-03.png)
+    ![Load balancer configuration](../../figs/laboratories/03-aws-wp/wordpress/lb-03.png)
 
-- **Listeners**: Crearem un listener per al port 80 (HTTP), que redirigirà el tràfic al port 80 de les instàncies EC2. Al port 443 (HTTPS) de moment no configurarem cap redirecció. Per fer-ho, primer haureu de crear un **Target Group**. Aquest grup es necessari per indicar al balancejador de càrrega on enviar el tràfic.
+- **Listeners**: Create a listener for port 80 (HTTP), which will redirect traffic to port 80 of the EC2 instances. For port 443 (HTTPS), we will not configure any redirection for now. To do this, you must first create a **Target Group**. This group is necessary to indicate to the load balancer where to send the traffic.
 
   - *Target Group*:
     - **Target Type**: Instances
@@ -308,48 +308,49 @@ Navigate to the AWS console and select the **EC2** service. In the sidebar, sele
     - **Health checks**: HTTP, ruta **/**
 
 
-    ![Configuració del target group](../../figs/laboratories/03-aws-wp/wordpress/tg-03.png)
+    ![Target group configuration](../../figs/laboratories/03-aws-wp/wordpress/tg-03.png)
 
 :::{.callout-note title="Health Check 🎯"}
-El balancejador de càrrega comprova la salut de les instàncies EC2 a través del port 80 i la ruta **/**. Això significa que el balancejador de càrrega enviarà tràfic a les instàncies EC2 que responguin correctament a les peticions HTTP a la ruta **/**. Com que les nostres instàncies EC2 tenen WordPress instal·lat, aquestes instàncies respondran correctament a les peticions HTTP a la ruta **/**. *Podem deixar la configuració per defecte*. La instal·lació de WordPress inclou una pàgina d'inici que respondrà amb 302 (Found) quan s'accedeixi a la ruta arrel (/), per això pot passar que el health check mostri que la instància no està saludable. Un cop configurat el WordPress, el health check mostrarà que la instància està saludable.
+
+The load balancer checks the health of the EC2 instances through port 80 and the path **/**. This means that the load balancer will send traffic to EC2 instances that respond correctly to HTTP requests on the **/** path. Since our EC2 instances have WordPress installed, these instances will respond correctly to HTTP requests on the **/** path. *We can leave the default configuration*. The WordPress installation includes a home page that will respond with 302 (Found) when accessing the root path (/), which is why the health check may show that the instance is unhealthy. Once WordPress is configured, the health check will show that the instance is healthy.
 :::
 
-- Seleccionarem les dos instàncies EC2 que allotgen WordPress (AMSA-WP-01 i AMSA-WP-02) i les afegirem al target group. Utilitzant el botó **Include as pending below** i després **Add to registered**.
+- Select the two EC2 instances that host WordPress (AMSA-WP-01 and AMSA-WP-02) and add them to the target group using the **Include as pending below** button and then **Add to registered**.
 
-    ![Configuració del target group](../../figs/laboratories/03-aws-wp/wordpress/tg-04.png)
+    ![Target group configuration](../../figs/laboratories/03-aws-wp/wordpress/tg-04.png)
 
 
-- Un cop creat el target group, el seleccionarem com a target del listener del balancejador de càrrega.
+- Once the target group has been created, we will select it as the target for the load balancer’s listener.
 
-    ![Configuració del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/lb-05.png)
+    ![Load balancer configuration](../../figs/laboratories/03-aws-wp/wordpress/lb-05.png)
 
-- Un cop creat el balancejador de càrrega, heu d'esperar uns minuts fins que el seu estat passi de **Provisioning** a **Active**. Un cop l'estat sigui **Active**, podeu accedir al balancejador de càrrega a través de la seva adreça DNS.
+- Once the load balancer has been created, you must wait a few minutes until its status changes from **Provisioning** to **Active**. Once the status change to **Active**, you can access the load balancer through its DNS address
 
-![Balancejador de càrrega actiu](../../figs/laboratories/03-aws-wp/wordpress/lb-active.png)
+![Active load balancer](../../figs/laboratories/03-aws-wp/wordpress/lb-active.png)
 
-- Ara ja podem accedir al balancejador de càrrega a través de la seva adreça DNS i veure la pàgina d'instal·lació de WordPress:
+- Now we can access the load balancer through its DNS address and see the WordPress installation page:
 
-![Instal·lació de WordPress a través del balancejador de càrrega](../../figs/laboratories/03-aws-wp/wordpress/wp-config-01.png)
+![WordPress installation through the load balancer](../../figs/laboratories/03-aws-wp/wordpress/wp-config-01.png)
 
-Procedirem a instal·lar WordPress a través del balancejador de càrrega. Seguiu els passos de la instal·lació i configureu l'usuari administrador i la contrasenya. Ara ja teniu el servidor web configurat amb WordPress i el balancejador de càrrega per distribuir el tràfic entre les instàncies EC2.
+We will proceed to install WordPress through the load balancer. Follow the installation steps and configure the administrator username and password. Now you have the web server configured with WordPress and the load balancer to distribute traffic between the EC2 instances.
 
-## Configuració VPN
+## VPN configuration
 
-### EC2 per desplegar el servidor VPN
+### EC2 to deploy the VPN server
 
-Per desplegar el servidor VPN, crearem una nova instància EC2 que actuarà com a servidor VPN. Aquesta instància EC2 haurà d'estar en una subxarxa pública connectada a interent. Anomenarem aquesta instància **AMSA-VPN** i la situarem a la subxarxa pública **AMSA-DMZ-01**. Aquesta instància EC2 utilitzarà el grup de seguretat **AMSA-VPN-SG** que permetrà el tràfic necessari per al funcionament del servidor VPN.
+To deploy the VPN server, we will create a new EC2 instance that will act as the VPN server. This EC2 instance must be in a public subnet connected to the internet. We will name this instance **AMSA-VPN** and place it in the public subnet **AMSA-DMZ-01**. This EC2 instance will use the security group **AMSA-VPN-SG**, which will allow the necessary traffic for the VPN server to function.
 
-1. Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral, seleccioneu **Instances** i després **Launch Instances**.
-2. Seleccioneu la imatge **Ubuntu Server 22.04 LTS**.
-3. Seleccioneu la instància **t2.micro**.
-4. Configureu la instància:
+1. Navigate to the AWS console and select the **EC2** service. In the sidebar, select **Instances** and then **Launch Instances**.
+2. Select the image **Ubuntu Server 22.04 LTS**.
+3. Select the instance **t2.micro**.
+4. Configure the instance:
     - **Network**: AMSA-VPC
     - **Subnet**: AMSA-DMZ-01
     - **Auto-assign Public IP**: Enable
 
-    ![Configuració de la instància EC2 per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-VPN.png)
+    ![EC2 instance configuration for the VPN server](../../figs/laboratories/03-aws-wp/wordpress/AMSA-VPN.png)
 
-5. Configureu el grup de seguretat: **AMSA-VPN-SG**.
+5. Configure the security group: **AMSA-VPN-SG**.
 
     Si reviseu la documentació d'instal·lació del servidor OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf). Veure que necessitem els següents ports oberts: **TCP 943, UDP 1194**.
 
