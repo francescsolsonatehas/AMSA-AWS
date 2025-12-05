@@ -212,9 +212,9 @@ window.Quarto = {
   </ul></li>
   <li><a href="#creació-de-la-base-de-dades-rds" id="toc-creació-de-la-base-de-dades-rds" class="nav-link" data-scroll-target="#creació-de-la-base-de-dades-rds">Creació de la Base de Dades RDS</a></li>
   <li><a href="#creation-of-ec2-instances" id="toc-creation-of-ec2-instances" class="nav-link" data-scroll-target="#creation-of-ec2-instances">Creation of EC2 instances</a></li>
-  <li><a href="#configuració-del-servidor-web-amb-wordpress" id="toc-configuració-del-servidor-web-amb-wordpress" class="nav-link" data-scroll-target="#configuració-del-servidor-web-amb-wordpress">Configuració del Servidor Web amb WordPress</a>
+  <li><a href="#web-server-configuration-with-wordpress" id="toc-web-server-configuration-with-wordpress" class="nav-link" data-scroll-target="#web-server-configuration-with-wordpress">Web Server Configuration with WordPress</a>
   <ul class="collapse">
-  <li><a href="#configuració-del-balancejador-de-càrrega" id="toc-configuració-del-balancejador-de-càrrega" class="nav-link" data-scroll-target="#configuració-del-balancejador-de-càrrega">Configuració del Balancejador de Càrrega</a></li>
+  <li><a href="#load-balancer-configuration" id="toc-load-balancer-configuration" class="nav-link" data-scroll-target="#load-balancer-configuration">Load Balancer Configuration</a></li>
   <li><a href="#configuració-vpn" id="toc-configuració-vpn" class="nav-link" data-scroll-target="#configuració-vpn">Configuració VPN</a>
   <ul class="collapse">
   <li><a href="#ec2-per-desplegar-el-servidor-vpn" id="toc-ec2-per-desplegar-el-servidor-vpn" class="nav-link" data-scroll-target="#ec2-per-desplegar-el-servidor-vpn">EC2 per desplegar el servidor VPN</a></li>
@@ -585,37 +585,37 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="creation-of-ec2-instances">Creation of EC2 instances</h2>
 <p>The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.</p>
 </section>
-<section id="configuració-del-servidor-web-amb-wordpress" class="level1">
-<h1>Configuració del Servidor Web amb WordPress</h1>
+<section id="web-server-configuration-with-wordpress" class="level1">
+<h1>Web Server Configuration with WordPress</h1>
 <ol type="1">
-<li><p>Creareu una instancia EC2 amb Amazon Linux, seleccionant la VPC <strong>AMSA-VPC</strong> i la subxarxa <strong>AMSA-DMZ-01</strong>. Assegureu-vos que l’instància utilitzi el grup de seguretat <strong>AMSA-WP-SG</strong>. La podeu anomenar <strong>AMSA-DB-Config</strong>. Seleccionar <em>assignar ip pública</em>. Aquesta instància només la farem servir per inicialitzar la base de dades i després la podrem eliminar.</p></li>
-<li><p>Un cop configurada la instància, connecteu-vos-hi mitjançant SSH utilitzant la clau privada corresponent a la clau pública que vau associar a la instància durant la seva creació. I realitzeu la configuració de la base de dades MySQL per a WordPress.</p></li>
-<li><p>Anem a crear una plantilla de llançament (<strong>Launch Template</strong>) per a les instàncies EC2 que allotjaran WordPress. Aquesta plantilla inclourà la configuració necessària per a les instàncies, incloent-hi el script d’instal·lació i configuració de WordPress.</p>
+<li><p>Create an EC2 instance with Amazon Linux, selecting the VPC <strong>AMSA-VPC</strong> and the subnet <strong>AMSA-DMZ-01</strong>. Make sure that the instance uses the security group <strong>AMSA-WP-SG</strong>. You can name it <strong>AMSA-DB-Config</strong>. Select <em>assign public IP</em>. We will only use this instance to initialize the database and then we can delete it.</p></li>
+<li><p>Once the instance is configured, connect to it via SSH using the private key corresponding to the public key you associated with the instance during its creation. Then configure the MySQL database for WordPress.</p></li>
+<li><p>Let’s create a launch template (<strong>Launch Template</strong>) for the EC2 instances that will host WordPress. This template will include the necessary configuration for the instances, including the installation and configuration script for WordPress.</p>
 <ul>
-<li>Nom de la plantilla: <strong>AMSA-WP-Template</strong></li>
+<li>Template name: <strong>AMSA-WP-Template</strong></li>
 <li>AMI: Amazon Linux 2023 (64-bit x86)</li>
-<li>Instància Type: t2.micro</li>
+<li>Instance Type: t2.micro</li>
 <li>Key Pair: AMSA-KEY</li>
-<li>Subxarxa: No seleccionar cap subxarxa (es seleccionarà dinàmicament)</li>
-<li>Grup de Seguretat: <em>AMSA-WP-SG</em></li>
-<li>Advanced Details: Afegiu el següent script a la secció de UserData.</li>
+<li>Subnet: Do not select any subnet (it will be selected dynamically</li>
+<li>Security group: <em>AMSA-WP-SG</em></li>
+<li>Advanced Details: Add the following script to the User Data section.</li>
 </ul></li>
 </ol>
-<div class="callout callout-style-default callout-note callout-titled" title="Script d'instal·lació i configuració de WordPress 📝">
+<div class="callout callout-style-default callout-note callout-titled" title="WordPress installation and configuration script 📝">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Script d’instal·lació i configuració de WordPress 📝
+<span class="screen-reader-only">Note</span>WordPress installation and configuration script 📝
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Modifiqueu les dades de connexió a la base de dades segons les vostres dades.</p>
+<p>Modify the database connection details according to your own data.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sudo bash install_wp.sh</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajusteu les dades següents segons les vostres dades</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust the following data according to your own details</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">DB_NAME</span><span class="op">=</span><span class="st">""</span> </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">DB_USER</span><span class="op">=</span><span class="st">""</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">DB_USER_PASSWORD</span><span class="op">=</span><span class="st">""</span></span>
@@ -649,31 +649,32 @@ window.Quarto = {
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>Un cop creada la plantilla de llançament, podeu utilitzar-la per crear instàncies EC2 amb WordPress ja configurat i preparades per connectar amb la vostra base de dades RDS. Aneu a <strong>EC2</strong> i seleccioneu <strong>Launch Instance</strong>. A continuació, seleccioneu la plantilla de llançament <strong>AMSA-WP-Template</strong> i configureu la resta de paràmetres segons les vostres necessitats.</p>
+<p>Once the launch template is created, you can use it to create EC2 instances with WordPress already configured and ready to connect to your RDS database. Go to <strong>EC2</strong> and select <strong>Launch Instance</strong>. Then select the launch template <strong>AMSA-WP-Template</strong> and configure the remaining parameters according to your needs.</p>
 <ul>
 <li>Nombre d’instàncies: 2</li>
-<li>Subxarxa: Seleccioneu la subxarxa <strong>AMSA-Private01</strong> per a la primera instància i <strong>AMSA-Private02</strong> per a la segona instància. Les podeu anomenar <strong>AMSA-WP-01</strong> i <strong>AMSA-WP-02</strong> respectivament.</li>
+<li>Subxarxa: Select the subnet <strong>AMSA-Private01</strong> for the first instance and <strong>AMSA-Private02</strong> for the second instance. You can name them <strong>AMSA-WP-01</strong> i <strong>AMSA-WP-02</strong> respectively.</li>
 </ul>
-<div class="callout callout-style-default callout-important callout-titled" title="Nota sobre les instàncies EC2 🖥️">
+<div class="callout callout-style-default callout-important callout-titled" title="Note about EC2 instances 🖥️">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Nota sobre les instàncies EC2 🖥️
+<span class="screen-reader-only">Important</span>Note about EC2 instances 🖥️
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Aquestes instàncies no tindran IP pública, ja que només seran accessibles a través del balancejador de càrrega que configurarem més endavant. Ara mateix no podreu accedir-hi directament ni per SSH ni per HTTP.</p>
+<p>These instances will not have a public IP, as they will only be accessible through the load balancer that we will configure later. For now, you will not be able to access them directly via SSH or HTTP.</p>
 </div>
 </div>
-<section id="configuració-del-balancejador-de-càrrega" class="level2">
-<h2 class="anchored" data-anchor-id="configuració-del-balancejador-de-càrrega">Configuració del Balancejador de Càrrega</h2>
-<p>En aquest punt, crearem un balancejador de càrrega per a les nostres instàncies EC2. Aquest balancejador de càrrega serà responsable de distribuir uniformement el tràfic entre les instàncies EC2 que allotgen WordPress.</p>
-<p>Existeixen 3 tipus de balancejadors de càrrega a AWS: <strong>Application Load Balancer (ALB)</strong>, <strong>Network Load Balancer (NLB)</strong> i <strong>Gateway Load Balancer (GWLB)</strong>. En aquest cas, utilitzarem un <strong>Application Load Balancer (ALB)</strong>, ja que és el recomanat per a aplicacions web que utiltizen HTTP i HTTPS.</p>
+<section id="load-balancer-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="load-balancer-configuration">Load Balancer Configuration</h2>
+<p>At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.</p>
+<p>There are 3 types of load balancers in AWS: <strong>Application Load Balancer (ALB)</strong>, <strong>Network Load Balancer (NLB)</strong> and <strong>Gateway Load Balancer (GWLB)</strong>. In this case, we will use an <strong>Application Load Balancer (ALB)</strong>, as it is recommended for web applications that use HTTP and HTTPS.</p>
 <p>Navegueu a la consola de AWS i seleccioneu el servei <strong>EC2</strong>. A la barra lateral, seleccioneu <strong>Load Balancers</strong> i després <strong>Create Load Balancer</strong>. Seleccioneu <strong>Application Load Balancer</strong> i feu clic a <strong>Create</strong>.</p>
+<p>Navigate to the AWS console and select the <strong>EC2</strong> service. In the sidebar, select <strong>Load Balancers</strong> and then <strong>Create Load Balancer</strong>. Choose <strong>Application Load Balancer</strong> and click <strong>Create</strong>.</p>
 <ul>
-<li><strong>Nom del balancejador de càrrega</strong>: AMSA-ALB</li>
+<li><strong>Load Balancer name</strong>: AMSA-ALB</li>
 <li><strong>Scheme</strong>: Internet-facing</li>
 <li><strong>IP Address Type</strong>: IPv4</li>
 </ul>
