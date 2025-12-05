@@ -164,7 +164,7 @@ To do this, we will navigate to the AWS VPC console, select the *Security Groups
 
 ![Security Group for EC2 instances](../../figs/laboratories/03-aws-wp/wordpress/AMSA-WP-SG.png)
 
-:::{.callout-note title="Nota sobre la seguretat 🔐"}
+:::{.callout-note title="Security note 🔐"}
 Now we allow all network traffic for web services and SSH. Once everything is configured, we will restrict this access only to inbound traffic coming from the load balancer for web services and from our internal network for SSH.
 :::
 
@@ -352,11 +352,11 @@ To deploy the VPN server, we will create a new EC2 instance that will act as the
 
 5. Configure the security group: **AMSA-VPN-SG**.
 
-    Si reviseu la documentació d'instal·lació del servidor OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf). Veure que necessitem els següents ports oberts: **TCP 943, UDP 1194**.
+If you review the installation documentation for the OpenVPN server: OpenVPN: [OpenVPN Access Server System Administrator Guide ](https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf), you will see that we need the following ports open: **TCP 943, UDP 1194**.
 
-    ![Configuració del grup de seguretat per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png)
+    ![Security group configuration for the VPN server](../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png)
 
-6. Connecteu-vos a la instància EC2 a través de la consola online de AWS o amb una connexió SSH i executeu la següent comanda per instal·lar el servidor OpenVPN:
+6. Connect to the EC2 instance through the AWS online console or with an SSH connection and run the following command to install the OpenVPN server:
 
     ```bash
     sudo apt update -y
@@ -366,38 +366,38 @@ To deploy the VPN server, we will create a new EC2 instance that will act as the
     sudo apt update && sudo apt install openvpn-as -y
     ```
 
-    ![Instal·lació del servidor OpenVPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-config.png)
+    ![OpenVPN server installation](../../figs/laboratories/03-aws-wp/wordpress/VPN-config.png)
 
-7. Amb aquestes credencials, podreu accedir a la interfície web del servidor OpenVPN a través del vostre navegador web. Navegueu a la IP pública de la instància EC2 (en el meu cas https://44.199.196.242:943/admin), com no tenim el certificat SSL configurat, ens sortirà un missatge d'advertència, ignoreu-lo i continueu. Inicieu sessió amb les credencials que heu configurat anteriorment.
+7. With these credentials, you will be able to access the OpenVPN server’s web interface through your web browser. Navigate to the public IP of the EC2 instance (in my case https://44.199.196.242:943/admin). Since we don’t have the SSL certificate configured, a warning message will appear—ignore it and continue. Log in with the credentials you configured earlier..
 
-    > Nota: Si heu perdut les credencials de l'usuari `openvpn`, les podeu recuperar consultat el fitxer de logs del servidor OpenVPN. Per exemple, podeu consultar el fitxer de logs amb la següent comanda:
+    > Note: If you have lost the `openvpn` user credentials, you can recover them by checking the OpenVPN server log file. For example, you can view the log file with the following command:
     >
     > ```bash
     > sudo less /usr/local/openvpn_as/init.log 
     > ```
 
-    ![Interfície web del servidor OpenVPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-login.png)
+    ![OpenVPN server web interface](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-login.png)
 
-    - Accepteu els termes de llicència.
+    - Accept the license terms..
   
-    ![Acceptació dels termes de llicència](../../figs/laboratories/03-aws-wp/wordpress/VPN-accept-terms.png)
+    ![Accepting the license terms.](../../figs/laboratories/03-aws-wp/wordpress/VPN-accept-terms.png)
 
-    - Aneu a **VPN Server/Network Settings** i configureu el **Hostname or IP Address** amb la IP pública de la instància EC2 on teniu el servidor OpenVPN. Un cop fet, clicareu a **Save**.
+    - Go to **VPN Server/Network Settings** and set the **Hostname or IP Address** to the public IP of the EC2 instance where your OpenVPN server is running. Once done, click **Save**.
 
-        ![Configuració de la IP pública del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-01.png)
+        ![Configuring the VPN Server’s Public IP](../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-01.png)
 
 
-    - Aneu a **Access Controls/Internet Access and DNS** i seleccioneu l'opció **Split Tunnel** per evitar que tot el tràfic del client sigui redirigit a través de la VPN. Únicament el tràfic dirigit a les subxarxes de la VPC serà redirigit a través de la VPN.
+    - Go to **Access Controls/Internet Access and DNS** and select the **Split Tunnel** option to prevent all client traffic from being redirected through the VPN. Only traffic destined for the VPC subnets will be routed through the VPN.
 
-        ![Configuració de Split Tunnel](../../figs/laboratories/03-aws-wp/wordpress/VPN-Split-Tunnel.png)
+        ![Configuring Split Tunnel](../../figs/laboratories/03-aws-wp/wordpress/VPN-Split-Tunnel.png)
 
-    - Aneu a **Access Controls/Global Access Rules** i afegiu una regla per permetre el tràfic de la VPN a les subxarxes de la VPC:
+    - Go to **Access Controls/Global Access Rules** and add a rule to allow VPN traffic to the VPC subnets:
   
-        ![Configuració de les regles d'accés global](../../figs/laboratories/03-aws-wp/wordpress/VPN-Global-Acces.png)
+        ![Configuring Global Access Rules](../../figs/laboratories/03-aws-wp/wordpress/VPN-Global-Acces.png)
 
-    - Aneu a **User** i creu-vos un usuari i una contrasenya per connectar-vos al servidor VPN.
+    - Go to **User** and create a username and password to connect to the VPN server.
 
-        ![Creació d'un usuari per al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-User.png)
+        ![Creating a VPN Server User](../../figs/laboratories/03-aws-wp/wordpress/VPN-User.png)
 
     - Un cop tinguem el fitxer de configuració, ja podeu fer un **Restart** del servei OpenVPN per aplicar tots els canvis. Torneu a accedir a la interfície web del servidor OpenVPN.
 
