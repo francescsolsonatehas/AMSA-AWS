@@ -142,52 +142,52 @@ The third step is to allow outbound traffic to the Internet through the NAT Gate
 Repeat the same steps for the subnet **AMSA-Private02**, modifying only the name of the route table and the association with the subnet.
 :::
 
-#### 2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)
+#### 2.2.3. Routing for the data subnet (AMSA-Data)
 
 The subnet **AMSA-Data** will not host instances that require Internet access. Therefore, we do not need to configure any route for this subnet. We will create an empty route table and associate it with the subnet **AMSA-Data**. This network will be completely isolated and will only allow internal communication within the VPC.
 
 
-## 3. Grups de Seguretat
+## 3. Security Groups
 
-Els grups de seguretat (Security Groups) són una eina per controlar el tràfic de xarxa de les instàncies i altres recursos d’AWS, actuant com un tallafocs virtual. Permeten definir regles que especifiquen quines connexions estan permeses tant d'entrada (inbound) com de sortida (outbound).
+Security Groups are a tool for controlling network traffic for instances and other AWS resources, acting as a virtual firewall. They allow defining rules that specify which connections are allowed for both inbound and outbound traffic
 
-- **Trafic inbound**: Permet decidir quins tipus de connexions entrants (cap al recurs) són permeses.
-- **Trafic outbound**: Controla quines connexions sortints (des del recurs cap a altres destinacions) estan autoritzades.
+- **Trafic inbound**: It allows you to decide which types of incoming connections (to the resource) are permitted.
+- **Trafic outbound**: Control which outbound connections (from the resource to other destinations) are authorized.
   
-### 3.1. Grup de Seguretat per a les instàncies EC2
+### 3.1. Security Group for EC2 instances
 
-- **Connexions entrants (inbound)** per als serveis web HTTP (port 80) i HTTPS (port 443), accessibles des de qualsevol origen.
-- **Connexions SSH (port 22)** per a administració remota, també accessibles des de qualsevol origen (inicialment, però més endavant es restringiran).
-- Totes les connexions sortints (**outbound**), que per defecte estan permeses a AWS, cosa que permet a les instàncies EC2 comunicar-se amb altres recursos com ara RDS.
+- **Inbound connections** for web services HTTP (port 80) and HTTPS (port 443), accessible from any origin.
+- **SSH conections (port 22)** for remote administration, also accessible from any origin (initially, but later they will be restricted).
+- All outbound connections (**outbound**). By default, they are allowed in AWS, which enables EC2 instances to communicate with other resources such as RDS.
 
-Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la secció *Security Groups* i clicarem a *Create security group*. A continuació, omplirem els camps amb la informació necessària i clicarem a *Create security group*. El podeu anomenar **AMSA-WP-SG**.
+To do this, we will navigate to the AWS VPC console, select the *Security Groups* section, and click *Create security group*. Next, we will fill in the fields with the necessary information and click *Create security group*. You can name it **AMSA-WP-SG**.
 
-![Grup de Seguretat per a les instàncies EC2](../../figs/laboratories/03-aws-wp/wordpress/AMSA-WP-SG.png)
+![Security Group for EC2 instances](../../figs/laboratories/03-aws-wp/wordpress/AMSA-WP-SG.png)
 
 :::{.callout-note title="Nota sobre la seguretat 🔐"}
-En aquest moment, estem permetent tot el tràfic de xarxa per als serveis web i SSH. Quan ho tinguem tot configurat, restringirem aquest accés únicament al trafic entrant provinent del balancejador de càrrega pels serveis web i a la nostra xarxa interna per a SSH.
+Now we allow all network traffic for web services and SSH. Once everything is configured, we will restrict this access only to inbound traffic coming from the load balancer for web services and from our internal network for SSH.
 :::
 
-### Grup de Seguretat per a la base de dades RDS
+### Security Group for the database RDS
 
-- **Connexions inbound**: Només permetrà tràfic al port 3306 (MySQL) i exclusivament des de les instàncies EC2 que pertanyin al grup de seguretat **AMSA-WP-SG**.
-- **Connexions outbound**: Per defecte, AWS permetrà totes les connexions sortints, cosa que garanteix que la base de dades pugui comunicar-se amb altres recursos si és necessari.
+- **Inbound connections**: t will only allow traffic on port 3306 (MySQL) and exclusively from EC2 instances that belong to the security group **AMSA-WP-SG**.
+- **Outbound connections**: By default, AWS will allow all outbound connections, which ensures that the database can communicate with other resources if necessary.
 
-Per fer-ho, navegarem a la consola de VPC d'AWS, seleccionarem la secció *Security Groups* i clicarem a *Create security group*. A continuació, omplirem els camps amb la informació necessària i clicarem a *Create security group*.
+To do this, we will navigate to the AWS VPC console, select the Security Groups section, and click Create security group. Next, we will fill in the fields with the necessary information and click *Create security group*.
 
-![Grup de Seguretat per a la base de dades RDS](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png)
+![Security Group for the database RDS](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png)
 
 ### Resum
 
 | Grup de Seguretat | Inbound | Outbound |
 |-------------------|---------|----------|
-| AMSA-WP-SG       | HTTP (80) i HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0| Totes permeses |
-| AMSA-DB-SG        | MySQL (3306) des de AMSA-Web-SG | Totes permeses |
+| AMSA-WP-SG       | HTTP (80) and HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0| All allowed |
+| AMSA-DB-SG        | MySQL (3306) des de AMSA-Web-SG | All allowed |
 
 
 ## Creació de la Base de Dades RDS
 
-La base de dades ja la vam configurar en el laboratori anterior [Desplegament d'una aplicació web amb AWS](../01-foundations/02-aws-wordpress.qmd). La única diferència és que ara la base de dades es troba en una subxarxa privada i només és accessible des de les instàncies EC2 que pertanyen al grup de seguretat **AMSA-Web-SG**.
+We already configured the database in the previous lab Deploying a web application with AWS. The only difference is that now the database is located in a private subnet and is only accessible from EC2 instances that belong to the security group **AMSA-Web-SG**.
 
 - **Compute resources**: Don't connect to an EC2 compute resource
 - **VPC**: AMSA-VPC
@@ -197,9 +197,9 @@ La base de dades ja la vam configurar en el laboratori anterior [Desplegament d'
 - **Availability Zone**: us-east-1d
 
 
-## Creació de les instàncies EC2
+## Creation of EC2 instances
 
-Les instàncies EC2 que allotjaran WordPress es desplegaran en les subxarxes privades, recordeu que vam configurar ansible en el laboratori anterior [Desplegament d'una aplicació web amb AWS](../01-foundations/02-aws-wordpress.qmd). AWS ens permet crear plantilles d'instàncies (**Launch Templates**) que faciliten la creació d'instàncies amb una configuració predefinida. Per tant, crearem una plantilla d'instància que inclogui la configuració necessària per a les nostres instàncies EC2 de WordPress, enlloc d'utiltizar el mètode amb ansible que vam utilitzar en el laboratori anterior.
+The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.
 
 # Configuració del Servidor Web amb WordPress
 
