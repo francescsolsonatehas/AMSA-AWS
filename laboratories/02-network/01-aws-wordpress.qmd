@@ -110,41 +110,41 @@ The third step is to allow outbound traffic to the Internet through the Internet
 Perform the same steps for the subnet **AMSA-DMZ-02**, modifying only the name of the route table and the association with the subnet.
 :::
 
-#### 2.2.2. Enrutament per a les subxarxes privades
+#### 2.2.2. Routing for private subnets
 
-Les subxarxes privades no tenen accés directe a Internet per motius de seguretat. Per tant, necessitem configurar les taules de rutes per a aquestes subxarxes de manera que puguin accedir a Internet a través d'un NAT Gateway (Network Address Translation Gateway). Això permetrà que les instàncies dins de les subxarxes privades puguin iniciar connexions cap a l'exterior, però impedirà que l'exterior iniciï connexions cap a elles. 
+Private subnets do not have direct access to the Internet for security reasons. Therefore, we need to configure the route tables for these subnets so that they can access the Internet through a NAT Gateway (Network Address Translation Gateway). This will allow instances within the private subnets to initiate outbound connections, but prevent external sources from initiating connections to them. 
 
 :::{.callout-note title="NAT Gateway 🧠"}
-Un NAT Gateway és un servei gestionat per AWS que permet a les instàncies en una subxarxa privada accedir a Internet per a actualitzacions de programari, descàrregues de paquets, etc., sense exposar aquestes instàncies directament a Internet. El NAT Gateway tradueix les adreces IP privades de les instàncies a una adreça IP pública quan aquestes instàncies fan peticions a Internet.
+A NAT Gateway is a managed service by AWS that allows instances in a private subnet to access the Internet for software updates, package downloads, etc., without exposing those instances directly to the Internet. The NAT Gateway translates the private IP addresses of the instances into a public IP address when those instances make requests to the Internet.
 :::
 
-Per crear el NAT Gateway, necessitem una IP elàstica (Elastic IP). Per tant, primer crearem una IP elàstica i després la utilitzarem per crear el NAT Gateway. L'anomeneu **AMSA-NAT-EIP**.
+To create the NAT Gateway, we need an Elastic IP. Therefore, we will first create an Elastic IP and then use it to create the NAT Gateway. Name it **AMSA-NAT-EIP**.
   
-![Creació de la IP elàstica](../../figs/laboratories/03-aws-wp/wordpress/ElasticIP-NAT.png)
+![Creating the Elastic IP](../../figs/laboratories/03-aws-wp/wordpress/ElasticIP-NAT.png)
 
-![Actualitzar el nom de la IP elàstica](../../figs/laboratories/03-aws-wp/wordpress/ElasticIp-Nat2.png)
+![Update the name of the Elastic IP](../../figs/laboratories/03-aws-wp/wordpress/ElasticIp-Nat2.png)
 
-Un cop tenim la IP elàstica, podem crear el NAT Gateway. L'anomeneu **AMSA-NG** i l'associeu a la subxarxa **AMSA-DMZ-01**. 
+Once we have the Elastic IP, we can create the NAT Gateway. Name it **AMSA-NG** and associate it with the subnet **AMSA-DMZ-01**. 
 
-![Creació del NAT Gateway](../../figs/laboratories/03-aws-wp/wordpress/nat-gw-create.png)
+![Creating the NAT Gateway](../../figs/laboratories/03-aws-wp/wordpress/nat-gw-create.png)
 
-Crearem la taula de rutes (*AMSA-Private01-RT*) per a la subxarxa **AMSA-Private01** i l'associarem a la subxarxa. Aquesta taula de rutes permetrà que les instàncies dins d'aquesta subxarxa accedeixin a Internet a través del NAT Gateway.
+Create the route table (*AMSA-Private01-RT*) for the subnet **AMSA-Private01** and we will associate it with the subnet. This route table will allow the instances within this subnet to access the Internet through the NAT Gateway.
 
-![Taula de rutes per a la subxarxa AMSA-Private01](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Private01-RT.png)
+![Route table for the subnet AMSA-Private01](../../figs/laboratories/03-aws-wp/wordpress/AMSA-Private01-RT.png)
 
-El segon pas és associar la taula de rutes (*AMSA-Private01-RT*) amb la subxarxa **AMSA-Private01** i permetre el tràfic de sortida a Internet a través del NAT Gateway que hem creat anteriorment. 
+The second step is to associate the route table (*AMSA-Private01-RT*) with the subnet **AMSA-Private01** and allow outbound traffic to the Internet through the NAT Gateway we created earlier. 
 
-![Creació de la taula de rutes per a la subxarxa AMSA-Private01](../../figs/laboratories/03-aws-wp/AMSA-Private01-RT-create.png)
+![Creating the route table for the subnet AMSA-Private01](../../figs/laboratories/03-aws-wp/AMSA-Private01-RT-create.png)
 
-El tercer pas és permetre el tràfic de sortida a Internet a través del NAT Gateway que hem creat anteriorment. Per fer-ho aneu a la secció *Routes* i clicareu a *Edit routes*. A continuació, **Add route** i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el **AMSA-NG**).
+The third step is to allow outbound traffic to the Internet through the NAT Gateway we created earlier. To do this, go to the section *Routes* and click on *Edit routes*. Next, **Add route** and edit (Destination: 0.0.0.0/0; Target:Select **AMSA-NG**).
 
 :::{.callout-warning title="AMSA-Private02 🛑"}
-Repetiu els mateixos passos per a la subxarxa **AMSA-Private02**, modificant només el nom de la taula de rutes i l'associació amb la subxarxa.
+Repeat the same steps for the subnet **AMSA-Private02**, modifying only the name of the route table and the association with the subnet.
 :::
 
 #### 2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)
 
-La subxarxa **AMSA-Data** no allotjarà instàncies que necessitin accés a Internet. Per tant, no necessitem configurar cap ruta per a aquesta subxarxa. Crearem una taula de rutes buida i l'associarem a la subxarxa **AMSA-Data**. Aquesta xarxa serà completament aïllada i només permetrà la comunicació interna dins de la VPC.
+The subnet **AMSA-Data** will not host instances that require Internet access. Therefore, we do not need to configure any route for this subnet. We will create an empty route table and associate it with the subnet **AMSA-Data**. This network will be completely isolated and will only allow internal communication within the VPC.
 
 
 ## 3. Grups de Seguretat
