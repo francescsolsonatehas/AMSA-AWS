@@ -204,14 +204,14 @@ window.Quarto = {
   <li><a href="#internet-gateway-configuration" id="toc-internet-gateway-configuration" class="nav-link" data-scroll-target="#internet-gateway-configuration">2.1. Internet Gateway Configuration</a></li>
   <li><a href="#creation-of-routing-tables" id="toc-creation-of-routing-tables" class="nav-link" data-scroll-target="#creation-of-routing-tables">2.2. Creation of Routing Tables</a></li>
   </ul></li>
-  <li><a href="#grups-de-seguretat" id="toc-grups-de-seguretat" class="nav-link" data-scroll-target="#grups-de-seguretat">3. Grups de Seguretat</a>
+  <li><a href="#security-groups" id="toc-security-groups" class="nav-link" data-scroll-target="#security-groups">3. Security Groups</a>
   <ul class="collapse">
-  <li><a href="#grup-de-seguretat-per-a-les-instàncies-ec2" id="toc-grup-de-seguretat-per-a-les-instàncies-ec2" class="nav-link" data-scroll-target="#grup-de-seguretat-per-a-les-instàncies-ec2">3.1. Grup de Seguretat per a les instàncies EC2</a></li>
-  <li><a href="#grup-de-seguretat-per-a-la-base-de-dades-rds" id="toc-grup-de-seguretat-per-a-la-base-de-dades-rds" class="nav-link" data-scroll-target="#grup-de-seguretat-per-a-la-base-de-dades-rds">Grup de Seguretat per a la base de dades RDS</a></li>
+  <li><a href="#security-group-for-ec2-instances" id="toc-security-group-for-ec2-instances" class="nav-link" data-scroll-target="#security-group-for-ec2-instances">3.1. Security Group for EC2 instances</a></li>
+  <li><a href="#security-group-for-the-database-rds" id="toc-security-group-for-the-database-rds" class="nav-link" data-scroll-target="#security-group-for-the-database-rds">Security Group for the database RDS</a></li>
   <li><a href="#resum" id="toc-resum" class="nav-link" data-scroll-target="#resum">Resum</a></li>
   </ul></li>
   <li><a href="#creació-de-la-base-de-dades-rds" id="toc-creació-de-la-base-de-dades-rds" class="nav-link" data-scroll-target="#creació-de-la-base-de-dades-rds">Creació de la Base de Dades RDS</a></li>
-  <li><a href="#creació-de-les-instàncies-ec2" id="toc-creació-de-les-instàncies-ec2" class="nav-link" data-scroll-target="#creació-de-les-instàncies-ec2">Creació de les instàncies EC2</a></li>
+  <li><a href="#creation-of-ec2-instances" id="toc-creation-of-ec2-instances" class="nav-link" data-scroll-target="#creation-of-ec2-instances">Creation of EC2 instances</a></li>
   <li><a href="#configuració-del-servidor-web-amb-wordpress" id="toc-configuració-del-servidor-web-amb-wordpress" class="nav-link" data-scroll-target="#configuració-del-servidor-web-amb-wordpress">Configuració del Servidor Web amb WordPress</a>
   <ul class="collapse">
   <li><a href="#configuració-del-balancejador-de-càrrega" id="toc-configuració-del-balancejador-de-càrrega" class="nav-link" data-scroll-target="#configuració-del-balancejador-de-càrrega">Configuració del Balancejador de Càrrega</a></li>
@@ -484,31 +484,31 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="enrutament-per-a-la-subxarxa-de-dades-amsa-data" class="level4">
-<h4 class="anchored" data-anchor-id="enrutament-per-a-la-subxarxa-de-dades-amsa-data">2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)</h4>
+<section id="routing-for-the-data-subnet-amsa-data" class="level4">
+<h4 class="anchored" data-anchor-id="routing-for-the-data-subnet-amsa-data">2.2.3. Routing for the data subnet (AMSA-Data)</h4>
 <p>The subnet <strong>AMSA-Data</strong> will not host instances that require Internet access. Therefore, we do not need to configure any route for this subnet. We will create an empty route table and associate it with the subnet <strong>AMSA-Data</strong>. This network will be completely isolated and will only allow internal communication within the VPC.</p>
 </section>
 </section>
 </section>
-<section id="grups-de-seguretat" class="level2">
-<h2 class="anchored" data-anchor-id="grups-de-seguretat">3. Grups de Seguretat</h2>
-<p>Els grups de seguretat (Security Groups) són una eina per controlar el tràfic de xarxa de les instàncies i altres recursos d’AWS, actuant com un tallafocs virtual. Permeten definir regles que especifiquen quines connexions estan permeses tant d’entrada (inbound) com de sortida (outbound).</p>
+<section id="security-groups" class="level2">
+<h2 class="anchored" data-anchor-id="security-groups">3. Security Groups</h2>
+<p>Security Groups are a tool for controlling network traffic for instances and other AWS resources, acting as a virtual firewall. They allow defining rules that specify which connections are allowed for both inbound and outbound traffic</p>
 <ul>
-<li><strong>Trafic inbound</strong>: Permet decidir quins tipus de connexions entrants (cap al recurs) són permeses.</li>
-<li><strong>Trafic outbound</strong>: Controla quines connexions sortints (des del recurs cap a altres destinacions) estan autoritzades.</li>
+<li><strong>Trafic inbound</strong>: It allows you to decide which types of incoming connections (to the resource) are permitted.</li>
+<li><strong>Trafic outbound</strong>: Control which outbound connections (from the resource to other destinations) are authorized.</li>
 </ul>
-<section id="grup-de-seguretat-per-a-les-instàncies-ec2" class="level3">
-<h3 class="anchored" data-anchor-id="grup-de-seguretat-per-a-les-instàncies-ec2">3.1. Grup de Seguretat per a les instàncies EC2</h3>
+<section id="security-group-for-ec2-instances" class="level3">
+<h3 class="anchored" data-anchor-id="security-group-for-ec2-instances">3.1. Security Group for EC2 instances</h3>
 <ul>
-<li><strong>Connexions entrants (inbound)</strong> per als serveis web HTTP (port 80) i HTTPS (port 443), accessibles des de qualsevol origen.</li>
-<li><strong>Connexions SSH (port 22)</strong> per a administració remota, també accessibles des de qualsevol origen (inicialment, però més endavant es restringiran).</li>
-<li>Totes les connexions sortints (<strong>outbound</strong>), que per defecte estan permeses a AWS, cosa que permet a les instàncies EC2 comunicar-se amb altres recursos com ara RDS.</li>
+<li><strong>Inbound connections</strong> for web services HTTP (port 80) and HTTPS (port 443), accessible from any origin.</li>
+<li><strong>SSH conections (port 22)</strong> for remote administration, also accessible from any origin (initially, but later they will be restricted).</li>
+<li>All outbound connections (<strong>outbound</strong>). By default, they are allowed in AWS, which enables EC2 instances to communicate with other resources such as RDS.</li>
 </ul>
-<p>Per fer-ho, navegarem a la consola de VPC d’AWS, seleccionarem la secció <em>Security Groups</em> i clicarem a <em>Create security group</em>. A continuació, omplirem els camps amb la informació necessària i clicarem a <em>Create security group</em>. El podeu anomenar <strong>AMSA-WP-SG</strong>.</p>
+<p>To do this, we will navigate to the AWS VPC console, select the <em>Security Groups</em> section, and click <em>Create security group</em>. Next, we will fill in the fields with the necessary information and click <em>Create security group</em>. You can name it <strong>AMSA-WP-SG</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/AMSA-WP-SG.png" class="img-fluid figure-img"></p>
-<figcaption>Grup de Seguretat per a les instàncies EC2</figcaption>
+<figcaption>Security Group for EC2 instances</figcaption>
 </figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Nota sobre la seguretat 🔐">
@@ -521,21 +521,21 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En aquest moment, estem permetent tot el tràfic de xarxa per als serveis web i SSH. Quan ho tinguem tot configurat, restringirem aquest accés únicament al trafic entrant provinent del balancejador de càrrega pels serveis web i a la nostra xarxa interna per a SSH.</p>
+<p>Now we allow all network traffic for web services and SSH. Once everything is configured, we will restrict this access only to inbound traffic coming from the load balancer for web services and from our internal network for SSH.</p>
 </div>
 </div>
 </section>
-<section id="grup-de-seguretat-per-a-la-base-de-dades-rds" class="level3">
-<h3 class="anchored" data-anchor-id="grup-de-seguretat-per-a-la-base-de-dades-rds">Grup de Seguretat per a la base de dades RDS</h3>
+<section id="security-group-for-the-database-rds" class="level3">
+<h3 class="anchored" data-anchor-id="security-group-for-the-database-rds">Security Group for the database RDS</h3>
 <ul>
-<li><strong>Connexions inbound</strong>: Només permetrà tràfic al port 3306 (MySQL) i exclusivament des de les instàncies EC2 que pertanyin al grup de seguretat <strong>AMSA-WP-SG</strong>.</li>
-<li><strong>Connexions outbound</strong>: Per defecte, AWS permetrà totes les connexions sortints, cosa que garanteix que la base de dades pugui comunicar-se amb altres recursos si és necessari.</li>
+<li><strong>Inbound connections</strong>: t will only allow traffic on port 3306 (MySQL) and exclusively from EC2 instances that belong to the security group <strong>AMSA-WP-SG</strong>.</li>
+<li><strong>Outbound connections</strong>: By default, AWS will allow all outbound connections, which ensures that the database can communicate with other resources if necessary.</li>
 </ul>
-<p>Per fer-ho, navegarem a la consola de VPC d’AWS, seleccionarem la secció <em>Security Groups</em> i clicarem a <em>Create security group</em>. A continuació, omplirem els camps amb la informació necessària i clicarem a <em>Create security group</em>.</p>
+<p>To do this, we will navigate to the AWS VPC console, select the Security Groups section, and click Create security group. Next, we will fill in the fields with the necessary information and click <em>Create security group</em>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png" class="img-fluid figure-img"></p>
-<figcaption>Grup de Seguretat per a la base de dades RDS</figcaption>
+<figcaption>Security Group for the database RDS</figcaption>
 </figure>
 </div>
 </section>
@@ -557,13 +557,13 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td>AMSA-WP-SG</td>
-<td>HTTP (80) i HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0</td>
-<td>Totes permeses</td>
+<td>HTTP (80) and HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0</td>
+<td>All allowed</td>
 </tr>
 <tr class="even">
 <td>AMSA-DB-SG</td>
 <td>MySQL (3306) des de AMSA-Web-SG</td>
-<td>Totes permeses</td>
+<td>All allowed</td>
 </tr>
 </tbody>
 </table>
@@ -571,7 +571,7 @@ window.Quarto = {
 </section>
 <section id="creació-de-la-base-de-dades-rds" class="level2">
 <h2 class="anchored" data-anchor-id="creació-de-la-base-de-dades-rds">Creació de la Base de Dades RDS</h2>
-<p>La base de dades ja la vam configurar en el laboratori anterior <a href="../../laboratories/01-foundations/02-aws-wordpress.html">Desplegament d’una aplicació web amb AWS</a>. La única diferència és que ara la base de dades es troba en una subxarxa privada i només és accessible des de les instàncies EC2 que pertanyen al grup de seguretat <strong>AMSA-Web-SG</strong>.</p>
+<p>We already configured the database in the previous lab Deploying a web application with AWS. The only difference is that now the database is located in a private subnet and is only accessible from EC2 instances that belong to the security group <strong>AMSA-Web-SG</strong>.</p>
 <ul>
 <li><strong>Compute resources</strong>: Don’t connect to an EC2 compute resource</li>
 <li><strong>VPC</strong>: AMSA-VPC</li>
@@ -581,9 +581,9 @@ window.Quarto = {
 <li><strong>Availability Zone</strong>: us-east-1d</li>
 </ul>
 </section>
-<section id="creació-de-les-instàncies-ec2" class="level2">
-<h2 class="anchored" data-anchor-id="creació-de-les-instàncies-ec2">Creació de les instàncies EC2</h2>
-<p>Les instàncies EC2 que allotjaran WordPress es desplegaran en les subxarxes privades, recordeu que vam configurar ansible en el laboratori anterior <a href="../../laboratories/01-foundations/02-aws-wordpress.html">Desplegament d’una aplicació web amb AWS</a>. AWS ens permet crear plantilles d’instàncies (<strong>Launch Templates</strong>) que faciliten la creació d’instàncies amb una configuració predefinida. Per tant, crearem una plantilla d’instància que inclogui la configuració necessària per a les nostres instàncies EC2 de WordPress, enlloc d’utiltizar el mètode amb ansible que vam utilitzar en el laboratori anterior.</p>
+<section id="creation-of-ec2-instances" class="level2">
+<h2 class="anchored" data-anchor-id="creation-of-ec2-instances">Creation of EC2 instances</h2>
+<p>The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.</p>
 </section>
 <section id="configuració-del-servidor-web-amb-wordpress" class="level1">
 <h1>Configuració del Servidor Web amb WordPress</h1>
