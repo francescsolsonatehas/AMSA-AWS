@@ -201,31 +201,31 @@ We already configured the database in the previous lab Deploying a web applicati
 
 The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.
 
-# Configuració del Servidor Web amb WordPress
+# Web Server Configuration with WordPress
 
-1. Creareu una instancia EC2 amb Amazon Linux, seleccionant la VPC **AMSA-VPC** i la subxarxa **AMSA-DMZ-01**. Assegureu-vos que l'instància utilitzi el grup de seguretat **AMSA-WP-SG**. La podeu anomenar **AMSA-DB-Config**. Seleccionar *assignar ip pública*. Aquesta instància només la farem servir per inicialitzar la base de dades i després la podrem eliminar.
+1. Create an EC2 instance with Amazon Linux, selecting the VPC **AMSA-VPC** and the subnet **AMSA-DMZ-01**. Make sure that the instance uses the security group **AMSA-WP-SG**. You can name it **AMSA-DB-Config**. Select *assign public IP*. We will only use this instance to initialize the database and then we can delete it.
 
-2. Un cop configurada la instància, connecteu-vos-hi mitjançant SSH utilitzant la clau privada corresponent a la clau pública que vau associar a la instància durant la seva creació. I realitzeu la configuració de la base de dades MySQL per a WordPress.
+2. Once the instance is configured, connect to it via SSH using the private key corresponding to the public key you associated with the instance during its creation. Then configure the MySQL database for WordPress.
 
-3. Anem a crear una plantilla de llançament (**Launch Template**) per a les instàncies EC2 que allotjaran WordPress. Aquesta plantilla inclourà la configuració necessària per a les instàncies, incloent-hi el script d'instal·lació i configuració de WordPress.
+3. Let's create a launch template (**Launch Template**) for the EC2 instances that will host WordPress. This template will include the necessary configuration for the instances, including the installation and configuration script for WordPress.
 
-   - Nom de la plantilla: **AMSA-WP-Template**
+   - Template name: **AMSA-WP-Template**
    - AMI: Amazon Linux 2023 (64-bit x86)
-   - Instància Type: t2.micro
+   - Instance Type: t2.micro
    - Key Pair: AMSA-KEY
-   - Subxarxa: No seleccionar cap subxarxa (es seleccionarà dinàmicament)
-   - Grup de Seguretat: *AMSA-WP-SG*
-   - Advanced Details: Afegiu el següent script a la secció de UserData.
+   - Subnet: Do not select any subnet (it will be selected dynamically
+   - Security group: *AMSA-WP-SG*
+   - Advanced Details: Add the following script to the User Data section.
 
-:::{.callout-note title="Script d'instal·lació i configuració de WordPress 📝"}
+:::{.callout-note title="WordPress installation and configuration script 📝"}
 
-Modifiqueu les dades de connexió a la base de dades segons les vostres dades.
+Modify the database connection details according to your own data.
 
 ```bash
 #!/bin/bash
 # sudo bash install_wp.sh
 
-# Ajusteu les dades següents segons les vostres dades
+# Adjust the following data according to your own details
 DB_NAME="" 
 DB_USER=""
 DB_USER_PASSWORD=""
@@ -260,27 +260,29 @@ sudo systemctl restart httpd
 ```
 :::
 
-Un cop creada la plantilla de llançament, podeu utilitzar-la per crear instàncies EC2 amb WordPress ja configurat i preparades per connectar amb la vostra base de dades RDS. Aneu a **EC2** i seleccioneu **Launch Instance**. A continuació, seleccioneu la plantilla de llançament **AMSA-WP-Template** i configureu la resta de paràmetres segons les vostres necessitats.
+Once the launch template is created, you can use it to create EC2 instances with WordPress already configured and ready to connect to your RDS database. Go to **EC2** and select **Launch Instance**. Then select the launch template **AMSA-WP-Template** and configure the remaining parameters according to your needs.
 
 - Nombre d'instàncies: 2
-- Subxarxa: Seleccioneu la subxarxa **AMSA-Private01** per a la primera instància i **AMSA-Private02** per a la segona instància. Les podeu anomenar **AMSA-WP-01** i **AMSA-WP-02** respectivament.
+- Subxarxa: Select the subnet **AMSA-Private01** for the first instance and **AMSA-Private02** for the second instance. You can name them **AMSA-WP-01** i **AMSA-WP-02** respectively.
 
 
-:::{.callout-important title="Nota sobre les instàncies EC2 🖥️"}
-Aquestes instàncies no tindran IP pública, ja que només seran accessibles a través del balancejador de càrrega que configurarem més endavant. Ara mateix no podreu accedir-hi directament ni per SSH ni per HTTP.
+:::{.callout-important title="Note about EC2 instances 🖥️"}
+These instances will not have a public IP, as they will only be accessible through the load balancer that we will configure later. For now, you will not be able to access them directly via SSH or HTTP.
 :::
 
 
 
-## Configuració del Balancejador de Càrrega
+## Load Balancer Configuration
 
-En aquest punt, crearem un balancejador de càrrega per a les nostres instàncies EC2. Aquest balancejador de càrrega serà responsable de distribuir uniformement el tràfic entre les instàncies EC2 que allotgen WordPress.
+At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.
 
-Existeixen 3 tipus de balancejadors de càrrega a AWS: **Application Load Balancer (ALB)**, **Network Load Balancer (NLB)** i **Gateway Load Balancer (GWLB)**. En aquest cas, utilitzarem un **Application Load Balancer (ALB)**, ja que és el recomanat per a aplicacions web que utiltizen HTTP i HTTPS.
+There are 3 types of load balancers in AWS: **Application Load Balancer (ALB)**, **Network Load Balancer (NLB)** and **Gateway Load Balancer (GWLB)**. In this case, we will use an **Application Load Balancer (ALB)**, as it is recommended for web applications that use HTTP and HTTPS.
 
 Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral, seleccioneu **Load Balancers** i després **Create Load Balancer**. Seleccioneu **Application Load Balancer** i feu clic a **Create**.
 
-- **Nom del balancejador de càrrega**: AMSA-ALB
+Navigate to the AWS console and select the **EC2** service. In the sidebar, select **Load Balancers** and then **Create Load Balancer**. Choose **Application Load Balancer** and click **Create**.
+
+- **Load Balancer name**: AMSA-ALB
 - **Scheme**: Internet-facing
 - **IP Address Type**: IPv4
 
