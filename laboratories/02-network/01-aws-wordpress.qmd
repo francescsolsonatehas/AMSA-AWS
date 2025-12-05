@@ -86,31 +86,31 @@ The second step is to associate the Internet Gateway with the VPC. Select the In
 Make sure the Internet Gateway is correctly associated with the VPC. If it is not associated, the public subnets will not be able to access the Internet.
 :::
 
-### 2.2. Creation of Route Tables
+### 2.2. Creation of Routing Tables
 
 Each subnet needs a route table to define how inbound and outbound traffic is directed. We will create specific route tables for each type of subnet (public and private) and associate them with the corresponding subnets.
 
 
-#### Enrutament per a les subxarxes públiques (DMZ)
+#### 2.2.1. Routing for public subnets (DMZ)
 
-El primer pas és crear la taula de rutes per a les subxarxes públiques. Aneu a **VPC** → **Route Tables** → **Create route table**. Seleccioneu la VPC **AMSA-VPC** i anomeneu la taula de rutes **AMSA-DMZ01-RT**.
+The first step is to create the route table for the public subnets. Go to **VPC** → **Route Tables** → **Create route table**. Select VPC **AMSA-VPC** and name the route table **AMSA-DMZ01-RT**.
 
-![Taula de rutes per a la subxarxa AMSA-DMZ01-RT](../../figs/laboratories/03-aws-wp/AMSA-DMZ01-RT.png)
+![Route table for the subnet AMSA-DMZ01-RT](../../figs/laboratories/03-aws-wp/AMSA-DMZ01-RT.png)
 
-El segon pas és associar la taula de rutes (*AMSA-DMZ01-RT*) amb la subxarxa **AMSA-DMZ-01** i permetre el tràfic de sortida a Internet a través del Gateway d'Internet que hem creat anteriorment. 
+The second step is to associate the route table (*AMSA-DMZ01-RT*) with the subnet **AMSA-DMZ-01** allow outbound traffic to the Internet through the Internet Gateway we created earlier. 
 
-![Associació de la taula de rutes amb la subxarxa AMSA-DMZ-01](../../figs/laboratories/03-aws-wp/AMSA-DMZ-Subnet-Association.png)
+![Association of the route table with the subnet AMSA-DMZ-01](../../figs/laboratories/03-aws-wp/AMSA-DMZ-Subnet-Association.png)
 
-El tercer pas és permetre el tràfic de sortida a Internet a través del Gateway d'Internet que hem creat anteriorment. Per fer-ho aneu a la secció *Routes* i clicareu a *Edit routes*. A continuació, **Add route** i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el **AMSA-IG**).
+The third step is to allow outbound traffic to the Internet through the Internet Gateway we created earlier. To do this, go to the section *Routes* and click on *Edit routes*. Next, **Add route** and edit (Destination: 0.0.0.0/0; Target:Seleccionar el **AMSA-IG**).
 
-![Permetem el tràfic amb l'exterior a través del IG](../../figs/laboratories/03-aws-wp/wordpress/IG.png)
+![Allowing traffic with the outside through the IG](../../figs/laboratories/03-aws-wp/wordpress/IG.png)
 
 
 :::{.callout-warning title="AMSA-DMZ-02 🛑"}
-Realitzeu els mateixos passos per a la subxarxa **AMSA-DMZ-02**, modificant només el nom de la taula de rutes i l'associació amb la subxarxa.
+Perform the same steps for the subnet **AMSA-DMZ-02**, modifying only the name of the route table and the association with the subnet.
 :::
 
-#### Enrutament per a les subxarxes privades
+#### 2.2.2. Enrutament per a les subxarxes privades
 
 Les subxarxes privades no tenen accés directe a Internet per motius de seguretat. Per tant, necessitem configurar les taules de rutes per a aquestes subxarxes de manera que puguin accedir a Internet a través d'un NAT Gateway (Network Address Translation Gateway). Això permetrà que les instàncies dins de les subxarxes privades puguin iniciar connexions cap a l'exterior, però impedirà que l'exterior iniciï connexions cap a elles. 
 
@@ -142,19 +142,19 @@ El tercer pas és permetre el tràfic de sortida a Internet a través del NAT Ga
 Repetiu els mateixos passos per a la subxarxa **AMSA-Private02**, modificant només el nom de la taula de rutes i l'associació amb la subxarxa.
 :::
 
-#### Enrutament per a la subxarxa de dades (AMSA-Data)
+#### 2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)
 
 La subxarxa **AMSA-Data** no allotjarà instàncies que necessitin accés a Internet. Per tant, no necessitem configurar cap ruta per a aquesta subxarxa. Crearem una taula de rutes buida i l'associarem a la subxarxa **AMSA-Data**. Aquesta xarxa serà completament aïllada i només permetrà la comunicació interna dins de la VPC.
 
 
-## Grups de Seguretat
+## 3. Grups de Seguretat
 
 Els grups de seguretat (Security Groups) són una eina per controlar el tràfic de xarxa de les instàncies i altres recursos d’AWS, actuant com un tallafocs virtual. Permeten definir regles que especifiquen quines connexions estan permeses tant d'entrada (inbound) com de sortida (outbound).
 
 - **Trafic inbound**: Permet decidir quins tipus de connexions entrants (cap al recurs) són permeses.
 - **Trafic outbound**: Controla quines connexions sortints (des del recurs cap a altres destinacions) estan autoritzades.
   
-### Grup de Seguretat per a les instàncies EC2
+### 3.1. Grup de Seguretat per a les instàncies EC2
 
 - **Connexions entrants (inbound)** per als serveis web HTTP (port 80) i HTTPS (port 443), accessibles des de qualsevol origen.
 - **Connexions SSH (port 22)** per a administració remota, també accessibles des de qualsevol origen (inicialment, però més endavant es restringiran).
@@ -435,20 +435,6 @@ Finalment, connecteu-vos a les instàncies EC2:
 
 > **Consideracions importants**: El servidor VPN ens permet accedir a les instàncies EC2 a través de SSH, però a partir de l'adreça interna (10.0.X.X) de la instància EC2. No podrem accedir a les instàncies EC2 a través de la seva adreça pública ja que hem configurat la VPN per accedir a les subxarxes de la VPC.
 
-## Neteja els recursos creats
+## Cleanup
 
-Un cop finalitzat podeu eliminar totes les instàncies EC2 i la base de dades RDS per evitar càrrecs innecessaris al vostre compte d'AWS.
-
-## Exercics Adicionals
-
-1. Com milloraríeu els grups de seguretat, quins canvis faríeu?
-2. Què caldria fer per connectar un client MySQL des de casa a la base de dades RDS? Expliqueu els passos.
-3. Prepara un script que faci una prova de càrrega al balancejador de càrrega i mostri com es distribueix el tràfic entre les instàncies EC2.
-4. Genera un infra_v3.yaml que contingui tota la infraestructura com a codi.
-
-## Recursos Addicionals
-
-- [infra_v1.yaml](src/infra-v1.yaml): Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d'AWS utilitzant AWS CloudFormation fins a la creació de templates de llançament.
-- [infra_v2.yaml](src/infra-v2.yaml): Aquest fitxer conté la infraestructura com a codi per crear tots els recursos d'AWS utilitzant AWS CloudFormation sense el load balancer ni les instancies EC2 corresponents als WordPress.
-
-
+Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.
