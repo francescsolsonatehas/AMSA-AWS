@@ -511,13 +511,13 @@ window.Quarto = {
 <figcaption>Security Group for EC2 instances</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Nota sobre la seguretat 🔐">
+<div class="callout callout-style-default callout-note callout-titled" title="Security note 🔐">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Nota sobre la seguretat 🔐
+<span class="screen-reader-only">Note</span>Security note 🔐
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -772,10 +772,10 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="ec2-to-deploy-the-vpn-server">EC2 to deploy the VPN server</h3>
 <p>To deploy the VPN server, we will create a new EC2 instance that will act as the VPN server. This EC2 instance must be in a public subnet connected to the internet. We will name this instance <strong>AMSA-VPN</strong> and place it in the public subnet <strong>AMSA-DMZ-01</strong>. This EC2 instance will use the security group <strong>AMSA-VPN-SG</strong>, which will allow the necessary traffic for the VPN server to function.</p>
 <ol type="1">
-<li><p>Navigate to the AWS console and select the <strong>EC2</strong> service. In the sidebar, select <strong>Instances</strong> and then <strong>Launch Instances</strong>.</p></li>
-<li><p>Select the image <strong>Ubuntu Server 22.04 LTS</strong>.</p></li>
-<li><p>Select the instance <strong>t2.micro</strong>.</p></li>
-<li><p>Configure the instance:</p>
+<li>Navigate to the AWS console and select the <strong>EC2</strong> service. In the sidebar, select <strong>Instances</strong> and then <strong>Launch Instances</strong>.</li>
+<li>Select the image <strong>Ubuntu Server 22.04 LTS</strong>.</li>
+<li>Select the instance <strong>t2.micro</strong>.</li>
+<li>Configure the instance:
 <ul>
 <li><strong>Network</strong>: AMSA-VPC</li>
 <li><strong>Subnet</strong>: AMSA-DMZ-01</li>
@@ -787,73 +787,70 @@ window.Quarto = {
 <figcaption>EC2 instance configuration for the VPN server</figcaption>
 </figure>
 </div></li>
-<li><p>Configure the security group: <strong>AMSA-VPN-SG</strong>.</p>
-<p>Si reviseu la documentació d’instal·lació del servidor OpenVPN: <a href="https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf">OpenVPN Access Server System Administrator Guide</a>. Veure que necessitem els següents ports oberts: <strong>TCP 943, UDP 1194</strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png" class="img-fluid figure-img"></p>
-<figcaption>Configuració del grup de seguretat per al servidor VPN</figcaption>
-</figure>
-</div></li>
-<li><p>Connecteu-vos a la instància EC2 a través de la consola online de AWS o amb una connexió SSH i executeu la següent comanda per instal·lar el servidor OpenVPN:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="at">-y</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ca-certificates gnupg wget net-tools <span class="at">-y</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget https://as-repository.openvpn.net/as-repo-public.asc <span class="at">-qO</span> /etc/apt/trusted.gpg.d/as-repo-public.asc</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">"deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/as-repo-public.asc] http://as-repository.openvpn.net/as/debian jammy main"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/openvpn-as-repo.list</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install openvpn-as <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<li>Configure the security group: <strong>AMSA-VPN-SG</strong>.</li>
+</ol>
+<p>If you review the installation documentation for the OpenVPN server: OpenVPN: <a href="https://openvpn.net/images/pdf/OpenVPN_Access_Server_Sysadmin_Guide_Rev.pdf">OpenVPN Access Server System Administrator Guide</a>, you will see that we need the following ports open: <strong>TCP 943, UDP 1194</strong>.</p>
+<pre><code>![Security group configuration for the VPN server](../../figs/laboratories/03-aws-wp/wordpress/AMSA-SG-VPN.png)</code></pre>
+<ol start="6" type="1">
+<li><p>Connect to the EC2 instance through the AWS online console or with an SSH connection and run the following command to install the OpenVPN server:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="at">-y</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install ca-certificates gnupg wget net-tools <span class="at">-y</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget https://as-repository.openvpn.net/as-repo-public.asc <span class="at">-qO</span> /etc/apt/trusted.gpg.d/as-repo-public.asc</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> echo <span class="st">"deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/as-repo-public.asc] http://as-repository.openvpn.net/as/debian jammy main"</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /etc/apt/sources.list.d/openvpn-as-repo.list</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install openvpn-as <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-config.png" class="img-fluid figure-img"></p>
-<figcaption>Instal·lació del servidor OpenVPN</figcaption>
+<figcaption>OpenVPN server installation</figcaption>
 </figure>
 </div></li>
-<li><p>Amb aquestes credencials, podreu accedir a la interfície web del servidor OpenVPN a través del vostre navegador web. Navegueu a la IP pública de la instància EC2 (en el meu cas https://44.199.196.242:943/admin), com no tenim el certificat SSL configurat, ens sortirà un missatge d’advertència, ignoreu-lo i continueu. Inicieu sessió amb les credencials que heu configurat anteriorment.</p>
+<li><p>With these credentials, you will be able to access the OpenVPN server’s web interface through your web browser. Navigate to the public IP of the EC2 instance (in my case https://44.199.196.242:943/admin). Since we don’t have the SSL certificate configured, a warning message will appear—ignore it and continue. Log in with the credentials you configured earlier..</p>
 <blockquote class="blockquote">
-<p>Nota: Si heu perdut les credencials de l’usuari <code>openvpn</code>, les podeu recuperar consultat el fitxer de logs del servidor OpenVPN. Per exemple, podeu consultar el fitxer de logs amb la següent comanda:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> less /usr/local/openvpn_as/init.log </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note: If you have lost the <code>openvpn</code> user credentials, you can recover them by checking the OpenVPN server log file. For example, you can view the log file with the following command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> less /usr/local/openvpn_as/init.log </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-login.png" class="img-fluid figure-img"></p>
-<figcaption>Interfície web del servidor OpenVPN</figcaption>
+<figcaption>OpenVPN server web interface</figcaption>
 </figure>
 </div>
 <ul>
-<li>Accepteu els termes de llicència.</li>
+<li>Accept the license terms..</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-accept-terms.png" class="img-fluid figure-img"></p>
-<figcaption>Acceptació dels termes de llicència</figcaption>
+<figcaption>Accepting the license terms.</figcaption>
 </figure>
 </div>
 <ul>
-<li><p>Aneu a <strong>VPN Server/Network Settings</strong> i configureu el <strong>Hostname or IP Address</strong> amb la IP pública de la instància EC2 on teniu el servidor OpenVPN. Un cop fet, clicareu a <strong>Save</strong>.</p>
+<li><p>Go to <strong>VPN Server/Network Settings</strong> and set the <strong>Hostname or IP Address</strong> to the public IP of the EC2 instance where your OpenVPN server is running. Once done, click <strong>Save</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-admin-01.png" class="img-fluid figure-img"></p>
-<figcaption>Configuració de la IP pública del servidor VPN</figcaption>
+<figcaption>Configuring the VPN Server’s Public IP</figcaption>
 </figure>
 </div></li>
-<li><p>Aneu a <strong>Access Controls/Internet Access and DNS</strong> i seleccioneu l’opció <strong>Split Tunnel</strong> per evitar que tot el tràfic del client sigui redirigit a través de la VPN. Únicament el tràfic dirigit a les subxarxes de la VPC serà redirigit a través de la VPN.</p>
+<li><p>Go to <strong>Access Controls/Internet Access and DNS</strong> and select the <strong>Split Tunnel</strong> option to prevent all client traffic from being redirected through the VPN. Only traffic destined for the VPC subnets will be routed through the VPN.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-Split-Tunnel.png" class="img-fluid figure-img"></p>
-<figcaption>Configuració de Split Tunnel</figcaption>
+<figcaption>Configuring Split Tunnel</figcaption>
 </figure>
 </div></li>
-<li><p>Aneu a <strong>Access Controls/Global Access Rules</strong> i afegiu una regla per permetre el tràfic de la VPN a les subxarxes de la VPC:</p>
+<li><p>Go to <strong>Access Controls/Global Access Rules</strong> and add a rule to allow VPN traffic to the VPC subnets:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-Global-Acces.png" class="img-fluid figure-img"></p>
-<figcaption>Configuració de les regles d’accés global</figcaption>
+<figcaption>Configuring Global Access Rules</figcaption>
 </figure>
 </div></li>
-<li><p>Aneu a <strong>User</strong> i creu-vos un usuari i una contrasenya per connectar-vos al servidor VPN.</p>
+<li><p>Go to <strong>User</strong> and create a username and password to connect to the VPN server.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/VPN-User.png" class="img-fluid figure-img"></p>
-<figcaption>Creació d’un usuari per al servidor VPN</figcaption>
+<figcaption>Creating a VPN Server User</figcaption>
 </figure>
 </div></li>
 <li><p>Un cop tinguem el fitxer de configuració, ja podeu fer un <strong>Restart</strong> del servei OpenVPN per aplicar tots els canvis. Torneu a accedir a la interfície web del servidor OpenVPN.</p></li>
