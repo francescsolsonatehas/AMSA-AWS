@@ -419,9 +419,9 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="enrutament-per-a-les-subxarxes-privades" class="level4">
-<h4 class="anchored" data-anchor-id="enrutament-per-a-les-subxarxes-privades">2.2.2. Enrutament per a les subxarxes privades</h4>
-<p>Les subxarxes privades no tenen accés directe a Internet per motius de seguretat. Per tant, necessitem configurar les taules de rutes per a aquestes subxarxes de manera que puguin accedir a Internet a través d’un NAT Gateway (Network Address Translation Gateway). Això permetrà que les instàncies dins de les subxarxes privades puguin iniciar connexions cap a l’exterior, però impedirà que l’exterior iniciï connexions cap a elles.</p>
+<section id="routing-for-private-subnets" class="level4">
+<h4 class="anchored" data-anchor-id="routing-for-private-subnets">2.2.2. Routing for private subnets</h4>
+<p>Private subnets do not have direct access to the Internet for security reasons. Therefore, we need to configure the route tables for these subnets so that they can access the Internet through a NAT Gateway (Network Address Translation Gateway). This will allow instances within the private subnets to initiate outbound connections, but prevent external sources from initiating connections to them.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="NAT Gateway 🧠">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -432,44 +432,44 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Un NAT Gateway és un servei gestionat per AWS que permet a les instàncies en una subxarxa privada accedir a Internet per a actualitzacions de programari, descàrregues de paquets, etc., sense exposar aquestes instàncies directament a Internet. El NAT Gateway tradueix les adreces IP privades de les instàncies a una adreça IP pública quan aquestes instàncies fan peticions a Internet.</p>
+<p>A NAT Gateway is a managed service by AWS that allows instances in a private subnet to access the Internet for software updates, package downloads, etc., without exposing those instances directly to the Internet. The NAT Gateway translates the private IP addresses of the instances into a public IP address when those instances make requests to the Internet.</p>
 </div>
 </div>
-<p>Per crear el NAT Gateway, necessitem una IP elàstica (Elastic IP). Per tant, primer crearem una IP elàstica i després la utilitzarem per crear el NAT Gateway. L’anomeneu <strong>AMSA-NAT-EIP</strong>.</p>
+<p>To create the NAT Gateway, we need an Elastic IP. Therefore, we will first create an Elastic IP and then use it to create the NAT Gateway. Name it <strong>AMSA-NAT-EIP</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/ElasticIP-NAT.png" class="img-fluid figure-img"></p>
-<figcaption>Creació de la IP elàstica</figcaption>
+<figcaption>Creating the Elastic IP</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/ElasticIp-Nat2.png" class="img-fluid figure-img"></p>
-<figcaption>Actualitzar el nom de la IP elàstica</figcaption>
+<figcaption>Update the name of the Elastic IP</figcaption>
 </figure>
 </div>
-<p>Un cop tenim la IP elàstica, podem crear el NAT Gateway. L’anomeneu <strong>AMSA-NG</strong> i l’associeu a la subxarxa <strong>AMSA-DMZ-01</strong>.</p>
+<p>Once we have the Elastic IP, we can create the NAT Gateway. Name it <strong>AMSA-NG</strong> and associate it with the subnet <strong>AMSA-DMZ-01</strong>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/nat-gw-create.png" class="img-fluid figure-img"></p>
-<figcaption>Creació del NAT Gateway</figcaption>
+<figcaption>Creating the NAT Gateway</figcaption>
 </figure>
 </div>
-<p>Crearem la taula de rutes (<em>AMSA-Private01-RT</em>) per a la subxarxa <strong>AMSA-Private01</strong> i l’associarem a la subxarxa. Aquesta taula de rutes permetrà que les instàncies dins d’aquesta subxarxa accedeixin a Internet a través del NAT Gateway.</p>
+<p>Create the route table (<em>AMSA-Private01-RT</em>) for the subnet <strong>AMSA-Private01</strong> and we will associate it with the subnet. This route table will allow the instances within this subnet to access the Internet through the NAT Gateway.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/wordpress/AMSA-Private01-RT.png" class="img-fluid figure-img"></p>
-<figcaption>Taula de rutes per a la subxarxa AMSA-Private01</figcaption>
+<figcaption>Route table for the subnet AMSA-Private01</figcaption>
 </figure>
 </div>
-<p>El segon pas és associar la taula de rutes (<em>AMSA-Private01-RT</em>) amb la subxarxa <strong>AMSA-Private01</strong> i permetre el tràfic de sortida a Internet a través del NAT Gateway que hem creat anteriorment.</p>
+<p>The second step is to associate the route table (<em>AMSA-Private01-RT</em>) with the subnet <strong>AMSA-Private01</strong> and allow outbound traffic to the Internet through the NAT Gateway we created earlier.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../../figs/laboratories/03-aws-wp/AMSA-Private01-RT-create.png" class="img-fluid figure-img"></p>
-<figcaption>Creació de la taula de rutes per a la subxarxa AMSA-Private01</figcaption>
+<figcaption>Creating the route table for the subnet AMSA-Private01</figcaption>
 </figure>
 </div>
-<p>El tercer pas és permetre el tràfic de sortida a Internet a través del NAT Gateway que hem creat anteriorment. Per fer-ho aneu a la secció <em>Routes</em> i clicareu a <em>Edit routes</em>. A continuació, <strong>Add route</strong> i editareu (Destination: 0.0.0.0/0; Target:Seleccionar el <strong>AMSA-NG</strong>).</p>
+<p>The third step is to allow outbound traffic to the Internet through the NAT Gateway we created earlier. To do this, go to the section <em>Routes</em> and click on <em>Edit routes</em>. Next, <strong>Add route</strong> and edit (Destination: 0.0.0.0/0; Target:Select <strong>AMSA-NG</strong>).</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="AMSA-Private02 🛑">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -480,13 +480,13 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Repetiu els mateixos passos per a la subxarxa <strong>AMSA-Private02</strong>, modificant només el nom de la taula de rutes i l’associació amb la subxarxa.</p>
+<p>Repeat the same steps for the subnet <strong>AMSA-Private02</strong>, modifying only the name of the route table and the association with the subnet.</p>
 </div>
 </div>
 </section>
 <section id="enrutament-per-a-la-subxarxa-de-dades-amsa-data" class="level4">
 <h4 class="anchored" data-anchor-id="enrutament-per-a-la-subxarxa-de-dades-amsa-data">2.2.3. Enrutament per a la subxarxa de dades (AMSA-Data)</h4>
-<p>La subxarxa <strong>AMSA-Data</strong> no allotjarà instàncies que necessitin accés a Internet. Per tant, no necessitem configurar cap ruta per a aquesta subxarxa. Crearem una taula de rutes buida i l’associarem a la subxarxa <strong>AMSA-Data</strong>. Aquesta xarxa serà completament aïllada i només permetrà la comunicació interna dins de la VPC.</p>
+<p>The subnet <strong>AMSA-Data</strong> will not host instances that require Internet access. Therefore, we do not need to configure any route for this subnet. We will create an empty route table and associate it with the subnet <strong>AMSA-Data</strong>. This network will be completely isolated and will only allow internal communication within the VPC.</p>
 </section>
 </section>
 </section>
