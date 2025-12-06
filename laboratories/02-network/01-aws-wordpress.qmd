@@ -168,7 +168,7 @@ To do this, we will navigate to the AWS VPC console, select the *Security Groups
 Now we allow all network traffic for web services and SSH. Once everything is configured, we will restrict this access only to inbound traffic coming from the load balancer for web services and from our internal network for SSH.
 :::
 
-### Security Group for the database RDS
+### 3.2. Security Group for the database RDS
 
 - **Inbound connections**: t will only allow traffic on port 3306 (MySQL) and exclusively from EC2 instances that belong to the security group **AMSA-WP-SG**.
 - **Outbound connections**: By default, AWS will allow all outbound connections, which ensures that the database can communicate with other resources if necessary.
@@ -177,7 +177,7 @@ To do this, we will navigate to the AWS VPC console, select the Security Groups 
 
 ![Security Group for the database RDS](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png)
 
-### Summary
+### 3.3. Summary
 
 |  Security Group | Inbound | Outbound |
 |-------------------|---------|----------|
@@ -185,7 +185,7 @@ To do this, we will navigate to the AWS VPC console, select the Security Groups 
 | AMSA-DB-SG        | MySQL (3306) from AMSA-Web-SG | All allowed |
 
 
-## Creation of the RDS Database
+## 4. Creation of the RDS Database
 
 We already configured the database in the previous lab Deploying a web application with AWS. The only difference is that now the database is located in a private subnet and is only accessible from EC2 instances that belong to the security group **AMSA-Web-SG**.
 
@@ -197,7 +197,7 @@ We already configured the database in the previous lab Deploying a web applicati
 - **Availability Zone**: us-east-1d
 
 
-## Creation of EC2 instances
+## 5. Creation of EC2 instances
 
 The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.
 
@@ -271,7 +271,7 @@ These instances will not have a public IP, as they will only be accessible throu
 :::
 
 
-## Load Balancer Configuration
+## 6. Load Balancer Configuration
 
 At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.
 
@@ -331,9 +331,9 @@ The load balancer checks the health of the EC2 instances through port 80 and the
 
 We will proceed to install WordPress through the load balancer. Follow the installation steps and configure the administrator username and password. Now you have the web server configured with WordPress and the load balancer to distribute traffic between the EC2 instances.
 
-## VPN configuration
+## 7. VPN configuration
 
-### EC2 to deploy the VPN server
+### 7.1.Create an EC2 to deploy the VPN server
 
 To deploy the VPN server, we will create a new EC2 instance that will act as the VPN server. This EC2 instance must be in a public subnet connected to the internet. We will name this instance **AMSA-VPN** and place it in the public subnet **AMSA-DMZ-01**. This EC2 instance will use the security group **AMSA-VPN-SG**, which will allow the necessary traffic for the VPN server to function.
 
