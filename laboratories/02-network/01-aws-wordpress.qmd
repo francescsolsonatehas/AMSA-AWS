@@ -197,11 +197,9 @@ We already configured the database in the previous lab Deploying a web applicati
 - **Availability Zone**: us-east-1d
 
 
-## 5. Creation of EC2 instances
+## 5. Creation of EC2 instances and Web Server Configuration with WordPress
 
 The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.
-
-# Web Server Configuration with WordPress
 
 1. Create an EC2 instance with Amazon Linux, selecting the VPC **AMSA-VPC** and the subnet **AMSA-DMZ-01**. Make sure that the instance uses the security group **AMSA-WP-SG**. You can name it **AMSA-DB-Config**. Select *assign public IP*. We will only use this instance to initialize the database and then we can delete it.
 
