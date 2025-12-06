@@ -177,15 +177,15 @@ To do this, we will navigate to the AWS VPC console, select the Security Groups 
 
 ![Security Group for the database RDS](../../figs/laboratories/03-aws-wp/wordpress/AMSA-DB-SG.png)
 
-### Resum
+### Summary
 
-| Grup de Seguretat | Inbound | Outbound |
+|  Security Group | Inbound | Outbound |
 |-------------------|---------|----------|
-| AMSA-WP-SG       | HTTP (80) and HTTPS (443) des de 0.0.0.0/0; SSH (22) des de 0.0.0.0/0| All allowed |
-| AMSA-DB-SG        | MySQL (3306) des de AMSA-Web-SG | All allowed |
+| AMSA-WP-SG       | HTTP (80) and HTTPS (443) from 0.0.0.0/0; SSH (22) from 0.0.0.0/0| All allowed |
+| AMSA-DB-SG        | MySQL (3306) from AMSA-Web-SG | All allowed |
 
 
-## Creació de la Base de Dades RDS
+## Creation of the RDS Database
 
 We already configured the database in the previous lab Deploying a web application with AWS. The only difference is that now the database is located in a private subnet and is only accessible from EC2 instances that belong to the security group **AMSA-Web-SG**.
 
@@ -271,14 +271,11 @@ These instances will not have a public IP, as they will only be accessible throu
 :::
 
 
-
 ## Load Balancer Configuration
 
 At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.
 
 There are 3 types of load balancers in AWS: **Application Load Balancer (ALB)**, **Network Load Balancer (NLB)** and **Gateway Load Balancer (GWLB)**. In this case, we will use an **Application Load Balancer (ALB)**, as it is recommended for web applications that use HTTP and HTTPS.
-
-Navegueu a la consola de AWS i seleccioneu el servei **EC2**. A la barra lateral, seleccioneu **Load Balancers** i després **Create Load Balancer**. Seleccioneu **Application Load Balancer** i feu clic a **Create**.
 
 Navigate to the AWS console and select the **EC2** service. In the sidebar, select **Load Balancers** and then **Create Load Balancer**. Choose **Application Load Balancer** and click **Create**.
 
@@ -291,7 +288,7 @@ Navigate to the AWS console and select the **EC2** service. In the sidebar, sele
 - **VPC**: AMSA-VPC
 - **Availability Zones**: Select the availability zones where we have the public subnet **AMSA-DMZ-01** (us-east-1a) and **AMSA-DMZ-02** (us-east-1b).
 
-- **Grups de Seguretat**: New security group (**AMSA-ALB-SG**), this security group will allow inbound traffic for ports 80 (HTTP) and 443 (HTTPS) from any source but will restrict outbound traffic to the EC2 instances (security group **AMSA-WP-SG**).
+- **Security Groups**: New security group (**AMSA-ALB-SG**), this security group will allow inbound traffic for ports 80 (HTTP) and 443 (HTTPS) from any source but will restrict outbound traffic to the EC2 instances (security group **AMSA-WP-SG**).
 
     ![Security Group for the Load Balancer](../../figs/laboratories/03-aws-wp/wordpress/AMSA-ALB-SG.png)
 
@@ -399,44 +396,43 @@ If you review the installation documentation for the OpenVPN server: OpenVPN: [O
 
         ![Creating a VPN Server User](../../figs/laboratories/03-aws-wp/wordpress/VPN-User.png)
 
-    - Un cop tinguem el fitxer de configuració, ja podeu fer un **Restart** del servei OpenVPN per aplicar tots els canvis. Torneu a accedir a la interfície web del servidor OpenVPN.
+    - Once you have the configuration file, you can **Restart** the OpenVPN service to apply all changes. Then, access the OpenVPN server web interface again.
 
-    - Aneu a **User/user/Connection Profiles** i creeu un perfil de connexió per defecte. Un cop creat us baixarà un fitxer de configuració que després utilitzarem per connectar-nos al servidor VPN.
+    - Go to **User/user/Connection Profiles** and create a default connection profile. Once created, a configuration file will be downloaded, which we will later use to connect to the VPN server.
 
-        ![Descàrrega del fitxer de configuració del client VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-Connection-Profile.png)
+        ![Downloading the VPN client configuration file](../../figs/laboratories/03-aws-wp/wordpress/VPN-Connection-Profile.png)
 
     
 
-    - Installeu l'aplicació [OpenVPN Connect](https://openvpn.net/client/) al vostre ordinador. Aquesta aplicació és el client VPN que utilitzarem per connectar-nos al servidor VPN.
+    - Install the [OpenVPN Connect](https://openvpn.net/client/) application on your computer. This application is the VPN client we will use to connect to the VPN server.
+ 
+    - Once installed, open the application and import the configuration file you downloaded earlier.
 
-    - Un cop instal·lat, obriu l'aplicació i importeu el fitxer de configuració que heu descarregat anteriorment.
+8.  Once everything is configured, we will update the security group of the EC2 instances to allow traffic on port 22 only from the VPN server. This means that the EC2 instances will only accept SSH traffic from the VPN server and not from any other source.
 
-        
-8.  Un cop tot configurat, actualitzarem el grup de seguretat de les instàncies EC2 per permetre el tràfic al port 22 únicament provinent del servidor VPN. Això significa que les instàncies EC2 només acceptaran tràfic SSH del servidor VPN i no de qualsevol altre origen.
+    ![Configuring SSH traffic to EC2 from the VPN server.](../../figs/laboratories/03-aws-wp/wordpress/ec2-ssh-only-vpn.png)
 
-    ![Configuració tràfic SSH a Ec2 del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/ec2-ssh-only-vpn.png)
+At this point, you will no longer be able to access the EC2 instances running the WordPress service via SSH, since SSH traffic is only allowed from the VPN server. To access the EC2 instances, you must first connect to the VPN server and then connect to the EC2 instances. To do this:
 
-En aquest punt, ja no podreu accedir a les instàncies EC2 on teniu el servei de WordPress a través de SSH, ja que el tràfic SSH només es permet des del servidor VPN. Per accedir a les instàncies EC2, primer heu de connectar-vos al servidor VPN i després connectar-vos a les instàncies EC2. Per fer-ho:
-
-- Importeu el fitxer de configuració del client OpenVPN Connect a l'aplicació i connecteu-vos al servidor VPN.
+- Import the OpenVPN Connect client configuration file into the application and connect to the VPN server.
   
-    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-01.png)
+    ![Connecting to the VPN Server](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-01.png)
 
-    > **TroubleShooting**: Si en el fitxer de configuració veieu (**Server Hostname**) una ip del rang 10.0.X.X, això vol dir que la VPN no s'ha configurat correctament. Assegureu-vos de reiniciar el servidor i tornar a descarregar el fitxer de configuració del client, ha de tenir la ip pública del servidor VPN.
+    > **TroubleShooting**: If you see in the configuration file (**Server Hostname**) an IP in the range 10.0.X.X, this means that the VPN has not been configured correctly. Make sure to restart the server and download the client configuration file again; it must include the VPN server’s public IP address.
 
-- Utilitzeu la mateixa contrasenya del usuari `openvpn` per connectar-vos al servidor VPN.
+- Use the same password as the user `openvpn` to connect to the VPN server.
 
-    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-02.png)
+    ![Connection to the VPN server](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-02.png)
 
-- Si tot ha anat bé, veureu que esteu connectats al servidor VPN.
+- If everything went well, you will see that you are connected to the VPN server.
 
-    ![Connexió al servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-03.png)
+    ![Connection to the VPN server](../../figs/laboratories/03-aws-wp/wordpress/vpn-connection-03.png)
   
-Finalment, connecteu-vos a les instàncies EC2:
+Finally, connect to the EC2 instances:
 
-![Accés a les instàncies EC2 a través del servidor VPN](../../figs/laboratories/03-aws-wp/wordpress/VPN-SSH.png)
+![Access to EC2 instances through the VPN server](../../figs/laboratories/03-aws-wp/wordpress/VPN-SSH.png)
 
-> **Consideracions importants**: El servidor VPN ens permet accedir a les instàncies EC2 a través de SSH, però a partir de l'adreça interna (10.0.X.X) de la instància EC2. No podrem accedir a les instàncies EC2 a través de la seva adreça pública ja que hem configurat la VPN per accedir a les subxarxes de la VPC.
+> **Important considerations**: The VPN server allows us to access the EC2 instances via SSH, but using the internal address (10.0.X.X) of the EC2 instance. We will not be able to access the EC2 instances through their public address because we have configured the VPN to access the VPC subnets.
 
 ## Cleanup
 
