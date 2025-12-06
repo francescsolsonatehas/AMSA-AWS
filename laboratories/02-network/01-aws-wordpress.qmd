@@ -434,6 +434,6 @@ Finally, connect to the EC2 instances:
 
 > **Important considerations**: The VPN server allows us to access the EC2 instances via SSH, but using the internal address (10.0.X.X) of the EC2 instance. We will not be able to access the EC2 instances through their public address because we have configured the VPN to access the VPC subnets.
 
-## Cleanup
+## 8. Cleanup
 
 Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.
