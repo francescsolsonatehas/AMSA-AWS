@@ -260,8 +260,8 @@ sudo systemctl restart httpd
 
 Once the launch template is created, you can use it to create EC2 instances with WordPress already configured and ready to connect to your RDS database. Go to **EC2** and select **Launch Instance**. Then select the launch template **AMSA-WP-Template** and configure the remaining parameters according to your needs.
 
-- Nombre d'instàncies: 2
-- Subxarxa: Select the subnet **AMSA-Private01** for the first instance and **AMSA-Private02** for the second instance. You can name them **AMSA-WP-01** i **AMSA-WP-02** respectively.
+- Number of instances: 2
+- Subnet: Select the subnet **AMSA-Private01** for the first instance and **AMSA-Private02** for the second instance. You can name them **AMSA-WP-01** i **AMSA-WP-02** respectively.
 
 
 :::{.callout-important title="Note about EC2 instances 🖥️"}
