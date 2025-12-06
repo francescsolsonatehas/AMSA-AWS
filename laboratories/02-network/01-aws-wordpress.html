@@ -207,19 +207,19 @@ window.Quarto = {
   <li><a href="#security-groups" id="toc-security-groups" class="nav-link" data-scroll-target="#security-groups">3. Security Groups</a>
   <ul class="collapse">
   <li><a href="#security-group-for-ec2-instances" id="toc-security-group-for-ec2-instances" class="nav-link" data-scroll-target="#security-group-for-ec2-instances">3.1. Security Group for EC2 instances</a></li>
-  <li><a href="#security-group-for-the-database-rds" id="toc-security-group-for-the-database-rds" class="nav-link" data-scroll-target="#security-group-for-the-database-rds">Security Group for the database RDS</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#security-group-for-the-database-rds" id="toc-security-group-for-the-database-rds" class="nav-link" data-scroll-target="#security-group-for-the-database-rds">3.2. Security Group for the database RDS</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">3.3. Summary</a></li>
   </ul></li>
-  <li><a href="#creation-of-the-rds-database" id="toc-creation-of-the-rds-database" class="nav-link" data-scroll-target="#creation-of-the-rds-database">Creation of the RDS Database</a></li>
-  <li><a href="#creation-of-ec2-instances" id="toc-creation-of-ec2-instances" class="nav-link" data-scroll-target="#creation-of-ec2-instances">Creation of EC2 instances</a></li>
+  <li><a href="#creation-of-the-rds-database" id="toc-creation-of-the-rds-database" class="nav-link" data-scroll-target="#creation-of-the-rds-database">4. Creation of the RDS Database</a></li>
+  <li><a href="#creation-of-ec2-instances" id="toc-creation-of-ec2-instances" class="nav-link" data-scroll-target="#creation-of-ec2-instances">5. Creation of EC2 instances</a></li>
   <li><a href="#web-server-configuration-with-wordpress" id="toc-web-server-configuration-with-wordpress" class="nav-link" data-scroll-target="#web-server-configuration-with-wordpress">Web Server Configuration with WordPress</a>
   <ul class="collapse">
-  <li><a href="#load-balancer-configuration" id="toc-load-balancer-configuration" class="nav-link" data-scroll-target="#load-balancer-configuration">Load Balancer Configuration</a></li>
-  <li><a href="#vpn-configuration" id="toc-vpn-configuration" class="nav-link" data-scroll-target="#vpn-configuration">VPN configuration</a>
+  <li><a href="#load-balancer-configuration" id="toc-load-balancer-configuration" class="nav-link" data-scroll-target="#load-balancer-configuration">6. Load Balancer Configuration</a></li>
+  <li><a href="#vpn-configuration" id="toc-vpn-configuration" class="nav-link" data-scroll-target="#vpn-configuration">7. VPN configuration</a>
   <ul class="collapse">
-  <li><a href="#ec2-to-deploy-the-vpn-server" id="toc-ec2-to-deploy-the-vpn-server" class="nav-link" data-scroll-target="#ec2-to-deploy-the-vpn-server">EC2 to deploy the VPN server</a></li>
+  <li><a href="#create-an-ec2-to-deploy-the-vpn-server" id="toc-create-an-ec2-to-deploy-the-vpn-server" class="nav-link" data-scroll-target="#create-an-ec2-to-deploy-the-vpn-server">7.1.Create an EC2 to deploy the VPN server</a></li>
   </ul></li>
-  <li><a href="#cleanup" id="toc-cleanup" class="nav-link" data-scroll-target="#cleanup">Cleanup</a></li>
+  <li><a href="#cleanup" id="toc-cleanup" class="nav-link" data-scroll-target="#cleanup">8. Cleanup</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -526,7 +526,7 @@ window.Quarto = {
 </div>
 </section>
 <section id="security-group-for-the-database-rds" class="level3">
-<h3 class="anchored" data-anchor-id="security-group-for-the-database-rds">Security Group for the database RDS</h3>
+<h3 class="anchored" data-anchor-id="security-group-for-the-database-rds">3.2. Security Group for the database RDS</h3>
 <ul>
 <li><strong>Inbound connections</strong>: t will only allow traffic on port 3306 (MySQL) and exclusively from EC2 instances that belong to the security group <strong>AMSA-WP-SG</strong>.</li>
 <li><strong>Outbound connections</strong>: By default, AWS will allow all outbound connections, which ensures that the database can communicate with other resources if necessary.</li>
@@ -540,7 +540,7 @@ window.Quarto = {
 </div>
 </section>
 <section id="summary" class="level3">
-<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<h3 class="anchored" data-anchor-id="summary">3.3. Summary</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -570,7 +570,7 @@ window.Quarto = {
 </section>
 </section>
 <section id="creation-of-the-rds-database" class="level2">
-<h2 class="anchored" data-anchor-id="creation-of-the-rds-database">Creation of the RDS Database</h2>
+<h2 class="anchored" data-anchor-id="creation-of-the-rds-database">4. Creation of the RDS Database</h2>
 <p>We already configured the database in the previous lab Deploying a web application with AWS. The only difference is that now the database is located in a private subnet and is only accessible from EC2 instances that belong to the security group <strong>AMSA-Web-SG</strong>.</p>
 <ul>
 <li><strong>Compute resources</strong>: Don’t connect to an EC2 compute resource</li>
@@ -582,7 +582,7 @@ window.Quarto = {
 </ul>
 </section>
 <section id="creation-of-ec2-instances" class="level2">
-<h2 class="anchored" data-anchor-id="creation-of-ec2-instances">Creation of EC2 instances</h2>
+<h2 class="anchored" data-anchor-id="creation-of-ec2-instances">5. Creation of EC2 instances</h2>
 <p>The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.</p>
 </section>
 <section id="web-server-configuration-with-wordpress" class="level1">
@@ -668,7 +668,7 @@ window.Quarto = {
 </div>
 </div>
 <section id="load-balancer-configuration" class="level2">
-<h2 class="anchored" data-anchor-id="load-balancer-configuration">Load Balancer Configuration</h2>
+<h2 class="anchored" data-anchor-id="load-balancer-configuration">6. Load Balancer Configuration</h2>
 <p>At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.</p>
 <p>There are 3 types of load balancers in AWS: <strong>Application Load Balancer (ALB)</strong>, <strong>Network Load Balancer (NLB)</strong> and <strong>Gateway Load Balancer (GWLB)</strong>. In this case, we will use an <strong>Application Load Balancer (ALB)</strong>, as it is recommended for web applications that use HTTP and HTTPS.</p>
 <p>Navigate to the AWS console and select the <strong>EC2</strong> service. In the sidebar, select <strong>Load Balancers</strong> and then <strong>Create Load Balancer</strong>. Choose <strong>Application Load Balancer</strong> and click <strong>Create</strong>.</p>
@@ -766,9 +766,9 @@ window.Quarto = {
 <p>We will proceed to install WordPress through the load balancer. Follow the installation steps and configure the administrator username and password. Now you have the web server configured with WordPress and the load balancer to distribute traffic between the EC2 instances.</p>
 </section>
 <section id="vpn-configuration" class="level2">
-<h2 class="anchored" data-anchor-id="vpn-configuration">VPN configuration</h2>
-<section id="ec2-to-deploy-the-vpn-server" class="level3">
-<h3 class="anchored" data-anchor-id="ec2-to-deploy-the-vpn-server">EC2 to deploy the VPN server</h3>
+<h2 class="anchored" data-anchor-id="vpn-configuration">7. VPN configuration</h2>
+<section id="create-an-ec2-to-deploy-the-vpn-server" class="level3">
+<h3 class="anchored" data-anchor-id="create-an-ec2-to-deploy-the-vpn-server">7.1.Create an EC2 to deploy the VPN server</h3>
 <p>To deploy the VPN server, we will create a new EC2 instance that will act as the VPN server. This EC2 instance must be in a public subnet connected to the internet. We will name this instance <strong>AMSA-VPN</strong> and place it in the public subnet <strong>AMSA-DMZ-01</strong>. This EC2 instance will use the security group <strong>AMSA-VPN-SG</strong>, which will allow the necessary traffic for the VPN server to function.</p>
 <ol type="1">
 <li>Navigate to the AWS console and select the <strong>EC2</strong> service. In the sidebar, select <strong>Instances</strong> and then <strong>Launch Instances</strong>.</li>
@@ -911,7 +911,7 @@ window.Quarto = {
 </section>
 </section>
 <section id="cleanup" class="level2">
-<h2 class="anchored" data-anchor-id="cleanup">Cleanup</h2>
+<h2 class="anchored" data-anchor-id="cleanup">8. Cleanup</h2>
 <p>Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.</p>
 
 
