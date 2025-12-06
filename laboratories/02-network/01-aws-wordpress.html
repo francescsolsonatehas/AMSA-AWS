@@ -211,16 +211,13 @@ window.Quarto = {
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">3.3. Summary</a></li>
   </ul></li>
   <li><a href="#creation-of-the-rds-database" id="toc-creation-of-the-rds-database" class="nav-link" data-scroll-target="#creation-of-the-rds-database">4. Creation of the RDS Database</a></li>
-  <li><a href="#creation-of-ec2-instances" id="toc-creation-of-ec2-instances" class="nav-link" data-scroll-target="#creation-of-ec2-instances">5. Creation of EC2 instances</a></li>
-  <li><a href="#web-server-configuration-with-wordpress" id="toc-web-server-configuration-with-wordpress" class="nav-link" data-scroll-target="#web-server-configuration-with-wordpress">Web Server Configuration with WordPress</a>
-  <ul class="collapse">
+  <li><a href="#creation-of-ec2-instances-and-web-server-configuration-with-wordpress" id="toc-creation-of-ec2-instances-and-web-server-configuration-with-wordpress" class="nav-link" data-scroll-target="#creation-of-ec2-instances-and-web-server-configuration-with-wordpress">5. Creation of EC2 instances and Web Server Configuration with WordPress</a></li>
   <li><a href="#load-balancer-configuration" id="toc-load-balancer-configuration" class="nav-link" data-scroll-target="#load-balancer-configuration">6. Load Balancer Configuration</a></li>
   <li><a href="#vpn-configuration" id="toc-vpn-configuration" class="nav-link" data-scroll-target="#vpn-configuration">7. VPN configuration</a>
   <ul class="collapse">
   <li><a href="#create-an-ec2-to-deploy-the-vpn-server" id="toc-create-an-ec2-to-deploy-the-vpn-server" class="nav-link" data-scroll-target="#create-an-ec2-to-deploy-the-vpn-server">7.1.Create an EC2 to deploy the VPN server</a></li>
   </ul></li>
   <li><a href="#cleanup" id="toc-cleanup" class="nav-link" data-scroll-target="#cleanup">8. Cleanup</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -581,12 +578,9 @@ window.Quarto = {
 <li><strong>Availability Zone</strong>: us-east-1d</li>
 </ul>
 </section>
-<section id="creation-of-ec2-instances" class="level2">
-<h2 class="anchored" data-anchor-id="creation-of-ec2-instances">5. Creation of EC2 instances</h2>
+<section id="creation-of-ec2-instances-and-web-server-configuration-with-wordpress" class="level2">
+<h2 class="anchored" data-anchor-id="creation-of-ec2-instances-and-web-server-configuration-with-wordpress">5. Creation of EC2 instances and Web Server Configuration with WordPress</h2>
 <p>The EC2 instances that will host WordPress will be deployed in private subnets. AWS allows us to create instance templates (Launch Templates) that make it easier to create instances with a predefined configuration. Therefore, we will create an instance template that includes the necessary configuration for our WordPress EC2 instances.</p>
-</section>
-<section id="web-server-configuration-with-wordpress" class="level1">
-<h1>Web Server Configuration with WordPress</h1>
 <ol type="1">
 <li><p>Create an EC2 instance with Amazon Linux, selecting the VPC <strong>AMSA-VPC</strong> and the subnet <strong>AMSA-DMZ-01</strong>. Make sure that the instance uses the security group <strong>AMSA-WP-SG</strong>. You can name it <strong>AMSA-DB-Config</strong>. Select <em>assign public IP</em>. We will only use this instance to initialize the database and then we can delete it.</p></li>
 <li><p>Once the instance is configured, connect to it via SSH using the private key corresponding to the public key you associated with the instance during its creation. Then configure the MySQL database for WordPress.</p></li>
@@ -667,6 +661,7 @@ window.Quarto = {
 <p>These instances will not have a public IP, as they will only be accessible through the load balancer that we will configure later. For now, you will not be able to access them directly via SSH or HTTP.</p>
 </div>
 </div>
+</section>
 <section id="load-balancer-configuration" class="level2">
 <h2 class="anchored" data-anchor-id="load-balancer-configuration">6. Load Balancer Configuration</h2>
 <p>At this point, we will create a load balancer for our EC2 instances. This load balancer will be responsible for evenly distributing traffic among the EC2 instances hosting WordPress.</p>
@@ -915,7 +910,6 @@ window.Quarto = {
 <p>Once completed, you can delete all EC2 instances and the RDS database to avoid unnecessary charges to your AWS account.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
