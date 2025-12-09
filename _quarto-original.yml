@@ -1,0 +1,112 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "AMSA - Fall 2025"
+  description: "Course materials for AMSA - Fall 2025"
+  site-url: "https://amsa-gei-udl-2526-105013.github.io/course/"
+  repo-url: https://github.com/amsa-gei-udl-2526-105013/course/
+
+  sidebar:
+    logo: /figs/logo.png
+    logo-width: 75px
+    logo-height: 75px
+    logo-alt: "AMSA Logo"
+    pinned: true
+    tools:
+    - icon: house
+      href: "index.html"
+      text: "Home"
+    - icon: github
+      href: "https://github.com/amsa-gei-udl-2526-105013/course/"
+      text: "GitHub organization"
+    - icon: person-fill
+      text: "Sakai"
+      href: "https://cv.udl.cat/"
+
+    style: "docked"
+    search: false
+    collapse-level: 1
+    contents:
+      - section: Informació del curs
+        contents:
+          - href: ./course-information/schedule.html
+            text: Planificació
+      - section: Diapositives
+        contents:
+          - href: ./slides/01-foundations-of-systems-administration.qmd
+            text: Unitat 01 · Fonaments de l'Administració de Sistemes
+          - href: ./slides/02-booting.qmd
+            text: Unitat 02 · Arrencada del sistema
+          - href: ./slides/02-booting-part2.qmd
+            text: Unitat 02 · Arrencada del sistema (Part 2)
+          - href: ./slides/02-booting-part3.qmd
+            text: Unitat 02 · Arrencada del sistema (Part 3)
+          - href: ./slides/03-filesystem-part1.qmd
+            text: Unitat 03 · Sistemes de fitxers (Part 1)
+          - href: ./slides/03-filesystem-part2.qmd
+            text: Unitat 03 · Sistemes de fitxers (Part 2)
+          - href: ./slides/03-filesystem-part3.qmd
+            text: Unitat 03 · Sistemes de fitxers (Part 3)
+      - section: Activitats
+        contents:
+          - section: Unitat 01 · Fonaments de l'Administració de Sistemes
+            contents:
+              - href: ./exercises/01-foundations-of-systems-administration/01-ex-week1.qmd
+                text: Activitat 1 · Configuració d'entorn de virtualització
+              - href: ./exercises/01-foundations-of-systems-administration/02-ex-week1.qmd
+                text: Activitat 2 · Emulació en mode d'usuari amb QEMU
+          - section: Unitat 02 · Arrencada del sistema
+            contents:
+              - href: ./exercises/02-booting/01-ex-week2.qmd
+                text: Activitat 1 · Booting amb MBR i BIOS
+              - href: ./exercises/02-booting/02-ex-week2.qmd
+                text: Activitat 2 · Booting amb UEFI
+              - href: ./exercises/02-booting/03-ex-week2.qmd
+                text: Activitat 3 · Dual Boot amb UEFI
+              - href: ./exercises/02-booting/04-ex-week3.qmd
+                text: Activitat 4 · Modificant la contrasenya de l'usuari root a través del GRUB
+              - href: ./exercises/02-booting/05-ex-week3.qmd
+                text: Activitat 5 · Arrencada automàtica d'una partició LUKS amb clau en un disc secundari
+              - href: ./exercises/02-booting/06-ex-week4.qmd
+                text: Activitat 6 · Anàlisi del procés d'arrencada amb systemd
+              - href: ./exercises/02-booting/07-ex-week4.qmd
+                text: Activitat 7 · Servei de Còpia de Seguretat Automàtica amb systemd
+          - section: Unitat 03 · Sistemes de fitxers
+            contents:
+              - href: ./exercises/03-fs/08-ex-week5.qmd
+                text: Activitat 8 · Administració bàsica de Sistemes de Fitxers
+              - href: ./exercises/03-fs/09-ex-week6.qmd
+                text: Activitat 9 · Configuració de RAIDs amb mdadm
+              - href: ./exercises/03-fs/10-ex-week7.qmd
+                text: Activitat 10 · Administració de volums lògics amb LVM
+
+      - section: Laboratoris
+        contents:
+          - section: Unitat 01 · Fonaments de l'Administració de Sistemes
+            contents:
+              - href: ./laboratories/01-introduction.qmd
+                text: Laboratori · Fonaments de l'Administració de Sistemes amb AWS
+              - href: ./laboratories/01-foundations/01-aws-introduction.qmd
+                text: Laboratori 01 · Introducció a AWS
+              - href: ./laboratories/01-foundations/02-aws-wordpress.qmd
+                text: Laboratori 02 · Desplegament d'una aplicació web amb AWS
+          - section: Networking
+            contents:
+              - href: ./laboratories/02-network/01-aws-wordpress.qmd
+                text: Laboratori 03 · Desplegament d'una aplicació web amb alta disponibilitat amb AWS
+      - section: Projectes
+        contents:
+          - href: ./projects/01-project/01-project.qmd
+            text: Projecte 1 · Snapshots i Backups amb systemd i initramfs
+          - href: ./projects/02-project/02-project.qmd
+            text: Projecte 2 · Diagnòstic i Resolució d'Incidències
+
+  
+format:
+  html:
+    toc: true
+    theme: 
+      - cosmo
+      - brand
