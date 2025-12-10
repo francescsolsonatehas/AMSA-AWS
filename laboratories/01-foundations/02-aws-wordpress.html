@@ -205,21 +205,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Select mode <strong>Standard Create</strong></li>
 <li>Select data base engine <strong>MySQL</strong></li>
-<li>Select the data base version <strong>MySQL 8.0.42</strong></li>
+<li>Select the data base version <strong>MySQL 8.0.44</strong></li>
 <li>Select the template <strong>Sandbox</strong></li>
 <li>Name of the database <strong>wordpress</strong></li>
 <li>Master username <strong>admin</strong></li>
 <li>Credential management: <strong>self-managed</strong></li>
-<li>Select <strong>set a password</strong></li>
+<li>Set the password. Type a password for the master and confirm it.</li>
 </ul>
 <p>Save the password. Leave the rest of the parameters as default. Once finished, click <strong>Create database</strong>.</p></li>
 <li><p>Wait a few minutes until the column <strong>Status</strong> turns green and says <strong>Available</strong>.</p></li>
 <li><p>Once the database is available, click on the database and go to the tab <strong>Connectivity &amp; security</strong> to view the connection details.</p>
 <ul>
+<li>Database Identifier: <code>wordpress</code></li>
 <li>Hostname: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code></li>
 <li>Port: <code>3306</code></li>
-<li>Username: <code>admin</code></li>
-<li>Database name: <code>wordpress</code></li>
 </ul></li>
 <li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
 <p>5.1. Go to the console of <strong>Amazon RDS</strong></p>
