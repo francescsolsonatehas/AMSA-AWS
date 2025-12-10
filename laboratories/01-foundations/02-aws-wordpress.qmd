@@ -65,7 +65,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
  	5.2. Connect to the EC2 instance
 	 
-	 go to the `EC2` dashboard. 
+	 go to the `EC2 dashboard`. 
 	 Select the `EC2 instance` just created: **AMSA**
 	 click on `Connect` , and then `Connect` again.
 	 
