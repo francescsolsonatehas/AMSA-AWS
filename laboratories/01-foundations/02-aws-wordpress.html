@@ -222,8 +222,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Save <code>Endpoint</code> (this is the <code>Hostname</code> of the DB). It will be used later.</p></li>
 <li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p>
-<p>5.1. Create an EC2 instance with Amazon Linux 2023:</p>
-<pre><code> Go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
+<p>5.1. Create an EC2 instance with Amazon Linux 2023</p>
+<pre><code> Save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
+
+ Go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
 
  ![AWS Dashboard](/figs/laboratories/01-intro/searchbar.png)
 
@@ -237,29 +239,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Then click `Launch instance`
 
 
- ![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)</code></pre></li>
-</ol>
+ ![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)</code></pre>
 <p>We now have a running EC2 instance. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.</p>
-<pre><code> 5.2. Connect to the EC2 instance
- 
- go to the `EC2` dashboard. 
- Select the `EC2 instance` just created: **AMSA**
- click on `Connect` , and then `Connect` again.
- 
- You will enter a terminal of the EC2 instance you created, as the user `ec2-user`, like this:
-
-![](/figs/laboratories/02-aws-wp/Terminal-EC2.png)
- 
- 
- 5.3. Install the MySQL client:
-
-```bash
-# Search for the package to install
-dnf search mysql
-# Let’s install the MariaDB client
-sudo dnf install mariadb105 -y
-```</code></pre>
-<ol start="6" type="1">
+<p>5.2. Connect to the EC2 instance</p>
+<p>go to the <code>EC2</code> dashboard. Select the <code>EC2 instance</code> just created: <strong>AMSA</strong> click on <code>Connect</code> , and then <code>Connect</code> again.</p>
+<p>You will enter a terminal of the EC2 instance you created, as the user <code>ec2-user</code>, like this:</p>
+<p><img src="../../figs/laboratories/02-aws-wp/Terminal-EC2.png" class="img-fluid"></p>
+<p>5.3. Install the MySQL client:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Search for the package to install</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let’s install the MariaDB client</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
 <p>6.1. Go to the console of <strong>Amazon RDS</strong></p>
 <p>6.2. Select our database instance (<code>wordpress</code>)</p>
