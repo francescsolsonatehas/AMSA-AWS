@@ -21,6 +21,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 2. In the **Aurora and RDS** console, click on **Create a database**
 
+
     * Select mode **Standard Create**
     * Select data base engine **MySQL**
     * Select the data base version **MySQL 8.0.44**
