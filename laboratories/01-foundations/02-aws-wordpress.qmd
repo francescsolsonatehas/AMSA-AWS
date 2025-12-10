@@ -23,12 +23,12 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
     * Select mode **Standard Create**
     * Select data base engine **MySQL**
-    * Select the data base version **MySQL 8.0.42**
+    * Select the data base version **MySQL 8.0.44**
     * Select the template **Sandbox**
     * Name of the database **wordpress**
     * Master username **admin**
     * Credential management: **self-managed**
-    * Select **set a password**
+    * Set the password. Type a password for the master and confirm it.
 
     Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
 
@@ -37,11 +37,9 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
-    * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
+   * Database Identifier: `wordpress`
+   * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
     * Port: `3306`
-    * Username: `admin`
-    * Database name: `wordpress`
-
 
 5. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
