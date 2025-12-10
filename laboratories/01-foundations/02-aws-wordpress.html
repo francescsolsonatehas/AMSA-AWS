@@ -222,20 +222,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p>
 <p>5.1. Create an EC2 instance with Amazon Linux 2023:</p>
-<pre><code> The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
-
- ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
-
- Once you're on the EC2 dashboard, click on `Instances` &gt; `Launch Instance`, as shown below:
-
- ![AWS Dashboard](../../figs/laboratories/01-intro/ec2-1.png)
-
- Enter a name: AMSA.
-
- Leave everything as it is except `Key pair name` : select `vockey`
-
- ![AWS Dashboard](../../figs/laboratories/01-intro/ec2-2.png)</code></pre></li>
+<pre><code> The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: </code></pre></li>
 </ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figs/laboratories/01-intro/searchbar.png" class="img-fluid figure-img"></p>
+<figcaption>AWS Dashboard</figcaption>
+</figure>
+</div>
+<pre><code>    Once you're on the EC2 dashboard, click on `Instances` &gt; `Launch Instance`, as shown below:</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figs/laboratories/01-intro/ec2-1.png" class="img-fluid figure-img"></p>
+<figcaption>AWS Dashboard</figcaption>
+</figure>
+</div>
+<pre><code>    Enter a name: AMSA.
+    
+    Leave everything as it is except `Key pair name` : select `vockey`
+    </code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../figs/laboratories/01-intro/ec2-2.png" class="img-fluid figure-img"></p>
+<figcaption>AWS Dashboard</figcaption>
+</figure>
+</div>
 <p>We now have a running EC2 instance. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.</p>
 <pre><code> 5.2. Connect to the EC2 instance
  
@@ -264,14 +275,14 @@ sudo dnf install mariadb105 -y
       Source: Custom
       Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
 <li><p>Connect to the RDS database from the EC2 instance:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Create the database <strong>wordpress</strong> and user <strong>wordpress</strong> with all permissions</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpress;</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> wordpress.<span class="op">*</span> <span class="kw">TO</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span>;</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FLUSH</span> <span class="kw">PRIVILEGES</span>;</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpress;</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">GRANT</span> <span class="kw">ALL</span> <span class="kw">PRIVILEGES</span> <span class="kw">ON</span> wordpress.<span class="op">*</span> <span class="kw">TO</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span>;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FLUSH</span> <span class="kw">PRIVILEGES</span>;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>exit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>We already have the database ready for the WordPress installation</p></li>
 </ol>
 </section>
@@ -279,9 +290,9 @@ sudo dnf install mariadb105 -y
 <h2 class="anchored" data-anchor-id="installing-wordpress-on-the-ec2-instance">2. Installing WordPress on the EC2 instance</h2>
 <ol type="1">
 <li><p>To install WordPress, a web server must be installed first (Apache):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start httpd</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start httpd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
@@ -341,17 +352,17 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <ol start="4" type="1">
 <li><p>Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache’s default page</p></li>
 <li><p>A requirement for WordPress is to have PHP installed. Let’s install PHP and the necessary extensions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Restart the Apache service to load the PHP extensions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Now we can install WordPress. First, we download the latest version of WordPress and save it to Apache’s default directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Access the public IP address of the EC2 instance from your web browser. You should see the WordPress installation page</p></li>
 <li><p>Follow the steps of the WordPress installation:</p>
 <ul>
