@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Select data base engine <strong>MySQL</strong></li>
 <li>Select the data base version <strong>MySQL 8.0.44</strong></li>
 <li>Select the template <strong>Sandbox</strong></li>
-<li>DB instance identifier <strong>Wordpress-DB</strong></li>
+<li>DB instance identifier <strong>wordpress-db</strong></li>
 <li>Master username <strong>admin</strong></li>
 <li>Credential management: <strong>self-managed</strong></li>
 <li>Set the password (<strong>Lleida2030!!</strong>). Type a password for the master and confirm it.</li>
@@ -216,8 +216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Wait a few minutes until the column <strong>Status</strong> turns green and says <strong>Available</strong>.</p></li>
 <li><p>Once the database is available, click on the database and go to the tab <strong>Connectivity &amp; security</strong> to view the connection details.</p>
 <ul>
-<li>DB identifier: <code>Wordpress-DB</code></li>
-<li>Endpoint: <code>Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com</code></li>
+<li>DB identifier: <code>wordpress-db</code></li>
+<li>Endpoint: <code>wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com</code></li>
 <li>Port: <code>3306</code></li>
 </ul>
 <p>Save <code>Endpoint</code> (this is the <code>Hostname</code> of the DB). It will be used later.</p></li>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
 <p>6.1. Go to the console of <strong>Amazon RDS</strong></p>
-<p>6.2. Select our database instance (<code>Wordpress-DB</code>)</p>
+<p>6.2. Select our database instance (<code>wordpress-db</code>)</p>
 <p>6.3. In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
 <p>6.4. Click on the <strong>default security group </strong> of type <strong>EC2 Security Group - Inbound</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). Click again in the same security group (<em>default sg-0efc4051ab6288a2d</em>) and then in <strong>Inboud rules</strong>, click on <strong>Edit Inboud rules</strong>:</p>
 <p><img src="figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png" class="img-fluid"></p>
@@ -270,8 +270,8 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre></li
 <li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya d'admin (creada abans) quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>hostname</code> is the database saved earlier (<code>Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>) and <code>admin</code> is the master user created earlier, along with its password. This is:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com <span class="at">-u</span> admin <span class="at">-p</span></span>
+<p><code>hostname</code> is the database saved earlier (<code>wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>) and <code>admin</code> is the master user created earlier, along with its password. This is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Lleida2030!!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>When entering MySQL, at the MySQL promtp, create the database <strong>wordpressdb</strong>, user <strong>wordpressuser</strong> and password <strong>wordpresspasswd</strong>, with all permissions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpressdb;</span>
@@ -371,7 +371,7 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <li>Database Name: <code>wordpressdb</code></li>
 <li>Username: <code>wordpressuser</code> (previously created user)</li>
 <li>Password: <code>wordpresspasswd</code> (password created earlier)</li>
-<li>Database Host: the RDS database endpoint (for example: <code>Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>)</li>
+<li>Database Host: the RDS database endpoint (for example: <code>wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>)</li>
 <li>Table Prefix: <code>wp_</code> (default)</li>
 </ul></li>
 <li>Click on <strong>Envia</strong></li>
