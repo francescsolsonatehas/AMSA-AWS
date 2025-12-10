@@ -38,9 +38,10 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
    * DB identifier: `wordpress`
-   * Hostname: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`
+   * Endpoint: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`
     * Port: `3306`
 
+save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
 
 5. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
   
@@ -88,9 +89,9 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 
 	6.1. Go to the console of **Amazon RDS**
 	
-	6.2. Select our database instance
+	6.2. Select our database instance (`wordpress`)
 	
-	6.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database
+	6.3. In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
 	6.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*)
 	
@@ -109,10 +110,18 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 
     ```bash
     mysql -h hostname -u admin -p
-    # Introdueix la contrassenya quan et demani
+    # Introdueix la contrassenya d'admin (creada abans) quan et demani
+    ```
+   hostname is the database saved earlier: wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com
+   
+   i admin es l'usuari master creat abans, juntament amb la seva contrasenya
+   
+     ```bash
+    mysql -h wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
+    # Torregrossa2030!!
     ```
 
-8. Create the database **wordpress** and user **wordpress** with all permissions
+8. When entering MySQL, at the MySQL promtp, create the database **wordpress** and user **wordpress** with all permissions:
 
     ```sql
     CREATE DATABASE wordpress;
