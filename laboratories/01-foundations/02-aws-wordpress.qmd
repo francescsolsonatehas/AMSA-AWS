@@ -25,10 +25,10 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     * Select data base engine **MySQL**
     * Select the data base version **MySQL 8.0.44**
     * Select the template **Sandbox**
-    * Name of the database **wordpress**
+    * Name of the database **Wordpress-DB**
     * Master username **admin**
     * Credential management: **self-managed**
-    * Set the password. Type a password for the master and confirm it.
+    * Set the password (**Lleida2030!!**). Type a password for the master and confirm it.
 
     Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
 
@@ -38,8 +38,8 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
-    * DB identifier: `wordpress`
-    * Endpoint: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`
+    * DB identifier: `Wordpress-DB`
+    * Endpoint: `Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com`
     * Port: `3306`
 
     Save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
@@ -88,7 +88,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 	6.1. Go to the console of **Amazon RDS**
 	
-	6.2. Select our database instance (`wordpress`)
+	6.2. Select our database instance (`Wordpress-DB`)
 	
 	6.3. In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
@@ -113,20 +113,20 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     mysql -h hostname -u admin -p
     # Introdueix la contrassenya d'admin (creada abans) quan et demani
     ```
-   `hostname` is the database saved earlier (`wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
+   `hostname` is the database saved earlier (`Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
    `admin` is the master user created earlier, along with its password. This is:
    
      ```bash
-    mysql -h wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
-    # Torregrossa2030!!
+    mysql -h Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
+    # Lleida2030!!
     ```
 
-8. When entering MySQL, at the MySQL promtp, create the database **wordpress** and user **wordpress** with all permissions:
+8. When entering MySQL, at the MySQL promtp, create the database **wordpressdb**, user **wordpressuser** and password **wordpresspasswd**, with all permissions:
 
     ```sql
-    CREATE DATABASE wordpress;
-    CREATE USER 'wordpress'@'%' IDENTIFIED BY 'wordpress';
-    GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%';
+    CREATE DATABASE wordpressdb;
+    CREATE USER 'wordpressuser'@'%' IDENTIFIED BY 'wordpresspasswd';
+    GRANT ALL PRIVILEGES ON wordpressdb.* TO 'wordpressuser'@'%';
     FLUSH PRIVILEGES;
     exit
     ```
@@ -206,10 +206,10 @@ This rule will allow HTTP connections from anywhere
     - Click on **Continua**
     - Click on **Som-hi!**
     - Enter the database connection details:
-      - Database Name: `wordpress`
-      - Username: `wordpress` (previously created user)
-      - Password: `wordpress` (password created earlier)
-      - Database Host: the RDS database endpoint (for example: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`)
+      - Database Name: `wordpressdb`
+      - Username: `wordpressuser` (previously created user)
+      - Password: `wordpresspasswd` (password created earlier)
+      - Database Host: the RDS database endpoint (for example: `Wordpress-DB.cp66aquygfg3.us-east-1.rds.amazonaws.com`)
       - Table Prefix: `wp_` (default)
     - Click on **Envia**
     - If everything is correct, click on **Executa la instal·lació**
