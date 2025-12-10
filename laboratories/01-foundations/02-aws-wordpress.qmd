@@ -48,17 +48,19 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 		The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
 
-![AWS Dashboard](/figs/laboratories/01-intro/searchbar.png)
+		![AWS Dashboard](/figs/laboratories/01-intro/searchbar.png)
 
 		Once you're on the EC2 dashboard, click on `Instances` > `Launch Instance`, as shown below:
 
-![AWS Dashboard](/figs/laboratories/01-intro/ec2-1.png)
+		![AWS Dashboard](/figs/laboratories/01-intro/ec2-1.png)
 
 		Enter a name: **AMSA**
 		
-		Leave everything as it is except `Key pair name` : select `vockey`
+		Leave everything as it is except `Key pair name` : If you have created a private key pair (as `aws-keypair` in the figure), select it, else select `vockey` .
+		Then click `Launch instance`
+
 		
-![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)
+		![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)
 
 We now have a running EC2 instance. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.
 
@@ -66,7 +68,12 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 	 
 	 go to the `EC2` dashboard. 
 	 Select the `EC2 instance` just created: **AMSA**
-	 click on `Connect` 
+	 click on `Connect` , and then `Connect` again.
+	 
+	 You will enter a terminal of the EC2 instance you created, as the user `ec2-user`, like this:
+
+	![](/figs/laboratories/02-aws-wp/Terminal-EC2.png)
+	 
 	 
 	 5.3. Install the MySQL client:
 
