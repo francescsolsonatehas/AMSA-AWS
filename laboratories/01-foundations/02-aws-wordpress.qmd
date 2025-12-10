@@ -17,9 +17,9 @@ lang: en
 
 AWS' relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.
 
-1. Let's go to the console of **Amazon RDS**.
+1. Let's go to the console of **Aurora and RDS**.
 
-2. In the **Amazon RDS** console, click on **Create database**
+2. In the **Aurora and RDS** console, click on **Create a database**
 
     * Select mode **Standard Create**
     * Select data base engine **MySQL**
