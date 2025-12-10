@@ -216,31 +216,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Wait a few minutes until the column <strong>Status</strong> turns green and says <strong>Available</strong>.</p></li>
 <li><p>Once the database is available, click on the database and go to the tab <strong>Connectivity &amp; security</strong> to view the connection details.</p>
 <ul>
-<li>Database Identifier: <code>wordpress</code></li>
-<li>Hostname: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code></li>
+<li>DB identifier: <code>wordpress</code></li>
+<li>Hostname: <code>wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com</code></li>
 <li>Port: <code>3306</code></li>
 </ul></li>
-<li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
-<p>5.1. Go to the console of <strong>Amazon RDS</strong></p>
-<p>5.2. Select our database instance</p>
-<p>5.3.In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
-<p>5.4. Click on the <strong>Security Group</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>)</p>
-<p>5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
-<pre class="plaintext"><code>      Type: MySQL/Aurora
-      Protocol: TCP
-      Port Range: 3306
-      Source: Custom
-      Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
 <li><p>To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.</p>
 <ul>
 <li>Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)</li>
 <li>Connect to the EC2 instance via SSH</li>
 <li>Install the MySQL client:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar el paquet a instal·lar</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar el paquet a instal·lar</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dnf</span> search mysql</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instal·lem el client mariadb</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
+<p>6.1. Go to the console of <strong>Amazon RDS</strong></p>
+<p>6.2. Select our database instance</p>
+<p>6.3.In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
+<p>6.4. Click on the <strong>Security Group</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>)</p>
+<p>6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
+<pre class="plaintext"><code>      Type: MySQL/Aurora
+      Protocol: TCP
+      Port Range: 3306
+      Source: Custom
+      Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)</code></pre></li>
 <li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
