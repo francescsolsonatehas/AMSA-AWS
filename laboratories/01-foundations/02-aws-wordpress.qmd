@@ -25,7 +25,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     * Select data base engine **MySQL**
     * Select the data base version **MySQL 8.0.44**
     * Select the template **Sandbox**
-    * Name of the database **Wordpress-DB**
+    * DB instance identifier **Wordpress-DB**
     * Master username **admin**
     * Credential management: **self-managed**
     * Set the password (**Lleida2030!!**). Type a password for the master and confirm it.
