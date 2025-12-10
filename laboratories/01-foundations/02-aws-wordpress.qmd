@@ -48,7 +48,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
      
     5.1. Create an EC2 instance with Amazon Linux 2023
     
-        Go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
+        Go to the EC2 dashboard. You can do this by typing EC2 into the search bar and clicking on the EC2 service: 
         
         ![AWS Dashboard](/figs/laboratories/01-intro/searchbar.png)
         
@@ -58,7 +58,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
          
         Enter a name: **AMSA**
         
-        Leave everything as it is except `Key pair name` : If you have created a private key pair (as `aws-keypair` in the figure), select it, else select `vockey` .
+        Leave everything as it is except Key pair name : If you have created a private key pair (as aws-keypair in the figure), select it, else select vockey.
 	    Then click `Launch instance`
         
         ![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)
