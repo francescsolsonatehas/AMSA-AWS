@@ -29,8 +29,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     * Master username **admin**
     * Credential management: **self-managed**
     * Set the password (**Lleida2030!!**). Type a password for the master and confirm it.
-
-    Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
+    * Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
 
 
 3. Wait a few minutes until the column **Status** turns green and says **Available**. 
