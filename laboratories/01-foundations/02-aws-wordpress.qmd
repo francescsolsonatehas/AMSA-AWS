@@ -78,9 +78,9 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 	 5.3. Install the MySQL client:
 
     ```bash
-    # Buscar el paquet a instal·lar
+    # Search for the package to install
     dnf search mysql
-    # Instal·lem el client mariadb
+    # Let’s install the MariaDB client
     sudo dnf install mariadb105 -y
     ```
 
