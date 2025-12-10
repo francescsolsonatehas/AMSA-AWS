@@ -276,14 +276,9 @@ sudo dnf install mariadb105 -y
 <li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Introdueix la contrassenya d'admin (creada abans) quan et demani</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>hostname is the database saved earlier: wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com</p></li>
-</ol>
-<p>i admin es l’usuari master creat abans, juntament amb la seva contrasenya</p>
-<pre><code> ```bash
-mysql -h wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
-# Torregrossa2030!!
-```</code></pre>
-<ol start="8" type="1">
+<p>hostname is the database saved earlier (<code>wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>) and <code>admin</code> is the master user created earlier, along with its password. This is:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com <span class="at">-u</span> admin <span class="at">-p</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Torregrossa2030!!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>When entering MySQL, at the MySQL promtp, create the database <strong>wordpress</strong> and user <strong>wordpress</strong> with all permissions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpress;</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpress'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpress'</span>;</span>
@@ -315,7 +310,7 @@ mysql -h wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
 </div>
 </div>
 <ol start="2" type="1">
-<li>By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. You will see that it cannot connect.</li>
+<li>By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. Enter EC2, click instances, choose the instance <code>wordpress</code>, copy the <code>Public IPv4 address</code> (i.e.&nbsp;44.200.65.68). Insert <code>http:44.200.65.68</code> in a browser. You will see that it cannot connect.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
@@ -343,6 +338,7 @@ Protocol: TCP
 Port Range: 80
 Source: Anywhere (0.0.0.0/0)</code></pre></li>
 </ol>
+<p>Insert <code>http:44.200.65.68</code>in a browser. It will appear in the screen <code>It works!</code></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -370,7 +366,7 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Access the public IP address of the EC2 instance from your web browser. You should see the WordPress installation page</p></li>
+<li><p>Access the public IP address of the EC2 instance from your web browser (<code>http:44.200.65.68</code>). You should see the WordPress installation page</p></li>
 <li><p>Follow the steps of the WordPress installation:</p>
 <ul>
 <li>Select the language (<em>català</em>).</li>
@@ -381,14 +377,15 @@ Source: Anywhere (0.0.0.0/0)</code></pre></li>
 <li>Database Name: <code>wordpress</code></li>
 <li>Username: <code>wordpress</code> (previously created user)</li>
 <li>Password: <code>wordpress</code> (password created earlier)</li>
-<li>Database Host: the RDS database endpoint (for example: <code>database-1.cik8jidkherq.us-east-1.rds.amazonaws.com</code>)</li>
+<li>Database Host: the RDS database endpoint (for example: <code>wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>)</li>
 <li>Table Prefix: <code>wp_</code> (default)</li>
 </ul></li>
 <li>Click on <strong>Envia</strong></li>
 <li>If everything is correct, click on <strong>Executa la instal·lació</strong></li>
 <li>Enter the site title (<strong>AMSA Lab02</strong>), el nom d’usuari (<strong>francesc</strong>), the password (<strong>9T3nEBqnFqDW3uhc7S</strong>) and the email (<strong>francesc.solsona@udl.cat</strong>)</li>
-<li>Click on <strong>Instal·la WordPress</strong></li>
+<li>Click on <strong>Instal·la el WordPress</strong></li>
 <li>Once the installation is complete, click on <strong>Inicia sessió</strong> and enter the credentials you created</li>
+<li>You will enter in the WordPress administration web (<code>http:44.200.65.68/wp-admin</code>).</li>
 </ul></li>
 </ol>
 </section>
