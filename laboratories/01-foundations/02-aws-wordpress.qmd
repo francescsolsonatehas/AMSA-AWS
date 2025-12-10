@@ -21,7 +21,6 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 2. In the **Aurora and RDS** console, click on **Create a database**
 
-
     * Select mode **Standard Create**
     * Select data base engine **MySQL**
     * Select the data base version **MySQL 8.0.44**
@@ -135,7 +134,7 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 
 ## 2.  Installing WordPress on the EC2 instance
 
-1. To install WordPress, a web server must be installed first (Apache):
+1. To install WordPress, a web server must be installed first (Apache) in the EC2 instance:
 
     ```bash
     sudo dnf install httpd -y
