@@ -54,13 +54,13 @@ AWS' relational database service (RDS) is a very interesting option for deployin
      
      Once you're on the **EC2 dashboard**, click on **Instances** > **Launch Instance**, as shown below:
      
-     ![AWS Dashboard](/figs/laboratories/01-intro/ec2-1.png)
+     ![EC2 Dashboard](/figs/laboratories/01-intro/ec2-1.png)
      
      Enter a name: **AMSA**
      
      Leave everything as it is except Key pair name : If you have created a private key pair (as aws-keypair in the figure), select it, else select **vockey**. Then click **Launch instance**.
     
-     ![AWS Dashboard](/figs/laboratories/01-intro/ec2-2.png)
+     ![EC2 Dashboard](/figs/laboratories/01-intro/ec2-2.png)
     
      We now have a running EC2 instance. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.
 
