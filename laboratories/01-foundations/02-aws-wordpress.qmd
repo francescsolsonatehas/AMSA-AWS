@@ -52,7 +52,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
         
         ![AWS Dashboard](/figs/laboratories/01-intro/searchbar.png)
         
-        Once you're on the EC2 dashboard, click on `Instances` > `Launch Instance`, as shown below:
+        Once you're on the EC2 dashboard, click on Instances > Launch Instance, as shown below:
         
         ![AWS Dashboard](/figs/laboratories/01-intro/ec2-1.png)
          
