@@ -112,9 +112,8 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
     mysql -h hostname -u admin -p
     # Introdueix la contrassenya d'admin (creada abans) quan et demani
     ```
-   hostname is the database saved earlier: wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com
-   
-   i admin es l'usuari master creat abans, juntament amb la seva contrasenya
+   hostname is the database saved earlier (`wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
+   `admin` is the master user created earlier, along with its password. This is:
    
      ```bash
     mysql -h wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
@@ -146,7 +145,7 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 Note that the start command *start* the Apache service, but it does not make it start automatically when the machine is rebooted. Therefore, we also need to run the *enable* command
 :::
 
-2. By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. You will see that it cannot connect.
+2. By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. Enter EC2, click instances, choose the instance `wordpress`, copy the `Public IPv4 address` (i.e. 44.200.65.68). Insert `http:44.200.65.68` in a browser. You will see that it cannot connect.
 
 ::: {.callout-tip title="Note"}
 If you click the link to the public IP address, it will try to access via HTTPS, but since we don't have an SSL certificate, it won't work. Manually modify the URL to http://<public_ip_addres>
@@ -165,6 +164,8 @@ If you click the link to the public IP address, it will try to access via HTTPS,
     Port Range: 80
     Source: Anywhere (0.0.0.0/0)
     ```
+
+Insert `http:44.200.65.68`in a browser. It will appear in the screen `It works!`
 
 ::: {.callout-tip title="Note"}
 This rule will allow HTTP connections from anywhere
@@ -196,7 +197,7 @@ This rule will allow HTTP connections from anywhere
     sudo chown -R apache:apache /var/www/html/
     ```
 
-8. Access the public IP address of the EC2 instance from your web browser. You should see the WordPress installation page
+8. Access the public IP address of the EC2 instance from your web browser (`http:44.200.65.68`). You should see the WordPress installation page
 
 9. Follow the steps of the WordPress installation:
 
@@ -207,13 +208,14 @@ This rule will allow HTTP connections from anywhere
       - Database Name: `wordpress`
       - Username: `wordpress` (previously created user)
       - Password: `wordpress` (password created earlier)
-      - Database Host: the RDS database endpoint (for example: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`)
+      - Database Host: the RDS database endpoint (for example: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`)
       - Table Prefix: `wp_` (default)
     - Click on **Envia**
     - If everything is correct, click on **Executa la instal·lació**
     - Enter the site title (**AMSA Lab02**), el nom d'usuari (**francesc**), the password (**9T3nEBqnFqDW3uhc7S**) and the email (**francesc.solsona@udl.cat**)
-    - Click on **Instal·la WordPress**
+    - Click on **Instal·la el WordPress**
     - Once the installation is complete, click on **Inicia sessió** and enter the credentials you created
+    - You will enter in the WordPress administration web (`http:44.200.65.68/wp-admin`). 
 
 ## 3. Cleanup
 
