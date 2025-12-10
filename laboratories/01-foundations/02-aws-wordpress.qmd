@@ -97,13 +97,13 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 	
 	6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
 
-	  ```plaintext
+        ```plaintext
     		Type: MySQL/Aurora
     		Protocol: TCP
     		Port Range: 3306
     		Source: Custom
     		Select the security group of the EC2 instance (launch-wizard-1)
-  	```
+        ```
 
 
  7. Connect to the RDS database from the EC2 instance:
