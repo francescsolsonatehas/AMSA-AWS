@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>6.1. Go to the console of <strong>Amazon RDS</strong></p>
 <p>6.2. Select our database instance (<code>wordpress</code>)</p>
 <p>6.3. In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
-<p>6.4. Click on the <strong>default security group </strong> of type <strong>EC2 Security Group - Inbound</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). Click again in the same security group ( <em>default sg-0efc4051ab6288a2d</em>) and then in <strong>Inboud rules</strong>, click on <strong>Edit Inboud rules</strong>:</p>
+<p>6.4. Click on the <strong>default security group </strong> of type <strong>EC2 Security Group - Inbound</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). Click again in the same security group (<em>default sg-0efc4051ab6288a2d</em>) and then in <strong>Inboud rules</strong>, click on <strong>Edit Inboud rules</strong>:</p>
 <p><img src="figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png" class="img-fluid"></p>
 <p>6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
 <pre><code> ```plaintext
