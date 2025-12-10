@@ -256,11 +256,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png" class="img-fluid"></p>
 <p>6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type <strong>MySQL/Aurora</strong> and enter the IP address of the EC2 instance. To do this, you need to click on <strong>Edit inbound rules</strong> and then add the following rule:</p>
 <pre><code> ```plaintext
-     Type: MySQL/Aurora
-     Protocol: TCP
-     Port Range: 3306
-     Source: Custom
-     Select the security group of the EC2 instance (launch-wizard-1)
+ Type: MySQL/Aurora
+ Protocol: TCP
+ Port Range: 3306
+ Source: Custom
+ Select the security group of the EC2 instance (launch-wizard-1)
  ```</code></pre></li>
 <li><p>Connect to the RDS database from the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> hostname <span class="at">-u</span> admin <span class="at">-p</span></span>
