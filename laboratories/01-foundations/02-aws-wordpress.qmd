@@ -37,21 +37,35 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
-   * Database Identifier: `wordpress`
-   * Hostname: `database-1.cik8jidkherq.us-east-1.rds.amazonaws.com`
+   * DB identifier: `wordpress`
+   * Hostname: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`
     * Port: `3306`
 
-5. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
-	5.1. Go to the console of **Amazon RDS**
+5. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
+  
+ 	 - Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)
+ 	 - Connect to the EC2 instance via SSH
+	 - Install the MySQL client:
+
+    ```bash
+    # Buscar el paquet a instal·lar
+    dnf search mysql
+    # Instal·lem el client mariadb
+    sudo dnf install mariadb105 -y
+    ```
+
+6. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
+
+	6.1. Go to the console of **Amazon RDS**
 	
-	5.2. Select our database instance
+	6.2. Select our database instance
 	
-	5.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database
+	6.3.In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
-	5.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*)
+	6.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*)
 	
-	5.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
+	6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
 
 	  ```plaintext
     		Type: MySQL/Aurora
@@ -62,27 +76,14 @@ AWS' relational database service (RDS) is a very interesting option for deployin
   	```
 
 
-6. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
-  
- 	 - Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)
- 	 - Connect to the EC2 instance via SSH
-	  - Install the MySQL client:
-
-    ```bash
-    # Buscar el paquet a instal·lar
-    dnf search mysql
-    # Instal·lem el client mariadb
-    sudo dnf install mariadb105 -y
-    ```
-
- 6. Connect to the RDS database from the EC2 instance:
+ 7. Connect to the RDS database from the EC2 instance:
 
     ```bash
     mysql -h hostname -u admin -p
     # Introdueix la contrassenya quan et demani
     ```
 
-7. Create the database **wordpress** and user **wordpress** with all permissions
+8. Create the database **wordpress** and user **wordpress** with all permissions
 
     ```sql
     CREATE DATABASE wordpress;
@@ -91,7 +92,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     FLUSH PRIVILEGES;
     exit
     ```
-8. We already have the database ready for the WordPress installation
+9. We already have the database ready for the WordPress installation
 
 ## 2.  Installing WordPress on the EC2 instance
 
