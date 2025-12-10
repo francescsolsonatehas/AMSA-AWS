@@ -39,9 +39,9 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
    * DB identifier: `wordpress`
    * Endpoint: `wordpress.cp66aquygfg3.us-east-1.rds.amazonaws.com`
-    * Port: `3306`
+   * Port: `3306`
 
-save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
+    Save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
 
 5. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
   
