@@ -85,7 +85,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 	
 	6.3. In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
-	6.4. Click on the **default security group ** of type **EC2 Security Group - Inbound** to edit the rules (similar to *default sg-0efc4051ab6288a2d*). Click again in the same security group ( *default sg-0efc4051ab6288a2d*) and then in **Inboud rules**, click on **Edit Inboud rules**:
+	6.4. Click on the **default security group ** of type **EC2 Security Group - Inbound** to edit the rules (similar to *default sg-0efc4051ab6288a2d*). Click again in the same security group (*default sg-0efc4051ab6288a2d*) and then in **Inboud rules**, click on **Edit Inboud rules**:
 
     ![](figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png)
 	
