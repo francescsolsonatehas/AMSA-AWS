@@ -102,7 +102,7 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
     		Protocol: TCP
     		Port Range: 3306
     		Source: Custom
-    		Seleccionar el grup de seguretat de la instància EC2 (launch-wizard-1)
+    		Select the security group of the EC2 instance (launch-wizard-1)
   	```
 
 
