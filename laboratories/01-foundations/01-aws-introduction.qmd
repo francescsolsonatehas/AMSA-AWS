@@ -221,13 +221,11 @@ PS C:\Users\fnao>
 The local computer I’m using is a Windows laptop, so the output will be different from yours if you’re using a Mac or a computer running Linux. Replace `fnao` with your own username and `C:\Users\fnao` with the path to your user directory.
 :::
 
-o connect to the EC2 instance, we will use the terminal on our local computer, just as we did at the beginning [Step 3](#pas-3-importació-de-la-clau-pública-a-aws), Open a terminal on your local computer. We will use the `ssh` command to connect to the remote machine. The command will look like this:
+To connect to the EC2 instance, we will use the terminal on our local computer, just as we did at the beginning [Step 3](#pas-3-importació-de-la-clau-pública-a-aws), Open a terminal on your local computer. We will use the `ssh` command to connect to the remote machine. The command will look like this:
 
 ```bash
 ssh -i .ssh/aws-keypair ec2-user@<public-ip>
 ``` 
-
-Haureu de substituir `<public-ip>` per la IP pública de la instància EC2. Per trobar la IP pública, torneu al tauler d'EC2 i feu clic a `Instances` a la part esquerra de la pantalla. Veureu una llista d'instàncies, feu clic a la instància que heu creat. Veureu la IP pública a la part inferior de la pantalla com es mostra a continuació:
 
 You will need to replace `<public-ip>` with the public IP of the EC2 instance. To find the public IP, go back to the EC2 dashboard and click on `Instances`, on the left side of the screen. You will see a list of instances—click on the one you created. You will see the public IP at the bottom of the screen, as shown below:
 

@@ -44,9 +44,31 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 5. To test the connection, we need a MySQL client. The easiest way is to create an EC2 instance and install the MySQL client.
   
- 	 - Create an EC2 instance with Amazon Linux 2023 (just like in the previous lab)
- 	 - Connect to the EC2 instance via SSH
-	 - Install the MySQL client:
+ 	 5.1. Create an EC2 instance with Amazon Linux 2023:
+
+		The first step will be to go to the `EC2` dashboard. You can do this by typing `EC2` into the search bar and clicking on the `EC2` service: 
+
+		![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
+
+		Once you're on the EC2 dashboard, click on `Instances` > `Launch Instance`, as shown below:
+
+		![AWS Dashboard](../../figs/laboratories/01-intro/ec2-1.png)
+
+		Enter a name: AMSA.
+		
+		Leave everything as it is except `Key pair name` : select `vockey`
+		
+		![AWS Dashboard](../../figs/laboratories/01-intro/ec2-2.png)
+
+We now have a running EC2 instance. This means we have a remote machine on AWS that we can connect to from our local computer using SSH. Let’s see how to do that.
+
+ 	 5.2. Connect to the EC2 instance
+	 
+	 go to the `EC2` dashboard. 
+	 Select the `EC2 instance`
+	 click on `Connect` 
+	 
+	 5.3. Install the MySQL client:
 
     ```bash
     # Buscar el paquet a instal·lar
