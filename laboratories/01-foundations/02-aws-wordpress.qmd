@@ -159,12 +159,12 @@ If you click the link to the public IP address, it will try to access via HTTPS,
     - In the section of **Security**, click on the **Security Group** associated with the instance (launch-wizard-1).
     - Add a new inbound rule to allow HTTP connections:
 
-    ```plaintext
-    Type: HTTP
-    Protocol: TCP
-    Port Range: 80
-    Source: Anywhere (0.0.0.0/0)
-    ```
+        ```plaintext
+        Type: HTTP
+        Protocol: TCP
+        Port Range: 80
+        Source: Anywhere (0.0.0.0/0)
+        ```
 
 Insert `http:44.200.65.68`in a browser. It will appear in the screen `It works!`
 
