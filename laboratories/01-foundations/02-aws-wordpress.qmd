@@ -93,7 +93,7 @@ We now have a running EC2 instance. This means we have a remote machine on AWS t
 	
 	6.3. In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
-	6.4. Click on the **Security Group** to edit the rules (similar to *default sg-0efc4051ab6288a2d*)
+	6.4. Click on the **default security group ** of type **EC2 Security Group - Inbound** to edit the rules (similar to *default sg-0efc4051ab6288a2d*). Click again in the same security group ( *default sg-0efc4051ab6288a2d*) and then in **Inboud rules**, click on **Edit Inboud rules**
 	
 	6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
 
