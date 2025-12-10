@@ -85,7 +85,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 6. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
-	6.1. Go to the console of **Amazon RDS**
+	6.1. Go to the console of **Aurora and RDS**
 	
 	6.2. Select our database instance (`wordpress-db`)
 	
@@ -105,8 +105,9 @@ AWS' relational database service (RDS) is a very interesting option for deployin
      Select the security group of the EC2 instance (launch-wizard-1)
      ```
 
+    Click **Save rules**
 
- 7. Connect to the RDS database from the EC2 instance:
+ 7. Connect to the RDS database from the EC2 terminal:
 
     ```bash
     mysql -h hostname -u admin -p
