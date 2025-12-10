@@ -322,15 +322,15 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre></li
 <ol start="3" type="1">
 <li><p>We need to add an inbound rule to the security group to allow HTTP connections:</p>
 <ul>
-<li>Go to the console of <strong>EC2</strong></li>
-<li>Select our EC2 instance</li>
-<li>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (launch-wizard-1).</li>
-<li>Add a new inbound rule to allow HTTP connections:</li>
-</ul>
+<li><p>Go to the console of <strong>EC2</strong></p></li>
+<li><p>Select our EC2 instance</p></li>
+<li><p>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (launch-wizard-1).</p></li>
+<li><p>Add a new inbound rule to allow HTTP connections:</p>
 <pre class="plaintext"><code>Type: HTTP
 Protocol: TCP
 Port Range: 80
 Source: Anywhere (0.0.0.0/0)</code></pre></li>
+</ul></li>
 </ol>
 <p>Insert <code>http:44.200.65.68</code>in a browser. It will appear in the screen <code>It works!</code></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Note">
