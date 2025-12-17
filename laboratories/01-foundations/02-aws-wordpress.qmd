@@ -86,12 +86,12 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 	
 	 5.3. Install the MySQL client:
 
-    ```bash
-    # Search for the package to install
-    dnf search mysql
-    # Let’s install the MariaDB client
-    sudo dnf install mariadb105 -y
-    ```
+	 ```bash
+	 # Search for the package to install
+	 dnf search mysql
+	 # Let’s install the MariaDB client
+	 sudo dnf install mariadb105 -y
+	 ```
 
 6. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
