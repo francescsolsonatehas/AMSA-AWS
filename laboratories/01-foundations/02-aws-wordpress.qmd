@@ -172,7 +172,7 @@ If you click the link to the public IP address, it will try to access via HTTPS,
         		```
     	- Click `Edit Inbound rules`,  insert the following:
 	
-Insert `http:44.200.65.68`in a browser. It will appear in the screen `It works!`
+Insert `http:44.200.65.68` in a browser. It will appear in the screen `It works!`
 
 ::: {.callout-tip title="Note"}
 This rule will allow HTTP connections from anywhere
