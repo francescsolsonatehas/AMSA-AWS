@@ -167,14 +167,14 @@ Now we’ll go to the search bar and look for the `EC2` service. Type `EC2` into
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
 
-Ara veureu el tauler d'EC2. A la part esquerra de la pantalla, veureu una llista d'opcions. Feu clic a `Import key pair`, com es mostra a continuació:
+You will now see the EC2 console. On the left side of the screen, you’ll find a list of options. Click on `Import key pair`, as shown below:
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair1.png)
 
 Now you need to give a name to the key pair. You can name it whatever you like, but I suggest naming it `aws-keypair` to keep things simple.
 You can now insert the public key into the text box, or you can click the Browse button to select the public key file from your computer.
-Just click `Browse`, navigate to the `.ssh` folder, and select the `aws-keypair.pub` file.
-But remember, the file must be the public key file, not the private key file. That means the file must have the `.pub` extension.
+Just click `Browse`, navigate to the `.ssh` folder, and select the `aws-keypair.pub` file. Alternatively, you can copy the content of `aws-keypair.pub` (the public key) into 
+the box. But remember, the file must be the public key file, not the private key file. That means the file must have the `.pub` extension.
 Once you’ve selected the file, click `Import Key Pair`.
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair2.png)
