@@ -127,8 +127,8 @@ SHA256:uhINFvYaJh6MbwFQCXdZyrW7W46jFGHUhLglDgQ5OYE ferran@DESKTOP-0841
 
 `ssh-keygen` is the command to generate the key pair. The **-t rsa** option specifies the type of key to create, in this case an RSA key, and **-f .ssh/aws-keypair** specifies the filename for the key pair. You can name the file whatever you like, but it’s important to remember the name you choose. In this example, we are naming it aws-keypair. I recommend using the same name to avoid confusion later.
 
-:::{.callout-tip title="Entendre les claus SSH - Veure video"}
-It is essential to understand how public and private keys work and how they are used to establish a connection SSH, **see [aquest vídeo](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
+:::{.callout-tip title="Understanding SSH keys - See video"}
+It is essential to understand how public and private keys work and how they are used to establish a connection SSH, **see [this video](https://www.youtube.com/watch?v=dPAw4opzN9g)**.
 :::
 
 We can check the contents of the directory `.ssh` with:
