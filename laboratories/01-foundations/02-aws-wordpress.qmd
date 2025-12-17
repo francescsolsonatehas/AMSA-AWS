@@ -17,9 +17,9 @@ lang: en
 
 AWS' relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.
 
-1. Let's go to the console of **Aurora and RDS**.
+1. Let's go to the dashboard of **Aurora and RDS**.
 
-2. In the **Aurora and RDS** console, click on **Create a database**
+2. In the **Aurora and RDS** dashboard, click on **Create a database**
 
     * Choose a database creation method **Full configuration**
     * Select data base engine **MySQL**
@@ -62,9 +62,9 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     
      ![EC2 Dashboard](/figs/laboratories/01-intro/ec2-2.png)
     
-     We now have a running EC2 instance. This means we have a remote virtual machine on AWS that we can connect to from the **EC2 console** or from our local computer using SSH (explained in ).
+     We now have a running EC2 instance. This means we have a remote virtual machine on AWS that we can connect to from the **EC2 dashboard** or from our local computer using SSH (explained in ).
      
-     Let’s see how to access from the EC2 console.
+     Let’s see how to access from the EC2 dashboard.
 
  	5.2. Connect to the EC2 instance
 	 
@@ -95,7 +95,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 6. Add a rule to the **Security Group** of the database to allow connections from the EC2 instance.
 
-	6.1. Go to the console of **Aurora and RDS**
+	6.1. Go to the dashboard of **Aurora and RDS**
 	
 	6.2. Click `Databases` and select our database instance (`wordpress-db`)
 	
@@ -167,7 +167,7 @@ If you click the link to the public IP address, it will try to access via HTTPS,
    
 3. We need to add an inbound rule to the security group to allow HTTP connections:
 
-    - Go to the **EC2** console
+    - Go to the **EC2** dashboard
     - Select our EC2 instance
     - In the section of **Security**, click on the **Security Group** associated with the instance (`sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
     - Add a new inbound rule to allow HTTP connections. 

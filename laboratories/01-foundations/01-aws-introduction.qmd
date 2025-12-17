@@ -168,7 +168,7 @@ Now we’ll go to the search bar and look for the `EC2` service. Type `EC2` into
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/searchbar.png)
 
-You will now see the EC2 console. On the left side of the screen, you’ll find a list of options. Click on `Import key pair`, as shown below:
+You will now see the EC2 dashboard. On the left side of the screen, you’ll find a list of options. Click on `Import key pair`, as shown below:
 
 ![AWS Dashboard](../../figs/laboratories/01-intro/keypair1.png)
 
