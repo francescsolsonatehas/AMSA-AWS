@@ -113,7 +113,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
     ```bash
     mysql -h hostname -u admin -p
-    # Introdueix la contrassenya d'admin (creada abans) quan et demani
+    # Enter the admin password (created earlier) when prompted
     ```
    `hostname` is the database saved earlier (`wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
    `admin` is the master user created earlier, along with its password. This is:
