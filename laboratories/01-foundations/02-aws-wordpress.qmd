@@ -239,7 +239,7 @@ This rule will allow HTTP connections from anywhere
     - Once the installation is complete, click on **Log in** and enter the credentials you created
     - You will enter in the login page of the WordPress administration (`http://44.200.65.68/wp-admin`).  Enter  username **francesc** and Password  **9T3nEBqnFqDW3uhc7S** 
 
-And Good Look!!  Its time to play with Wordpress ...
+And Good Look!!  It's time to play with Wordpress ...
 
 ## 3. Cleanup
 
