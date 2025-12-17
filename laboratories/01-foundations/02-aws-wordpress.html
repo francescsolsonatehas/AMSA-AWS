@@ -337,12 +337,13 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <li>Add a new inbound rule to allow HTTP connections.
 <ul>
 <li>Click <code>Edit Inbound rules</code>. Insert the following:</li>
+</ul></li>
 </ul>
-<code>plaintext       Type: HTTP       Protocol: TCP       Port Range: 80       Source: Anywhere-IPv4 (0.0.0.0/0)</code>
-<ul>
-<li>Click <code>Save rules</code></li>
-</ul></li>
-</ul></li>
+<pre class="plaintext"><code>Type: HTTP
+Protocol: TCP
+Port Range: 80
+Source: Anywhere-IPv4 (0.0.0.0/0)</code></pre>
+<pre><code> - Click `Save rules`</code></pre></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Note">
 <div class="callout-header d-flex align-content-center">
@@ -363,17 +364,17 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <p>Verify it: Insert <code>http://44.200.65.68</code> in a browser. It will appear in the screen <strong>It works!</strong></p>
 <ol start="5" type="1">
 <li><p>A requirement for WordPress is to have PHP installed. Let’s install PHP and the necessary extensions in the <strong>EC2 instance</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Restart the Apache service to load the PHP extensions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Now we can install WordPress. First, we download the latest version of WordPress and save it to Apache’s default directory:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /tmp</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://wordpress.org/latest.tar.gz</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> latest.tar.gz</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Access the public IP address of the EC2 instance from your web browser (<code>http://44.200.65.68</code>). You should see the WordPress installation page</p></li>
 <li><p>Follow the steps of the WordPress installation:</p>
 <ul>
