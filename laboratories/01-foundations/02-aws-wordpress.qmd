@@ -29,11 +29,11 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     * DB instance identifier **wordpress-db**
     * Master username **admin**
     * Credential management: **self-managed**
-    * Set the password (**Lleida2030!!**). Type a password for the master and confirm it.
-    * Save the password. Leave the rest of the parameters as default. Once finished, click **Create database**.
+    * Set the password (**Lleida2030!!**). Type a password for the master and confirm it. Be sure to save this password—you’ll need it later.
+    * Leave the rest of the parameters as default. Once finished, click **Create database**.
 
 
-3. Wait a few minutes until the column **Status** turns green and says **Available**. 
+3. Wait a few minutes until the column **Status** turns green and says **Available**. The database creation process may take some time.
 
 
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
