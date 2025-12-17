@@ -333,7 +333,7 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <ul>
 <li>Go to the console of <strong>EC2</strong></li>
 <li>Select our EC2 instance</li>
-<li>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (i.e.&nbsp;<code>sg-038f49ebd3fbe8b5a (launch-wizard-1)</code>).</li>
+<li>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (<code>sg-038f49ebd3fbe8b5a (launch-wizard-1)</code>).</li>
 <li>Add a new inbound rule to allow HTTP connections.
 <ul>
 <li>Click <code>Edit Inbound rules</code>. Insert the following:</li>
@@ -357,10 +357,12 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <p>This rule will allow HTTP connections from anywhere</p>
 </div>
 </div>
-<p>Verify it: Insert <code>http://44.200.65.68</code> in a browser. It will appear in the screen <strong>It works!</strong></p>
 <ol start="4" type="1">
-<li><p>Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache’s default page</p></li>
-<li><p>A requirement for WordPress is to have PHP installed. Let’s install PHP and the necessary extensions:</p>
+<li>Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser.</li>
+</ol>
+<p>Verify it: Insert <code>http://44.200.65.68</code> in a browser. It will appear in the screen <strong>It works!</strong></p>
+<ol start="5" type="1">
+<li><p>A requirement for WordPress is to have PHP installed. Let’s install PHP and the necessary extensions in the <strong>EC2 instance</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php8.1 <span class="at">-y</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install php-curl php-zip php-gd php-soap php-intl php-mysqlnd php-pdo <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Restart the Apache service to load the PHP extensions:</p>
@@ -372,7 +374,7 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv wordpress/<span class="pp">*</span> /var/www/html/</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rm <span class="at">-rf</span> wordpress latest.tar.gz</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chown <span class="at">-R</span> apache:apache /var/www/html/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Access the public IP address of the EC2 instance from your web browser (<code>http:44.200.65.68</code>). You should see the WordPress installation page</p></li>
+<li><p>Access the public IP address of the EC2 instance from your web browser (<code>http://44.200.65.68</code>). You should see the WordPress installation page</p></li>
 <li><p>Follow the steps of the WordPress installation:</p>
 <ul>
 <li>Select the language (<em>català</em>). In <em>English</em> doesn’t work.</li>
