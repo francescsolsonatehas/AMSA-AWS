@@ -170,13 +170,14 @@ If you click the link to the public IP address, it will try to access via HTTPS,
         	Port Range: 80
         	Source: Anywhere-IPv4 (0.0.0.0/0)
         	```
-    	- Click `Save rules:
-	
-Insert `http://44.200.65.68` in a browser. It will appear in the screen **It works!**
+    	- Click `Save rules`
 
 ::: {.callout-tip title="Note"}
 This rule will allow HTTP connections from anywhere
 :::
+	
+Verify it: Insert `http://44.200.65.68` in a browser. It will appear in the screen **It works!**
+
 
 4. Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache's default page
 
