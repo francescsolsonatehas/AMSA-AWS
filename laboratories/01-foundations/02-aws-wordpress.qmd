@@ -78,7 +78,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 	![](/figs/laboratories/02-aws-wp/Terminal-EC2.png)
 	 
-	Alternatively, you may access the EC2 instance through an SSH connection, as shown below: 
+	Alternatively, you may access the EC2 instance through an SSH connection from a local console, as shown below: 
 	 
 	```bash
 	cd   # we suppose the .ssh directory is located in the home of the user francesc
