@@ -262,7 +262,7 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 [ec2-user@ip-172-31-86-82 ~]$
 ```
 
-::: {.callout-important title="Exercici"}
+::: {.callout-important title="Exercise"}
 Investigate the meaning and importance of the message you accept when connecting to the remote machine for the first time. Why is it important to accept this message? What does it mean? What are its implications?
 :::
 
