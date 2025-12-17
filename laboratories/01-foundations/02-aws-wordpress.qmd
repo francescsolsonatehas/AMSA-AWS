@@ -88,7 +88,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 	6.1. Go to the console of **Aurora and RDS**
 	
-	6.2. Select our database instance (`wordpress-db`)
+	6.2. Click `Databases` and select our database instance (`wordpress-db`)
 	
 	6.3. In the section **Connectivity & security**, search for the **Security Group** associated with the database
 	
@@ -96,7 +96,8 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
     ![](/figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png)
 	
-	6.5. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Select the connection type **MySQL/Aurora** and enter the IP address of the EC2 instance. To do this, you need to click on **Edit inbound rules** and then add the following rule:
+	6.5. Clck on Delete` the existing **Inboud rule**.
+	6.6. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Click `Add rule`. Select the  **type** `MySQL/Aurora`, **Source type**  `Custom` and **Source** the default security group of the EC2 instance to allow it to connect to the DB. Like this:
 
      ```plaintext
      Type: MySQL/Aurora
