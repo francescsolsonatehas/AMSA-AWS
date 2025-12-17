@@ -281,7 +281,7 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter the admin password (created earlier) when prompted</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>hostname</code> is the database (<strong>Endpoint</strong>) saved earlier (<code>wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com</code>) and <code>admin</code> is the master user created earlier, along with its password. This is:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-h</span> wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com <span class="at">-u</span> admin <span class="at">-p</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Lleida2030!!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> password: Lleida2030!!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>When entering MySQL, at the MySQL promtp (<strong>MySQL [(none)]&gt; </strong>), create the database <strong>wordpressdb</strong>, user <strong>wordpressuser</strong> and password <strong>wordpresspasswd</strong>, with all permissions:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> wordpressdb;</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="fu">USER</span> <span class="st">'wordpressuser'</span>@<span class="st">'%'</span> <span class="kw">IDENTIFIED</span> <span class="kw">BY</span> <span class="st">'wordpresspasswd'</span>;</span>
@@ -294,7 +294,7 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <section id="installing-wordpress-on-the-ec2-instance" class="level2">
 <h2 class="anchored" data-anchor-id="installing-wordpress-on-the-ec2-instance">2. Installing WordPress on the EC2 instance</h2>
 <ol type="1">
-<li><p>To install WordPress, a web server must be installed first (Apache) in the EC2 instance:</p>
+<li><p>To install WordPress, a web server (<strong>Apache</strong>) must be installed first in the <strong>EC2 instance</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dnf install httpd <span class="at">-y</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start httpd</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
