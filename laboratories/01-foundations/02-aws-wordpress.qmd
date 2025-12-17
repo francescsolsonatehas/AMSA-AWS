@@ -210,7 +210,7 @@ This rule will allow HTTP connections from anywhere
 
 9. Follow the steps of the WordPress installation:
 
-    - Select the language (*català*). In *English* doesn't work.
+    - Select the language (*català*)
     - Click on **Continua**
     - Click on **Som-hi!**
     - Enter the database connection details:
