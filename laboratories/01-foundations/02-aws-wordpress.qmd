@@ -123,7 +123,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     # Lleida2030!!
     ```
 
-8. When entering MySQL, at the MySQL promtp, create the database **wordpressdb**, user **wordpressuser** and password **wordpresspasswd**, with all permissions:
+8. When entering MySQL, at the MySQL promtp (**MySQL [(none)]>  **), create the database **wordpressdb**, user **wordpressuser** and password **wordpresspasswd**, with all permissions:
 
     ```sql
     CREATE DATABASE wordpressdb;
