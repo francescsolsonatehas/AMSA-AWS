@@ -108,7 +108,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
      Select the security group of the EC2 instance (launch-wizard-1)
      ```
 
-    Click **Save rules**
+    Click `Save rules`
 
  7. Connect to the RDS database from the `EC2 terminal`:
 
