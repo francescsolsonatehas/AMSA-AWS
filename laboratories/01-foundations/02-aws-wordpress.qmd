@@ -58,7 +58,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
      
     *  Enter a (EC2) name: **AMSA**
      
-    *  Leave everything as it is except Key pair name : If you have created a private key pair (as aws-keypair in the figure), select it, else select **vockey**. Then click **Launch instance**.
+    *  Leave everything as it is except Key pair name : If you have created a private key pair (as **aws-keypair** in the figure), select it, else select **vockey**. Then click **Launch instance**.
     
      ![EC2 Dashboard](/figs/laboratories/01-intro/ec2-2.png)
     
