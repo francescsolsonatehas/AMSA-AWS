@@ -158,11 +158,11 @@ If you click the link to the public IP address, it will try to access via HTTPS,
    
 3. We need to add an inbound rule to the security group to allow HTTP connections:
 
-    - Go to the console of **EC2**
+    - Go to the **EC2** console
     - Select our EC2 instance
     - In the section of **Security**, click on the **Security Group** associated with the instance (`sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
     - Add a new inbound rule to allow HTTP connections. 
-    	- Click `Edit Inbound rules`.  Insert the following:
+    	- Click `Edit Inbound rules`.  Click `Add rule`. Insert the following:
 
 			```plaintext
 			Type: HTTP
