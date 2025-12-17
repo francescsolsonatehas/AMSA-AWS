@@ -336,9 +336,11 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <li>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (i.e.&nbsp;<code>sg-038f49ebd3fbe8b5a (launch-wizard-1)</code>).</li>
 <li>Add a new inbound rule to allow HTTP connections.
 <ul>
-<li><p>Click <code>Edit Inbound rules</code>, insert the following:</p>
-<p><code>plaintext       Type: HTTP       Protocol: TCP       Port Range: 80       Source: Anywhere (0.0.0.0/0)</code></p></li>
-<li><p>Click <code>Edit Inbound rules</code>, insert the following:</p></li>
+<li>Click <code>Edit Inbound rules</code>. Insert the following:</li>
+</ul>
+<code>plaintext       Type: HTTP       Protocol: TCP       Port Range: 80       Source: Anywhere-IPv4 (0.0.0.0/0)</code>
+<ul>
+<li>Click `Save rules:</li>
 </ul></li>
 </ul></li>
 </ol>
