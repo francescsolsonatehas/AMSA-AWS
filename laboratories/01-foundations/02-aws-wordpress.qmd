@@ -23,7 +23,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
     * Choose a database creation method **Full configuration**
     * Select data base engine **MySQL**
-    * Select the data base version **MySQL 8.0.44**
+    * Select the data base version **MySQL 8.0.43**
     * Select the template **Sandbox**
     * Select **Single-AZ DB instance deployment (1 instance)**
     * DB instance identifier **wordpress-db**
