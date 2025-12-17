@@ -234,7 +234,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <ul>
-<li>Once you’re on the <strong>EC2 dashboard</strong>, click on <strong>Instances</strong> &gt; <strong>Launch Instances</strong>, as shown below:</li>
+<li><p>Once you’re on the <strong>EC2 dashboard</strong>, you can import a Key pair (<strong>aws-keypair</strong>) created previously.</p></li>
+<li><p>Next, click on <strong>Instances</strong> &gt; <strong>Launch Instances</strong>, as shown below:</p></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -258,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Go to the <code>EC2 dashboard</code>. Select the <code>EC2 instance</code> just created: <strong>AMSA</strong> click on <code>Connect</code>, select <code>Connect using a Public IP</code> and then click <code>Connect</code> again.</p>
 <p>You will access a terminal on the EC2 instance you created, logged in as <code>ec2-user</code>, as shown below::</p>
 <p><img src="../../figs/laboratories/02-aws-wp/Terminal-EC2.png" class="img-fluid"></p>
-<p>Alternatively, you may access the EC2 instance through an SSH connection, as shown below:</p>
+<p>Alternatively, you may access the EC2 instance through an SSH connection from a local console, as shown below:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span>   <span class="co"># we suppose the .ssh directory is located in the home of the user francesc</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To get the <strong>public-ip</strong>, Go to the EC2 dashboard and click <code>Instances</code>. Then click the AMSA EC2 instance. Copy the <code>public-ip</code>.</p>
