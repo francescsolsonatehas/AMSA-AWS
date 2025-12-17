@@ -96,7 +96,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
     ![](/figs/laboratories/02-aws-wp/DB-SecurityGroup-Inbound.png)
 	
-	6.5. Clck on Delete` the existing **Inboud rule**.
+	6.5. Clck on `Delete` the existing **Inboud rule**.
 	6.6. Add a new inbound rule to allow connections from the IP address of our EC2 instance. Click `Add rule`. Select the  **type** `MySQL/Aurora`, **Source type**  `Custom` and **Source** the default security group of the EC2 instance (similar to **launch-wizard-1**) to allow it to connect to the DB, like this:
 
      ```plaintext
@@ -115,7 +115,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     mysql -h hostname -u admin -p
     # Enter the admin password (created earlier) when prompted
     ```
-   `hostname` is the database saved earlier (`wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
+   `hostname` is the database (**Endpoint**) saved earlier (`wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`) and
    `admin` is the master user created earlier, along with its password. This is:
    
      ```bash
