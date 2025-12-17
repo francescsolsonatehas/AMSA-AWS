@@ -200,8 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="creating-a-data-base-db-with-rds">1. Creating a Data Base (DB) with RDS</h2>
 <p>AWS’ relational database service (RDS) is a very interesting option for deploying MySQL, MariaDB, PostgreSQL, Oracle, SQL Server, and Aurora databases. This service offers easy and efficient database management, as well as the ability to perform backups, scalability, and high availability.</p>
 <ol type="1">
-<li><p>Let’s go to the console of <strong>Aurora and RDS</strong>.</p></li>
-<li><p>In the <strong>Aurora and RDS</strong> console, click on <strong>Create a database</strong></p>
+<li><p>Let’s go to the dashboard of <strong>Aurora and RDS</strong>.</p></li>
+<li><p>In the <strong>Aurora and RDS</strong> dashboard, click on <strong>Create a database</strong></p>
 <ul>
 <li>Choose a database creation method <strong>Full configuration</strong></li>
 <li>Select data base engine <strong>MySQL</strong></li>
@@ -252,8 +252,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>EC2 Dashboard</figcaption>
 </figure>
 </div>
-<p>We now have a running EC2 instance. This means we have a remote virtual machine on AWS that we can connect to from the <strong>EC2 console</strong> or from our local computer using SSH (explained in ).</p>
-<p>Let’s see how to access from the EC2 console.</p>
+<p>We now have a running EC2 instance. This means we have a remote virtual machine on AWS that we can connect to from the <strong>EC2 dashboard</strong> or from our local computer using SSH (explained in ).</p>
+<p>Let’s see how to access from the EC2 dashboard.</p>
 <p>5.2. Connect to the EC2 instance</p>
 <p>Go to the <code>EC2 dashboard</code>. Select the <code>EC2 instance</code> just created: <strong>AMSA</strong> click on <code>Connect</code>, select <code>Connect using a Public IP</code> and then click <code>Connect</code> again.</p>
 <p>You will access a terminal on the EC2 instance you created, logged in as <code>ec2-user</code>, as shown below::</p>
@@ -272,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="co"># Let’s install the MariaDB client</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">sudo</span> dnf install mariadb105 <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 <li><p>Add a rule to the <strong>Security Group</strong> of the database to allow connections from the EC2 instance.</p>
-<p>6.1. Go to the console of <strong>Aurora and RDS</strong></p>
+<p>6.1. Go to the dashboard of <strong>Aurora and RDS</strong></p>
 <p>6.2. Click <code>Databases</code> and select our database instance (<code>wordpress-db</code>)</p>
 <p>6.3. In the section <strong>Connectivity &amp; security</strong>, search for the <strong>Security Group</strong> associated with the database</p>
 <p>6.4. Click on the <strong>default security group </strong> of type <strong>EC2 Security Group - Inbound</strong> to edit the rules (similar to <em>default sg-0efc4051ab6288a2d</em>). Click again in the same security group (<em>default sg-0efc4051ab6288a2d</em>) and then in <strong>Inboud rules</strong>, click on <strong>Edit Inboud rules</strong>:</p>
@@ -340,7 +340,7 @@ Select the security group of the EC2 instance (launch-wizard-1)</code></pre>
 <ol start="3" type="1">
 <li><p>We need to add an inbound rule to the security group to allow HTTP connections:</p>
 <ul>
-<li>Go to the <strong>EC2</strong> console</li>
+<li>Go to the <strong>EC2</strong> dashboard</li>
 <li>Select our EC2 instance</li>
 <li>In the section of <strong>Security</strong>, click on the <strong>Security Group</strong> associated with the instance (<code>sg-038f49ebd3fbe8b5a (launch-wizard-1)</code>).</li>
 <li>Add a new inbound rule to allow HTTP connections.
