@@ -70,7 +70,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 	 Select the `EC2 instance` just created: **AMSA**
 	 click on `Connect`, select `Connect using a Public IP`  and then click `Connect` again.
 	 
-	 You will enter in a terminal of the EC2 instance you created, as the user `ec2-user`, like this:
+	 You will access a terminal on the EC2 instance you created, logged in as `ec2-user`, as shown below::
 
 	![](/figs/laboratories/02-aws-wp/Terminal-EC2.png)
 	 
