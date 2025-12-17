@@ -90,6 +90,7 @@ This command has several parameters that allow you to customize the SSH key. The
 The first step to create the SSH key pair is to make sure the **.ssh** directory exists. To do this, open a terminal on your local computer and type the following command:
 
 ```bash
+cd  # we suppose the .ssh directory will be located in the home of the user francesc
 mkdir .ssh
 ```
 

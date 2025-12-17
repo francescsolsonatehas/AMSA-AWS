@@ -76,7 +76,14 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 
 	![](/figs/laboratories/02-aws-wp/Terminal-EC2.png)
 	 
+	You can alternatively connect with the EC2 instance using an ssh connection this way:	 
 	 
+	```bash
+	cd   # we suppose the .ssh directory is located in the home of the user francesc
+	ssh -i .ssh/aws-keypair ec2-user@<public-ip>
+	``
+	We need to get the public-ip. Go to the EC2 dashboard and click `Instances`. Then cllick the AMSA EC2 instance. Copy the `public-ip`.
+	
 	 5.3. Install the MySQL client:
 
     ```bash
