@@ -121,7 +121,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
    
      ```bash
     mysql -h wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com -u admin -p
-    # Lleida2030!!
+    Enter password: Lleida2030!!
     ```
 
 8. When entering MySQL, at the MySQL promtp (**MySQL [(none)]>  **), create the database **wordpressdb**, user **wordpressuser** and password **wordpresspasswd**, with all permissions:
@@ -133,11 +133,12 @@ AWS' relational database service (RDS) is a very interesting option for deployin
     FLUSH PRIVILEGES;
     exit
     ```
+    
 9. We already have the database ready for the WordPress installation
 
 ## 2.  Installing WordPress on the EC2 instance
 
-1. To install WordPress, a web server must be installed first (Apache) in the EC2 instance:
+1. To install WordPress, a web server (**Apache**) must be installed first  in the **EC2 instance**:
 
     ```bash
     sudo dnf install httpd -y
