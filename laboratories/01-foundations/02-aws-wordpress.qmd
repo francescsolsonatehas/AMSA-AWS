@@ -227,16 +227,16 @@ This rule will allow HTTP connections from anywhere
     - Click on **Continue**
     - Click on **Let's go**
     - Enter the database connection details:
-      - Database Name: `wordpressdb`
-      - Username: `wordpressuser` (previously created user)
-      - Password: `wordpresspasswd` (password created earlier)
+      - Database Name: `wordpressdb` (created earlier in the MySQL console)
+      - Username: `wordpressuser` (created earlier in the MySQL console)
+      - Password: `wordpresspasswd` (created earlier in the MySQL console)
       - Database Host: the RDS database endpoint (for example: `wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`)
       - Table Prefix: `wp_` (default)
-    - Click on **Send**
+    - Click on **Submit**
     - If everything is correct, click on **Run the installation**
     - Enter the site title (**AMSA AWS-Lab**), el nom d'usuari (**francesc**), the password (**9T3nEBqnFqDW3uhc7S**) and the email (**francesc.solsona@udl.cat**)
     - Click on **Install WordPress**
-    - Once the installation is complete, click on **Inicia sessió** and enter the credentials you created
+    - Once the installation is complete, click on **Log in** and enter the credentials you created
     - You will enter in the WordPress administration web (`http://44.200.65.68/wp-admin`). 
 
 ## 3. Cleanup
