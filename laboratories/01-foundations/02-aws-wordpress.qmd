@@ -39,7 +39,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 4. Once the database is available, click on the database and go to the tab **Connectivity & security** to view the connection details.
 
     * DB identifier: `wordpress-db`
-    * Endpoint: `wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`
+    * Endpoint (similar to): `wordpress-db.cp66aquygfg3.us-east-1.rds.amazonaws.com`
     * Port: `3306`
 
     Save `Endpoint` (this is the `Hostname` of the DB). It will be used later.
