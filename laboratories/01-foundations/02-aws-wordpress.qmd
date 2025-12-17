@@ -160,7 +160,7 @@ If you click the link to the public IP address, it will try to access via HTTPS,
 
     - Go to the console of **EC2**
     - Select our EC2 instance
-    - In the section of **Security**, click on the **Security Group** associated with the instance (i.e. `sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
+    - In the section of **Security**, click on the **Security Group** associated with the instance (`sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
     - Add a new inbound rule to allow HTTP connections. 
     	- Click `Edit Inbound rules`.  Insert the following:
 
@@ -176,12 +176,13 @@ If you click the link to the public IP address, it will try to access via HTTPS,
 This rule will allow HTTP connections from anywhere
 :::
 	
+
+4. Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. 
+
 Verify it: Insert `http://44.200.65.68` in a browser. It will appear in the screen **It works!**
 
 
-4. Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser. We should see Apache's default page
-
-5. A requirement for WordPress is to have PHP installed. Let's install PHP and the necessary extensions:
+5. A requirement for WordPress is to have PHP installed. Let's install PHP and the necessary extensions in the **EC2 instance**:
 
     ```bash
     sudo dnf install php8.1 -y
@@ -205,7 +206,7 @@ Verify it: Insert `http://44.200.65.68` in a browser. It will appear in the scre
     sudo chown -R apache:apache /var/www/html/
     ```
 
-8. Access the public IP address of the EC2 instance from your web browser (`http:44.200.65.68`). You should see the WordPress installation page
+8. Access the public IP address of the EC2 instance from your web browser (`http://44.200.65.68`). You should see the WordPress installation page
 
 9. Follow the steps of the WordPress installation:
 
