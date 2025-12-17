@@ -150,7 +150,7 @@ AWS' relational database service (RDS) is a very interesting option for deployin
 Note that the start command *start* the Apache service, but it does not make it start automatically when the machine is rebooted. Therefore, we also need to run the *enable* command
 :::
 
-2. By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. Enter EC2, click `Instances`, choose the instance `wordpress`, copy the `Public IPv4 address` (i.e. 44.200.65.68). Insert `http:44.200.65.68` in a browser. You will see that it cannot connect.
+2. By default, the security group of the EC2 instance does not allow HTTP connections (port 80). You can verify this by trying to access the public IP address of the EC2 instance from a web browser. Enter EC2, click `Instances`, choose the instance `wordpress`, copy the `Public IPv4 address` (i.e. 44.200.65.68). Insert `http://44.200.65.68` in a browser. You will see that it cannot connect.
 
 ::: {.callout-tip title="Note"}
 If you click the link to the public IP address, it will try to access via HTTPS, but since we don't have an SSL certificate, it won't work. Manually modify the URL to http://<public_ip_addres>
@@ -160,16 +160,18 @@ If you click the link to the public IP address, it will try to access via HTTPS,
 
     - Go to the console of **EC2**
     - Select our EC2 instance
-    - In the section of **Security**, click on the **Security Group** associated with the instance (launch-wizard-1).
-    - Add a new inbound rule to allow HTTP connections:
+    - In the section of **Security**, click on the **Security Group** associated with the instance (i.e. `sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
+    - Add a new inbound rule to allow HTTP connections. 
+    	- Click `Edit Inbound rules`,  insert the following:
 
-        ```plaintext
-        Type: HTTP
-        Protocol: TCP
-        Port Range: 80
-        Source: Anywhere (0.0.0.0/0)
-        ```
-
+       		 ```plaintext
+        		Type: HTTP
+        		Protocol: TCP
+        		Port Range: 80
+        		Source: Anywhere (0.0.0.0/0)
+        		```
+    	- Click `Edit Inbound rules`,  insert the following:
+	
 Insert `http:44.200.65.68`in a browser. It will appear in the screen `It works!`
 
 ::: {.callout-tip title="Note"}
