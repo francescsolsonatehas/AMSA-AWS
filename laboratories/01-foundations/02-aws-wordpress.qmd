@@ -162,15 +162,15 @@ If you click the link to the public IP address, it will try to access via HTTPS,
     - Select our EC2 instance
     - In the section of **Security**, click on the **Security Group** associated with the instance (i.e. `sg-038f49ebd3fbe8b5a (launch-wizard-1)`).
     - Add a new inbound rule to allow HTTP connections. 
-    	- Click `Edit Inbound rules`,  insert the following:
+    	- Click `Edit Inbound rules`.  Insert the following:
 
-       		 ```plaintext
-        		Type: HTTP
-        		Protocol: TCP
-        		Port Range: 80
-        		Source: Anywhere (0.0.0.0/0)
-        		```
-    	- Click `Edit Inbound rules`,  insert the following:
+       	```plaintext
+        	Type: HTTP
+        	Protocol: TCP
+        	Port Range: 80
+        	Source: Anywhere-IPv4 (0.0.0.0/0)
+        	```
+    	- Click `Save rules:
 	
 Insert `http://44.200.65.68` in a browser. It will appear in the screen **It works!**
 
