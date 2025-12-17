@@ -179,7 +179,8 @@ This rule will allow HTTP connections from anywhere
 
 4. Once the rule has been added, we can access the public IP address of the EC2 instance from the web browser and verify it: 
 
-	Insert `http://44.200.65.68` in a browser. It will appear in the screen **It works!**
+	Insert `http://44.200.65.68` in a browser. It will appear in the screen: 
+	 **It works!**
 
 
 5. A requirement for WordPress is to have PHP installed. Let's install PHP and the necessary extensions in the **EC2 instance**:
