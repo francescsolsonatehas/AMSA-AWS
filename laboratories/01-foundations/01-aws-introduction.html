@@ -417,7 +417,7 @@ Note
 </section>
 <section id="pas-6-connexio-a-la-instancia-ec2" class="level2">
 <h2 class="anchored" data-anchor-id="pas-6-connexio-a-la-instancia-ec2">6. Connecting to the EC2 instance</h2>
-<p>Before connecting to the remote machine, I want you to try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is <code>pwd</code>, which stands for <code>print working directory</code>, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is <code>whoami</code>, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.</p>
+<p>Before connecting to the remote machine, you may try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is <code>pwd</code>, which stands for <code>print working directory</code>, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is <code>whoami</code>, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.</p>
 <p>Below is the output I get on my local computer:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PS</span> C<span class="op">:</span>\Users\fnao<span class="op">&gt;</span> <span class="fu">pwd</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -490,15 +490,15 @@ Last login: Sun Mar  2 09:50:33 2025 from 79.156.58.43
 <h3 class="anchored" data-anchor-id="pas-2-transferencia-del-fitxer-de-dades-a-la-instancia-ec2">7.1. Transferring a data file to the EC2 instance EC2</h3>
 <p>To transfer a data file (<code>workload.csv</code>) to the EC2 instance, we will use SFTP (SSH File Transfer Protocol). SFTP is a secure protocol for transferring files between a local computer and a remote machine. We will use the same SSH key pair we created earlier to authenticate to the EC2 instance.</p>
 <ol type="1">
-<li>Download the data file <a href="./sources/workload.csv"><code>workload.csv</code></a> to your local computer.</li>
-<li>Use SFTP to upload the data file to the EC2 instance:</li>
-</ol>
+<li><p>Download the data file <a href="./sources/workload.csv"><code>workload.csv</code></a> to your local computer.</p></li>
+<li><p>Use SFTP to upload the data file to the EC2 instance:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace &lt;public-ip&gt; with the public IP of your EC2 instance</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp</span> <span class="at">-i</span> .ssh/aws-keypair ec2-user@<span class="op">&lt;</span>public-ip<span class="op">&gt;</span>:/home/ec2-user</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the workload.csv file from the remote directory to your local machine</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">put</span> workload.csv</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Close the SFTP session</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
 </section>
 <section id="pas-1-configuracio-de-lentorn-remot-a-lec2" class="level3">
 <h3 class="anchored" data-anchor-id="pas-1-configuracio-de-lentorn-remot-a-lec2">7.2. Setup and Python script execution in the EC2</h3>
