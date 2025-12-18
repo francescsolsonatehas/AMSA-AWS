@@ -207,7 +207,7 @@ We now have a running EC2 instance with our public key imported. This means we h
 
 ## 6. Connecting to the EC2 instance {#pas-6-connexio-a-la-instancia-ec2}
 
-Before connecting to the remote machine, I want you to try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is `pwd`, which stands for `print working directory`, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is `whoami`, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.
+Before connecting to the remote machine, you may try a few commands on your local computer that we will repeat once we are connected to the remote machine. One of the commands is `pwd`, which stands for `print working directory`, as mentioned earlier. This command will show you the path to the directory you are currently in. The other command is `whoami`, which will show you the username you are logged in with. Try these commands on your local computer and remember the output. We will repeat them once we are connected to the remote machine.
 
 Below is the output I get on my local computer:
 
@@ -289,14 +289,14 @@ To transfer a data file  (`workload.csv`) to the EC2 instance, we will use SFTP 
 1. Download the data file  [`workload.csv`](./sources/workload.csv)  to your local computer.
 2. Use SFTP to upload the data file to the EC2 instance:
 
-```bash
-# Replace <public-ip> with the public IP of your EC2 instance
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user
-# Download the workload.csv file from the remote directory to your local machine
-put workload.csv
-# Close the SFTP session
-exit
-```
+	```bash
+	# Replace <public-ip> with the public IP of your EC2 instance
+	sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user
+	# Download the workload.csv file from the remote directory to your local machine
+	put workload.csv
+	# Close the SFTP session
+	exit
+	```
 
 
 ### 7.2. Setup and Python script execution in the EC2 {#pas-1-configuracio-de-lentorn-remot-a-lec2}
