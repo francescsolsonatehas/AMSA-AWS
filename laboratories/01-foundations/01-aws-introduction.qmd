@@ -414,7 +414,12 @@ python3 -c "print('Hello World from the virtual environment')"
   ```
 
 
-Now it should work correctly and generate an image file with the workload graph. You can check that the image file has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
+Now it should work correctly and generate an image file with the workload graph. You can check that the image file (`workload_analysis.png`) has been created correctly using the `ls -l command. Once the image has been generated, you can use SFTP to download it to your local machine:
+
+```bash
+sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
+get workload_analysis.png
+```
 
 ## 8. Cleanup {#neteja-final}
 
