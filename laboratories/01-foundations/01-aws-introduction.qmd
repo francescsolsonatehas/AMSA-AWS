@@ -291,7 +291,7 @@ To transfer a data file  (`workload.csv`) to the EC2 instance, we will use SFTP 
 
 ```bash
 # Replace <public-ip> with the public IP of your EC2 instance
-sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user/lab01-workload-simulation
+sftp -i .ssh/aws-keypair ec2-user@<public-ip>:/home/ec2-user
 # Download the workload.csv file from the remote directory to your local machine
 put workload.csv
 # Close the SFTP session
@@ -345,6 +345,7 @@ python3 -c "print('Hello World from the virtual environment')"
 
   ```bash
   mkdir lab01-workload-simulation
+  mv workload.csv lab01-workload-simulation
   cd lab01-workload-simulation
   ```
 
