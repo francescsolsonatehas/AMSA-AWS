@@ -1,5 +1,5 @@
 ---
-title: Deployment of a high-availability web application
+title: Deployment a high-availability web application
 lang: en
 ---
 
