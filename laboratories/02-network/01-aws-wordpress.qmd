@@ -34,7 +34,7 @@ When you perform subnetting to create subnets within your VPC, you increase the 
 Remember that the total calculated addresses are not the total usable addresses for your servers (hosts). Some addresses are reserved for special uses, such as network identification and broadcast.
 :::
 
-Podem definir la VPC a través de la interfície web d'AWS, utilitzant els formularis disponibles:
+We can define the VPC through the AWS web interface, using the available forms:
 
 ![VPC definition](../../figs/laboratories/03-aws-wp/wordpress/vpc.png)
 
