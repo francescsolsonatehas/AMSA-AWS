@@ -33,8 +33,8 @@ website:
         text: 1 · Executing a Python script in a EC2 instance
       - href: ./laboratories/01-foundations/02-aws-wordpress.qmd
         text: 2 · Deploying a web application
-#      - href: ./laboratories/02-network/01-aws-wordpress.qmd
-#        text: 3 · Deployment of a high-availability web application
+      - href: ./laboratories/02-network/01-aws-wordpress.qmd
+        text: 3 · Deployment of a high-availability web application
 
 format:
   html:
