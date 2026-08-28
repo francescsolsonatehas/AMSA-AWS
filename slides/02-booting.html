@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Jordi Mateo Fornés">
   <title>AMSA - Fall 2025 – Arrencada del sistema (Part 1)</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -200,7 +206,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jordi Mateo Fornés 
+Jordi Mateo Fornés
 </div>
 </div>
 </div>
@@ -462,12 +468,12 @@ Jordi Mateo Fornés
 </ul></li>
 </ul>
 <div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">/</span></span>
-<span id="cb1-2"><a></a><span class="ex">├──</span> boot</span>
-<span id="cb1-3"><a></a><span class="ex">│</span>   ├── efi</span>
-<span id="cb1-4"><a></a><span class="ex">│</span>   │   ├── EFI</span>
-<span id="cb1-5"><a></a><span class="ex">│</span>   │   │   ├── BOOT</span>
-<span id="cb1-6"><a></a><span class="ex">│</span>   │   │   │   ├── BOOTX64.EFI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="ex">/</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="ex">├──</span> boot</span>
+<span id="cb1-3"><a aria-label="3"></a><span class="ex">│</span>   ├── efi</span>
+<span id="cb1-4"><a aria-label="4"></a><span class="ex">│</span>   │   ├── EFI</span>
+<span id="cb1-5"><a aria-label="5"></a><span class="ex">│</span>   │   │   ├── BOOT</span>
+<span id="cb1-6"><a aria-label="6"></a><span class="ex">│</span>   │   │   │   ├── BOOTX64.EFI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="què-és-uefi-ii" class="slide level2 smaller">
@@ -497,15 +503,15 @@ Jordi Mateo Fornés
 <img data-src="../figs/slides/02-booting/UEFI-BOOT.png" class="r-stretch"></section>
 <section id="efibootmgr" class="slide level2 smaller">
 <h2><code>efibootmgr</code></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="co"># efibootmgr -v</span></span>
-<span id="cb2-2"><a></a><span class="ex">BootCurrent:</span> 0002</span>
-<span id="cb2-3"><a></a><span class="ex">Timeout:</span> 3 seconds</span>
-<span id="cb2-4"><a></a><span class="ex">BootOrder:</span> 0003,0002,0000,0004</span>
-<span id="cb2-5"><a></a><span class="ex">Boot0000*</span> CD/DVD Drive  BIOS<span class="er">(</span><span class="ex">3,0,00</span><span class="kw">)</span></span>
-<span id="cb2-6"><a></a><span class="ex">Boot0001*</span> Hard Drive    HD<span class="er">(</span><span class="ex">2,0,00</span><span class="kw">)</span></span>
-<span id="cb2-7"><a></a><span class="ex">Boot0002*</span> Fedora        HD<span class="er">(</span><span class="ex">1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d</span><span class="kw">)</span><span class="ex">File</span><span class="er">(</span><span class="ex">\EFI\fedora\grubx64.efi</span><span class="kw">)</span></span>
-<span id="cb2-8"><a></a><span class="ex">Boot0003*</span> opensuse      HD<span class="er">(</span><span class="ex">1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d</span><span class="kw">)</span><span class="ex">File</span><span class="er">(</span><span class="ex">\EFI\opensuse\grubx64.efi</span><span class="kw">)</span></span>
-<span id="cb2-9"><a></a><span class="ex">Boot0004*</span> Hard Drive    BIOS<span class="er">(</span><span class="ex">2,0,00</span><span class="kw">)</span><span class="ex">P0:</span> ST1500DM003-9YN16G </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="co"># efibootmgr -v</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="ex">BootCurrent:</span> 0002</span>
+<span id="cb2-3"><a aria-label="3"></a><span class="ex">Timeout:</span> 3 seconds</span>
+<span id="cb2-4"><a aria-label="4"></a><span class="ex">BootOrder:</span> 0003,0002,0000,0004</span>
+<span id="cb2-5"><a aria-label="5"></a><span class="ex">Boot0000*</span> CD/DVD Drive  BIOS<span class="er">(</span><span class="ex">3,0,00</span><span class="kw">)</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="ex">Boot0001*</span> Hard Drive    HD<span class="er">(</span><span class="ex">2,0,00</span><span class="kw">)</span></span>
+<span id="cb2-7"><a aria-label="7"></a><span class="ex">Boot0002*</span> Fedora        HD<span class="er">(</span><span class="ex">1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d</span><span class="kw">)</span><span class="ex">File</span><span class="er">(</span><span class="ex">\EFI\fedora\grubx64.efi</span><span class="kw">)</span></span>
+<span id="cb2-8"><a aria-label="8"></a><span class="ex">Boot0003*</span> opensuse      HD<span class="er">(</span><span class="ex">1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d</span><span class="kw">)</span><span class="ex">File</span><span class="er">(</span><span class="ex">\EFI\opensuse\grubx64.efi</span><span class="kw">)</span></span>
+<span id="cb2-9"><a aria-label="9"></a><span class="ex">Boot0004*</span> Hard Drive    BIOS<span class="er">(</span><span class="ex">2,0,00</span><span class="kw">)</span><span class="ex">P0:</span> ST1500DM003-9YN16G </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment">Les entrades <strong>Boot0000 i Boot0004</strong> corresponen a modes de compatibilitat <strong>BIOS (CSM)</strong>, no són natives- d’UEFI.</li>
 <li class="fragment">Generades automàticament pel firmware, sense intervenció externa.</li>

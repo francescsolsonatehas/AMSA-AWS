@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Jordi Mateo Fornés">
   <title>AMSA - Fall 2025 – Arrencada del sistema (Part 3)</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -200,7 +206,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jordi Mateo Fornés 
+Jordi Mateo Fornés
 </div>
 </div>
 </div>
@@ -213,7 +219,7 @@ Jordi Mateo Fornés
 <section id="pid-1-initsystemd" class="slide level2 smaller">
 <h2>PID 1: init/systemd</h2>
 <p>Quan s’acaba el procés d’inicialització del sistema en l’espai del kernel i es descomprimeix i executa l’initramfs, es produeix una transició important cap a l’espai d’usuari.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="bu">exec</span> switch_root /mnt /sbin/init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="bu">exec</span> switch_root /mnt /sbin/init</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment">El comandament <code>switch_root</code> substitueix l’arrel del sistema de fitxers actual (l’initramfs) per la partició arrel real del sistema operatiu.</li>
 <li class="fragment">El kernel deixa de gestionar directament els processos i passa el control a un procés en l’espai d’usuari.</li>
@@ -347,16 +353,16 @@ Jordi Mateo Fornés
 <h2>Exemple de fitxer d’unitat</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">[Unit]</span></span>
-<span id="cb2-2"><a></a><span class="va">Description</span><span class="op">=</span>CUPS <span class="ex">Scheduler</span></span>
-<span id="cb2-3"><a></a><span class="va">Documentation</span><span class="op">=</span>man:cupsd<span class="kw">(</span><span class="ex">8</span><span class="kw">)</span></span>
-<span id="cb2-4"><a></a><span class="va">After</span><span class="op">=</span>network.target</span>
-<span id="cb2-5"><a></a><span class="ex">[Service]</span></span>
-<span id="cb2-6"><a></a><span class="va">ExecStart</span><span class="op">=</span>/usr/sbin/cupsd <span class="ex">-l</span></span>
-<span id="cb2-7"><a></a><span class="va">Type</span><span class="op">=</span>notify</span>
-<span id="cb2-8"><a></a><span class="ex">[Install]</span></span>
-<span id="cb2-9"><a></a><span class="va">Also</span><span class="op">=</span>cups.socket <span class="ex">cups.path</span></span>
-<span id="cb2-10"><a></a><span class="va">WantedBy</span><span class="op">=</span>printer.target</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">[Unit]</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="va">Description</span><span class="op">=</span>CUPS <span class="ex">Scheduler</span></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="va">Documentation</span><span class="op">=</span>man:cupsd<span class="kw">(</span><span class="ex">8</span><span class="kw">)</span></span>
+<span id="cb2-4"><a aria-label="4"></a><span class="va">After</span><span class="op">=</span>network.target</span>
+<span id="cb2-5"><a aria-label="5"></a><span class="ex">[Service]</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="va">ExecStart</span><span class="op">=</span>/usr/sbin/cupsd <span class="ex">-l</span></span>
+<span id="cb2-7"><a aria-label="7"></a><span class="va">Type</span><span class="op">=</span>notify</span>
+<span id="cb2-8"><a aria-label="8"></a><span class="ex">[Install]</span></span>
+<span id="cb2-9"><a aria-label="9"></a><span class="va">Also</span><span class="op">=</span>cups.socket <span class="ex">cups.path</span></span>
+<span id="cb2-10"><a aria-label="10"></a><span class="va">WantedBy</span><span class="op">=</span>printer.target</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li class="fragment">CUPS (Common Unix Printing System) és un sistema d’impressió utilitzat en sistemes Unix i Linux.</li>
@@ -551,11 +557,11 @@ Jordi Mateo Fornés
 </section>
 <section id="unitat-install" class="slide level2 smaller">
 <h2>Unitat [<code>INSTALL</code>]</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">[Install]</span></span>
-<span id="cb3-2"><a></a><span class="va">WantedBy</span><span class="op">=</span>multi-user.target</span>
-<span id="cb3-3"><a></a><span class="va">Also</span><span class="op">=</span>sysstat-collect.timer</span>
-<span id="cb3-4"><a></a><span class="va">Also</span><span class="op">=</span>sysstat-summary.timer</span>
-<span id="cb3-5"><a></a><span class="va">Alias</span><span class="op">=</span>monitoring.service</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">[Install]</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="va">WantedBy</span><span class="op">=</span>multi-user.target</span>
+<span id="cb3-3"><a aria-label="3"></a><span class="va">Also</span><span class="op">=</span>sysstat-collect.timer</span>
+<span id="cb3-4"><a aria-label="4"></a><span class="va">Also</span><span class="op">=</span>sysstat-summary.timer</span>
+<span id="cb3-5"><a aria-label="5"></a><span class="va">Alias</span><span class="op">=</span>monitoring.service</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment">La secció <code>[Install]</code> defineix com s’instal·la i s’inicia una unitat.</li>
 <li class="fragment"><code>WantedBy=multi-user.target</code> indica que aquesta unitat s’ha d’iniciar quan s’arrenca el sistema en mode multiusuari (runlevel 3).</li>

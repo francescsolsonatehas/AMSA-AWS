@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Jordi Mateo Fornés">
   <title>AMSA - Fall 2025 – Sistema de fitxers (I)</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -203,7 +209,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jordi Mateo Fornés 
+Jordi Mateo Fornés
 </div>
 </div>
 </div>
@@ -714,10 +720,10 @@ Jordi Mateo Fornés
 </section>
 <section id="montatge-dun-fs" class="slide level2 smaller">
 <h2>Montatge d’un FS</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="co"># Sintaxi: mount -t &lt;fs_type&gt; &lt;device&gt; &lt;mount_point&gt;</span></span>
-<span id="cb1-2"><a></a><span class="fu">mount</span> <span class="at">-t</span> ext4 /dev/nvme0n1p2 /home</span>
-<span id="cb1-3"><a></a><span class="fu">mount</span> <span class="at">-t</span> btrfs /dev/sdb1 /backup</span>
-<span id="cb1-4"><a></a><span class="fu">mount</span> <span class="at">-t</span> tmpfs <span class="at">-o</span> size=1G tmpfs /tmp/ramdisk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="co"># Sintaxi: mount -t &lt;fs_type&gt; &lt;device&gt; &lt;mount_point&gt;</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">mount</span> <span class="at">-t</span> ext4 /dev/nvme0n1p2 /home</span>
+<span id="cb1-3"><a aria-label="3"></a><span class="fu">mount</span> <span class="at">-t</span> btrfs /dev/sdb1 /backup</span>
+<span id="cb1-4"><a aria-label="4"></a><span class="fu">mount</span> <span class="at">-t</span> tmpfs <span class="at">-o</span> size=1G tmpfs /tmp/ramdisk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <colgroup>
 <col style="width: 26%">
@@ -1182,26 +1188,26 @@ Jordi Mateo Fornés
 <section id="ext-estructura-de-linode" class="slide level2 smaller">
 <h2>EXT: Estructura de l’Inode</h2>
 <p>L’<strong>inode</strong> és el nucli del sistema EXT. Cada fitxer té almenys un inode que conté tota la seva metadata:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a></a><span class="kw">struct</span> ext4_inode <span class="op">{</span></span>
-<span id="cb2-2"><a></a>    <span class="dt">uint16_t</span> i_mode<span class="op">;</span>        <span class="co">// Permisos i tipus de fitxer</span></span>
-<span id="cb2-3"><a></a>    <span class="dt">uint16_t</span> i_uid<span class="op">;</span>         <span class="co">// User ID del propietari</span></span>
-<span id="cb2-4"><a></a>    <span class="dt">uint32_t</span> i_size<span class="op">;</span>        <span class="co">// Mida del fitxer en bytes</span></span>
-<span id="cb2-5"><a></a>    <span class="dt">uint32_t</span> i_atime<span class="op">;</span>       <span class="co">// Últim temps d'accés</span></span>
-<span id="cb2-6"><a></a>    <span class="dt">uint32_t</span> i_ctime<span class="op">;</span>       <span class="co">// Temps de creació de l'inode</span></span>
-<span id="cb2-7"><a></a>    <span class="dt">uint32_t</span> i_mtime<span class="op">;</span>       <span class="co">// Últim temps de modificació</span></span>
-<span id="cb2-8"><a></a>    <span class="dt">uint16_t</span> i_gid<span class="op">;</span>         <span class="co">// Group ID del propietari</span></span>
-<span id="cb2-9"><a></a>    <span class="dt">uint16_t</span> i_links_count<span class="op">;</span> <span class="co">// Nombre de hard links</span></span>
-<span id="cb2-10"><a></a>    </span>
-<span id="cb2-11"><a></a>    <span class="co">// Punters a blocs de dades</span></span>
-<span id="cb2-12"><a></a>    <span class="dt">uint32_t</span> i_block<span class="op">[</span><span class="dv">15</span><span class="op">];</span>   <span class="co">// Blocs directes i indirectes</span></span>
-<span id="cb2-13"><a></a>    <span class="co">/*</span></span>
-<span id="cb2-14"><a></a><span class="co">     * i_block[0-11]: 12 punters directes (48KB amb blocs de 4KB)</span></span>
-<span id="cb2-15"><a></a><span class="co">     * i_block[12]:   1 punter simple indirecte (4MB addicionals)</span></span>
-<span id="cb2-16"><a></a><span class="co">     * i_block[13]:   1 punter doble indirecte (4GB addicionals)</span></span>
-<span id="cb2-17"><a></a><span class="co">     * i_block[14]:   1 punter triple indirecte (4TB addicionals)</span></span>
-<span id="cb2-18"><a></a><span class="co">     */</span></span>
-<span id="cb2-19"><a></a></span>
-<span id="cb2-20"><a></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a aria-label="1"></a><span class="kw">struct</span> ext4_inode <span class="op">{</span></span>
+<span id="cb2-2"><a aria-label="2"></a>    <span class="dt">uint16_t</span> i_mode<span class="op">;</span>        <span class="co">// Permisos i tipus de fitxer</span></span>
+<span id="cb2-3"><a aria-label="3"></a>    <span class="dt">uint16_t</span> i_uid<span class="op">;</span>         <span class="co">// User ID del propietari</span></span>
+<span id="cb2-4"><a aria-label="4"></a>    <span class="dt">uint32_t</span> i_size<span class="op">;</span>        <span class="co">// Mida del fitxer en bytes</span></span>
+<span id="cb2-5"><a aria-label="5"></a>    <span class="dt">uint32_t</span> i_atime<span class="op">;</span>       <span class="co">// Últim temps d'accés</span></span>
+<span id="cb2-6"><a aria-label="6"></a>    <span class="dt">uint32_t</span> i_ctime<span class="op">;</span>       <span class="co">// Temps de creació de l'inode</span></span>
+<span id="cb2-7"><a aria-label="7"></a>    <span class="dt">uint32_t</span> i_mtime<span class="op">;</span>       <span class="co">// Últim temps de modificació</span></span>
+<span id="cb2-8"><a aria-label="8"></a>    <span class="dt">uint16_t</span> i_gid<span class="op">;</span>         <span class="co">// Group ID del propietari</span></span>
+<span id="cb2-9"><a aria-label="9"></a>    <span class="dt">uint16_t</span> i_links_count<span class="op">;</span> <span class="co">// Nombre de hard links</span></span>
+<span id="cb2-10"><a aria-label="10"></a>    </span>
+<span id="cb2-11"><a aria-label="11"></a>    <span class="co">// Punters a blocs de dades</span></span>
+<span id="cb2-12"><a aria-label="12"></a>    <span class="dt">uint32_t</span> i_block<span class="op">[</span><span class="dv">15</span><span class="op">];</span>   <span class="co">// Blocs directes i indirectes</span></span>
+<span id="cb2-13"><a aria-label="13"></a>    <span class="co">/*</span></span>
+<span id="cb2-14"><a aria-label="14"></a><span class="co">     * i_block[0-11]: 12 punters directes (48KB amb blocs de 4KB)</span></span>
+<span id="cb2-15"><a aria-label="15"></a><span class="co">     * i_block[12]:   1 punter simple indirecte (4MB addicionals)</span></span>
+<span id="cb2-16"><a aria-label="16"></a><span class="co">     * i_block[13]:   1 punter doble indirecte (4GB addicionals)</span></span>
+<span id="cb2-17"><a aria-label="17"></a><span class="co">     * i_block[14]:   1 punter triple indirecte (4TB addicionals)</span></span>
+<span id="cb2-18"><a aria-label="18"></a><span class="co">     */</span></span>
+<span id="cb2-19"><a aria-label="19"></a></span>
+<span id="cb2-20"><a aria-label="20"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Els <strong>i-nodes</strong> consumeixen un 10% de l’emmagatzematge del disc (<em>es pot configurar en el moment de la creació del sistema de fitxers</em>).</p>
 </section>
 <section id="ext-adreçament-de-blocs-ext2" class="slide level2 smaller">
@@ -1305,12 +1311,12 @@ Jordi Mateo Fornés
 </section>
 <section id="ext4-estructura-dun-extent" class="slide level2 smaller">
 <h2>ext4: Estructura d’un Extent</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a></a><span class="kw">struct</span> ext4_extent <span class="op">{</span></span>
-<span id="cb3-2"><a></a>    <span class="dt">uint32_t</span> ee_block<span class="op">;</span>      <span class="co">// Bloc lògic inicial al fitxer</span></span>
-<span id="cb3-3"><a></a>    <span class="dt">uint16_t</span> ee_len<span class="op">;</span>        <span class="co">// Longitud en blocs (màxim 32.768)</span></span>
-<span id="cb3-4"><a></a>    <span class="dt">uint16_t</span> ee_start_hi<span class="op">;</span>   <span class="co">// Bits alts del bloc físic</span></span>
-<span id="cb3-5"><a></a>    <span class="dt">uint32_t</span> ee_start_lo<span class="op">;</span>   <span class="co">// Bits baixos del bloc físic</span></span>
-<span id="cb3-6"><a></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a aria-label="1"></a><span class="kw">struct</span> ext4_extent <span class="op">{</span></span>
+<span id="cb3-2"><a aria-label="2"></a>    <span class="dt">uint32_t</span> ee_block<span class="op">;</span>      <span class="co">// Bloc lògic inicial al fitxer</span></span>
+<span id="cb3-3"><a aria-label="3"></a>    <span class="dt">uint16_t</span> ee_len<span class="op">;</span>        <span class="co">// Longitud en blocs (màxim 32.768)</span></span>
+<span id="cb3-4"><a aria-label="4"></a>    <span class="dt">uint16_t</span> ee_start_hi<span class="op">;</span>   <span class="co">// Bits alts del bloc físic</span></span>
+<span id="cb3-5"><a aria-label="5"></a>    <span class="dt">uint32_t</span> ee_start_lo<span class="op">;</span>   <span class="co">// Bits baixos del bloc físic</span></span>
+<span id="cb3-6"><a aria-label="6"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell" data-reveal="true" data-layout-align="default">
 <div class="cell-output-display">
 <div>

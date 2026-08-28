@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Jordi Mateo Fornés">
   <title>AMSA - Fall 2025 – Fonaments de l’Administració de Sistemes</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -203,7 +209,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jordi Mateo Fornés 
+Jordi Mateo Fornés
 </div>
 </div>
 </div>
@@ -879,15 +885,15 @@ Jordi Mateo Fornés
 
 </div><div class="column" style="width:40%;">
 <h3 id="exemple-de-notes">Exemple de Notes</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a></a><span class="fu">## Setmana X</span></span>
-<span id="cb1-2"><a></a></span>
-<span id="cb1-3"><a></a><span class="fu"># Resum teòric</span></span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a><span class="fu"># Exemples pràctics</span></span>
-<span id="cb1-6"><a></a></span>
-<span id="cb1-7"><a></a><span class="fu"># Dubtes i preguntes</span></span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a><span class="fu"># Reflexions personals</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a aria-label="1"></a><span class="fu">## Setmana X</span></span>
+<span id="cb1-2"><a aria-label="2"></a></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="fu"># Resum teòric</span></span>
+<span id="cb1-4"><a aria-label="4"></a></span>
+<span id="cb1-5"><a aria-label="5"></a><span class="fu"># Exemples pràctics</span></span>
+<span id="cb1-6"><a aria-label="6"></a></span>
+<span id="cb1-7"><a aria-label="7"></a><span class="fu"># Dubtes i preguntes</span></span>
+<span id="cb1-8"><a aria-label="8"></a></span>
+<span id="cb1-9"><a aria-label="9"></a><span class="fu"># Reflexions personals</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div title="No es permet cap altre forma ">
 <div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
@@ -1911,22 +1917,22 @@ Jordi Mateo Fornés
 <p>Ansible és una eina d’automatització de la configuració i gestió de sistemes. Utilitza un llenguatge senzill basat en <code>YAML</code> per definir les tasques i la configuració dels sistemes, i utilitza SSH per connectar-se als servidors i executar les tasques.</p>
 <div class="columns">
 <div class="column" style="width:45%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a></a><span class="kw">-</span><span class="at"> </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> webservers</span></span>
-<span id="cb2-2"><a></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
-<span id="cb2-3"><a></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install Apache</span></span>
-<span id="cb2-4"><a></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span></span>
-<span id="cb2-5"><a></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> apache2</span></span>
-<span id="cb2-6"><a></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
-<span id="cb2-7"><a></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Start Apache</span></span>
-<span id="cb2-8"><a></a><span class="at">      </span><span class="fu">service</span><span class="kw">:</span></span>
-<span id="cb2-9"><a></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> apache2</span></span>
-<span id="cb2-10"><a></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> started</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a aria-label="1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> webservers</span></span>
+<span id="cb2-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install Apache</span></span>
+<span id="cb2-4"><a aria-label="4"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span></span>
+<span id="cb2-5"><a aria-label="5"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> apache2</span></span>
+<span id="cb2-6"><a aria-label="6"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb2-7"><a aria-label="7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Start Apache</span></span>
+<span id="cb2-8"><a aria-label="8"></a><span class="at">      </span><span class="fu">service</span><span class="kw">:</span></span>
+<span id="cb2-9"><a aria-label="9"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> apache2</span></span>
+<span id="cb2-10"><a aria-label="10"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> started</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:45%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a></a><span class="fu">hosts</span><span class="kw">:</span></span>
-<span id="cb3-2"><a></a><span class="at">  </span><span class="fu">webservers</span><span class="kw">:</span></span>
-<span id="cb3-3"><a></a><span class="at">    </span><span class="kw">-</span><span class="at"> web1.example.com</span></span>
-<span id="cb3-4"><a></a><span class="at">    </span><span class="kw">-</span><span class="at"> web2.example.com</span></span>
-<span id="cb3-5"><a></a><span class="at">    </span><span class="kw">-</span><span class="at"> web3.example.com</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a aria-label="1"></a><span class="fu">hosts</span><span class="kw">:</span></span>
+<span id="cb3-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">webservers</span><span class="kw">:</span></span>
+<span id="cb3-3"><a aria-label="3"></a><span class="at">    </span><span class="kw">-</span><span class="at"> web1.example.com</span></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="at">    </span><span class="kw">-</span><span class="at"> web2.example.com</span></span>
+<span id="cb3-5"><a aria-label="5"></a><span class="at">    </span><span class="kw">-</span><span class="at"> web3.example.com</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>Ansible és una eina d’automatització que ens permet gestionar la configuració dels servidors de manera eficient i fiable. Per exemple, si necessitem instal·lar un servidor web a 10.000 servidors, en lloc de fer-ho manualment en cada servidor, podem utilitzar Ansible per automatitzar aquesta tasca. Amb aquest script indiquem les tasques ha realitzar instal·lar apache i aixecar el servei. I en el fitxer de hosts indiquem els servidors on volem realitzar aquestes tasques.</p>
@@ -1991,15 +1997,15 @@ Jordi Mateo Fornés
 <section id="cloudformation" class="slide level2">
 <h2>CloudFormation</h2>
 <p>CloudFormation és un servei d’AWS que permet als desenvolupadors definir i desplegar la infraestructura de manera programàtica mitjançant codi.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a></a><span class="fu">Resources</span><span class="kw">:</span></span>
-<span id="cb4-2"><a></a><span class="at">  </span><span class="fu">MyInstance</span><span class="kw">:</span></span>
-<span id="cb4-3"><a></a><span class="at">    </span><span class="fu">Type</span><span class="kw">:</span><span class="at"> AWS::EC2::Instance</span></span>
-<span id="cb4-4"><a></a><span class="at">    </span><span class="fu">Properties</span><span class="kw">:</span></span>
-<span id="cb4-5"><a></a><span class="at">      </span><span class="fu">ImageId</span><span class="kw">:</span><span class="at"> ami-0c55b159cbfafe1f0</span></span>
-<span id="cb4-6"><a></a><span class="at">      </span><span class="fu">InstanceType</span><span class="kw">:</span><span class="at"> t2.micro</span></span>
-<span id="cb4-7"><a></a><span class="at">      </span><span class="fu">KeyName</span><span class="kw">:</span><span class="at"> my-key-pair</span></span>
-<span id="cb4-8"><a></a><span class="at">      </span><span class="fu">SecurityGroups</span><span class="kw">:</span></span>
-<span id="cb4-9"><a></a><span class="at">        </span><span class="kw">-</span><span class="at"> my-security-group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a aria-label="1"></a><span class="fu">Resources</span><span class="kw">:</span></span>
+<span id="cb4-2"><a aria-label="2"></a><span class="at">  </span><span class="fu">MyInstance</span><span class="kw">:</span></span>
+<span id="cb4-3"><a aria-label="3"></a><span class="at">    </span><span class="fu">Type</span><span class="kw">:</span><span class="at"> AWS::EC2::Instance</span></span>
+<span id="cb4-4"><a aria-label="4"></a><span class="at">    </span><span class="fu">Properties</span><span class="kw">:</span></span>
+<span id="cb4-5"><a aria-label="5"></a><span class="at">      </span><span class="fu">ImageId</span><span class="kw">:</span><span class="at"> ami-0c55b159cbfafe1f0</span></span>
+<span id="cb4-6"><a aria-label="6"></a><span class="at">      </span><span class="fu">InstanceType</span><span class="kw">:</span><span class="at"> t2.micro</span></span>
+<span id="cb4-7"><a aria-label="7"></a><span class="at">      </span><span class="fu">KeyName</span><span class="kw">:</span><span class="at"> my-key-pair</span></span>
+<span id="cb4-8"><a aria-label="8"></a><span class="at">      </span><span class="fu">SecurityGroups</span><span class="kw">:</span></span>
+<span id="cb4-9"><a aria-label="9"></a><span class="at">        </span><span class="kw">-</span><span class="at"> my-security-group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>AWS CloudFormation és un servei que permet als desenvolupadors definir i desplegar la infraestructura de manera programàtica mitjançant codi. Aquest codi es defineix en plantilles de CloudFormation, que descriuen els recursos necessaris per a la infraestructura, com ara instàncies EC2, grups de seguretat, taules de rutes, …, En aquest exemple, es defineix una instància EC2 amb una imatge AMI, un tipus d’instància, una clau SSH, i un grup de seguretat. Un cop es defineix la plantilla, es pot desplegar la infraestructura amb un sol clic o una sola comanda, automatitzant així el procés de desplegament i garantint la consistència de la infraestructura.</p>
 <style type="text/css">

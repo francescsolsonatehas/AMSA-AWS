@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Jordi Mateo Fornés">
   <title>AMSA - Fall 2025 – Sistema de fitxers (II)</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -203,7 +209,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Jordi Mateo Fornés 
+Jordi Mateo Fornés
 </div>
 </div>
 </div>
@@ -1103,12 +1109,12 @@ Jordi Mateo Fornés
 <div class="columns">
 <div class="column" style="width:50%;">
 <h3 id="distribucions-basades-en-red-hat">Distribucions basades en Red Hat</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">dnf</span> search mdadm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">dnf</span> install mdadm <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="ex">dnf</span> search mdadm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">dnf</span> install mdadm <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <h3 id="distribucions-basades-en-debian">Distribucions basades en Debian</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">apt</span> search mdadm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">apt</span> install mdadm <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">apt</span> search mdadm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="ex">apt</span> install mdadm <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <div class="center">
 <p>El funcionament del paquet <code>mdadm</code> és similar en totes les distribucions de Linux. Per tant, les instruccions d’ús són similars i no importa la distribució que s’utilitzeu.</p>
@@ -1119,9 +1125,9 @@ Jordi Mateo Fornés
 <div class="columns">
 <div class="column" style="width:50%;">
 <h3 class="smaller" id="opcions-bàsiques">Opcions Bàsiques</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="ex">mdadm</span> <span class="at">--create</span> <span class="at">--verbose</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> </span>
-<span id="cb5-2"><a></a><span class="ex">--level=[nivell]</span> </span>
-<span id="cb5-3"><a></a><span class="ex">--raid-devices=[nº</span> dispositius] <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--create</span> <span class="at">--verbose</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> </span>
+<span id="cb5-2"><a aria-label="2"></a><span class="ex">--level=[nivell]</span> </span>
+<span id="cb5-3"><a aria-label="3"></a><span class="ex">--raid-devices=[nº</span> dispositius] <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment"><strong><code>--create</code></strong>: Crea un nou dispositiu RAID.</li>
 <li class="fragment"><strong><code>--verbose</code></strong>: Mostra informació detallada sobre el procés.</li>
@@ -1134,7 +1140,7 @@ Jordi Mateo Fornés
 
 </div></div><div class="column" style="width:45%;">
 <h3 id="altres-opcions">Altres Opcions</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">mdadm</span> <span class="at">--create</span> <span class="at">--help</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--create</span> <span class="at">--help</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment"><strong><code>--metadata=[tipus]</code></strong>: Tipus de metadades.</li>
 <li class="fragment"><strong><code>--spare-devices=[nº dispositius]</code></strong>: Nombre de dispositius reservats.</li>
@@ -1145,33 +1151,33 @@ Jordi Mateo Fornés
 </section>
 <section id="gestió-del-raid---manage" class="slide level2 smaller">
 <h2>Gestió del RAID <code>(--manage)</code></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span>
-<span id="cb7-2"><a></a>  <span class="ex">--add</span>         <span class="at">-a</span>   : afegeix dispositius posteriors a l<span class="st">'array</span></span>
-<span id="cb7-3"><a></a><span class="st">  --re-add           : els dispositius posteriors són reafegits si eren</span></span>
-<span id="cb7-4"><a></a><span class="st">                     : membres recents de l'</span>array</span>
-<span id="cb7-5"><a></a>  <span class="ex">--remove</span>      <span class="at">-r</span>   : elimina els dispositius posteriors, que no han d<span class="st">'estar actius</span></span>
-<span id="cb7-6"><a></a><span class="st">  --fail        -f   : marca els dispositius posteriors com a defectuosos</span></span>
-<span id="cb7-7"><a></a><span class="st">  --set-faulty       : igual que --fail</span></span>
-<span id="cb7-8"><a></a><span class="st">  --replace          : marca el(s) dispositiu(s) per ser reemplaçat(s) per recanvis. </span></span>
-<span id="cb7-9"><a></a><span class="st">                     : Un cop completat el reemplaçament, el dispositiu es marcarà </span></span>
-<span id="cb7-10"><a></a><span class="st">                     : com a defectuós</span></span>
-<span id="cb7-11"><a></a><span class="st">  --with             : indica quin recanvi hauria de preferir un '</span>--replace<span class="st">' anterior</span></span>
-<span id="cb7-12"><a></a><span class="st">  --run         -R   : inicia un array parcialment construït</span></span>
-<span id="cb7-13"><a></a><span class="st">  --stop        -S   : desactiva l'</span>array, alliberant tots els recursos</span>
-<span id="cb7-14"><a></a>  <span class="ex">--readonly</span>    <span class="at">-o</span>   : marca l<span class="st">'array com a només lectura</span></span>
-<span id="cb7-15"><a></a><span class="st">  --readwrite   -w   : marca l'</span>array com a lectura i escriptura</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span>
+<span id="cb7-2"><a aria-label="2"></a>  <span class="ex">--add</span>         <span class="at">-a</span>   : afegeix dispositius posteriors a l<span class="st">'array</span></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="st">  --re-add           : els dispositius posteriors són reafegits si eren</span></span>
+<span id="cb7-4"><a aria-label="4"></a><span class="st">                     : membres recents de l'</span>array</span>
+<span id="cb7-5"><a aria-label="5"></a>  <span class="ex">--remove</span>      <span class="at">-r</span>   : elimina els dispositius posteriors, que no han d<span class="st">'estar actius</span></span>
+<span id="cb7-6"><a aria-label="6"></a><span class="st">  --fail        -f   : marca els dispositius posteriors com a defectuosos</span></span>
+<span id="cb7-7"><a aria-label="7"></a><span class="st">  --set-faulty       : igual que --fail</span></span>
+<span id="cb7-8"><a aria-label="8"></a><span class="st">  --replace          : marca el(s) dispositiu(s) per ser reemplaçat(s) per recanvis. </span></span>
+<span id="cb7-9"><a aria-label="9"></a><span class="st">                     : Un cop completat el reemplaçament, el dispositiu es marcarà </span></span>
+<span id="cb7-10"><a aria-label="10"></a><span class="st">                     : com a defectuós</span></span>
+<span id="cb7-11"><a aria-label="11"></a><span class="st">  --with             : indica quin recanvi hauria de preferir un '</span>--replace<span class="st">' anterior</span></span>
+<span id="cb7-12"><a aria-label="12"></a><span class="st">  --run         -R   : inicia un array parcialment construït</span></span>
+<span id="cb7-13"><a aria-label="13"></a><span class="st">  --stop        -S   : desactiva l'</span>array, alliberant tots els recursos</span>
+<span id="cb7-14"><a aria-label="14"></a>  <span class="ex">--readonly</span>    <span class="at">-o</span>   : marca l<span class="st">'array com a només lectura</span></span>
+<span id="cb7-15"><a aria-label="15"></a><span class="st">  --readwrite   -w   : marca l'</span>array com a lectura i escriptura</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="informació-i-monitoratge-del-raid" class="slide level2 smaller">
 <h2>Informació i Monitoratge del RAID</h2>
 <p>Les opcions <code>--detail</code> i <code>--examine</code> permeten obtenir informació detallada sobre un dispositiu RAID. La principal diferència entre ambdues opcions és que <code>--examine</code> mostra informació més detallada sobre el dispositiu.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="ex">mdadm</span> <span class="at">--detail</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--detail</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="ex">mdadm</span> <span class="at">--examine</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--examine</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <p>La opció <code>--monitor</code> permet monitorar un dispositiu RAID en temps real. Obtenint informació sobre els esdeveniments que es produeixen en el dispositiu i ens permet prendre accions en conseqüència.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">mdadm</span> <span class="at">--monitor</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--monitor</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="ensamblatge---assemble" class="slide level2">
 <h2>Ensamblatge <code>--assemble</code></h2>
@@ -1179,7 +1185,7 @@ Jordi Mateo Fornés
 <li class="fragment">Permet muntar un array RAID existent.</li>
 <li class="fragment">Aquesta opció no crea un nou array, sinó que reuneix un array existent a partir dels dispositius que especifiquem.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="ex">mdadm</span> <span class="at">--assemble</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--assemble</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">dispositius</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment">Cada cop que el sistema s’inicia, aquesta opció s’executa al kernel. Escaneja els discs, busca els superblocks i reconstrueix tots els arrays per a nosaltres.</li>
 </ul>
@@ -1187,14 +1193,14 @@ Jordi Mateo Fornés
 <section id="initramfs-i-raid" class="slide level2 smaller">
 <h2>Initramfs i RAID</h2>
 <p>En entorns amb RAID, <strong>initramfs</strong> inclou els binaris i la configuració necessaris per gestionar els arrays RAID. Durant la fase d’arrencada, es fa servir la comanda:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">mdadm</span> <span class="at">--assemble</span> <span class="at">--scan</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--assemble</span> <span class="at">--scan</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Detecta i munta automàticament tots els arrays definits a <code>/etc/mdadm/mdadm.conf</code>. Això assegura que les particions RAID estiguin operatives abans de muntar la partició root i iniciar el sistema operatiu.</p>
 <p>A més, initramfs pot incloure scripts per comprovar la integritat dels dispositius RAID i gestionar fallades de discs durant l’arrencada, assegurant un boot fiable en entorns amb mirroring (RAID1).</p>
 </section>
 <section id="actualització-amb---grow" class="slide level2 smaller">
 <h2>Actualització amb <code>--grow</code></h2>
 <p>Aquesta opció permet actualitzar un dispositiu RAID. Per exemple, canviar el RAID, augmentar el nombre de dispositius o canviar la mida dels blocs.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">mdadm</span> <span class="at">--grow</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--level</span><span class="op">=</span><span class="pp">[</span><span class="ss">nivell</span><span class="pp">]</span> <span class="at">--raid-devices</span><span class="op">=</span>[nº dispositius]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--grow</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--level</span><span class="op">=</span><span class="pp">[</span><span class="ss">nivell</span><span class="pp">]</span> <span class="at">--raid-devices</span><span class="op">=</span>[nº dispositius]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment"><strong>Situació I</strong>: En un RAID5 format per 3 discs, ens pot interessar al cap del temps afegir un disc més.</li>
 <li class="fragment"><strong>Situació II</strong>: En un RAID5 format per 4 discs, ens pot interessar al cap del temps canviar el RAID a 6.</li>
@@ -1219,7 +1225,7 @@ Jordi Mateo Fornés
 <section id="aturar-i-eliminar-un-raid" class="slide level2 smaller">
 <h2>Aturar i Eliminar un RAID</h2>
 <p>Per aturar un RAID, podem utilitzar l’opció <code>--stop</code> del mode <code>--manage</code> de <code>mdadm</code>. Aquesta opció desactiva l’array i allibera tots els recursos associats.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--stop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--stop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div title="Compte!">
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -1231,8 +1237,8 @@ Jordi Mateo Fornés
 </div>
 <div class="callout-content">
 <p>Aquesta operació no <strong>destruirà</strong> l’array, sinó que simplement el desactivarà. Per eliminar un raid podem eliminar el seu dispositiu associat, sempre primer aturant l’array.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--stop</span></span>
-<span id="cb15-2"><a></a><span class="fu">rm</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a aria-label="1"></a><span class="ex">mdadm</span> <span class="at">--manage</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span> <span class="at">--stop</span></span>
+<span id="cb15-2"><a aria-label="2"></a><span class="fu">rm</span> /dev/<span class="pp">[</span><span class="ss">nom</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1241,8 +1247,8 @@ Jordi Mateo Fornés
 <section id="etcmdadmmdadm.conf" class="slide level2 smaller">
 <h2><code>/etc/mdadm/mdadm.conf</code></h2>
 <p>Aquest fitxer conté informació que permet al sistema reconèixer i muntar automàticament els arrays RAID durant l’arrencada i també proporciona paràmetres per a la creació, monitorització i manteniment dels arrays.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a></a>ARRAY /dev/md0 UUID=12345678:90ab:cdef:1234:567890abcdef</span>
-<span id="cb16-2"><a></a>ARRAY /dev/md1 UUID=abcdef12:3456:7890:abcd:ef1234567890</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb16-1"><a aria-label="1"></a>ARRAY /dev/md0 UUID=12345678:90ab:cdef:1234:567890abcdef</span>
+<span id="cb16-2"><a aria-label="2"></a>ARRAY /dev/md1 UUID=abcdef12:3456:7890:abcd:ef1234567890</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li class="fragment"><code>ARRAY</code>: indica un dispositiu RAID gestionat per mdadm.</li>
 <li class="fragment"><code>/dev/mdX</code>: dispositiu de bloc que representa l’array RAID.</li>
